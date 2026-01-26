@@ -12,7 +12,7 @@ export default function Home() {
             <Link href="/docs" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Docs</Link>
             <a href="https://github.com/Brycce/wirl" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">GitHub</a>
             <a
-              href="https://wirl.vercel.app/signup"
+              href="https://app.wirl.dev/signup"
               className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Get Started
@@ -41,7 +41,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a
-              href="https://wirl.vercel.app/signup"
+              href="https://app.wirl.dev/signup"
               className="bg-gray-900 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-gray-800 transition-colors"
             >
               Start for free
@@ -314,7 +314,7 @@ export default function Home() {
               ))}
             </ul>
             <a
-              href="https://wirl.vercel.app/signup"
+              href="https://app.wirl.dev/signup"
               className="block w-full bg-gray-900 text-white py-4 rounded-xl font-semibold hover:bg-gray-800 transition-colors"
             >
               Get started free
@@ -334,7 +334,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wirl.vercel.app/signup"
+              href="https://app.wirl.dev/signup"
               className="bg-gray-900 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-gray-800 transition-colors"
             >
               Start for free

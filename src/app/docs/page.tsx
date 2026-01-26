@@ -11,7 +11,7 @@ export default function DocsPage() {
             <Link href="/docs" className="text-sm text-gray-900 font-medium">Docs</Link>
             <a href="https://github.com/Brycce/wirl" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">GitHub</a>
             <a
-              href="https://wirl.vercel.app/signup"
+              href="https://app.wirl.dev/signup"
               className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Get Started
@@ -124,7 +124,7 @@ await wirl.track({
               </div>
               <p className="text-gray-500">
                 Get your API key from the{' '}
-                <a href="https://wirl.vercel.app/dashboard/settings" className="text-violet-600 hover:underline">
+                <a href="https://app.wirl.dev/dashboard/settings" className="text-violet-600 hover:underline">
                   Settings page
                 </a>{' '}
                 in your dashboard.
@@ -298,7 +298,7 @@ await wirl.track({
                   <span className="text-xs text-gray-500 ml-4 font-mono">HTTP</span>
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
-{`POST https://wirl.vercel.app/api/v1/events
+{`POST https://app.wirl.dev/api/v1/events
 
 Headers:
   Authorization: Bearer sk_live_your_api_key
@@ -328,10 +328,10 @@ Body:
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
 {`# Get a contact
-GET https://wirl.vercel.app/api/v1/contacts/:id
+GET https://app.wirl.dev/api/v1/contacts/:id
 
 # Update a contact
-PATCH https://wirl.vercel.app/api/v1/contacts/:id
+PATCH https://app.wirl.dev/api/v1/contacts/:id
 Body: { "properties": { "name": "Jane" } }`}
                 </pre>
               </div>
@@ -349,10 +349,10 @@ Body: { "properties": { "name": "Jane" } }`}
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
 {`# List sequences
-GET https://wirl.vercel.app/api/v1/sequences
+GET https://app.wirl.dev/api/v1/sequences
 
 # Create a sequence
-POST https://wirl.vercel.app/api/v1/sequences
+POST https://app.wirl.dev/api/v1/sequences
 Body: {
   "name": "Welcome Sequence",
   "trigger_event": "user.signup",
@@ -388,7 +388,7 @@ Body: {
 {`{
   "mcpServers": {
     "wirl": {
-      "url": "https://wirl.vercel.app/mcp"
+      "url": "https://app.wirl.dev/mcp"
     }
   }
 }`}
@@ -408,7 +408,7 @@ Body: {
 {`{
   "mcpServers": {
     "wirl": {
-      "url": "https://wirl.vercel.app/mcp"
+      "url": "https://app.wirl.dev/mcp"
     }
   }
 }`}
