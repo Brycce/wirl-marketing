@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -6,9 +8,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="text-xl font-semibold text-gray-900">wirl</div>
           <div className="flex items-center gap-6">
-            <a href="#features" className="text-sm text-gray-600 hover:text-gray-900">Features</a>
-            <a href="#how-it-works" className="text-sm text-gray-600 hover:text-gray-900">How it works</a>
-            <a href="#pricing" className="text-sm text-gray-600 hover:text-gray-900">Pricing</a>
+            <a href="#features" className="text-sm text-gray-600 hover:text-gray-900 hidden sm:block">Features</a>
+            <Link href="/docs" className="text-sm text-gray-600 hover:text-gray-900">Docs</Link>
+            <a href="#pricing" className="text-sm text-gray-600 hover:text-gray-900 hidden sm:block">Pricing</a>
             <a
               href="https://wirl.vercel.app/login"
               className="text-sm text-gray-600 hover:text-gray-900"
@@ -26,10 +28,10 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block mb-6 px-4 py-1.5 bg-gray-100 rounded-full text-sm text-gray-600">
-            Built for developers who ship fast
+            npm install wirl
           </div>
           <h1 className="text-5xl sm:text-6xl font-semibold text-gray-900 leading-tight mb-6">
             Email automation
@@ -47,11 +49,28 @@ export default function Home() {
             >
               Start for free
             </a>
-            <a
-              href="https://github.com/Brycce/wirl"
+            <Link
+              href="/docs"
               className="border border-gray-200 text-gray-700 px-8 py-4 rounded-xl text-base font-medium hover:border-gray-300 hover:bg-gray-50 transition-colors"
             >
-              View on GitHub
+              Read the docs
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Install */}
+      <section className="py-8 px-6">
+        <div className="max-w-xl mx-auto">
+          <div className="bg-gray-950 rounded-xl p-4 flex items-center justify-between">
+            <code className="text-gray-300 font-mono">npm install wirl</code>
+            <a
+              href="https://www.npmjs.com/package/wirl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-300 text-sm"
+            >
+              v0.1.1
             </a>
           </div>
         </div>
@@ -75,6 +94,20 @@ export default function Home() {
                 <span className="text-green-400">&apos;wirl&apos;</span>
                 <span className="text-gray-500">;</span>
                 {"\n\n"}
+                <span className="text-purple-400">const</span>{" "}
+                <span className="text-blue-400">wirl</span>{" "}
+                <span className="text-gray-500">=</span>{" "}
+                <span className="text-purple-400">new</span>{" "}
+                <span className="text-yellow-400">Wirl</span>
+                <span className="text-gray-300">({"{"}</span>
+                {"\n"}
+                {"  "}
+                <span className="text-gray-300">apiKey:</span>{" "}
+                <span className="text-green-400">&apos;sk_live_...&apos;</span>
+                {"\n"}
+                <span className="text-gray-300">{"})"}</span>
+                <span className="text-gray-500">;</span>
+                {"\n\n"}
                 <span className="text-gray-500">// When a user signs up</span>
                 {"\n"}
                 <span className="text-purple-400">await</span>{" "}
@@ -95,7 +128,7 @@ export default function Home() {
                 <span className="text-gray-300">{"})"}</span>
                 <span className="text-gray-500">;</span>
                 {"\n\n"}
-                <span className="text-gray-500">// That&apos;s it. Welcome sequence starts automatically.</span>
+                <span className="text-gray-500">// Welcome sequence starts automatically</span>
               </code>
             </pre>
           </div>
@@ -135,7 +168,7 @@ export default function Home() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Developer-first</h3>
               <p className="text-gray-600">
-                TypeScript SDK. Clean API. No drag-and-drop builders. Define sequences in code or the dashboard.
+                TypeScript SDK on npm. Clean API. No drag-and-drop builders. Define sequences in code or the dashboard.
               </p>
             </div>
 
@@ -172,12 +205,14 @@ export default function Home() {
                 1
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Track events</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Install & track events</h3>
                 <p className="text-gray-600 mb-4">
-                  Add one line to your signup, purchase, or any user action.
+                  Add the SDK to your project and track events when users take actions.
                 </p>
-                <div className="bg-gray-950 rounded-xl p-4 font-mono text-sm text-gray-300">
-                  await wirl.track({"{"} email, event: &apos;user.signup&apos; {"}"})
+                <div className="bg-gray-950 rounded-xl p-4 font-mono text-sm text-gray-300 space-y-2">
+                  <div><span className="text-gray-500">$</span> npm install wirl</div>
+                  <div className="text-gray-500 mt-2"># Then in your code:</div>
+                  <div>await wirl.track({"{"} email, event: &apos;user.signup&apos; {"}"})</div>
                 </div>
               </div>
             </div>
@@ -189,7 +224,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Create sequences</h3>
                 <p className="text-gray-600 mb-4">
-                  Build email sequences in the dashboard. Set triggers, delays, and conditions.
+                  Build email sequences in the dashboard. Set triggers, delays, and templates.
                 </p>
                 <div className="bg-gray-100 rounded-xl p-4 text-sm text-gray-700">
                   When <code className="bg-white px-2 py-0.5 rounded">user.signup</code> → Send welcome email → Wait 2 days → Send tips email
@@ -212,8 +247,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SDK Methods */}
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+              Simple SDK
+            </h2>
+            <p className="text-gray-600">
+              Four methods. That&apos;s all you need.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-xl border border-gray-100">
+              <code className="text-purple-600 font-mono font-medium">track()</code>
+              <p className="text-gray-600 mt-2 text-sm">
+                Track an event and associate it with a contact. Creates the contact if they don&apos;t exist.
+              </p>
+              <pre className="mt-4 text-xs bg-gray-50 p-3 rounded-lg font-mono text-gray-700 overflow-x-auto">
+{`await wirl.track({
+  email: 'user@example.com',
+  event: 'user.signup',
+  properties: { plan: 'pro' }
+})`}
+              </pre>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-100">
+              <code className="text-purple-600 font-mono font-medium">identify()</code>
+              <p className="text-gray-600 mt-2 text-sm">
+                Update contact properties without tracking an event.
+              </p>
+              <pre className="mt-4 text-xs bg-gray-50 p-3 rounded-lg font-mono text-gray-700 overflow-x-auto">
+{`await wirl.identify({
+  email: 'user@example.com',
+  properties: { name: 'Jane' }
+})`}
+              </pre>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-100">
+              <code className="text-purple-600 font-mono font-medium">trigger()</code>
+              <p className="text-gray-600 mt-2 text-sm">
+                Manually start a specific sequence for a contact.
+              </p>
+              <pre className="mt-4 text-xs bg-gray-50 p-3 rounded-lg font-mono text-gray-700 overflow-x-auto">
+{`await wirl.trigger({
+  email: 'user@example.com',
+  sequence: 'onboarding'
+})`}
+              </pre>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-100">
+              <code className="text-purple-600 font-mono font-medium">exit()</code>
+              <p className="text-gray-600 mt-2 text-sm">
+                Remove a contact from a sequence early.
+              </p>
+              <pre className="mt-4 text-xs bg-gray-50 p-3 rounded-lg font-mono text-gray-700 overflow-x-auto">
+{`await wirl.exit({
+  email: 'user@example.com',
+  sequence: 'trial-reminder'
+})`}
+              </pre>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/docs" className="text-gray-900 font-medium hover:underline">
+              Read full documentation →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
-      <section id="pricing" className="py-20 px-6 bg-gray-50">
+      <section id="pricing" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-semibold text-gray-900 mb-4">
@@ -229,25 +339,25 @@ export default function Home() {
             <div className="text-gray-500 mb-6">Free during beta</div>
             <ul className="text-left space-y-3 mb-8">
               <li className="flex items-center gap-3 text-gray-700">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited sequences
               </li>
               <li className="flex items-center gap-3 text-gray-700">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited contacts
               </li>
               <li className="flex items-center gap-3 text-gray-700">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited events
               </li>
               <li className="flex items-center gap-3 text-gray-700">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Your Resend account
@@ -264,7 +374,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-semibold text-gray-900 mb-4">
             Ready to automate your emails?
@@ -272,28 +382,39 @@ export default function Home() {
           <p className="text-gray-600 mb-8">
             Set up in 5 minutes. No credit card required.
           </p>
-          <a
-            href="https://wirl.vercel.app/signup"
-            className="inline-block bg-gray-900 text-white px-8 py-4 rounded-xl text-base font-medium hover:bg-gray-800 transition-colors"
-          >
-            Start for free
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://wirl.vercel.app/signup"
+              className="bg-gray-900 text-white px-8 py-4 rounded-xl text-base font-medium hover:bg-gray-800 transition-colors"
+            >
+              Start for free
+            </a>
+            <Link
+              href="/docs"
+              className="border border-gray-200 bg-white text-gray-700 px-8 py-4 rounded-xl text-base font-medium hover:border-gray-300 transition-colors"
+            >
+              Read the docs
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-gray-500 text-sm">
-            Built by developers, for developers.
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/Brycce/wirl" className="text-gray-500 hover:text-gray-700 text-sm">
-              GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/wirl" className="text-gray-500 hover:text-gray-700 text-sm">
-              npm
-            </a>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="text-xl font-semibold text-gray-900">wirl</div>
+            <div className="flex items-center gap-8">
+              <Link href="/docs" className="text-gray-500 hover:text-gray-700 text-sm">
+                Documentation
+              </Link>
+              <a href="https://github.com/Brycce/wirl" className="text-gray-500 hover:text-gray-700 text-sm">
+                GitHub
+              </a>
+              <a href="https://www.npmjs.com/package/wirl" className="text-gray-500 hover:text-gray-700 text-sm">
+                npm
+              </a>
+            </div>
           </div>
         </div>
       </footer>
