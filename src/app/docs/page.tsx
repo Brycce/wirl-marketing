@@ -376,22 +376,16 @@ Body: {
               </p>
 
               <h3 className="text-lg font-semibold mb-4">Claude Code</h3>
-              <p className="text-gray-500 mb-4">Add to your <code className="bg-gray-100 px-2 py-1 rounded">.mcp.json</code>:</p>
+              <p className="text-gray-500 mb-4">Run this command in your terminal:</p>
               <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
-                  <span className="text-xs text-gray-500 ml-4 font-mono">.mcp.json</span>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">terminal</span>
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
-{`{
-  "mcpServers": {
-    "wirl": {
-      "url": "https://app.wirl.dev/mcp"
-    }
-  }
-}`}
+{`claude mcp add wirl --url https://app.wirl.dev/mcp`}
                 </pre>
               </div>
 
