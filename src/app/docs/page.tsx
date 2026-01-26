@@ -385,7 +385,7 @@ Body: {
                   <span className="text-xs text-gray-500 ml-4 font-mono">terminal</span>
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
-{`claude mcp add wirl --url https://app.wirl.dev/mcp`}
+{`claude mcp add --transport http wirl https://app.wirl.dev/mcp`}
                 </pre>
               </div>
 
