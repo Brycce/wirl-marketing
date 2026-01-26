@@ -374,48 +374,74 @@ Body: {
                 Wirl provides an MCP (Model Context Protocol) server that lets AI assistants like Claude
                 manage your email sequences, templates, and contacts directly.
               </p>
+
+              <h3 className="text-lg font-semibold mb-4">Claude Code</h3>
+              <p className="text-gray-500 mb-4">Add to your <code className="bg-gray-100 px-2 py-1 rounded">.mcp.json</code>:</p>
               <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
-                  <span className="text-xs text-gray-500 ml-4 font-mono">claude_desktop_config.json</span>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">.mcp.json</span>
                 </div>
                 <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
 {`{
   "mcpServers": {
     "wirl": {
-      "command": "npx",
-      "args": ["@wirl/mcp"]
+      "url": "https://wirl.vercel.app/mcp"
     }
   }
 }`}
                 </pre>
               </div>
-              <p className="text-gray-500">
-                Add this to your Claude Desktop or Claude Code MCP configuration. No API key needed in the config —
-                you&apos;ll authenticate interactively.
-              </p>
+
+              <h3 className="text-lg font-semibold mb-4">Cursor</h3>
+              <p className="text-gray-500 mb-4">Add to <code className="bg-gray-100 px-2 py-1 rounded">.cursor/mcp.json</code>:</p>
+              <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">.cursor/mcp.json</span>
+                </div>
+                <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
+{`{
+  "mcpServers": {
+    "wirl": {
+      "url": "https://wirl.vercel.app/mcp"
+    }
+  }
+}`}
+                </pre>
+              </div>
             </section>
 
             {/* MCP Auth */}
             <section id="mcp-auth" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">MCP Authentication</h2>
               <p className="text-gray-500 mb-6">
-                Once the MCP is configured, ask Claude to connect to Wirl:
+                After adding the MCP config, authenticate using the <code className="bg-gray-100 px-2 py-1 rounded">/mcp</code> command:
               </p>
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6">
-                <p className="text-gray-700 italic">&quot;Connect to my Wirl account&quot;</p>
+              <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">terminal</span>
+                </div>
+                <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
+{`claude /mcp
+# Select "wirl" → "Authenticate"`}
+                </pre>
               </div>
-              <p className="text-gray-500 mb-4">Claude will:</p>
+              <p className="text-gray-500 mb-4">This will:</p>
               <ol className="list-decimal list-inside space-y-2 text-gray-500 mb-6">
-                <li>Generate a device code</li>
-                <li>Ask you to visit <code className="bg-gray-100 px-2 py-1 rounded text-violet-600">wirl.vercel.app/device</code></li>
-                <li>Enter the code and log in</li>
-                <li>Automatically save your API key</li>
+                <li>Open a browser window</li>
+                <li>Log in to your Wirl account</li>
+                <li>Grant access to Claude</li>
               </ol>
               <p className="text-gray-500">
-                Your credentials are stored locally in <code className="bg-gray-100 px-2 py-1 rounded">~/.wirl/credentials.json</code>.
+                Once authenticated, Claude can manage your sequences, templates, and contacts.
               </p>
             </section>
 
