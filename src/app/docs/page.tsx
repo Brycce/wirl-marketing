@@ -49,6 +49,14 @@ export default function DocsPage() {
                 <li><a href="#api-sequences" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sequences API</a></li>
               </ul>
             </div>
+            <div>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">MCP Integration</h3>
+              <ul className="space-y-2">
+                <li><a href="#mcp-setup" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Setup</a></li>
+                <li><a href="#mcp-auth" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Authentication</a></li>
+                <li><a href="#mcp-tools" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Available Tools</a></li>
+              </ul>
+            </div>
           </nav>
         </aside>
 
@@ -357,6 +365,107 @@ Body: {
 }`}
                 </pre>
               </div>
+            </section>
+
+            {/* MCP Setup */}
+            <section id="mcp-setup" className="mb-20 scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-6">MCP Integration</h2>
+              <p className="text-gray-500 mb-6">
+                Wirl provides an MCP (Model Context Protocol) server that lets AI assistants like Claude
+                manage your email sequences, templates, and contacts directly.
+              </p>
+              <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">claude_desktop_config.json</span>
+                </div>
+                <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
+{`{
+  "mcpServers": {
+    "wirl": {
+      "command": "npx",
+      "args": ["@wirl/mcp"]
+    }
+  }
+}`}
+                </pre>
+              </div>
+              <p className="text-gray-500">
+                Add this to your Claude Desktop or Claude Code MCP configuration. No API key needed in the config —
+                you&apos;ll authenticate interactively.
+              </p>
+            </section>
+
+            {/* MCP Auth */}
+            <section id="mcp-auth" className="mb-20 scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-6">MCP Authentication</h2>
+              <p className="text-gray-500 mb-6">
+                Once the MCP is configured, ask Claude to connect to Wirl:
+              </p>
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6">
+                <p className="text-gray-700 italic">&quot;Connect to my Wirl account&quot;</p>
+              </div>
+              <p className="text-gray-500 mb-4">Claude will:</p>
+              <ol className="list-decimal list-inside space-y-2 text-gray-500 mb-6">
+                <li>Generate a device code</li>
+                <li>Ask you to visit <code className="bg-gray-100 px-2 py-1 rounded text-violet-600">wirl.vercel.app/device</code></li>
+                <li>Enter the code and log in</li>
+                <li>Automatically save your API key</li>
+              </ol>
+              <p className="text-gray-500">
+                Your credentials are stored locally in <code className="bg-gray-100 px-2 py-1 rounded">~/.wirl/credentials.json</code>.
+              </p>
+            </section>
+
+            {/* MCP Tools */}
+            <section id="mcp-tools" className="mb-20 scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-6">Available MCP Tools</h2>
+              <p className="text-gray-500 mb-6">
+                Once connected, Claude can use these tools to manage your email automation:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <h4 className="font-semibold mb-2">Sequences</h4>
+                  <ul className="text-sm text-gray-500 space-y-1">
+                    <li>list_sequences</li>
+                    <li>create_sequence</li>
+                    <li>update_sequence</li>
+                    <li>get_sequence_stats</li>
+                  </ul>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <h4 className="font-semibold mb-2">Templates</h4>
+                  <ul className="text-sm text-gray-500 space-y-1">
+                    <li>list_templates</li>
+                    <li>create_template</li>
+                    <li>update_template</li>
+                    <li>delete_template</li>
+                  </ul>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <h4 className="font-semibold mb-2">Contacts</h4>
+                  <ul className="text-sm text-gray-500 space-y-1">
+                    <li>list_contacts</li>
+                    <li>find_contact_by_email</li>
+                    <li>update_contact</li>
+                  </ul>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <h4 className="font-semibold mb-2">Events</h4>
+                  <ul className="text-sm text-gray-500 space-y-1">
+                    <li>track_event</li>
+                    <li>list_events</li>
+                    <li>trigger_sequence</li>
+                    <li>exit_sequence</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="text-gray-500">
+                Example prompts: &quot;Create a welcome sequence triggered by user.signup&quot; or
+                &quot;Why isn&apos;t user@example.com receiving emails?&quot;
+              </p>
             </section>
 
             {/* Need Help */}
