@@ -2,17 +2,17 @@ import Link from 'next/link';
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Nav */}
-      <nav className="fixed top-0 w-full bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5 z-50">
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-xl font-semibold">wirl</Link>
           <div className="flex items-center gap-8">
-            <Link href="/docs" className="text-sm text-white font-medium">Docs</Link>
-            <a href="https://github.com/Brycce/wirl" className="text-sm text-gray-400 hover:text-white transition-colors">GitHub</a>
+            <Link href="/docs" className="text-sm text-gray-900 font-medium">Docs</Link>
+            <a href="https://github.com/Brycce/wirl" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">GitHub</a>
             <a
               href="https://wirl.vercel.app/signup"
-              className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+              className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Get Started
             </a>
@@ -22,31 +22,31 @@ export default function DocsPage() {
 
       <div className="pt-16 flex">
         {/* Sidebar */}
-        <aside className="w-64 fixed left-0 top-16 bottom-0 border-r border-white/5 p-6 overflow-y-auto hidden lg:block bg-[#0a0a0a]">
+        <aside className="w-64 fixed left-0 top-16 bottom-0 border-r border-gray-100 p-6 overflow-y-auto hidden lg:block bg-white">
           <nav className="space-y-8">
             <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Getting Started</h3>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Getting Started</h3>
               <ul className="space-y-2">
-                <li><a href="#installation" className="text-sm text-gray-400 hover:text-white transition-colors">Installation</a></li>
-                <li><a href="#quick-start" className="text-sm text-gray-400 hover:text-white transition-colors">Quick Start</a></li>
-                <li><a href="#configuration" className="text-sm text-gray-400 hover:text-white transition-colors">Configuration</a></li>
+                <li><a href="#installation" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Installation</a></li>
+                <li><a href="#quick-start" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Quick Start</a></li>
+                <li><a href="#configuration" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Configuration</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">SDK Reference</h3>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">SDK Reference</h3>
               <ul className="space-y-2">
-                <li><a href="#track" className="text-sm text-gray-400 hover:text-white transition-colors">track()</a></li>
-                <li><a href="#identify" className="text-sm text-gray-400 hover:text-white transition-colors">identify()</a></li>
-                <li><a href="#trigger" className="text-sm text-gray-400 hover:text-white transition-colors">trigger()</a></li>
-                <li><a href="#exit" className="text-sm text-gray-400 hover:text-white transition-colors">exit()</a></li>
+                <li><a href="#track" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">track()</a></li>
+                <li><a href="#identify" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">identify()</a></li>
+                <li><a href="#trigger" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">trigger()</a></li>
+                <li><a href="#exit" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">exit()</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">API Reference</h3>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">API Reference</h3>
               <ul className="space-y-2">
-                <li><a href="#api-events" className="text-sm text-gray-400 hover:text-white transition-colors">Events API</a></li>
-                <li><a href="#api-contacts" className="text-sm text-gray-400 hover:text-white transition-colors">Contacts API</a></li>
-                <li><a href="#api-sequences" className="text-sm text-gray-400 hover:text-white transition-colors">Sequences API</a></li>
+                <li><a href="#api-events" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Events API</a></li>
+                <li><a href="#api-contacts" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Contacts API</a></li>
+                <li><a href="#api-sequences" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sequences API</a></li>
               </ul>
             </div>
           </nav>
@@ -56,20 +56,20 @@ export default function DocsPage() {
         <main className="flex-1 lg:ml-64 p-8 max-w-4xl">
           <div className="max-w-none">
             <h1 className="text-5xl font-bold mb-4">Documentation</h1>
-            <p className="text-xl text-gray-400 mb-16">
+            <p className="text-xl text-gray-500 mb-16">
               Learn how to integrate Wirl into your application.
             </p>
 
             {/* Installation */}
             <section id="installation" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Installation</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Install the Wirl SDK using your preferred package manager:
               </p>
               <div className="space-y-3">
                 {['npm install wirl', 'yarn add wirl', 'pnpm add wirl'].map((cmd) => (
-                  <div key={cmd} className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                    <div className="flex items-center gap-2 px-4 py-2 border-b border-white/5">
+                  <div key={cmd} className="bg-gray-900 rounded-xl overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-800">
                       <div className="w-2 h-2 rounded-full bg-[#ff5f57]"></div>
                       <div className="w-2 h-2 rounded-full bg-[#febc2e]"></div>
                       <div className="w-2 h-2 rounded-full bg-[#28c840]"></div>
@@ -86,11 +86,11 @@ export default function DocsPage() {
             {/* Quick Start */}
             <section id="quick-start" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Quick Start</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Initialize the SDK with your API key and start tracking events:
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden mb-6">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -114,9 +114,9 @@ await wirl.track({
 });`}
                 </pre>
               </div>
-              <p className="text-gray-400">
+              <p className="text-gray-500">
                 Get your API key from the{' '}
-                <a href="https://wirl.vercel.app/dashboard/settings" className="text-cyan-400 hover:underline">
+                <a href="https://wirl.vercel.app/dashboard/settings" className="text-violet-600 hover:underline">
                   Settings page
                 </a>{' '}
                 in your dashboard.
@@ -126,28 +126,28 @@ await wirl.track({
             {/* Configuration */}
             <section id="configuration" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Configuration</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 The Wirl constructor accepts the following options:
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
+              <div className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/5">
-                      <th className="text-left p-4 font-semibold text-white">Option</th>
-                      <th className="text-left p-4 font-semibold text-white">Type</th>
-                      <th className="text-left p-4 font-semibold text-white">Description</th>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left p-4 font-semibold text-gray-900">Option</th>
+                      <th className="text-left p-4 font-semibold text-gray-900">Type</th>
+                      <th className="text-left p-4 font-semibold text-gray-900">Description</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-white/5">
-                      <td className="p-4 font-mono text-cyan-400">apiKey</td>
-                      <td className="p-4 text-gray-400">string</td>
-                      <td className="p-4 text-gray-400">Required. Your Wirl API key.</td>
+                    <tr className="border-b border-gray-100">
+                      <td className="p-4 font-mono text-violet-600">apiKey</td>
+                      <td className="p-4 text-gray-500">string</td>
+                      <td className="p-4 text-gray-500">Required. Your Wirl API key.</td>
                     </tr>
                     <tr>
-                      <td className="p-4 font-mono text-cyan-400">baseUrl</td>
-                      <td className="p-4 text-gray-400">string</td>
-                      <td className="p-4 text-gray-400">Optional. API base URL. Defaults to production.</td>
+                      <td className="p-4 font-mono text-violet-600">baseUrl</td>
+                      <td className="p-4 text-gray-500">string</td>
+                      <td className="p-4 text-gray-500">Optional. API base URL. Defaults to production.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -157,14 +157,14 @@ await wirl.track({
             {/* track() */}
             <section id="track" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">
-                <code className="text-cyan-400">track()</code>
+                <code className="text-violet-600">track()</code>
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Track an event for a contact. If the contact doesn&apos;t exist, it will be created automatically.
                 This is the primary method for triggering email sequences.
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden mb-6">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -181,20 +181,20 @@ await wirl.track({
                 </pre>
               </div>
               <h4 className="font-semibold mb-4">Parameters</h4>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
+              <div className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <tbody>
-                    <tr className="border-b border-white/5">
-                      <td className="p-4 font-mono text-cyan-400">email</td>
-                      <td className="p-4 text-gray-400">Contact&apos;s email address</td>
+                    <tr className="border-b border-gray-100">
+                      <td className="p-4 font-mono text-violet-600">email</td>
+                      <td className="p-4 text-gray-500">Contact&apos;s email address</td>
                     </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="p-4 font-mono text-cyan-400">event</td>
-                      <td className="p-4 text-gray-400">Event name (e.g., &quot;user.signup&quot;, &quot;order.completed&quot;)</td>
+                    <tr className="border-b border-gray-100">
+                      <td className="p-4 font-mono text-violet-600">event</td>
+                      <td className="p-4 text-gray-500">Event name (e.g., &quot;user.signup&quot;, &quot;order.completed&quot;)</td>
                     </tr>
                     <tr>
-                      <td className="p-4 font-mono text-cyan-400">properties</td>
-                      <td className="p-4 text-gray-400">Optional object with additional data</td>
+                      <td className="p-4 font-mono text-violet-600">properties</td>
+                      <td className="p-4 text-gray-500">Optional object with additional data</td>
                     </tr>
                   </tbody>
                 </table>
@@ -204,13 +204,13 @@ await wirl.track({
             {/* identify() */}
             <section id="identify" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">
-                <code className="text-violet-400">identify()</code>
+                <code className="text-fuchsia-600">identify()</code>
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Update a contact&apos;s properties without tracking an event. Useful for enriching contact data.
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -231,14 +231,14 @@ await wirl.track({
             {/* trigger() */}
             <section id="trigger" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">
-                <code className="text-fuchsia-400">trigger()</code>
+                <code className="text-pink-600">trigger()</code>
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Manually enroll a contact in a specific sequence. Use this when you want to start a sequence
                 without tracking an event.
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -255,14 +255,14 @@ await wirl.track({
             {/* exit() */}
             <section id="exit" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">
-                <code className="text-emerald-400">exit()</code>
+                <code className="text-emerald-600">exit()</code>
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Remove a contact from a sequence early. Useful when a user takes an action that should
                 stop the sequence (e.g., they upgraded, so stop the upgrade reminder emails).
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -279,11 +279,11 @@ await wirl.track({
             {/* API Events */}
             <section id="api-events" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Events API</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 If you prefer to use the REST API directly instead of the SDK:
               </p>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -311,8 +311,8 @@ Body:
             {/* API Contacts */}
             <section id="api-contacts" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Contacts API</h2>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -332,8 +332,8 @@ Body: { "properties": { "name": "Jane" } }`}
             {/* API Sequences */}
             <section id="api-sequences" className="mb-20 scroll-mt-24">
               <h2 className="text-2xl font-bold mb-6">Sequences API</h2>
-              <div className="bg-[#161616] border border-white/5 rounded-xl overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-[#1a1a1a]">
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
@@ -360,14 +360,14 @@ Body: {
             </section>
 
             {/* Need Help */}
-            <section className="bg-[#161616] border border-white/5 rounded-2xl p-8 text-center">
+            <section className="bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center">
               <h2 className="text-xl font-bold mb-2">Need help?</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-500 mb-6">
                 Check out the source code or open an issue on GitHub.
               </p>
               <a
                 href="https://github.com/Brycce/wirl"
-                className="inline-block bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                className="inline-block bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors"
               >
                 View on GitHub
               </a>
