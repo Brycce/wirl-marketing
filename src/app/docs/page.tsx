@@ -46,6 +46,7 @@ export default function DocsPage() {
               <ul className="space-y-2">
                 <li><a href="#api-events" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Events API</a></li>
                 <li><a href="#api-contacts" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Contacts API</a></li>
+                <li><a href="#api-properties" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Properties API</a></li>
                 <li><a href="#api-sequences" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sequences API</a></li>
               </ul>
             </div>
@@ -333,6 +334,39 @@ GET https://app.wirl.dev/api/v1/contacts/:id
 # Update a contact
 PATCH https://app.wirl.dev/api/v1/contacts/:id
 Body: { "properties": { "name": "Jane" } }`}
+                </pre>
+              </div>
+            </section>
+
+            {/* API Properties */}
+            <section id="api-properties" className="mb-20 scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-6">Contact Properties API</h2>
+              <p className="text-gray-500 mb-6">
+                Pre-register contact properties so they appear as template variables in the editor.
+                Properties set via <code className="bg-gray-100 px-2 py-1 rounded">identify()</code> or <code className="bg-gray-100 px-2 py-1 rounded">track()</code> are auto-discovered,
+                but registering them adds type info and descriptions.
+              </p>
+              <div className="bg-gray-900 rounded-xl overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
+                  <span className="text-xs text-gray-500 ml-4 font-mono">HTTP</span>
+                </div>
+                <pre className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
+{`# List registered properties
+GET https://app.wirl.dev/api/v1/contacts/properties
+
+# Register a property
+POST https://app.wirl.dev/api/v1/contacts/properties
+Body: {
+  "name": "plan",
+  "type": "string",
+  "description": "User's plan tier"
+}
+
+# Supported types: string, number, boolean, date
+# Use in templates as {{contact.plan}}`}
                 </pre>
               </div>
             </section>
