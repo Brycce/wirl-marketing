@@ -28,7 +28,7 @@ export default async function Image() {
             top: 40,
             right: 50,
             fontSize: 36,
-            fontWeight: 700,
+            fontWeight: 900,
             color: '#18181b',
           }}
         >
@@ -47,7 +47,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 88,
-            fontWeight: 700,
+            fontWeight: 900,
             color: '#18181b',
             textAlign: 'center',
             lineHeight: 1.1,
@@ -58,7 +58,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 88,
-            fontWeight: 700,
+            fontWeight: 900,
             color: '#18181b',
             textAlign: 'center',
             lineHeight: 1.1,
@@ -71,6 +71,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 36,
+            fontWeight: 700,
             color: '#71717a',
             marginTop: 24,
           }}
@@ -95,7 +96,7 @@ export default async function Image() {
                 borderRadius: 100,
                 fontSize: 28,
                 color: '#52525b',
-                fontWeight: 500,
+                fontWeight: 700,
               }}
             >
               {text}
