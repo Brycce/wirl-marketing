@@ -57,10 +57,10 @@ export function HeroScene() {
       <Desk x={300} y={186} shirt="R" hair="h" />
       <Desk x={580} y={186} shirt="P" />
       <Desk x={860} y={186} shirt="O" hair="h" />
-      <At x={44} y={120} className="bob-1"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={324} y={116} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={604} y={124} className="bob-3"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={884} y={118} className="bob-4"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={44} y={120} className="bob-1"><Sprite rows={SWIRL} scale={2} /></At>
+      <At x={324} y={116} className="bob-2"><Sprite rows={SWIRL} scale={2} /></At>
+      <At x={604} y={124} className="bob-3"><Sprite rows={SWIRL} scale={2} /></At>
+      <At x={884} y={118} className="bob-4"><Sprite rows={SWIRL} scale={2} /></At>
       <Bubble x={120} y={70}>refunds thing, done</Bubble>
       <Bubble x={410} y={60}>shipping!!</Bubble>
       <Bubble x={690} y={76}>one more feature</Bubble>
@@ -76,23 +76,23 @@ export function MessScene() {
       <Ground y={250} />
 
       <At x={40} y={168}><Sprite rows={CLOUD} scale={5} /></At>
-      <At x={70} y={130} className="bob-1"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={70} y={130} className="bob-1"><Sprite rows={SWIRL} scale={2} /></At>
       <At x={118} y={128}><Sprite rows={LOCK_OPEN} scale={3} /></At>
       <At x={150} y={150}><Sprite rows={SKULL} scale={3} /></At>
       <Label x={40} y={266}>someone&apos;s personal vercel</Label>
 
       <At x={330} y={210}><Sprite rows={LAPTOP} scale={5} /></At>
-      <At x={352} y={172} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={352} y={172} className="bob-2"><Sprite rows={SWIRL} scale={2} /></At>
       <At x={396} y={150} className="flicker"><Sprite rows={FLAME} scale={3} /></At>
       <Label x={330} y={266}>the intern&apos;s laptop</Label>
 
       <At x={600} y={185}><Sprite rows={PAGE} scale={5} /></At>
-      <At x={612} y={146} className="bob-3"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={612} y={146} className="bob-3"><Sprite rows={SWIRL} scale={2} /></At>
       <At x={668} y={150}><Sprite rows={LOCK_OPEN} scale={3} /></At>
       <Label x={590} y={266}>a password in a notion page</Label>
 
       <At x={880} y={200}><Sprite rows={SIGN} scale={5} /></At>
-      <At x={892} y={160} className="bob-4"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={892} y={160} className="bob-4"><Sprite rows={SWIRL} scale={2} /></At>
       <At x={946} y={150} className="flicker"><Sprite rows={WARN} scale={3} /></At>
       <Label x={870} y={266}>a public URL, by accident</Label>
     </Stage>
@@ -107,15 +107,15 @@ export function WirlScene() {
       <Ground y={290} />
 
       <At x={30} y={238} className="walk-1"><Sprite rows={ROBOT} scale={4} /></At>
-      <At x={38} y={196} className="walk-1"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={38} y={196} className="walk-1"><Sprite rows={SWIRL} scale={2} /></At>
       <At x={120} y={238} className="walk-2"><Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} /></At>
-      <At x={128} y={196} className="walk-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={128} y={196} className="walk-2"><Sprite rows={SWIRL} scale={2} /></At>
       <Label x={30} y={302}>your agents</Label>
 
       <At x={300} y={236}><Sprite rows={ARROW} scale={5} /></At>
 
       <At x={400} y={150}><Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} /></At>
-      <At x={478} y={186}><Sprite rows={SWIRL} scale={6} swap={{ K: 'k' }} /></At>
+      <At x={452} y={190}><Sprite rows={SWIRL} scale={5} swap={{ K: 'k' }} /></At>
       <At x={560} y={120}><Sprite rows={LOCK_CLOSED} scale={6} /></At>
       <Label x={520} y={302}>wirl</Label>
 
@@ -142,8 +142,8 @@ export function ShareScene() {
       <At x={190} y={144}><Sprite rows={PERSON} scale={4} /></At>
       <At x={520} y={144}><Sprite rows={PERSON} scale={4} swap={{ b: 'R', H: 'h' }} /></At>
       <At x={850} y={144}><Sprite rows={PERSON} scale={4} swap={{ b: 'P' }} /></At>
-      <At x={370} y={120} className="bob-1"><Sprite rows={SWIRL} scale={4} /></At>
-      <At x={700} y={120} className="bob-3"><Sprite rows={SWIRL} scale={4} /></At>
+      <At x={370} y={120} className="bob-1"><Sprite rows={SWIRL} scale={2.5} /></At>
+      <At x={700} y={120} className="bob-3"><Sprite rows={SWIRL} scale={2.5} /></At>
       <At x={580} y={112} className="bob-2"><Sprite rows={HEART} scale={3} /></At>
       <Bubble x={110} y={70}>fixed the export, try it</Bubble>
       <Bubble x={470} y={60}>nice. added a filter</Bubble>
@@ -167,7 +167,7 @@ export function AdminPanel() {
   return (
     <div className="px-window max-w-3xl mx-auto">
       <div className="flex items-center justify-between px-4 py-2 border-b-[3px] border-ink bg-sand font-pixel text-[17px] leading-none">
-        <span className="inline-flex items-center gap-2"><Sprite rows={SWIRL} scale={2} /> harbor.co · admin</span>
+        <span className="inline-flex items-center gap-2"><Sprite rows={SWIRL} scale={1.25} /> harbor.co · admin</span>
         <span className="inline-flex items-center gap-3"><span>wirls</span><span className="text-dim">teams</span><span className="text-dim">log</span></span>
       </div>
       <div className="p-4 font-pixel text-[16px] leading-none overflow-x-auto">
