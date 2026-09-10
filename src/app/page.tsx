@@ -7,7 +7,7 @@ import WaitlistForm from '@/components/WaitlistForm';
 const guarantees = [
   {
     term: 'Login by default',
-    body: 'Every app opens behind your company sign-in from its first deploy. No one can forget to add auth, because adding auth is not a step.',
+    body: 'Every app opens behind your company sign-in from its first deploy. Nothing is public by accident. No one can forget to add auth, because adding auth is not a step.',
   },
   {
     term: 'Team permissions',
@@ -68,7 +68,7 @@ export default function Home() {
               Wirl hosts the internal apps your team builds, by hand or with agents. Every one launches behind your company login, with team permissions and an audit log.
             </p>
             <p className="mt-4 text-lg md:text-xl leading-snug max-w-[34ch] text-ink/75">
-              Let everyone build. Keep track of what exists and who can open it.
+              Everyone can build. You keep the list, the login, and the log.
             </p>
             <div className="mt-9">
               <WaitlistForm tone="tape" id="waitlist-email-hero" />
@@ -113,6 +113,9 @@ export default function Home() {
           <h2 className={`text-4xl md:text-5xl ${h2} max-w-[22ch]`}>
             Auth, permissions, and logging, handled once for every app.
           </h2>
+          <p className="mt-6 text-lg md:text-xl text-dim leading-relaxed max-w-[58ch]">
+            Every internal tool built anywhere else needs someone to wire up a login, decide who can see it, and remember to log what happens inside. Most never get any of that. On Wirl those three things are set once for the workspace and every app inherits them. That is why the safe way is also the fast way: building a tool is just building the tool.
+          </p>
           <dl className="mt-14 divide-y-2 divide-ink border-y-2 border-ink">
             {guarantees.map((g) => (
               <div key={g.term} className="grid md:grid-cols-12 gap-3 md:gap-8 py-8">
@@ -156,17 +159,23 @@ export default function Home() {
 
       {/* Who it is for */}
       <section className="bg-paper border-t-2 border-ink">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 grid md:grid-cols-2 gap-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 grid md:grid-cols-3 gap-12">
           <div>
-            <h2 className={`text-3xl md:text-4xl ${h2}`}>If you run engineering</h2>
-            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[46ch]">
-              Your team is already shipping internal software. Wirl is a place to let them, where every app inherits your login and your permissions and you can see the whole list. You stop being the person who retrofits auth.
+            <h2 className={`text-3xl ${h2}`}>If you run engineering</h2>
+            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
+              Your team is already shipping internal software. Wirl is a place to let them, where every app inherits your login and your permissions and you can see the whole list. Fewer requests to support tools you didn&apos;t build, and you stop being the person who retrofits auth.
             </p>
           </div>
           <div>
-            <h2 className={`text-3xl md:text-4xl ${h2}`}>If you build the tools</h2>
-            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[46ch]">
-              Point your agent at Wirl and ask for what you need. It comes back deployed, behind the company login, visible to the team you named. No auth to wire up, no one to ask for a server.
+            <h2 className={`text-3xl ${h2}`}>If you&apos;re an engineer</h2>
+            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
+              Point your agent at Wirl and ask for what you need. It comes back deployed, behind the company login, visible to the team you named. No auth to wire up, no one to ask for a server, and it is still just code.
+            </p>
+          </div>
+          <div>
+            <h2 className={`text-3xl ${h2}`}>If you&apos;re not an engineer</h2>
+            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
+              Describe the tool you need to your agent. It arrives at a link that already works with your company login, and only the people you named can open it. No ticket to engineering, no waiting for a server.
             </p>
           </div>
         </div>
