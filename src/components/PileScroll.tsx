@@ -2,31 +2,46 @@
 
 import { useEffect, useRef } from 'react';
 
-// Sets --p from 0 to 1 over the first stretch of scrolling. The pile reads it
-// and tidies itself. Everything else is CSS.
-const DISTANCE = 520;
+// The panel pins once it is fully in view and stays put while the reader
+// scrolls through the outer wrapper's extra height. --p goes 0 to 1 over
+// that stretch: a short hold on the mess, the tidying, a short hold on the
+// result, then the page carries on. Everything visual is CSS reading --p.
+const STICKY_TOP = 72;
 
-export default function PileScroll({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+function smoothstep(t: number) {
+  return t * t * (3 - 2 * t);
+}
+
+export default function PileScroll({ children, panelClassName = '' }: { children: React.ReactNode; panelClassName?: string }) {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const outer = outerRef.current;
+    const panel = panelRef.current;
+    if (!outer || !panel) return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      el.style.setProperty('--p', '1');
+      outer.style.setProperty('--p', '1');
       return;
     }
 
     let raf = 0;
     let current = 0;
-    const target = () => Math.min(1, Math.max(0, window.scrollY / DISTANCE));
+
+    const target = () => {
+      const travel = outer.offsetHeight - panel.offsetHeight;
+      if (travel <= 0) return 1;
+      const raw = Math.min(1, Math.max(0, (STICKY_TOP - outer.getBoundingClientRect().top) / travel));
+      // Hold the mess for the first stretch, hold the result for the last.
+      return smoothstep(Math.min(1, Math.max(0, (raw - 0.14) / 0.66)));
+    };
 
     const tick = () => {
       const t = target();
-      current += (t - current) * 0.18;
+      current += (t - current) * 0.25;
       if (Math.abs(t - current) < 0.002) current = t;
-      el.style.setProperty('--p', current.toFixed(4));
+      outer.style.setProperty('--p', current.toFixed(4));
       if (current !== t) raf = requestAnimationFrame(tick);
     };
     const onScroll = () => {
@@ -36,15 +51,19 @@ export default function PileScroll({ children, className = '' }: { children: Rea
 
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 
   return (
-    <div ref={ref} className={className} style={{ '--p': 0 } as React.CSSProperties}>
-      {children}
+    <div ref={outerRef} className="pile-outer relative" style={{ '--p': 0 } as React.CSSProperties}>
+      <div ref={panelRef} className={`pile-panel sticky ${panelClassName}`} style={{ top: STICKY_TOP }}>
+        {children}
+      </div>
     </div>
   );
 }

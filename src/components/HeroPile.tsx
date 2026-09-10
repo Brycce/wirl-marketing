@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import PileScroll from './PileScroll';
 import { COMPANY } from './data';
 
@@ -8,12 +9,12 @@ import { COMPANY } from './data';
 // As the reader scrolls, --p goes from 0 to 1 and the pile tidies itself
 // into the workspace: cards straighten, line up, and every lock lights up.
 
-type Place = { x0: number; y0: number; r0: number; w0: number; x1: number; y1: number; w1?: number };
+type Place = { x0: number; y0: number; r0: number; w0: number; x1: number; y1: number; w1?: number; h1?: number };
 
 function vars(p: Place) {
   return {
     '--x0': p.x0, '--y0': p.y0, '--r0': p.r0, '--w0': p.w0,
-    '--x1': p.x1, '--y1': p.y1, '--w1': p.w1 ?? 340,
+    '--x1': p.x1, '--y1': p.y1, '--w1': p.w1 ?? 310, '--h1': p.h1 ?? 0,
   } as React.CSSProperties;
 }
 
@@ -39,8 +40,8 @@ function Pill({ children, tone = 'grey' }: { children: React.ReactNode; tone?: '
 function LoginBadge() {
   return (
     <span className="ml-auto relative inline-flex items-center text-[10px] whitespace-nowrap">
-      <span className="pile-fade-out inline-flex items-center gap-1 text-dim"><Lock /> {COMPANY}</span>
-      <span className="pile-fade-in absolute right-0 inline-flex items-center gap-1 text-ok bg-ok-bg rounded-full px-1.5"><Lock /> {COMPANY} login</span>
+      <span className="pile-badge-off inline-flex items-center gap-1 text-dim"><Lock /> {COMPANY}</span>
+      <span className="pile-badge-on absolute right-0 inline-flex items-center gap-1 text-ok bg-ok-bg rounded-full px-1.5"><Lock /> {COMPANY} login</span>
     </span>
   );
 }
@@ -50,7 +51,7 @@ function Card({
 }: { title: string; team: string; place: Place; bob: string; children: React.ReactNode }) {
   return (
     <div className="pile-card absolute left-0 top-0" style={vars(place)}>
-      <div className={`${bob} bg-white rounded-lg border border-rule shadow-card overflow-hidden`}>
+      <div className={`${bob} pile-inner bg-white rounded-lg border border-rule shadow-card overflow-hidden`}>
         <div className="flex items-center gap-2 px-3 py-2 border-b border-rule">
           <span className="text-[12px] font-bold whitespace-nowrap">{title}</span>
           <Pill>{team}</Pill>
@@ -67,32 +68,40 @@ function Row({ children }: { children: React.ReactNode }) {
 }
 
 // Tidy grid: four columns, two rows.
-const COL = [-90, 270, 630, 990];
-const ROW = [90, 310];
+const COL = [-50, 280, 610, 940];
+const ROW = [132, 350];
 
 export default function HeroPile() {
   return (
-    <PileScroll className="relative overflow-hidden rounded-3xl bg-panel h-[320px] sm:h-[440px] lg:h-[540px]">
+    <PileScroll panelClassName="relative overflow-hidden rounded-3xl bg-panel">
+      <div className="pile-tint absolute inset-0 rounded-3xl" aria-hidden="true" />
       <div className="absolute left-1/2 top-0 w-[1240px] h-[600px] -translate-x-1/2 origin-top scale-50 sm:scale-75 lg:scale-100" aria-hidden="true">
         <div className="pile-stage absolute inset-0">
 
           {/* The workspace. Appears as the pile tidies. */}
-          <div className="pile-fade-in absolute rounded-2xl border border-ink/20" style={{ left: -100, top: 30, width: 1440, height: 480 }}>
-            <div className="absolute left-4 top-3 inline-flex items-center gap-2 text-[11px] font-semibold">
-              <Lock /> {COMPANY} workspace <span className="text-dim font-normal">· 15 apps · 5 teams · everyone signed in</span>
+          {/* The workspace: Wirl's own window, which the pile becomes. */}
+          <div className="pile-fade-in absolute rounded-xl bg-white border border-rule shadow-card" style={{ left: -50, top: 40, width: 1340, height: 505 }}>
+            <div className="h-11 px-4 border-b border-rule flex items-center gap-5 text-[11.5px]">
+              <span className="inline-flex items-center gap-2 font-bold"><Image src="/logo.png" alt="" width={16} height={16} /> {COMPANY}</span>
+              <span className="inline-flex items-center gap-4 text-dim">
+                <span className="text-ink font-semibold border-b-2 border-ink -mb-[1px] pb-[13px] pt-[14px]">Apps <span className="text-dim font-normal">15</span></span>
+                <span>Teams <span className="font-normal">5</span></span>
+                <span>Audit log</span>
+              </span>
+              <span className="ml-auto inline-flex items-center gap-1.5 text-ok"><span className="w-1.5 h-1.5 rounded-full bg-ok" /> everyone signed in</span>
             </div>
           </div>
 
           {/* Customer credits */}
-          <Card title="customer-credits" team="Support" bob="bob-1" place={{ x0: 60, y0: 110, r0: -6, w0: 330, x1: COL[0], y1: ROW[0] }}>
-            <Row><span className="w-12 text-dim">#4821</span><span className="flex-1 truncate">Late delivery, goodwill</span><span>£120.00</span><Pill tone="ink">Approve</Pill></Row>
-            <Row><span className="w-12 text-dim">#4819</span><span className="flex-1 truncate">Double-billed in March</span><span>£39.50</span><Pill tone="ink">Approve</Pill></Row>
+          <Card title="customer-credits" team="Support" bob="bob-1" place={{ x0: 60, y0: 110, r0: -6, w0: 330, x1: COL[0], y1: ROW[0], h1: 164 }}>
+            <Row><span className="w-12 text-dim">#4821</span><span className="flex-1 truncate">Late delivery</span><span>£120.00</span><Pill tone="ink">Approve</Pill></Row>
+            <Row><span className="w-12 text-dim">#4819</span><span className="flex-1 truncate">Double-billed</span><span>£39.50</span><Pill tone="ink">Approve</Pill></Row>
             <Row><span className="w-12 text-dim">#4816</span><span className="flex-1 truncate">Outage credit</span><span>£210.00</span><Pill tone="ok">Approved</Pill></Row>
             <Row><span className="w-12 text-dim">#4811</span><span className="flex-1 truncate">Downgrade refund</span><span>£64.00</span><Pill tone="ok">Approved</Pill></Row>
           </Card>
 
           {/* Supplier payments */}
-          <Card title="supplier-payments" team="Finance" bob="bob-2" place={{ x0: 380, y0: 30, r0: 3, w0: 300, x1: COL[1], y1: ROW[0] }}>
+          <Card title="supplier-payments" team="Finance" bob="bob-2" place={{ x0: 380, y0: 30, r0: 3, w0: 300, x1: COL[1], y1: ROW[0], h1: 164 }}>
             <Row><span className="flex-1 truncate">Northwind Print</span><span className="text-dim">Fri</span><span>$8,400</span></Row>
             <Row><span className="flex-1 truncate">Lumen Studio</span><span className="text-dim">Fri</span><span>$2,150</span></Row>
             <Row><span className="flex-1 truncate">Haverford Freight</span><span className="text-dim">Mon</span><span>$12,900</span></Row>
@@ -103,7 +112,7 @@ export default function HeroPile() {
           </Card>
 
           {/* Candidate pipeline */}
-          <Card title="candidate-pipeline" team="People" bob="bob-3" place={{ x0: 680, y0: 90, r0: -3, w0: 370, x1: COL[2], y1: ROW[0] }}>
+          <Card title="candidate-pipeline" team="People" bob="bob-3" place={{ x0: 680, y0: 90, r0: -3, w0: 370, x1: COL[2], y1: ROW[0], h1: 164 }}>
             <div className="grid grid-cols-3 gap-2">
               {[
                 ['Phone screen', ['M. Okafor', 'J. Lindqvist']],
@@ -121,21 +130,21 @@ export default function HeroPile() {
           </Card>
 
           {/* Incident handover */}
-          <Card title="incident-handover" team="Engineering" bob="bob-4" place={{ x0: 1000, y0: 160, r0: 6, w0: 270, x1: COL[3], y1: ROW[0] }}>
+          <Card title="incident-handover" team="Engineering" bob="bob-4" place={{ x0: 1000, y0: 160, r0: 6, w0: 270, x1: COL[3], y1: ROW[0], h1: 164 }}>
             <div className="font-bold text-[12px] mb-1">Tue 9 Sep · handover</div>
             <p className="text-ink/70">Queue backlog cleared 03:10. Watch the EU region, latency spiked twice. Runbook link updated.</p>
             <div className="mt-2 flex gap-1"><Pill>p1 · 0</Pill><Pill>p2 · 2</Pill></div>
           </Card>
 
           {/* Spend requests */}
-          <Card title="spend-requests" team="Finance" bob="bob-3" place={{ x0: 20, y0: 350, r0: 4, w0: 260, x1: COL[0], y1: ROW[1] }}>
+          <Card title="spend-requests" team="Finance" bob="bob-3" place={{ x0: 20, y0: 350, r0: 4, w0: 260, x1: COL[0], y1: ROW[1], h1: 130 }}>
             <Row><span className="flex-1 truncate">Team offsite, catering</span><span>$1,240</span><Pill tone="ink">Approve</Pill></Row>
             <Row><span className="flex-1 truncate">Conference travel</span><span>$860</span><Pill tone="ok">Approved</Pill></Row>
           </Card>
 
           {/* Audit log */}
-          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 330, y0: 380, r0: 2, w0: 350, x1: COL[1], y1: ROW[1] })}>
-            <div className="bob-2 bg-white rounded-lg border border-rule shadow-card p-3 font-mono text-[10.5px] leading-[18px] whitespace-nowrap overflow-hidden">
+          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 330, y0: 380, r0: 2, w0: 350, x1: COL[1], y1: ROW[1], h1: 130 })}>
+            <div className="bob-2 pile-inner bg-white rounded-lg border border-rule shadow-card p-3 font-mono text-[10.5px] leading-[18px] whitespace-nowrap overflow-hidden">
               <div className="text-dim mb-1">audit log · live</div>
               <div><span className="text-dim">09:41:02</span> dana@harbor.co <span className="text-ok">opened</span> budget-lines</div>
               <div><span className="text-dim">09:41:09</span> claude <span className="text-ok">deployed</span> supplier-payments</div>
@@ -145,8 +154,8 @@ export default function HeroPile() {
           </div>
 
           {/* The agent's terminal */}
-          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 700, y0: 350, r0: -4, w0: 400, x1: COL[2], y1: ROW[1] })}>
-            <div className="bob-3 bg-ink text-white rounded-lg shadow-card p-3 font-mono text-[10.5px] leading-[18px] whitespace-nowrap overflow-hidden">
+          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 700, y0: 350, r0: -4, w0: 400, x1: COL[2], y1: ROW[1], h1: 130 })}>
+            <div className="bob-3 pile-inner bg-ink text-white rounded-lg shadow-card border border-white/10 p-3 font-mono text-[10.5px] leading-[18px] whitespace-nowrap overflow-hidden">
               <div><span className="text-white/50">› </span>Build a supplier payments tool for finance</div>
               <div className="mt-1"><span className="text-tape">created</span>   supplier-payments</div>
               <div><span className="text-tape">login</span>     {COMPANY}</div>
@@ -156,8 +165,8 @@ export default function HeroPile() {
           </div>
 
           {/* Sticky note */}
-          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 1040, y0: 330, r0: -7, w0: 200, x1: COL[3], y1: ROW[1], w1: 320 })}>
-            <div className="bob-1 bg-tape rounded-sm shadow-card p-4 display text-[17px] leading-snug" style={{ fontVariationSettings: '"opsz" 20, "SOFT" 60' }}>
+          <div className="pile-card absolute left-0 top-0" style={vars({ x0: 1040, y0: 330, r0: -7, w0: 200, x1: COL[3], y1: ROW[1], w1: 310, h1: 130 })}>
+            <div className="bob-1 pile-inner bg-tape rounded-sm shadow-card p-4 display text-[17px] leading-snug" style={{ fontVariationSettings: '"opsz" 20, "SOFT" 60' }}>
               <em>Who can open budget-lines?</em>
               <br />
               Finance. Only Finance.
@@ -165,12 +174,12 @@ export default function HeroPile() {
           </div>
 
           {/* Loose facts. They fade as the workspace takes over. */}
-          <div className="pile-fade-out absolute" style={{ left: 40, top: 30, transform: 'rotate(4deg)' }}>
+          <div className="pile-fade-out-fast absolute" style={{ left: 40, top: 30, transform: 'rotate(4deg)' }}>
             <div className="bob-4 bg-white rounded-full border border-rule shadow-card px-3 py-1.5 text-[11px] inline-flex items-center gap-1.5 whitespace-nowrap">
               <Lock /> 15 apps, all behind {COMPANY} login
             </div>
           </div>
-          <div className="pile-fade-out absolute" style={{ left: 1040, top: 20, transform: 'rotate(-5deg)' }}>
+          <div className="pile-fade-out-fast absolute" style={{ left: 1040, top: 20, transform: 'rotate(-5deg)' }}>
             <div className="bob-2 bg-white rounded-lg border border-rule shadow-card px-3 py-2 flex flex-wrap gap-1 w-[190px]">
               {['Support', 'Finance', 'Engineering', 'People', 'Ops'].map((t) => <Pill key={t}>{t}</Pill>)}
             </div>
