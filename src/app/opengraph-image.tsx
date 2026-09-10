@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Wirl – Email automation built for developers';
+export const alt = 'Wirl – The governed home for agent-built internal tools';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -57,7 +57,7 @@ export default async function Image() {
             lineHeight: 1.1,
           }}
         >
-          Email automation
+          Internal tools,
         </div>
         <div
           style={{
@@ -68,7 +68,7 @@ export default async function Image() {
             lineHeight: 1.1,
           }}
         >
-          built for developers
+          governed by default
         </div>
 
         {/* Subtitle */}
@@ -80,7 +80,7 @@ export default async function Image() {
             marginTop: 24,
           }}
         >
-          Track events. Trigger sequences. Send emails.
+          Where your agents deploy internal software.
         </div>
 
         {/* Pills */}
@@ -91,7 +91,7 @@ export default async function Image() {
             marginTop: 40,
           }}
         >
-          {['Event-driven', 'API-first', 'No drag & drop'].map((text) => (
+          {['Auth by default', 'Role-based access', 'Audit logs'].map((text) => (
             <div
               key={text}
               style={{

@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Wirl - Email Automation for Developers",
-  description: "Turn user actions into automated email sequences. One line of code.",
+  title: "Wirl - Deploy internal tools your agents build",
+  description: "Wirl is where coding agents deploy internal software. Auth, roles, and audit logs come with it.",
   metadataBase: new URL('https://wirl.dev'),
   openGraph: {
-    title: "Wirl – Email automation built for developers",
-    description: "Track events. Trigger sequences. Send emails. No drag & drop.",
+    title: "Wirl – The governed home for agent-built internal tools",
+    description: "Your agents build the internal tools. Wirl deploys them behind company auth, roles, and audit logs.",
     siteName: "Wirl",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wirl – Email automation built for developers",
-    description: "Track events. Trigger sequences. Send emails. No drag & drop.",
+    title: "Wirl – The governed home for agent-built internal tools",
+    description: "Your agents build the internal tools. Wirl deploys them behind company auth, roles, and audit logs.",
   },
 };
 
