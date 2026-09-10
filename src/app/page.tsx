@@ -131,7 +131,7 @@ export default function Home() {
       </section>
 
       <footer className={`${wrap} py-10 flex items-center justify-between font-pixel text-[16px] leading-none text-dim`}>
-        <span className="text-ink"><Wordmark size={1.4} /></span>
+        <span className="text-ink"><Wordmark size={2} /></span>
         <div className="flex gap-6">
           <Link href="/docs" className="hover:text-ink">Docs</Link>
           <a href="#waitlist" className="hover:text-ink">Waitlist</a>

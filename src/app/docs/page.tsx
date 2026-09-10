@@ -23,7 +23,7 @@ export default function Docs() {
         </Link>
       </main>
       <footer className="max-w-6xl mx-auto w-full px-6 py-10 flex items-center justify-between font-pixel text-[16px] leading-none text-dim">
-        <span className="text-ink"><Wordmark size={1.4} /></span>
+        <span className="text-ink"><Wordmark size={2} /></span>
         <Link href="/" className="hover:text-ink">Home</Link>
       </footer>
     </div>

@@ -5,7 +5,7 @@ export const alt = 'Wirl. Let your people build.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-const MARK = ["..........KKKK..........", ".........KK..KK.........", ".KK......KK..KK......KK.", ".KK......KK..KK......KK.", ".KK.......KKKK.......KK.", ".KK......KKKKKK......KK.", ".KK.....KKK..KKK.....KK.", ".KK....KKK....KKK....KK.", ".KK...KKK......KKK...KK.", ".KK..KKK........KKK..KK.", ".KKKKKK..........KKKKKK.", "..KKKK............KKKK.."];
+const MARK = ["...KKKKKKK..", ".KKK.....KK.", ".K........K.", "KK..KKKK..KK", "K...K..KK..K", "K...K...K..K", "KK..KK..K..K", ".KK....KK..K", "..KK..KK..KK", "...KKKK...K.", ".........KK."];
 
 function Mark({ px }: { px: number }) {
   return (
@@ -44,7 +44,7 @@ export default async function Image() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 22, marginBottom: 40 }}>
-          <Mark px={7} />
+          <Mark px={8} />
           <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1 }}>wirl</div>
         </div>
         <div style={{ fontSize: 88, lineHeight: 1, textAlign: 'center', fontWeight: 700 }}>Let your people build.</div>

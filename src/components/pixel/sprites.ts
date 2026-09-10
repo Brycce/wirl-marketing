@@ -1,20 +1,19 @@
 import type { SpriteMap } from './Sprite';
 
-// The mark: a w whose middle peak is a loop. Two-pixel strokes so it holds up small.
+// The mark: a little round swirl, one pixel thick, about two turns, tail at the bottom right.
 // This is the logo on this branch, and also what a "wirl" looks like in the scenes.
 export const SWIRL: SpriteMap = [
-  '..........KKKK..........',
-  '.........KK..KK.........',
-  '.KK......KK..KK......KK.',
-  '.KK......KK..KK......KK.',
-  '.KK.......KKKK.......KK.',
-  '.KK......KKKKKK......KK.',
-  '.KK.....KKK..KKK.....KK.',
-  '.KK....KKK....KKK....KK.',
-  '.KK...KKK......KKK...KK.',
-  '.KK..KKK........KKK..KK.',
-  '.KKKKKK..........KKKKKK.',
-  '..KKKK............KKKK..',
+  '...KKKKKKK..',
+  '.KKK.....KK.',
+  '.K........K.',
+  'KK..KKKK..KK',
+  'K...K..KK..K',
+  'K...K...K..K',
+  'KK..KK..K..K',
+  '.KK....KK..K',
+  '..KK..KK..KK',
+  '...KKKK...K.',
+  '.........KK.',
 ];
 
 // Someone at a desk, building. Shirt colour 'b' is swappable. Two screen
