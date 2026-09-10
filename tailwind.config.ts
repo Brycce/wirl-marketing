@@ -15,7 +15,7 @@ const config: Config = {
       colors: {
         ink: '#161616',
         paper: '#FBFBF9',
-        cobalt: '#2B38F5',
+        tape: '#FFE04A',
         rule: '#E4E4DE',
         dim: '#6B6B66',
       },

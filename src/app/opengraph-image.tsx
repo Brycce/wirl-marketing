@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Wirl. The tools your agents build, wirled into one place.';
+export const alt = 'Wirl. One place to ship every internal tool.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -14,7 +14,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: '#FBFBF9',
+          background: '#FFE04A',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -57,7 +57,7 @@ export default async function Image() {
             lineHeight: 1.1,
           }}
         >
-          The tools your agents build,
+          One place to ship
         </div>
         <div
           style={{
@@ -68,7 +68,7 @@ export default async function Image() {
             lineHeight: 1.1,
           }}
         >
-          wirled into one place.
+          every internal tool.
         </div>
 
         {/* Subtitle */}
@@ -76,11 +76,11 @@ export default async function Image() {
           style={{
             fontSize: 36,
             fontWeight: 700,
-            color: '#2B38F5',
+            color: '#161616',
             marginTop: 24,
           }}
         >
-          Behind your login. With roles and an audit log.
+          Login, permissions, and an audit log on every app.
         </div>
 
         {/* Pills */}
@@ -91,15 +91,15 @@ export default async function Image() {
             marginTop: 40,
           }}
         >
-          {['Login on every app', 'Roles set once', 'Audit log'].map((text) => (
+          {['Login by default', 'Team permissions', 'Audit log', 'One list'].map((text) => (
             <div
               key={text}
               style={{
-                background: '#EEEEE9',
+                background: '#161616',
                 padding: '18px 36px',
                 borderRadius: 100,
                 fontSize: 28,
-                color: '#161616',
+                color: '#FFE04A',
                 fontWeight: 700,
               }}
             >

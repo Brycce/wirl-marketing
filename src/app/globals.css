@@ -13,21 +13,45 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #2B38F5;
+  outline: 2px solid #161616;
   outline-offset: 3px;
 }
 
-/* One continuous stroke, drawn on when it enters view. */
+/* A stroke that draws itself on. Used for the check after joining. */
 .draw-line {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+  animation: draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
 }
 @keyframes draw {
   to { stroke-dashoffset: 0; }
 }
 
+/* The spiral in the hero turns slowly, always. */
+.turn {
+  animation: turn 120s linear infinite;
+}
+@keyframes turn {
+  to { transform: rotate(-360deg); }
+}
+
+/* The audit log in the product window streams upward. */
+.stream {
+  animation: stream 16s linear infinite;
+}
+@keyframes stream {
+  to { transform: translateY(-50%); }
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .draw-line { animation: none; stroke-dashoffset: 0; }
+  .turn, .stream, .blink { animation: none; }
 }
