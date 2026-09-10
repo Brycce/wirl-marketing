@@ -108,13 +108,30 @@ export default function Home() {
         </MessPills>
       </section>
 
-      {/* What Wirl gives you instead */}
-      <section className={`${wrap} pb-16 md:pb-24 text-center`}>
-        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08]">What Wirl gives you instead.</h2>
-        <p className="mt-4 text-[15px] md:text-base text-dim max-w-[54ch] mx-auto leading-relaxed">
-          Every app your team ships, in one list, behind one login. Every open, export, deploy, and denied request, written down.
-        </p>
-        <div className="mt-10 rounded-3xl bg-panel p-3 md:p-8 text-left">
+      {/* What Wirl is */}
+      <section className={`${wrap} pb-16 md:pb-24`}>
+        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">What Wirl gives you.</h2>
+        <dl className="mt-10 grid md:grid-cols-3 gap-8 md:gap-10">
+          <div>
+            <dt className="text-lg font-bold tracking-tight">What it is</dt>
+            <dd className="mt-2 text-[15px] text-dim leading-relaxed">
+              A secure place to run internal tools. You push an app, or your agent does, and it comes back at a URL behind your company login.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-lg font-bold tracking-tight">What you get</dt>
+            <dd className="mt-2 text-[15px] text-dim leading-relaxed">
+              One list of every internal tool, who can open each one, and a log of everything that happened inside. Login, permissions, and logging on every app, without anyone setting them up.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-lg font-bold tracking-tight">How it helps</dt>
+            <dd className="mt-2 text-[15px] text-dim leading-relaxed">
+              Anyone can ship a tool without asking. Engineering stops retrofitting auth onto things it didn&apos;t build. Security gets the list without chasing anyone for it.
+            </dd>
+          </div>
+        </dl>
+        <div className="mt-10 rounded-3xl bg-panel p-3 md:p-8">
           <ProductWindow />
         </div>
       </section>
