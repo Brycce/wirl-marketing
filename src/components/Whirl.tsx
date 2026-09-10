@@ -150,14 +150,14 @@ export default function Whirl() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between max-w-[560px] mx-auto mt-2 text-sm text-dim">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 max-w-[560px] mx-auto mt-2 text-sm text-dim">
         <span className="transition-opacity duration-500" style={{ opacity: done ? 1 : 0 }}>
           Twelve tools your team already shipped. One place.
         </span>
         <button
           type="button"
           onClick={() => setRun((n) => n + 1)}
-          className="underline underline-offset-4 decoration-rule hover:decoration-ink hover:text-ink transition-colors"
+          className="self-start whitespace-nowrap underline underline-offset-4 decoration-rule hover:decoration-ink hover:text-ink transition-colors"
         >
           Wirl it again
         </button>

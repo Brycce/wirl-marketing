@@ -51,9 +51,9 @@ export default function Home() {
           <Link href="/" className="text-ink" data-line-start>
             <Wordmark size={30} />
           </Link>
-          <div className="flex items-center gap-6 text-[15px]">
-            <Link href="/docs" className="text-dim hover:text-ink transition-colors">Docs</Link>
-            <a href="https://app.wirl.dev/login" className="text-dim hover:text-ink transition-colors">Log in</a>
+          <div className="flex items-center gap-4 sm:gap-6 text-[15px]">
+            <Link href="/docs" className="hidden sm:inline text-dim hover:text-ink transition-colors">Docs</Link>
+            <a href="https://app.wirl.dev/login" className="hidden sm:inline text-dim hover:text-ink transition-colors">Log in</a>
             <a href="#waitlist" className="bg-ink text-paper px-4 py-2 rounded-md font-semibold hover:bg-cobalt transition-colors">
               Join the waitlist
             </a>
