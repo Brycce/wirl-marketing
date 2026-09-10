@@ -9,8 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      colors: {
+        ink: '#161616',
+        paper: '#FBFBF9',
+        cobalt: '#2B38F5',
+        rule: '#E4E4DE',
+        dim: '#6B6B66',
       },
     },
   },

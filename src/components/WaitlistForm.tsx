@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 type State = 'idle' | 'submitting' | 'done' | 'error';
 
-export default function WaitlistForm({ id }: { id?: string }) {
+export default function WaitlistForm({ align = 'left' }: { align?: 'left' | 'center' }) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<State>('idle');
   const [message, setMessage] = useState('');
@@ -35,40 +35,44 @@ export default function WaitlistForm({ id }: { id?: string }) {
     }
   }
 
+  const alignClass = align === 'center' ? 'mx-auto text-center' : '';
+
   if (state === 'done') {
     return (
-      <div id={id} className="max-w-md mx-auto text-center">
-        <p className="text-gray-900 font-medium">You&apos;re on the list.</p>
-        <p className="text-sm text-gray-500 mt-1">We&apos;ll email you when Wirl opens up.</p>
+      <div className={`max-w-md ${alignClass}`}>
+        <p className="text-ink font-semibold text-lg">You&apos;re on the list.</p>
+        <p className="text-dim mt-1">We&apos;ll write when your workspace is ready.</p>
       </div>
     );
   }
 
   return (
-    <form id={id} onSubmit={onSubmit} className="max-w-md mx-auto">
-      <div className="flex flex-col sm:flex-row gap-3">
-        <label htmlFor="waitlist-email" className="sr-only">
+    <form onSubmit={onSubmit} className={`max-w-md ${alignClass}`}>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <label htmlFor={`waitlist-email-${align}`} className="sr-only">
           Work email
         </label>
         <input
-          id="waitlist-email"
+          id={`waitlist-email-${align}`}
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@company.com"
           disabled={state === 'submitting'}
-          className="flex-1 border border-gray-300 rounded-full px-5 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-gray-900 transition-colors disabled:opacity-60"
+          className="flex-1 min-w-0 border border-ink/30 bg-white rounded-md px-4 py-3 text-ink placeholder:text-dim/70 focus:border-ink transition-colors disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={state === 'submitting'}
-          className="bg-gray-900 text-white text-sm px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors disabled:opacity-60 whitespace-nowrap"
+          className="bg-cobalt text-white px-5 py-3 rounded-md font-semibold hover:bg-ink transition-colors disabled:opacity-60 whitespace-nowrap"
         >
-          {state === 'submitting' ? 'Joining…' : 'Join the waitlist'}
+          {state === 'submitting' ? 'Joining' : 'Join the waitlist'}
         </button>
       </div>
-      {state === 'error' && <p className="text-sm text-red-600 mt-3 text-center sm:text-left">{message}</p>}
+      <p className="text-sm mt-2 min-h-[1.25rem]" aria-live="polite">
+        {state === 'error' ? <span className="text-cobalt">{message}</span> : <span className="text-dim">Private beta. No spam, no drip campaign.</span>}
+      </p>
     </form>
   );
 }

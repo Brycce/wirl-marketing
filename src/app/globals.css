@@ -1,9 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  font-optical-sizing: auto;
+}
+
+:focus-visible {
+  outline: 2px solid #2B38F5;
+  outline-offset: 3px;
+}
+
+/* One continuous stroke, drawn on when it enters view. */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .draw-line { animation: none; stroke-dashoffset: 0; }
 }

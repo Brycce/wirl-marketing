@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Wirl – The governed home for agent-built internal tools';
+export const alt = 'Wirl. The tools your agents build, pulled into one place.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -14,7 +14,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: '#ffffff',
+          background: '#FBFBF9',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -50,25 +50,25 @@ export default async function Image() {
         {/* Tagline */}
         <div
           style={{
-            fontSize: 88,
+            fontSize: 72,
             fontWeight: 900,
             color: '#18181b',
             textAlign: 'center',
             lineHeight: 1.1,
           }}
         >
-          Internal tools,
+          The tools your agents build,
         </div>
         <div
           style={{
-            fontSize: 88,
+            fontSize: 72,
             fontWeight: 900,
             color: '#18181b',
             textAlign: 'center',
             lineHeight: 1.1,
           }}
         >
-          governed by default
+          pulled into one place.
         </div>
 
         {/* Subtitle */}
@@ -76,11 +76,11 @@ export default async function Image() {
           style={{
             fontSize: 36,
             fontWeight: 700,
-            color: '#71717a',
+            color: '#2B38F5',
             marginTop: 24,
           }}
         >
-          Where your agents deploy internal software.
+          Behind your login. With roles and an audit log.
         </div>
 
         {/* Pills */}
@@ -91,15 +91,15 @@ export default async function Image() {
             marginTop: 40,
           }}
         >
-          {['Auth by default', 'Role-based access', 'Audit logs'].map((text) => (
+          {['Login on every app', 'Roles set once', 'Audit log'].map((text) => (
             <div
               key={text}
               style={{
-                background: '#f4f4f5',
+                background: '#EEEEE9',
                 padding: '18px 36px',
                 borderRadius: 100,
                 fontSize: 28,
-                color: '#52525b',
+                color: '#161616',
                 fontWeight: 700,
               }}
             >
