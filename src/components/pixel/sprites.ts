@@ -212,6 +212,19 @@ export const CHECK: SpriteMap = [
   '..G....',
 ];
 
+// A plain app: a little window. Not a wirl yet. Title bar colour 'b' is swappable.
+export const APP: SpriteMap = [
+  'KKKKKKKKKKKK',
+  'KbbbbbbbbbbK',
+  'KKKKKKKKKKKK',
+  'KWWWWWWWWWWK',
+  'KWKKKKKWWWWK',
+  'KWWWWWWWWWWK',
+  'KWKKKKKKKWWK',
+  'KWWWWWWWWWWK',
+  'KKKKKKKKKKKK',
+];
+
 export const HEART: SpriteMap = [
   '.RR.RR.',
   'RRRRRRR',

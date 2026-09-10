@@ -1,6 +1,6 @@
 import Sprite from './Sprite';
 import {
-  SWIRL, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, PAGE, SIGN,
+  SWIRL, APP, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, PAGE, SIGN,
   LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, ARROW, CHECK, HEART,
 } from './sprites';
 
@@ -57,10 +57,10 @@ export function HeroScene() {
       <Desk x={300} y={186} shirt="R" hair="h" />
       <Desk x={580} y={186} shirt="P" />
       <Desk x={860} y={186} shirt="O" hair="h" />
-      <At x={44} y={120} className="bob-1"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={324} y={116} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={604} y={124} className="bob-3"><Sprite rows={SWIRL} scale={3} /></At>
-      <At x={884} y={118} className="bob-4"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={40} y={122} className="bob-1"><Sprite rows={APP} scale={3} /></At>
+      <At x={320} y={118} className="bob-2"><Sprite rows={APP} scale={3} swap={{ b: 'R' }} /></At>
+      <At x={600} y={126} className="bob-3"><Sprite rows={APP} scale={3} swap={{ b: 'P' }} /></At>
+      <At x={880} y={120} className="bob-4"><Sprite rows={APP} scale={3} swap={{ b: 'O' }} /></At>
       <Bubble x={120} y={70}>refunds thing, done</Bubble>
       <Bubble x={410} y={60}>shipping!!</Bubble>
       <Bubble x={690} y={76}>one more feature</Bubble>
@@ -76,23 +76,23 @@ export function MessScene() {
       <Ground y={250} />
 
       <At x={40} y={168}><Sprite rows={CLOUD} scale={5} /></At>
-      <At x={70} y={130} className="bob-1"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={70} y={132} className="bob-1"><Sprite rows={APP} scale={3} /></At>
       <At x={118} y={128}><Sprite rows={LOCK_OPEN} scale={3} /></At>
       <At x={150} y={150}><Sprite rows={SKULL} scale={3} /></At>
       <Label x={40} y={266}>someone&apos;s personal vercel</Label>
 
       <At x={330} y={210}><Sprite rows={LAPTOP} scale={5} /></At>
-      <At x={352} y={172} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={352} y={174} className="bob-2"><Sprite rows={APP} scale={3} swap={{ b: 'R' }} /></At>
       <At x={396} y={150} className="flicker"><Sprite rows={FLAME} scale={3} /></At>
       <Label x={330} y={266}>the intern&apos;s laptop</Label>
 
       <At x={600} y={185}><Sprite rows={PAGE} scale={5} /></At>
-      <At x={612} y={146} className="bob-3"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={612} y={148} className="bob-3"><Sprite rows={APP} scale={3} swap={{ b: 'P' }} /></At>
       <At x={668} y={150}><Sprite rows={LOCK_OPEN} scale={3} /></At>
       <Label x={590} y={266}>a password in a notion page</Label>
 
       <At x={880} y={200}><Sprite rows={SIGN} scale={5} /></At>
-      <At x={892} y={160} className="bob-4"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={892} y={162} className="bob-4"><Sprite rows={APP} scale={3} swap={{ b: 'O' }} /></At>
       <At x={946} y={150} className="flicker"><Sprite rows={WARN} scale={3} /></At>
       <Label x={870} y={266}>a public URL, by accident</Label>
     </Stage>
@@ -107,20 +107,25 @@ export function WirlScene() {
       <Ground y={290} />
 
       <At x={30} y={238} className="walk-1"><Sprite rows={ROBOT} scale={4} /></At>
-      <At x={38} y={196} className="walk-1"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={36} y={198} className="walk-1"><Sprite rows={APP} scale={3} /></At>
       <At x={120} y={238} className="walk-2"><Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} /></At>
-      <At x={128} y={196} className="walk-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={126} y={198} className="walk-2"><Sprite rows={APP} scale={3} swap={{ b: 'R' }} /></At>
       <Label x={30} y={302}>your agents</Label>
 
       <At x={300} y={236}><Sprite rows={ARROW} scale={5} /></At>
 
-      <At x={400} y={150}><Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} /></At>
-      <At x={470} y={178}><Sprite rows={SWIRL} scale={6} swap={{ K: 'k' }} /></At>
-      <At x={560} y={120}><Sprite rows={LOCK_CLOSED} scale={6} /></At>
-      <Label x={520} y={302}>wirl</Label>
+      <At x={380} y={150}><Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} /></At>
+      <At x={450} y={178}><Sprite rows={SWIRL} scale={6} swap={{ K: 'k' }} /></At>
+      <At x={540} y={120}><Sprite rows={LOCK_CLOSED} scale={6} /></At>
+      <Label x={510} y={302}>Wirl</Label>
 
-      <At x={760} y={110}>
-        <div className="px-window w-[320px] p-4">
+      <At x={640} y={232}><Sprite rows={ARROW} scale={4} /></At>
+      <At x={690} y={208} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={700} y={176}><Sprite rows={LOCK_CLOSED} scale={3} /></At>
+      <Label x={676} y={302}>a wirl</Label>
+
+      <At x={790} y={110}>
+        <div className="px-window w-[300px] p-4">
           <div className="font-pixel text-[20px] leading-none mb-3">governance policy</div>
           {policy.map((p) => (
             <div key={p} className="flex items-center gap-3 py-1.5 border-t-2 border-ink/15 font-pixel text-[17px] leading-none">
