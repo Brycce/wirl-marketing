@@ -1,10 +1,13 @@
 import Image from 'next/image';
-import { COMPANY, TEAMS, LOG } from './data';
+import PileScroll from './PileScroll';
+import { COMPANY } from './data';
 
-// The stage. A pile of internal tools on a table, each a small real-looking
-// app window with its team and the login it sits behind. As --p rises the
-// pile becomes the Wirl window. Then each chapter's overlay rises over the
-// grid: sign-in, teams, the audit log, the agent's terminal.
+// A pile of internal tools on a table. Each is a small, real-looking app
+// window with the team that can open it and the login it sits behind.
+// Also in the pile: the audit log, the agent's terminal, and one sticky note.
+//
+// As the reader scrolls, --p goes from 0 to 1 and the pile tidies itself
+// into the workspace: cards straighten, line up, and every lock lights up.
 
 type Place = { x0: number; y0: number; r0: number; w0: number; x1: number; y1: number; w1?: number; h1?: number };
 
@@ -31,7 +34,7 @@ function Pill({ children, tone = 'grey' }: { children: React.ReactNode; tone?: '
     bad: 'bg-bad-bg text-bad',
     ink: 'bg-ink text-white',
   }[tone];
-  return <span className={`inline-block rounded-full px-1.5 py-[1px] text-[10px] font-semibold leading-4 whitespace-nowrap ${t}`}>{children}</span>;
+  return <span className={`inline-block rounded-full px-1.5 py-[1px] text-[10px] font-semibold leading-4 ${t}`}>{children}</span>;
 }
 
 function LoginBadge() {
@@ -44,10 +47,10 @@ function LoginBadge() {
 }
 
 function Card({
-  title, team, place, bob, children, className = '',
-}: { title: string; team: string; place: Place; bob: string; children: React.ReactNode; className?: string }) {
+  title, team, place, bob, children,
+}: { title: string; team: string; place: Place; bob: string; children: React.ReactNode }) {
   return (
-    <div className={`pile-card absolute left-0 top-0 ${className}`} style={vars(place)}>
+    <div className="pile-card absolute left-0 top-0" style={vars(place)}>
       <div className={`${bob} pile-inner bg-white rounded-lg border border-rule shadow-card overflow-hidden`}>
         <div className="flex items-center gap-2 px-3 py-2 border-b border-rule">
           <span className="text-[12px] font-bold whitespace-nowrap">{title}</span>
@@ -64,25 +67,26 @@ function Row({ children }: { children: React.ReactNode }) {
   return <div className="flex items-center gap-2 py-1 border-b border-rule last:border-0">{children}</div>;
 }
 
-// Tidy grid: four columns, two rows, inside the window.
+// Tidy grid: four columns, two rows.
 const COL = [-50, 280, 610, 940];
 const ROW = [132, 350];
 
-export default function StoryStage() {
+export default function HeroPile() {
   return (
-    <>
+    <PileScroll panelClassName="relative overflow-hidden rounded-3xl bg-panel">
       <div className="pile-tint absolute inset-0 rounded-3xl" aria-hidden="true" />
       <div className="absolute left-1/2 top-0 w-[1240px] h-[600px] -translate-x-1/2 origin-top scale-50 sm:scale-75 lg:scale-100" aria-hidden="true">
         <div className="pile-stage absolute inset-0">
 
+          {/* The workspace. Appears as the pile tidies. */}
           {/* The workspace: Wirl's own window, which the pile becomes. */}
           <div className="pile-fade-in absolute rounded-xl bg-white border border-rule shadow-card" style={{ left: -50, top: 40, width: 1340, height: 505 }}>
             <div className="h-11 px-4 border-b border-rule flex items-center gap-5 text-[11.5px]">
               <span className="inline-flex items-center gap-2 font-bold"><Image src="/logo.png" alt="" width={16} height={16} /> {COMPANY}</span>
-              <span className="inline-flex items-center gap-4 text-dim h-full">
-                <span className="relative h-full inline-flex items-center">Apps <span className="ml-1">15</span><span className="tab-apps absolute left-0 right-0 bottom-0 h-[2px] bg-ink" /></span>
-                <span className="relative h-full inline-flex items-center">Teams <span className="ml-1">5</span><span className="tab-teams absolute left-0 right-0 bottom-0 h-[2px] bg-ink" /></span>
-                <span className="relative h-full inline-flex items-center">Audit log<span className="tab-audit absolute left-0 right-0 bottom-0 h-[2px] bg-ink" /></span>
+              <span className="inline-flex items-center gap-4 text-dim">
+                <span className="text-ink font-semibold border-b-2 border-ink -mb-[1px] pb-[13px] pt-[14px]">Apps <span className="text-dim font-normal">15</span></span>
+                <span>Teams <span className="font-normal">5</span></span>
+                <span>Audit log</span>
               </span>
               <span className="ml-auto inline-flex items-center gap-1.5 text-ok"><span className="w-1.5 h-1.5 rounded-full bg-ok" /> everyone signed in</span>
             </div>
@@ -96,16 +100,14 @@ export default function StoryStage() {
             <Row><span className="w-12 text-dim">#4811</span><span className="flex-1 truncate">Downgrade refund</span><span>£64.00</span><Pill tone="ok">Approved</Pill></Row>
           </Card>
 
-          {/* Supplier payments: the one the agent builds in the last chapter */}
-          <Card title="supplier-payments" team="Finance" bob="bob-2" className="keep-bright" place={{ x0: 380, y0: 30, r0: 3, w0: 300, x1: COL[1], y1: ROW[0], h1: 164 }}>
-            <div className="ring-5 rounded-md -m-1 p-1">
-              <Row><span className="flex-1 truncate">Northwind Print</span><span className="text-dim">Fri</span><span>$8,400</span></Row>
-              <Row><span className="flex-1 truncate">Lumen Studio</span><span className="text-dim">Fri</span><span>$2,150</span></Row>
-              <Row><span className="flex-1 truncate">Haverford Freight</span><span className="text-dim">Mon</span><span>$12,900</span></Row>
-              <div className="mt-2 flex items-center justify-between text-[10px] text-dim">
-                <span className="truncate">deployed 2 min ago by claude</span>
-                <Pill tone="ink">Run payments</Pill>
-              </div>
+          {/* Supplier payments */}
+          <Card title="supplier-payments" team="Finance" bob="bob-2" place={{ x0: 380, y0: 30, r0: 3, w0: 300, x1: COL[1], y1: ROW[0], h1: 164 }}>
+            <Row><span className="flex-1 truncate">Northwind Print</span><span className="text-dim">Fri</span><span>$8,400</span></Row>
+            <Row><span className="flex-1 truncate">Lumen Studio</span><span className="text-dim">Fri</span><span>$2,150</span></Row>
+            <Row><span className="flex-1 truncate">Haverford Freight</span><span className="text-dim">Mon</span><span>$12,900</span></Row>
+            <div className="mt-2 flex items-center justify-between text-[10px] text-dim">
+              <span className="truncate">deployed 2 min ago by claude</span>
+              <Pill tone="ink">Run payments</Pill>
             </div>
           </Card>
 
@@ -151,7 +153,7 @@ export default function StoryStage() {
             </div>
           </div>
 
-          {/* The agent's terminal, small */}
+          {/* The agent's terminal */}
           <div className="pile-card absolute left-0 top-0" style={vars({ x0: 700, y0: 350, r0: -4, w0: 400, x1: COL[2], y1: ROW[1], h1: 130 })}>
             <div className="bob-3 pile-inner bg-ink text-white rounded-lg shadow-card border border-white/10 p-3 font-mono text-[10.5px] leading-[18px] whitespace-nowrap overflow-hidden">
               <div><span className="text-white/50">› </span>Build a supplier payments tool for finance</div>
@@ -171,7 +173,7 @@ export default function StoryStage() {
             </div>
           </div>
 
-          {/* Loose facts. They leave as the workspace takes over. */}
+          {/* Loose facts. They fade as the workspace takes over. */}
           <div className="pile-fade-out-fast absolute" style={{ left: 40, top: 30, transform: 'rotate(4deg)' }}>
             <div className="bob-4 bg-white rounded-full border border-rule shadow-card px-3 py-1.5 text-[11px] inline-flex items-center gap-1.5 whitespace-nowrap">
               <Lock /> 15 apps, all behind {COMPANY} login
@@ -182,66 +184,8 @@ export default function StoryStage() {
               {['Support', 'Finance', 'Engineering', 'People', 'Ops'].map((t) => <Pill key={t}>{t}</Pill>)}
             </div>
           </div>
-
-          {/* Chapter 3: sign in */}
-          <div className="ov ov-2 absolute" style={{ left: 450, top: 200, width: 340 }}>
-            <div className="bg-white rounded-xl border border-rule shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] p-6 text-center">
-              <Image src="/logo.png" alt="" width={26} height={26} className="mx-auto" />
-              <div className="mt-3 text-[13px] font-bold">customer-credits</div>
-              <div className="text-[11px] text-dim mt-0.5">Sign in to continue</div>
-              <div className="mt-4 bg-ink text-white rounded-md py-2 text-[12px] font-semibold inline-flex items-center justify-center gap-2 w-full"><Lock /> Continue with {COMPANY}</div>
-              <div className="mt-3 text-[10.5px] text-dim">Not public. Never was.</div>
-            </div>
-          </div>
-
-          {/* Chapter 4: teams */}
-          <div className="ov ov-3 absolute" style={{ left: 240, top: 120, width: 760 }}>
-            <div className="bg-white rounded-xl border border-rule shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] p-5 text-[11.5px]">
-              <div className="text-dim mb-3">Teams · who can open what</div>
-              {TEAMS.map(([team, apps]) => (
-                <div key={team} className="flex items-center gap-3 py-2 border-t border-rule">
-                  <span className="w-24 font-bold">{team}</span>
-                  <span className="flex flex-wrap gap-1.5">{apps.map((a) => <Pill key={a} tone="ok">{a}</Pill>)}</span>
-                </div>
-              ))}
-              <div className="mt-3 flex items-center gap-3 rounded-md bg-bad-bg text-bad px-3 py-2 font-mono text-[11px]">
-                <span className="opacity-70">09:42:05</span> priya@harbor.co tried nda-lookup <span className="font-bold">· denied</span> <span className="opacity-70">· not in Legal</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Chapter 5: audit log, full */}
-          <div className="ov ov-4 absolute" style={{ left: 170, top: 110, width: 900 }}>
-            <div className="bg-white rounded-xl border border-rule shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] p-5 font-mono text-[11.5px] leading-[22px]">
-              <div className="text-dim mb-2">audit log · live · {COMPANY}</div>
-              <div className="relative h-[264px] overflow-hidden">
-                <div className="stream">
-                  {[...LOG, ...LOG].map((row, i) => (
-                    <div key={i} className="flex gap-3 whitespace-nowrap">
-                      <span className="text-dim">{row[0]}</span>
-                      <span className="w-36 truncate">{row[1]}</span>
-                      <span className={`w-16 ${row[2] === 'denied' || row[2] === 'revoked' ? 'text-bad' : 'text-ok'}`}>{row[2]}</span>
-                      <span className="text-dim truncate">{row[3]}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
-              </div>
-            </div>
-          </div>
-
-          {/* Chapter 6: the agent */}
-          <div className="ov ov-5 absolute" style={{ left: 240, top: 318, width: 760 }}>
-            <div className="bg-ink text-white rounded-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] p-5 font-mono text-[12px] leading-[22px]">
-              <div className="whitespace-nowrap"><span className="text-white/50">› </span><span className="typed inline-block align-top">Build a supplier payments tool for finance and deploy it</span></div>
-              <div className="mt-2 line-1"><span className="text-tape">created</span>   supplier-payments</div>
-              <div className="line-2"><span className="text-tape">login</span>     {COMPANY} · nothing public</div>
-              <div className="line-3"><span className="text-tape">access</span>    Finance, Ops</div>
-              <div className="line-4 flex items-center gap-3"><span><span className="text-tape">live</span>      supplier-payments.harbor.wirl.app</span><span className="live-chip inline-flex items-center gap-1.5 rounded-full bg-ok-bg text-ok px-2 text-[11px] leading-5"><span className="w-1.5 h-1.5 rounded-full bg-ok" /> 47s after you asked</span></div>
-            </div>
-          </div>
         </div>
       </div>
-    </>
+    </PileScroll>
   );
 }

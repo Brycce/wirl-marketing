@@ -33,11 +33,13 @@ body {
 }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
-/* The story stage. The block pins; --p and friends come from Story.tsx. */
-.story { --panel-h: 320px; }
-@media (min-width: 640px) { .story { --panel-h: 440px; } }
-@media (min-width: 1024px) { .story { --panel-h: 540px; } }
+/* The hero pile. The outer wrapper is taller than the panel; the panel pins
+   inside it and --p runs 0 to 1 while the reader scrolls through the extra
+   height. Cards straighten, line up, and stop breathing as it rises. */
+.pile-outer { --panel-h: 320px; --travel: 300px; height: calc(var(--panel-h) + var(--travel)); }
 .pile-panel { height: var(--panel-h); }
+@media (min-width: 640px) { .pile-outer { --panel-h: 440px; --travel: 380px; } }
+@media (min-width: 1024px) { .pile-outer { --panel-h: 540px; --travel: 460px; } }
 
 .pile-stage {
   transform: perspective(1800px) rotateX(calc(14deg * (1 - var(--p, 0)))) scale(calc(1 - 0.1 * var(--p, 0)));
@@ -51,9 +53,7 @@ body {
       calc((var(--y0) + (var(--y1) - var(--y0)) * var(--p, 0)) * 1px)
     )
     rotate(calc(var(--r0) * (1 - var(--p, 0)) * 1deg));
-  opacity: calc(1 - 0.65 * var(--ov, 0) - 0.35 * var(--ov5, 0));
 }
-.pile-card.keep-bright { opacity: calc(1 - 0.65 * var(--ov, 0)); }
 .pile-fade-out { opacity: calc(1 - var(--p, 0)); }
 .pile-fade-out-fast { opacity: clamp(0, 1 - var(--p, 0) * 3, 1); }
 .pile-fade-in { opacity: var(--p, 0); }
@@ -67,32 +67,6 @@ body {
 
 /* The ground cools to a faint mint as the mess becomes the workspace. */
 .pile-tint { opacity: var(--p, 0); background: #E9F1EA; }
-
-/* Chapter overlays rise over the grid and leave as the next begins. */
-.ov { pointer-events: none; }
-.ov-2 { opacity: var(--b2, 0); transform: translateY(calc((1 - var(--b2, 0)) * 18px)); }
-.ov-3 { opacity: var(--b3, 0); transform: translateY(calc((1 - var(--b3, 0)) * 18px)); }
-.ov-4 { opacity: var(--b4, 0); transform: translateY(calc((1 - var(--b4, 0)) * 18px)); }
-.ov-5 { opacity: var(--b5, 0); transform: translateY(calc((1 - var(--b5, 0)) * 18px)); }
-
-/* Window tabs follow the chapter. */
-.tab-apps { opacity: calc(1 - max(var(--b3, 0), var(--b4, 0))); }
-.tab-teams { opacity: var(--b3, 0); }
-.tab-audit { opacity: var(--b4, 0); }
-
-/* The agent's terminal: the request types itself, the results land one by one. */
-.typed { clip-path: inset(0 calc((1 - clamp(0, (var(--p5, 0) - 0.5) * 4, 1)) * 100%) 0 0); }
-.line-1 { opacity: clamp(0, (var(--p5, 0) - 0.76) * 20, 1); }
-.line-2 { opacity: clamp(0, (var(--p5, 0) - 0.8) * 20, 1); }
-.line-3 { opacity: clamp(0, (var(--p5, 0) - 0.84) * 20, 1); }
-.line-4 { opacity: clamp(0, (var(--p5, 0) - 0.88) * 20, 1); }
-.live-chip { opacity: clamp(0, (var(--p5, 0) - 0.93) * 20, 1); }
-.ring-5 { box-shadow: 0 0 0 calc(clamp(0, (var(--p5, 0) - 0.93) * 20, 1) * 2.5px) #146C3A; }
-
-/* Captions under the stage, one per chapter. */
-.cap { opacity: 0; transition: opacity 0.35s ease; }
-.story[data-chapter="0"] .cap-0, .story[data-chapter="1"] .cap-1, .story[data-chapter="2"] .cap-2,
-.story[data-chapter="3"] .cap-3, .story[data-chapter="4"] .cap-4, .story[data-chapter="5"] .cap-5 { opacity: 1; }
 
 .bob-1 { animation: bob 7s ease-in-out infinite; }
 .bob-2 { animation: bob 8.5s ease-in-out infinite 0.8s; }
