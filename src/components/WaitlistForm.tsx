@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Sprite from './pixel/Sprite';
+import { CHECK } from './pixel/sprites';
 
 type State = 'idle' | 'submitting' | 'done' | 'error';
 
@@ -32,25 +34,21 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
     }
   }
 
-  const align = center ? 'mx-auto text-center' : '';
-
   if (state === 'done') {
     return (
       <div className={`max-w-md flex items-start gap-3 ${center ? 'mx-auto justify-center' : ''}`}>
-        <svg viewBox="0 0 40 32" className="w-8 h-6 shrink-0 mt-0.5" fill="none" aria-hidden="true">
-          <path d="M 4 18 C 10 22, 14 28, 16 28 C 20 26, 28 8, 37 4" stroke="#161616" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" pathLength={1} className="draw-line" />
-        </svg>
+        <Sprite rows={CHECK} scale={4} className="shrink-0 mt-1" />
         <div className="text-left">
-          <p className="font-bold">You&apos;re on the list.</p>
-          <p className="text-dim text-sm mt-0.5">We&apos;ll write when your workspace is ready.</p>
+          <p className="font-pixel text-xl leading-none">You&apos;re on the list.</p>
+          <p className="text-dim text-sm mt-1.5">We&apos;ll write when your workspace is ready.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className={`max-w-md ${align}`}>
-      <div className="flex flex-col sm:flex-row gap-2">
+    <form onSubmit={onSubmit} className={`max-w-md ${center ? 'mx-auto text-center' : ''}`}>
+      <div className="flex flex-col sm:flex-row gap-3">
         <label htmlFor={id} className="sr-only">Work email</label>
         <input
           id={id}
@@ -60,18 +58,18 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@company.com"
           disabled={state === 'submitting'}
-          className="flex-1 min-w-0 rounded-lg border border-rule bg-white px-4 py-2.5 text-[15px] placeholder:text-dim/70 focus:border-ink transition-colors disabled:opacity-60"
+          className="px-input flex-1 min-w-0 px-4 py-2.5 text-[15px] placeholder:text-dim/70 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={state === 'submitting'}
-          className="bg-ink text-white px-5 py-2.5 rounded-lg text-[15px] font-semibold hover:bg-black transition-colors disabled:opacity-60 whitespace-nowrap"
+          className="px-btn px-5 py-2.5 font-pixel text-[18px] leading-none disabled:opacity-60 whitespace-nowrap"
         >
           {state === 'submitting' ? 'Joining' : 'Join the waitlist'}
         </button>
       </div>
-      <p className="text-[13px] text-dim mt-2 min-h-[1.25rem]" aria-live="polite">
-        {state === 'error' ? <span className="text-bad">{message}</span> : 'Private beta. No spam, no drip campaign.'}
+      <p className="text-[13px] text-dim mt-3 min-h-[1.25rem]" aria-live="polite">
+        {state === 'error' ? <span className="text-red">{message}</span> : 'Private beta. No spam, no drip campaign.'}
       </p>
     </form>
   );

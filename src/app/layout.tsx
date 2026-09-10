@@ -3,18 +3,18 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Wirl. Let your people build.",
-  description: "A secure place to run the internal tools your team makes. Anyone can ship. Every app lands behind your company login, with team permissions and an audit log.",
+  description: "Wirl is where your team ships internal tools. Every app becomes a wirl: a URL behind your company login, with a team on it and a record of what happens inside.",
   metadataBase: new URL('https://wirl.dev'),
   openGraph: {
     title: "Let your people build.",
-    description: "A secure place to run the internal tools your team makes. Anyone can ship. Every app lands behind your company login, with team permissions and an audit log.",
+    description: "Wirl is where your team ships internal tools. Every app becomes a wirl: a URL behind your company login, with a team on it and a record of what happens inside.",
     siteName: "Wirl",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Let your people build.",
-    description: "A secure place to run the internal tools your team makes. Anyone can ship. Every app lands behind your company login, with team permissions and an audit log.",
+    description: "Wirl is where your team ships internal tools. Every app becomes a wirl: a URL behind your company login, with a team on it and a record of what happens inside.",
   },
 };
 

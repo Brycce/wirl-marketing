@@ -1,102 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0..100,0..1&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
+body { font-optical-sizing: auto; }
 
-body {
-  font-optical-sizing: auto;
-}
+:focus-visible { outline: 3px solid #1F2A1F; outline-offset: 3px; }
 
-/* Display type: Fraunces at large optical size, a little soft, a little wonky. */
-.display {
-  font-family: Fraunces, Georgia, serif;
-  font-weight: 400;
-  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
-  letter-spacing: -0.02em;
-}
+/* Pixel UI: hard edges, hard shadows, no radii. */
+.px-window { background: #FBF7E9; border: 3px solid #1F2A1F; box-shadow: 6px 6px 0 #1F2A1F; }
+.px-window-green { background: #0F380F; color: #9BBC0F; border: 3px solid #1F2A1F; box-shadow: 6px 6px 0 #8BAC0F; }
+.px-btn { background: #1F2A1F; color: #FBF7E9; border: 3px solid #1F2A1F; box-shadow: 4px 4px 0 #8BAC0F; transition: transform 80ms, box-shadow 80ms; }
+.px-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #8BAC0F; }
+.px-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #8BAC0F; }
+.px-btn-sun { background: #F2C14E; color: #1F2A1F; box-shadow: 4px 4px 0 #1F2A1F; }
+.px-btn-sun:hover { box-shadow: 2px 2px 0 #1F2A1F; }
+.px-input { background: #fff; border: 3px solid #1F2A1F; }
+.px-input:focus { outline: none; box-shadow: 4px 4px 0 #8BAC0F; }
+.px-tag { border: 2px solid #1F2A1F; box-shadow: 2px 2px 0 #1F2A1F; }
 
-:focus-visible {
-  outline: 2px solid #161616;
-  outline-offset: 3px;
-}
+/* Scanlines on green screens. */
+.scanlines { background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px); }
 
-/* A stroke that draws itself on. Used for the check after joining. */
-.draw-line {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
-}
-@keyframes draw { to { stroke-dashoffset: 0; } }
+/* Sprites float, walk, and blink. */
+.bob-1 { animation: bob 2.4s steps(4) infinite; }
+.bob-2 { animation: bob 2.4s steps(4) infinite 0.6s; }
+.bob-3 { animation: bob 2.4s steps(4) infinite 1.2s; }
+.bob-4 { animation: bob 2.4s steps(4) infinite 1.8s; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-/* The hero pile. The outer wrapper is taller than the panel; the panel pins
-   inside it and --p runs 0 to 1 while the reader scrolls through the extra
-   height. Cards straighten, line up, and stop breathing as it rises. */
-.pile-outer { --panel-h: 320px; --travel: 300px; height: calc(var(--panel-h) + var(--travel)); }
-.pile-panel { height: var(--panel-h); }
-@media (min-width: 640px) { .pile-outer { --panel-h: 440px; --travel: 380px; } }
-@media (min-width: 1024px) { .pile-outer { --panel-h: 540px; --travel: 460px; } }
+.walk-1 { animation: walk 6s steps(24) infinite; }
+.walk-2 { animation: walk 6s steps(24) infinite 3s; }
+@keyframes walk { from { transform: translateX(0); } to { transform: translateX(120px); } }
 
-.pile-stage {
-  transform: perspective(1800px) rotateX(calc(14deg * (1 - var(--p, 0)))) scale(calc(1 - 0.1 * var(--p, 0)));
-  transform-origin: 50% 0;
-}
-.pile-card {
-  width: calc((var(--w0) + (var(--w1) - var(--w0)) * var(--p, 0)) * 1px);
-  transform:
-    translate(
-      calc((var(--x0) + (var(--x1) - var(--x0)) * var(--p, 0)) * 1px),
-      calc((var(--y0) + (var(--y1) - var(--y0)) * var(--p, 0)) * 1px)
-    )
-    rotate(calc(var(--r0) * (1 - var(--p, 0)) * 1deg));
-}
-.pile-fade-out { opacity: calc(1 - var(--p, 0)); }
-.pile-fade-out-fast { opacity: clamp(0, 1 - var(--p, 0) * 3, 1); }
-.pile-fade-in { opacity: var(--p, 0); }
-
-/* The badge on every card: a grey mention of the domain becomes a green login. Quick switch, no ghosting. */
-.pile-badge-off { opacity: clamp(0, 1 - (var(--p, 0) - 0.3) * 6, 1); }
-.pile-badge-on { opacity: clamp(0, (var(--p, 0) - 0.4) * 6, 1); }
-
-/* Cards grow to a shared row height as they line up. */
-.pile-inner { min-height: calc(var(--p, 0) * var(--h1, 0) * 1px); }
-
-/* The ground cools to a faint mint as the mess becomes the workspace. */
-.pile-tint { opacity: var(--p, 0); background: #E9F1EA; }
-
-.bob-1 { animation: bob 7s ease-in-out infinite; }
-.bob-2 { animation: bob 8.5s ease-in-out infinite 0.8s; }
-.bob-3 { animation: bob 6.5s ease-in-out infinite 1.6s; }
-.bob-4 { animation: bob 9.5s ease-in-out infinite 0.3s; }
-@keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(calc(-7px * (1 - var(--p, 0)))); }
-}
-
-/* The mess drifts. Slowly, in small circles. */
-.drift-1 { animation: drift 14s ease-in-out infinite; }
-.drift-2 { animation: drift 17s ease-in-out infinite 2s reverse; }
-.drift-3 { animation: drift 20s ease-in-out infinite 4s; }
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(10px, -8px); }
-  50% { transform: translate(-6px, 10px); }
-  75% { transform: translate(-12px, -4px); }
-}
-
-/* The audit log streams upward. */
-.stream { animation: stream 16s linear infinite; }
-@keyframes stream { to { transform: translateY(-50%); } }
+.frame-a { animation: frameA 1.6s steps(1) infinite; }
+.frame-b { animation: frameB 1.6s steps(1) infinite; }
+@keyframes frameA { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes frameB { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
 
 .blink { animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
+.flicker { animation: flicker 0.9s steps(2) infinite; }
+@keyframes flicker { 50% { opacity: 0.55; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .draw-line { animation: none; stroke-dashoffset: 0; }
-  .bob-1, .bob-2, .bob-3, .bob-4, .drift-1, .drift-2, .drift-3, .stream, .blink { animation: none; }
+  .bob-1, .bob-2, .bob-3, .bob-4, .walk-1, .walk-2, .frame-a, .frame-b, .blink, .flicker { animation: none; }
+  .frame-b { opacity: 0; }
 }
+
+/* Scenes are drawn on an 1100px stage and scaled down on smaller screens. */
+.stage { --s: 0.34; width: calc(1100px * var(--s)); height: calc(var(--h) * var(--s)); margin: 0 auto; position: relative; }
+.stage > .stage-inner { position: absolute; left: 0; top: 0; width: 1100px; height: var(--h); transform: scale(var(--s)); transform-origin: top left; }
+@media (min-width: 640px) { .stage { --s: 0.56; } }
+@media (min-width: 900px) { .stage { --s: 0.78; } }
+@media (min-width: 1180px) { .stage { --s: 1; } }

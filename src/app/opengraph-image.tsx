@@ -6,15 +6,15 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function Image() {
-  const fraunces = await fetch(
-    'https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58njr1a03gg7S2nfgRYIctxujDg.ttf'
+  const pixelify = await fetch(
+    'https://fonts.gstatic.com/s/pixelifysans/v3/CHy2V-3HFUT7aC4iv1TxGDR9DHEserHN25py2TQO131Y.ttf'
   ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
     (
       <div
         style={{
-          background: '#ffffff',
+          background: '#F6F1DF',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -22,27 +22,24 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           padding: '60px',
-          fontFamily: 'Fraunces',
-          color: '#161616',
+          fontFamily: 'Pixelify',
+          color: '#1F2A1F',
+          border: '12px solid #1F2A1F',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://wirl.dev/logo.png" alt="" width={96} height={96} style={{ marginBottom: 36 }} />
-        <div style={{ fontSize: 76, lineHeight: 1.05, textAlign: 'center', letterSpacing: '-1.5px', maxWidth: 800 }}>
-          Let your people build.
+        <div style={{ fontSize: 96, lineHeight: 1, textAlign: 'center', fontWeight: 700 }}>Let your people build.</div>
+        <div style={{ fontSize: 34, color: '#6E6A58', marginTop: 28, textAlign: 'center' }}>
+          A secure place for the internal tools your team makes. Governance built in.
         </div>
-        <div style={{ fontSize: 30, color: '#6B6B66', marginTop: 28, textAlign: 'center' }}>
-          A secure place for internal tools, governance built in.
-        </div>
-        <div style={{ display: 'flex', gap: 14, marginTop: 44 }}>
-          {['Anyone can ship', 'Login on every app', 'Team permissions', 'Audit log'].map((text) => (
-            <div key={text} style={{ background: '#F4F4F1', padding: '12px 24px', borderRadius: 100, fontSize: 24 }}>
+        <div style={{ display: 'flex', gap: 16, marginTop: 48 }}>
+          {['anyone can ship', 'login on every wirl', 'team permissions', 'audit log'].map((text) => (
+            <div key={text} style={{ background: '#FBF7E9', border: '4px solid #1F2A1F', boxShadow: '6px 6px 0 #8BAC0F', padding: '10px 22px', fontSize: 28 }}>
               {text}
             </div>
           ))}
         </div>
       </div>
     ),
-    { ...size, fonts: [{ name: 'Fraunces', data: fraunces, weight: 400, style: 'normal' }] }
+    { ...size, fonts: [{ name: 'Pixelify', data: pixelify, weight: 700, style: 'normal' }] }
   );
 }
