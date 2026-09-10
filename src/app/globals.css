@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0..100,0..1&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +12,14 @@ body {
   font-optical-sizing: auto;
 }
 
+/* Display type: Fraunces at large optical size, a little soft, a little wonky. */
+.display {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
+  letter-spacing: -0.02em;
+}
+
 :focus-visible {
   outline: 2px solid #161616;
   outline-offset: 3px;
@@ -23,35 +31,38 @@ body {
   stroke-dashoffset: 1;
   animation: draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
 }
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Cards in the hero pile breathe. Different durations so they never sync. */
+.bob-1 { animation: bob 7s ease-in-out infinite; }
+.bob-2 { animation: bob 8.5s ease-in-out infinite 0.8s; }
+.bob-3 { animation: bob 6.5s ease-in-out infinite 1.6s; }
+.bob-4 { animation: bob 9.5s ease-in-out infinite 0.3s; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 
-/* The spiral in the hero turns slowly, always. */
-.turn {
-  animation: turn 120s linear infinite;
-}
-@keyframes turn {
-  to { transform: rotate(-360deg); }
-}
-
-/* The audit log in the product window streams upward. */
-.stream {
-  animation: stream 16s linear infinite;
-}
-@keyframes stream {
-  to { transform: translateY(-50%); }
+/* The mess drifts. Slowly, in small circles. */
+.drift-1 { animation: drift 14s ease-in-out infinite; }
+.drift-2 { animation: drift 17s ease-in-out infinite 2s reverse; }
+.drift-3 { animation: drift 20s ease-in-out infinite 4s; }
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -8px); }
+  50% { transform: translate(-6px, 10px); }
+  75% { transform: translate(-12px, -4px); }
 }
 
-.blink {
-  animation: blink 1s steps(1) infinite;
-}
-@keyframes blink {
-  50% { opacity: 0; }
-}
+/* The audit log streams upward. */
+.stream { animation: stream 16s linear infinite; }
+@keyframes stream { to { transform: translateY(-50%); } }
+
+.blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .draw-line { animation: none; stroke-dashoffset: 0; }
-  .turn, .stream, .blink { animation: none; }
+  .bob-1, .bob-2, .bob-3, .bob-4, .drift-1, .drift-2, .drift-3, .stream, .blink { animation: none; }
 }

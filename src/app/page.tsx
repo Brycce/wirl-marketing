@@ -1,25 +1,31 @@
 import Link from 'next/link';
 import Wordmark from '@/components/Wordmark';
-import Spiral from '@/components/Spiral';
+import HeroPile from '@/components/HeroPile';
+import MessPills from '@/components/MessPills';
 import ProductWindow from '@/components/ProductWindow';
 import WaitlistForm from '@/components/WaitlistForm';
+import { LoginPicture, PermissionsPicture, LogPicture, ListPicture } from '@/components/Illustrations';
 
 const guarantees = [
   {
     term: 'Login by default',
     body: 'Every app opens behind your company sign-in from its first deploy. Nothing is public by accident. No one can forget to add auth, because adding auth is not a step.',
+    Picture: LoginPicture,
   },
   {
     term: 'Team permissions',
     body: 'Define teams once. Every app inherits them and can check them in code. Remove someone in one place and they are out of everything.',
+    Picture: PermissionsPicture,
   },
   {
     term: 'Audit log',
     body: 'Who opened which tool, what they looked at, what they changed. The access review becomes a query instead of a week of Slack messages.',
+    Picture: LogPicture,
   },
   {
     term: 'One list',
     body: 'Everything your team has shipped, on one screen, with who can reach each one. Not scattered across whichever accounts the builders were logged into.',
+    Picture: ListPicture,
   },
 ];
 
@@ -38,173 +44,158 @@ const steps = [
   },
 ];
 
-const h2 = 'font-extrabold tracking-[-0.03em] leading-[1.02] text-balance';
+const personas = [
+  {
+    title: 'If you run engineering',
+    body: 'Your team is already shipping internal software. Wirl is a place to let them, where every app inherits your login and your permissions and you can see the whole list. Fewer requests to support tools you didn’t build, and you stop being the person who retrofits auth.',
+  },
+  {
+    title: 'If you’re an engineer',
+    body: 'Point your agent at Wirl and ask for what you need. It comes back deployed, behind the company login, visible to the team you named. No auth to wire up, no one to ask for a server, and it is still just code.',
+  },
+  {
+    title: 'If you’re not an engineer',
+    body: 'Describe the tool you need to your agent. It arrives at a link that already works with your company login, and only the people you named can open it. No ticket to engineering, no waiting for a server.',
+  },
+];
+
+const wrap = 'max-w-6xl mx-auto px-6';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className="min-h-screen bg-white text-ink">
+      <nav className={`${wrap} flex items-center justify-between py-5`}>
+        <Link href="/"><Wordmark /></Link>
+        <div className="flex items-center gap-5 text-[14px]">
+          <Link href="/docs" className="hidden sm:inline text-dim hover:text-ink transition-colors">Docs</Link>
+          <a href="https://app.wirl.dev/login" className="hidden sm:inline text-dim hover:text-ink transition-colors">Log in</a>
+          <a href="#waitlist" className="bg-ink text-white px-4 py-2 rounded-lg font-semibold hover:bg-black transition-colors">
+            Join the waitlist
+          </a>
+        </div>
+      </nav>
+
       {/* Hero */}
-      <section className="bg-tape text-ink">
-        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-6">
-          <Link href="/"><Wordmark size={30} /></Link>
-          <div className="flex items-center gap-4 sm:gap-6 text-[15px]">
-            <Link href="/docs" className="hidden sm:inline hover:underline underline-offset-4">Docs</Link>
-            <a href="https://app.wirl.dev/login" className="hidden sm:inline hover:underline underline-offset-4">Log in</a>
-            <a href="#waitlist" className="bg-ink text-tape px-4 py-2 rounded-md font-bold hover:bg-black transition-colors">
-              Join the waitlist
-            </a>
+      <section className="pt-14 md:pt-24 pb-10 text-center">
+        <div className={wrap}>
+          <h1 className="display text-[2.6rem] sm:text-6xl md:text-[4.25rem] leading-[1.02] max-w-[16ch] mx-auto text-balance">
+            One place to ship every internal tool.
+          </h1>
+          <p className="mt-6 text-[17px] md:text-lg leading-relaxed max-w-[46ch] mx-auto text-ink/85">
+            Wirl hosts the internal apps your team builds, by hand or with agents. Every one launches behind your company login, with team permissions and an audit log.
+          </p>
+          <p className="mt-2 text-[15px] text-dim">
+            Everyone can build. You keep the list, the login, and the log.
+          </p>
+          <div className="mt-8">
+            <WaitlistForm id="waitlist-email-hero" center />
           </div>
-        </nav>
-
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-10 md:pt-16 pb-20 grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6">
-            <h1
-              className="font-extrabold tracking-[-0.04em] leading-[0.92] text-balance"
-              style={{ fontSize: 'clamp(3.25rem, 7.2vw, 6.75rem)' }}
-            >
-              One place to ship every internal tool.
-            </h1>
-            <p className="mt-7 text-xl md:text-2xl leading-snug max-w-[34ch]">
-              Wirl hosts the internal apps your team builds, by hand or with agents. Every one launches behind your company login, with team permissions and an audit log.
-            </p>
-            <p className="mt-4 text-lg md:text-xl leading-snug max-w-[34ch] text-ink/75">
-              Everyone can build. You keep the list, the login, and the log.
-            </p>
-            <div className="mt-9">
-              <WaitlistForm tone="tape" id="waitlist-email-hero" />
-            </div>
-          </div>
-          <div className="lg:col-span-6">
-            <Spiral className="w-full max-w-[640px] mx-auto lg:ml-auto" />
-          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 mt-14">
+          <HeroPile />
         </div>
       </section>
 
-      {/* The problem, and the thing itself */}
-      <section className="bg-ink text-white">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24">
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
-            <h2 className={`lg:col-span-6 text-4xl md:text-5xl ${h2}`}>
-              Internal tools are getting built faster than anyone can keep track of them.
-            </h2>
-            <div className="lg:col-span-6 text-lg md:text-xl text-white/75 leading-relaxed space-y-5 max-w-[52ch]">
-              <p>
-                Coding agents turned a dashboard or an admin tool into a one-hour job, so people build them. Each one lands wherever the builder was logged in: a personal Vercel account, a Notion page with a shared password, a public URL nobody meant to be public.
-              </p>
-              <p>
-                Nobody has the list. Nobody knows which ones can read customer data. Engineering finds out when something goes wrong, and gets asked to retrofit auth after the fact.
-              </p>
-            </div>
-          </div>
+      {/* The problem */}
+      <section className={`${wrap} py-16 md:py-24`}>
+        <MessPills>
+          <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] max-w-[22ch] mx-auto text-balance">
+            Internal tools are getting built faster than anyone can keep track of them.
+          </h2>
+          <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[54ch] mx-auto">
+            Coding agents turned a dashboard or an admin tool into a one-hour job, so people build them. Each one lands wherever the builder was logged in. Nobody has the list, nobody knows which ones can read customer data, and engineering gets asked to retrofit auth after the fact.
+          </p>
+        </MessPills>
+      </section>
 
-          <div className="mt-20">
-            <p className="text-tape font-bold text-lg mb-5">What Wirl gives you instead</p>
-            <ProductWindow />
-            <p className="mt-5 text-white/60 max-w-[62ch] leading-relaxed">
-              Every app your team ships, in one list, behind one login. Every open, export, deploy, and denied request, written down.
-            </p>
-          </div>
+      {/* What Wirl gives you instead */}
+      <section className={`${wrap} pb-16 md:pb-24 text-center`}>
+        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08]">What Wirl gives you instead.</h2>
+        <p className="mt-4 text-[15px] md:text-base text-dim max-w-[54ch] mx-auto leading-relaxed">
+          Every app your team ships, in one list, behind one login. Every open, export, deploy, and denied request, written down.
+        </p>
+        <div className="mt-10 rounded-3xl bg-panel p-3 md:p-8 text-left">
+          <ProductWindow />
         </div>
       </section>
 
-      {/* What you get */}
-      <section className="bg-paper">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24">
-          <h2 className={`text-4xl md:text-5xl ${h2} max-w-[22ch]`}>
+      {/* Guarantees */}
+      <section className={`${wrap} pb-16 md:pb-24`}>
+        <div className="text-center">
+          <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] max-w-[22ch] mx-auto text-balance">
             Auth, permissions, and logging, handled once for every app.
           </h2>
-          <p className="mt-6 text-lg md:text-xl text-dim leading-relaxed max-w-[58ch]">
+          <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[58ch] mx-auto">
             Every internal tool built anywhere else needs someone to wire up a login, decide who can see it, and remember to log what happens inside. Most never get any of that. On Wirl those three things are set once for the workspace and every app inherits them. That is why the safe way is also the fast way: building a tool is just building the tool.
           </p>
-          <dl className="mt-14 divide-y-2 divide-ink border-y-2 border-ink">
-            {guarantees.map((g) => (
-              <div key={g.term} className="grid md:grid-cols-12 gap-3 md:gap-8 py-8">
-                <dt className="md:col-span-4 text-2xl font-extrabold tracking-tight">{g.term}</dt>
-                <dd className="md:col-span-7 text-lg text-dim leading-relaxed max-w-[56ch]">{g.body}</dd>
-              </div>
-            ))}
-          </dl>
+        </div>
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          {guarantees.map(({ term, body, Picture }) => (
+            <div key={term} className="rounded-3xl bg-panel p-8 md:p-10">
+              <div className="py-4"><Picture /></div>
+              <h3 className="mt-6 text-xl font-bold tracking-tight">{term}</h3>
+              <p className="mt-2 text-[15px] text-dim leading-relaxed max-w-[48ch]">{body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="bg-paper scroll-mt-8">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pb-24">
-          <h2 className={`text-4xl md:text-5xl ${h2}`}>How it works</h2>
-          <ol className="mt-12 grid md:grid-cols-3 gap-10 md:gap-8">
-            {steps.map((s, i) => (
-              <li key={s.title}>
-                <div className="text-tape bg-ink inline-flex w-9 h-9 items-center justify-center rounded-md font-extrabold text-lg mb-4">
-                  {i + 1}
-                </div>
-                <h3 className="text-2xl font-extrabold tracking-tight">{s.title}</h3>
-                <p className="mt-2 text-lg text-dim leading-relaxed max-w-[36ch]">{s.body}</p>
-              </li>
-            ))}
-          </ol>
-
-          <div className="mt-14 rounded-xl bg-ink text-paper p-6 md:p-8 font-mono text-[13.5px] leading-relaxed overflow-x-auto">
-            <pre>
-              <span className="text-paper/50">$</span>{' claude mcp add --transport http wirl https://app.wirl.dev/mcp'}{'\n\n'}
-              <span className="text-paper/50">{'> '}</span>
-              <span className="italic">Build a vendor payouts tool for finance and deploy it</span>{'\n\n'}
-              <span className="text-tape">{'  created'}</span>{'   vendor-payouts'}{'\n'}
-              <span className="text-tape">{'  login'}</span>{'     acme.com'}{'\n'}
-              <span className="text-tape">{'  access'}</span>{'    Finance, Ops'}{'\n'}
-              <span className="text-tape">{'  live'}</span>{'      vendor-payouts.acme.wirl.app'}
-            </pre>
-          </div>
+      <section id="how-it-works" className={`${wrap} pb-16 md:pb-24 scroll-mt-8`}>
+        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">How it works.</h2>
+        <ol className="mt-12 grid md:grid-cols-3 gap-8">
+          {steps.map((s, i) => (
+            <li key={s.title} className="rounded-3xl bg-panel p-8">
+              <div className="w-7 h-7 rounded-full bg-white border border-rule text-[12px] font-bold inline-flex items-center justify-center">{i + 1}</div>
+              <h3 className="mt-4 text-lg font-bold tracking-tight">{s.title}</h3>
+              <p className="mt-2 text-[15px] text-dim leading-relaxed">{s.body}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-4 rounded-3xl bg-ink text-white p-6 md:p-8 font-mono text-[13px] leading-relaxed overflow-x-auto">
+          <pre>
+            <span className="text-white/50">$</span>{' claude mcp add --transport http wirl https://app.wirl.dev/mcp'}{'\n\n'}
+            <span className="text-white/50">{'> '}</span>
+            <span className="italic">Build a vendor payouts tool for finance and deploy it</span>{'\n\n'}
+            <span className="text-tape">{'  created'}</span>{'   vendor-payouts'}{'\n'}
+            <span className="text-tape">{'  login'}</span>{'     acme.com'}{'\n'}
+            <span className="text-tape">{'  access'}</span>{'    Finance, Ops'}{'\n'}
+            <span className="text-tape">{'  live'}</span>{'      vendor-payouts.acme.wirl.app'}
+          </pre>
         </div>
       </section>
 
       {/* Who it is for */}
-      <section className="bg-paper border-t-2 border-ink">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 grid md:grid-cols-3 gap-12">
-          <div>
-            <h2 className={`text-3xl ${h2}`}>If you run engineering</h2>
-            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
-              Your team is already shipping internal software. Wirl is a place to let them, where every app inherits your login and your permissions and you can see the whole list. Fewer requests to support tools you didn&apos;t build, and you stop being the person who retrofits auth.
-            </p>
-          </div>
-          <div>
-            <h2 className={`text-3xl ${h2}`}>If you&apos;re an engineer</h2>
-            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
-              Point your agent at Wirl and ask for what you need. It comes back deployed, behind the company login, visible to the team you named. No auth to wire up, no one to ask for a server, and it is still just code.
-            </p>
-          </div>
-          <div>
-            <h2 className={`text-3xl ${h2}`}>If you&apos;re not an engineer</h2>
-            <p className="mt-5 text-lg text-dim leading-relaxed max-w-[40ch]">
-              Describe the tool you need to your agent. It arrives at a link that already works with your company login, and only the people you named can open it. No ticket to engineering, no waiting for a server.
-            </p>
-          </div>
+      <section className={`${wrap} pb-16 md:pb-24`}>
+        <div className="grid md:grid-cols-3 gap-8 border-t border-rule pt-12">
+          {personas.map((p) => (
+            <div key={p.title}>
+              <h3 className="text-lg font-bold tracking-tight">{p.title}</h3>
+              <p className="mt-2 text-[15px] text-dim leading-relaxed">{p.body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Closing */}
-      <section id="waitlist" className="bg-tape text-ink scroll-mt-8">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 grid md:grid-cols-12 gap-10 items-end">
-          <div className="md:col-span-6">
-            <h2 className={`text-5xl md:text-6xl ${h2}`}>
-              Let everyone build. Keep the list.
-            </h2>
-            <p className="mt-5 text-xl max-w-[36ch]">
-              Wirl is in private beta. Leave your email and we&apos;ll get you in.
-            </p>
-          </div>
-          <div className="md:col-span-6 md:col-start-7">
-            <WaitlistForm tone="tape" id="waitlist-email-footer" />
+      <section id="waitlist" className={`${wrap} pb-16 scroll-mt-8`}>
+        <div className="rounded-3xl bg-panel px-6 py-16 md:py-20 text-center">
+          <h2 className="display text-4xl md:text-5xl leading-[1.05]">Let everyone build. Keep the list.</h2>
+          <p className="mt-4 text-[15px] md:text-base text-dim max-w-[40ch] mx-auto">
+            Wirl is in private beta. Leave your email and we&apos;ll get you in.
+          </p>
+          <div className="mt-8">
+            <WaitlistForm id="waitlist-email-footer" center />
           </div>
         </div>
       </section>
 
-      <footer className="bg-ink text-white/60">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-8 flex items-center justify-between text-sm">
-          <span className="text-white"><Wordmark size={20} onDark /></span>
-          <div className="flex gap-6">
-            <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
-            <a href="#waitlist" className="hover:text-white transition-colors">Waitlist</a>
-          </div>
+      <footer className={`${wrap} py-10 flex items-center justify-between text-[13px] text-dim`}>
+        <span className="text-ink"><Wordmark size={20} /></span>
+        <div className="flex gap-6">
+          <Link href="/docs" className="hover:text-ink transition-colors">Docs</Link>
+          <a href="#waitlist" className="hover:text-ink transition-colors">Waitlist</a>
+          <span>© 2026 Wirl</span>
         </div>
       </footer>
     </div>

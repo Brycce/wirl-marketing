@@ -6,119 +6,43 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function Image() {
-  const interBlack = await fetch(
-    'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuBWYMZg.ttf'
+  const fraunces = await fetch(
+    'https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58njr1a03gg7S2nfgRYIctxujDg.ttf'
   ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
     (
       <div
         style={{
-          background: '#FFE04A',
+          background: '#ffffff',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '40px 60px',
-          position: 'relative',
+          padding: '60px',
+          fontFamily: 'Fraunces',
+          color: '#161616',
         }}
       >
-        {/* Domain top right */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 40,
-            right: 50,
-            fontSize: 36,
-            fontWeight: 900,
-            color: '#18181b',
-          }}
-        >
-          wirl.dev
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="https://wirl.dev/logo.png" alt="" width={96} height={96} style={{ marginBottom: 36 }} />
+        <div style={{ fontSize: 76, lineHeight: 1.05, textAlign: 'center', letterSpacing: '-1.5px', maxWidth: 800 }}>
+          One place to ship every internal tool.
         </div>
-
-        {/* Logo */}
-        <img
-          src="https://wirl.dev/logo.png"
-          width={120}
-          height={120}
-          style={{ marginBottom: 28 }}
-        />
-
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: 72,
-            fontWeight: 900,
-            color: '#18181b',
-            textAlign: 'center',
-            lineHeight: 1.1,
-          }}
-        >
-          One place to ship
-        </div>
-        <div
-          style={{
-            fontSize: 72,
-            fontWeight: 900,
-            color: '#18181b',
-            textAlign: 'center',
-            lineHeight: 1.1,
-          }}
-        >
-          every internal tool.
-        </div>
-
-        {/* Subtitle */}
-        <div
-          style={{
-            fontSize: 36,
-            fontWeight: 700,
-            color: '#161616',
-            marginTop: 24,
-          }}
-        >
+        <div style={{ fontSize: 30, color: '#6B6B66', marginTop: 28, textAlign: 'center' }}>
           Login, permissions, and an audit log on every app.
         </div>
-
-        {/* Pills */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 20,
-            marginTop: 40,
-          }}
-        >
+        <div style={{ display: 'flex', gap: 14, marginTop: 44 }}>
           {['Login by default', 'Team permissions', 'Audit log', 'One list'].map((text) => (
-            <div
-              key={text}
-              style={{
-                background: '#161616',
-                padding: '18px 36px',
-                borderRadius: 100,
-                fontSize: 28,
-                color: '#FFE04A',
-                fontWeight: 700,
-              }}
-            >
+            <div key={text} style={{ background: '#F4F4F1', padding: '12px 24px', borderRadius: 100, fontSize: 24 }}>
               {text}
             </div>
           ))}
         </div>
       </div>
     ),
-    {
-      ...size,
-      fonts: [
-        {
-          name: 'Inter',
-          data: interBlack,
-          weight: 900,
-          style: 'normal',
-        },
-      ],
-    }
+    { ...size, fonts: [{ name: 'Fraunces', data: fraunces, weight: 400, style: 'normal' }] }
   );
 }

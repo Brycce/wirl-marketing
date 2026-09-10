@@ -10,14 +10,20 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
         ink: '#161616',
-        paper: '#FBFBF9',
-        tape: '#FFE04A',
-        rule: '#E4E4DE',
+        panel: '#F4F4F1',
+        rule: '#E6E6E1',
         dim: '#6B6B66',
+        tape: '#FFE04A',
+        ok: { DEFAULT: '#146C3A', bg: '#DDF3E4' },
+        bad: { DEFAULT: '#A32D22', bg: '#FBE3E0' },
+      },
+      boxShadow: {
+        card: '0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -22px rgba(0,0,0,0.28)',
       },
     },
   },

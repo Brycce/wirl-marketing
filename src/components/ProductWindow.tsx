@@ -1,9 +1,9 @@
-import { TOOLS } from './Spiral';
+import { TOOLS } from './data';
 
-// The two things Wirl gives you that you do not have today:
-// the list of every internal app with who can open it, and a log of
-// everything that happens inside them. An agent's request sits on top,
-// because that is how most of these apps get made now.
+// The two things Wirl adds that you do not have today: the list of every
+// internal app with who can open it, and a record of everything that
+// happens inside them. An agent's request sits on top, because that is
+// how most of these apps get made now.
 const LOG: [string, string, string, string][] = [
   ['09:41:02', 'dana@acme.com', 'opened', 'payroll-export'],
   ['09:41:09', 'claude', 'deployed', 'vendor-payouts'],
@@ -17,36 +17,36 @@ const LOG: [string, string, string, string][] = [
 
 export default function ProductWindow() {
   return (
-    <div className="rounded-xl border border-white/10 bg-[#1C1C20] overflow-hidden font-mono text-[12.5px] leading-relaxed">
-      <div className="px-4 py-3 border-b border-white/10 flex items-center gap-3 whitespace-nowrap overflow-hidden">
-        <span className="text-tape">›</span>
-        <span className="text-white truncate">Build a vendor payouts tool for finance and deploy it</span>
-        <span className="blink inline-block w-2 h-4 bg-tape shrink-0" />
+    <div className="rounded-xl border border-rule bg-white shadow-card overflow-hidden font-mono text-[12.5px] leading-relaxed">
+      <div className="px-4 py-3 border-b border-rule bg-panel flex items-center gap-3 whitespace-nowrap overflow-hidden">
+        <span className="text-dim">›</span>
+        <span className="truncate">Build a vendor payouts tool for finance and deploy it</span>
+        <span className="blink inline-block w-2 h-4 bg-ink shrink-0" />
       </div>
       <div className="grid md:grid-cols-2">
-        <div className="p-4 border-b md:border-b-0 md:border-r border-white/10">
-          <div className="text-white/40 mb-3">apps · {TOOLS.length} · all behind acme.com login</div>
+        <div className="p-4 border-b md:border-b-0 md:border-r border-rule">
+          <div className="text-dim mb-3">apps · {TOOLS.length} · all behind acme.com login</div>
           {TOOLS.slice(0, 9).map(([name, team], i) => (
-            <div key={name} className={`flex items-center justify-between py-1.5 whitespace-nowrap ${i === 3 ? 'text-tape' : 'text-white/85'}`}>
+            <div key={name} className={`flex items-center justify-between py-1.5 whitespace-nowrap ${i === 3 ? 'font-medium' : ''}`}>
               <span>{i === 3 ? '● ' : '  '}{name}</span>
-              <span className="text-white/40">{team}</span>
+              <span className="text-dim">{team}</span>
             </div>
           ))}
         </div>
         <div className="p-4">
-          <div className="text-white/40 mb-3">audit log · live</div>
+          <div className="text-dim mb-3">audit log · live</div>
           <div className="relative h-[300px] overflow-hidden">
             <div className="stream">
               {[...LOG, ...LOG].map((row, i) => (
                 <div key={i} className="flex gap-3 py-1.5 whitespace-nowrap">
-                  <span className="text-white/35">{row[0]}</span>
-                  <span className="text-white">{row[1]}</span>
-                  <span className={row[2] === 'denied' || row[2] === 'revoked' ? 'text-[#FF8A7A]' : 'text-tape'}>{row[2]}</span>
-                  <span className="text-white/60 truncate">{row[3]}</span>
+                  <span className="text-dim">{row[0]}</span>
+                  <span>{row[1]}</span>
+                  <span className={row[2] === 'denied' || row[2] === 'revoked' ? 'text-bad' : 'text-ok'}>{row[2]}</span>
+                  <span className="text-dim truncate">{row[3]}</span>
                 </div>
               ))}
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#1C1C20] to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
           </div>
         </div>
       </div>
