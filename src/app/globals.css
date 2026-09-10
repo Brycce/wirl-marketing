@@ -33,14 +33,31 @@ body {
 }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
-/* Cards in the hero pile breathe. Different durations so they never sync. */
+/* The hero pile. --p is 0 with the page unscrolled and 1 after a short scroll.
+   Cards straighten, line up, and stop breathing as it rises. */
+.pile-stage {
+  transform: perspective(1800px) rotateX(calc(14deg * (1 - var(--p, 0)))) scale(calc(1 - 0.15 * var(--p, 0)));
+  transform-origin: 50% 0;
+}
+.pile-card {
+  width: calc((var(--w0) + (var(--w1) - var(--w0)) * var(--p, 0)) * 1px);
+  transform:
+    translate(
+      calc((var(--x0) + (var(--x1) - var(--x0)) * var(--p, 0)) * 1px),
+      calc((var(--y0) + (var(--y1) - var(--y0)) * var(--p, 0)) * 1px)
+    )
+    rotate(calc(var(--r0) * (1 - var(--p, 0)) * 1deg));
+}
+.pile-fade-out { opacity: calc(1 - var(--p, 0)); }
+.pile-fade-in { opacity: var(--p, 0); }
+
 .bob-1 { animation: bob 7s ease-in-out infinite; }
 .bob-2 { animation: bob 8.5s ease-in-out infinite 0.8s; }
 .bob-3 { animation: bob 6.5s ease-in-out infinite 1.6s; }
 .bob-4 { animation: bob 9.5s ease-in-out infinite 0.3s; }
 @keyframes bob {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  50% { transform: translateY(calc(-7px * (1 - var(--p, 0)))); }
 }
 
 /* The mess drifts. Slowly, in small circles. */
