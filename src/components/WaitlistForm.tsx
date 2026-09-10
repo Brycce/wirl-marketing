@@ -39,9 +39,22 @@ export default function WaitlistForm({ align = 'left' }: { align?: 'left' | 'cen
 
   if (state === 'done') {
     return (
-      <div className={`max-w-md ${alignClass}`}>
-        <p className="text-ink font-semibold text-lg">You&apos;re on the list.</p>
-        <p className="text-dim mt-1">We&apos;ll write when your workspace is ready.</p>
+      <div className={`max-w-md flex items-start gap-3 ${alignClass}`}>
+        <svg viewBox="0 0 40 32" className="w-9 h-7 shrink-0 mt-0.5" fill="none" aria-hidden="true">
+          <path
+            d="M 4 18 C 10 22, 14 28, 16 28 C 20 26, 28 8, 37 4"
+            stroke="#2B38F5"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength={1}
+            className="draw-line"
+          />
+        </svg>
+        <div>
+          <p className="text-ink font-semibold text-lg">Wirled in.</p>
+          <p className="text-dim mt-1">We&apos;ll write when your workspace is ready.</p>
+        </div>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Wirl. The tools your agents build, pulled into one place.';
+export const alt = 'Wirl. The tools your agents build, wirled into one place.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -68,7 +68,7 @@ export default async function Image() {
             lineHeight: 1.1,
           }}
         >
-          pulled into one place.
+          wirled into one place.
         </div>
 
         {/* Subtitle */}

@@ -1,13 +1,12 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import Wordmark from '@/components/Wordmark';
 
 export default function Docs() {
   return (
     <div className="min-h-screen bg-paper text-ink flex flex-col">
       <nav className="flex items-center justify-between px-6 md:px-10 py-5 max-w-7xl mx-auto w-full">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="" width={30} height={30} />
-          <span className="font-bold text-lg tracking-tight">wirl</span>
+        <Link href="/" className="text-ink">
+          <Wordmark size={30} />
         </Link>
         <div className="flex items-center gap-6 text-[15px]">
           <a href="https://app.wirl.dev/login" className="text-dim hover:text-ink transition-colors">Log in</a>
