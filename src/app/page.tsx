@@ -8,13 +8,13 @@ import { LoginPicture, PermissionsPicture, LogPicture, ListPicture } from '@/com
 
 const guarantees = [
   {
-    term: 'Login by default',
-    body: 'Every app opens behind your company sign-in from its first deploy. Nothing is public by accident. No one can forget to add auth, because adding auth is not a step.',
+    term: 'Login on every app',
+    body: 'Every app opens behind your company sign-in from its first deploy. There is no public URL unless you make one. No one can forget to add auth, because adding auth is not a step.',
     Picture: LoginPicture,
   },
   {
     term: 'Team permissions',
-    body: 'Define teams once. Every app inherits them and can check them in code. Remove someone in one place and they are out of everything.',
+    body: 'Teams are defined for the workspace, and every app checks against them. Remove someone from a team and they are out of every tool that team could open.',
     Picture: PermissionsPicture,
   },
   {
@@ -44,18 +44,18 @@ const steps = [
   },
 ];
 
-const personas = [
+const situations = [
   {
-    title: 'If you run engineering',
-    body: 'Your team is already shipping internal software. Wirl is a place to let them, where every app inherits your login and your permissions and you can see the whole list. Fewer requests to support tools you didn’t build, and you stop being the person who retrofits auth.',
+    title: 'Finance needs a tool by Friday.',
+    body: 'Someone describes it to an agent on Tuesday. It is live behind the company sign-in that afternoon, and only Finance can open it. Nobody filed a ticket, and nobody had to wire up a login.',
   },
   {
-    title: 'If you’re an engineer',
-    body: 'Point your agent at Wirl and ask for what you need. It comes back deployed, behind the company login, visible to the team you named. No auth to wire up, no one to ask for a server, and it is still just code.',
+    title: 'An agent ships something at 2am.',
+    body: 'It cannot ship it public, and it cannot ship it to everyone. Whatever it built is in the list by morning, with the team it picked and a record of what it did.',
   },
   {
-    title: 'If you’re not an engineer',
-    body: 'Describe the tool you need to your agent. It arrives at a link that already works with your company login, and only the people you named can open it. No ticket to engineering, no waiting for a server.',
+    title: 'Security asks for the list.',
+    body: 'You send the list. Every app, who can open it, and what happened inside each one. It took a minute, not a week of asking around.',
   },
 ];
 
@@ -126,7 +126,7 @@ export default function Home() {
             Auth, permissions, and logging, handled once for every app.
           </h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[58ch] mx-auto">
-            Every internal tool built anywhere else needs someone to wire up a login, decide who can see it, and remember to log what happens inside. Most never get any of that. On Wirl those three things are set once for the workspace and every app inherits them. That is why the safe way is also the fast way: building a tool is just building the tool.
+            A tool built anywhere else needs someone to wire up a login, decide who can see it, and remember to log what happens inside. Most never get any of that. On Wirl those three things belong to the workspace, not to the app. A new tool doesn&apos;t bring its own, it gets the workspace&apos;s, so there is nothing to add and nothing to forget. That is why the safe way is also the fast way.
           </p>
         </div>
         <div className="mt-12 grid md:grid-cols-2 gap-4">
@@ -156,22 +156,22 @@ export default function Home() {
           <pre>
             <span className="text-white/50">$</span>{' claude mcp add --transport http wirl https://app.wirl.dev/mcp'}{'\n\n'}
             <span className="text-white/50">{'> '}</span>
-            <span className="italic">Build a vendor payouts tool for finance and deploy it</span>{'\n\n'}
-            <span className="text-tape">{'  created'}</span>{'   vendor-payouts'}{'\n'}
-            <span className="text-tape">{'  login'}</span>{'     acme.com'}{'\n'}
+            <span className="italic">Build a supplier payments tool for finance and deploy it</span>{'\n\n'}
+            <span className="text-tape">{'  created'}</span>{'   supplier-payments'}{'\n'}
+            <span className="text-tape">{'  login'}</span>{'     harbor.co'}{'\n'}
             <span className="text-tape">{'  access'}</span>{'    Finance, Ops'}{'\n'}
-            <span className="text-tape">{'  live'}</span>{'      vendor-payouts.acme.wirl.app'}
+            <span className="text-tape">{'  live'}</span>{'      supplier-payments.harbor.wirl.app'}
           </pre>
         </div>
       </section>
 
-      {/* Who it is for */}
+      {/* Three situations */}
       <section className={`${wrap} pb-16 md:pb-24`}>
         <div className="grid md:grid-cols-3 gap-8 border-t border-rule pt-12">
-          {personas.map((p) => (
+          {situations.map((p) => (
             <div key={p.title}>
-              <h3 className="text-lg font-bold tracking-tight">{p.title}</h3>
-              <p className="mt-2 text-[15px] text-dim leading-relaxed">{p.body}</p>
+              <h3 className="display text-2xl leading-tight">{p.title}</h3>
+              <p className="mt-3 text-[15px] text-dim leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
