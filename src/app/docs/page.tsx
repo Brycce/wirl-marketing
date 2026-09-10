@@ -1,5 +1,12 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Wordmark from '@/components/Wordmark';
+
+export const metadata: Metadata = {
+  title: 'Docs',
+  description: 'Wirl documentation lands when the private beta opens: shipping an app, teams and permissions, the audit log, and driving it all from your coding agent over MCP.',
+  alternates: { canonical: '/docs' },
+};
 
 export default function Docs() {
   return (
