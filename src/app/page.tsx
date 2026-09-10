@@ -31,16 +31,16 @@ const guarantees = [
 
 const steps = [
   {
-    title: 'Connect your agent',
-    body: 'One command adds Wirl as an MCP server to Claude Code, Cursor, or anything else that speaks MCP. There is a dashboard too.',
+    title: 'Ask your agent, or push the code',
+    body: 'One command connects Wirl to Claude Code, Cursor, or anything else that speaks MCP. Or deploy from the dashboard.',
   },
   {
-    title: 'Ask for the tool',
-    body: 'The agent writes it, creates the app, picks which teams can open it, and deploys to a URL. Nothing to provision first.',
+    title: 'Get a URL that already works',
+    body: 'It comes back live, behind the company login. No auth to wire up, no server to ask for, no ticket.',
   },
   {
-    title: 'Approve, don’t build',
-    body: 'Login, permissions, and logging are already there. The agent chooses who can see the tool. It cannot choose nobody.',
+    title: 'Pick who can open it',
+    body: 'Choose the teams. That is the whole permissions setup. Everything else was already on.',
   },
 ];
 
@@ -79,13 +79,13 @@ export default function Home() {
       <section className="pt-14 md:pt-24 pb-10 text-center">
         <div className={wrap}>
           <h1 className="display text-[2.6rem] sm:text-6xl md:text-[4.25rem] leading-[1.02] max-w-[16ch] mx-auto text-balance">
-            One place to ship every internal tool.
+            Let your people build.
           </h1>
           <p className="mt-6 text-[17px] md:text-lg leading-relaxed max-w-[46ch] mx-auto text-ink/85">
-            Wirl hosts the internal apps your team builds, by hand or with agents. Every one launches behind your company login, with team permissions and an audit log.
+            Wirl is a secure place to run the internal tools your team makes, with agents or by hand. Anyone can ship an app. Every app lands behind your company login, open to the right teams, with a record of what happens inside.
           </p>
           <p className="mt-2 text-[15px] text-dim">
-            Everyone can build. You keep the list, the login, and the log.
+            Fun for the people building. Boring for the people responsible. On purpose.
           </p>
           <div className="mt-8">
             <WaitlistForm id="waitlist-email-hero" center />
@@ -100,17 +100,17 @@ export default function Home() {
       <section className={`${wrap} py-16 md:py-24`}>
         <MessPills>
           <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] max-w-[22ch] mx-auto text-balance">
-            Internal tools are getting built faster than anyone can keep track of them.
+            Your people are already building.
           </h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[54ch] mx-auto">
-            Coding agents turned a dashboard or an admin tool into a one-hour job, so people build them. Each one lands wherever the builder was logged in. Nobody has the list, nobody knows which ones can read customer data, and engineering gets asked to retrofit auth after the fact.
+            Ops has a dashboard. Finance has a tool. Support built something on Tuesday with an agent, and it works. This is the best thing to happen to internal tools in a decade. The only problem is where it all lives: personal accounts, shared passwords, links in Slack. Nobody has the list.
           </p>
         </MessPills>
       </section>
 
       {/* What Wirl is */}
       <section className={`${wrap} pb-16 md:pb-24`}>
-        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">What Wirl gives you.</h2>
+        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">Give them somewhere to ship.</h2>
         <dl className="mt-10 grid md:grid-cols-3 gap-8 md:gap-10">
           <div>
             <dt className="text-lg font-bold tracking-tight">What it is</dt>
@@ -127,7 +127,7 @@ export default function Home() {
           <div>
             <dt className="text-lg font-bold tracking-tight">How it helps</dt>
             <dd className="mt-2 text-[15px] text-dim leading-relaxed">
-              Anyone can ship a tool without asking. Engineering stops retrofitting auth onto things it didn&apos;t build. Security gets the list without chasing anyone for it.
+              Anyone can ship without asking. Engineering stops retrofitting auth onto things it didn&apos;t build. Security gets the list without chasing anyone. You get to say yes.
             </dd>
           </div>
         </dl>
@@ -136,30 +136,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Guarantees */}
-      <section className={`${wrap} pb-16 md:pb-24`}>
-        <div className="text-center">
-          <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] max-w-[22ch] mx-auto text-balance">
-            Auth, permissions, and logging, handled once for every app.
-          </h2>
-          <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[58ch] mx-auto">
-            A tool built anywhere else needs someone to wire up a login, decide who can see it, and remember to log what happens inside. Most never get any of that. On Wirl those three things belong to the workspace, not to the app. A new tool doesn&apos;t bring its own, it gets the workspace&apos;s, so there is nothing to add and nothing to forget. That is why the safe way is also the fast way.
-          </p>
-        </div>
-        <div className="mt-12 grid md:grid-cols-2 gap-4">
-          {guarantees.map(({ term, body, Picture }) => (
-            <div key={term} className="rounded-3xl bg-panel p-8 md:p-10">
-              <div className="py-4"><Picture /></div>
-              <h3 className="mt-6 text-xl font-bold tracking-tight">{term}</h3>
-              <p className="mt-2 text-[15px] text-dim leading-relaxed max-w-[48ch]">{body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* How it works */}
       <section id="how-it-works" className={`${wrap} pb-16 md:pb-24 scroll-mt-8`}>
-        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">How it works.</h2>
+        <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] text-center">For the people building.</h2>
         <ol className="mt-12 grid md:grid-cols-3 gap-8">
           {steps.map((s, i) => (
             <li key={s.title} className="rounded-3xl bg-panel p-8">
@@ -182,6 +161,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Guarantees */}
+      <section className={`${wrap} pb-16 md:pb-24`}>
+        <div className="text-center">
+          <h2 className="display text-3xl md:text-[2.75rem] leading-[1.08] max-w-[22ch] mx-auto text-balance">
+            For the people who have to say yes.
+          </h2>
+          <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[58ch] mx-auto">
+            Governance on Wirl is infrastructure, not a process. Login, permissions, and logging are properties of the workspace, and every app gets them whether or not the builder thought about it. Nothing to add, nothing to forget, nothing to audit for after the fact. That is what makes it safe to let everyone build.
+          </p>
+        </div>
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          {guarantees.map(({ term, body, Picture }) => (
+            <div key={term} className="rounded-3xl bg-panel p-8 md:p-10">
+              <div className="py-4"><Picture /></div>
+              <h3 className="mt-6 text-xl font-bold tracking-tight">{term}</h3>
+              <p className="mt-2 text-[15px] text-dim leading-relaxed max-w-[48ch]">{body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Three situations */}
       <section className={`${wrap} pb-16 md:pb-24`}>
         <div className="grid md:grid-cols-3 gap-8 border-t border-rule pt-12">
@@ -197,7 +197,7 @@ export default function Home() {
       {/* Closing */}
       <section id="waitlist" className={`${wrap} pb-16 scroll-mt-8`}>
         <div className="rounded-3xl bg-panel px-6 py-16 md:py-20 text-center">
-          <h2 className="display text-4xl md:text-5xl leading-[1.05]">Let everyone build. Keep the list.</h2>
+          <h2 className="display text-4xl md:text-5xl leading-[1.05]">Say yes to the builders.</h2>
           <p className="mt-4 text-[15px] md:text-base text-dim max-w-[40ch] mx-auto">
             Wirl is in private beta. Leave your email and we&apos;ll get you in.
           </p>
