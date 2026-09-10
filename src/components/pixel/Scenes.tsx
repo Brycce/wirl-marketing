@@ -99,7 +99,7 @@ export function MessScene() {
   );
 }
 
-/* Agents carry apps into Wirl. Policy checked on the way in. */
+/* Agents carry apps into Wirl. Policy checked on the way in; the app comes out locked. */
 export function WirlScene() {
   const policy = ['login required', 'teams only', 'audit log on', 'no public URLs'];
   return (
@@ -120,9 +120,9 @@ export function WirlScene() {
       <Label x={510} y={302}>Wirl</Label>
 
       <At x={640} y={232}><Sprite rows={ARROW} scale={4} /></At>
-      <At x={690} y={208} className="bob-2"><Sprite rows={SWIRL} scale={3} /></At>
+      <At x={684} y={212} className="bob-2"><Sprite rows={APP} scale={3} swap={{ b: 'g' }} /></At>
       <At x={700} y={176}><Sprite rows={LOCK_CLOSED} scale={3} /></At>
-      <Label x={676} y={302}>a wirl</Label>
+      <Label x={650} y={302}>the app, on Wirl</Label>
 
       <At x={790} y={110}>
         <div className="px-window w-[300px] p-4">
@@ -139,7 +139,7 @@ export function WirlScene() {
   );
 }
 
-/* Colleagues pass a wirl around and make it better. */
+/* Colleagues pass an app around and make it better. */
 export function ShareScene() {
   return (
     <Stage h={240}>
@@ -147,17 +147,17 @@ export function ShareScene() {
       <At x={190} y={144}><Sprite rows={PERSON} scale={4} /></At>
       <At x={520} y={144}><Sprite rows={PERSON} scale={4} swap={{ b: 'R', H: 'h' }} /></At>
       <At x={850} y={144}><Sprite rows={PERSON} scale={4} swap={{ b: 'P' }} /></At>
-      <At x={370} y={120} className="bob-1"><Sprite rows={SWIRL} scale={3.5} /></At>
-      <At x={700} y={120} className="bob-3"><Sprite rows={SWIRL} scale={3.5} /></At>
+      <At x={366} y={124} className="bob-1"><Sprite rows={APP} scale={3} swap={{ b: 'g' }} /></At>
+      <At x={696} y={124} className="bob-3"><Sprite rows={APP} scale={3} swap={{ b: 'g' }} /></At>
       <At x={580} y={112} className="bob-2"><Sprite rows={HEART} scale={3} /></At>
       <Bubble x={110} y={70}>fixed the export, try it</Bubble>
       <Bubble x={470} y={60}>nice. added a filter</Bubble>
-      <Bubble x={790} y={74}>wirled it again</Bubble>
+      <Bubble x={790} y={74}>shipped it again</Bubble>
     </Stage>
   );
 }
 
-/* The admin's screen: every wirl, who can open it, and the log. */
+/* The admin's screen: every app, who can open it, and the log. */
 const TEAMS = ['Fin', 'Sup', 'Eng', 'Ppl', 'Legal'];
 const ROWS: [string, boolean[]][] = [
   ['customer-credits', [false, true, false, false, false]],
@@ -173,11 +173,11 @@ export function AdminPanel() {
     <div className="px-window max-w-3xl mx-auto">
       <div className="flex items-center justify-between px-4 py-2 border-b-[3px] border-ink bg-sand font-pixel text-[17px] leading-none">
         <span className="inline-flex items-center gap-2"><Sprite rows={SWIRL} scale={1.6} /> harbor.co · admin</span>
-        <span className="inline-flex items-center gap-3"><span>wirls</span><span className="text-dim">teams</span><span className="text-dim">log</span></span>
+        <span className="inline-flex items-center gap-3"><span>apps</span><span className="text-dim">teams</span><span className="text-dim">log</span></span>
       </div>
       <div className="p-4 font-pixel text-[16px] leading-none overflow-x-auto">
         <div className="grid grid-cols-[1fr_repeat(5,44px)] gap-y-2 items-center min-w-[440px]">
-          <div className="text-dim">wirl</div>
+          <div className="text-dim">app</div>
           {TEAMS.map((t) => <div key={t} className="text-dim text-center">{t}</div>)}
           {ROWS.map(([name, access]) => (
             <div key={name} className="contents">
@@ -193,7 +193,7 @@ export function AdminPanel() {
       </div>
       <div className="px-4 py-3 border-t-[3px] border-ink bg-gb-dark text-gb-light font-term text-[19px] leading-tight scanlines">
         <div>09:42:05 priya@harbor.co denied nda-lookup · not in Legal</div>
-        <div>09:43:01 wirl revoked lee@harbor.co · left Finance</div>
+        <div>09:43:01 Wirl revoked lee@harbor.co · left Finance</div>
         <div>09:43:20 omar@harbor.co opened incident-handover <span className="blink">_</span></div>
       </div>
     </div>
@@ -208,7 +208,7 @@ export function Terminal() {
       <div className="mt-3"><span className="text-gb-green">&gt;</span> build a supplier payments tool for finance and deploy it</div>
       <div className="mt-3 pl-4">created   supplier-payments</div>
       <div className="pl-4">policy    login ok · teams ok · audit ok</div>
-      <div className="pl-4">wirled    supplier-payments.harbor.wirl.app <span className="blink">_</span></div>
+      <div className="pl-4">live      supplier-payments.harbor.wirl.app <span className="blink">_</span></div>
     </div>
   );
 }

@@ -10,11 +10,11 @@ const situations = [
   },
   {
     title: 'An agent ships something at 2am.',
-    body: 'It cannot ship it public, and it cannot ship it to everyone. Whatever it built is a wirl by morning, with the team it picked and a record of what it did.',
+    body: 'It cannot ship it public, and it cannot ship it to everyone. Whatever it built is on Wirl by morning, with the team it picked and a record of what it did.',
   },
   {
     title: 'Security asks for the list.',
-    body: 'You send the list. Every wirl, who can open it, and what happened inside each one. It took a minute, not a week of asking around.',
+    body: 'You send the list. Every app, who can open it, and what happened inside each one. It took a minute, not a week of asking around.',
   },
 ];
 
@@ -40,7 +40,7 @@ export default function Home() {
             Let your people build.
           </h1>
           <p className="mt-6 text-[17px] md:text-lg leading-relaxed max-w-[48ch] mx-auto text-ink/85">
-            Wirl hosts the internal tools your team builds, by hand or with agents. Each ships as a wirl: a URL behind your login, a team that can open it, and a log of what happens.
+            Wirl hosts the internal tools your team builds, by hand or with agents. Each one ships to a URL behind your login, with a team that can open it and a log of what happens.
           </p>
           <p className="mt-3 font-pixel text-[18px] text-dim leading-none">
             Fun for the people building. Boring for the people responsible. On purpose.
@@ -71,7 +71,7 @@ export default function Home() {
       <section className={`${wrap} py-16 md:py-24 text-center`}>
         <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Give their agents a place to ship.</h2>
         <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-          Point Claude Code or Cursor at Wirl. When it deploys, the app lands as a wirl: behind your login, open only to the teams you pick, logged. Your governance policy is checked at deploy time, not in a review three weeks later.
+          Point Claude Code or Cursor at Wirl. When it deploys, the app lands behind your login, open only to the teams you pick, logged. Your governance policy is checked at deploy time, not in a review three weeks later.
         </p>
         <div className="mt-10 overflow-hidden">
           <WirlScene />
@@ -84,9 +84,9 @@ export default function Home() {
       {/* Share */}
       <section className="bg-gb-pale border-y-[3px] border-ink">
         <div className={`${wrap} py-16 md:py-20 text-center`}>
-          <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Share it. Improve it. Wirl it again.</h2>
+          <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Share it. Improve it.<br />Ship it again.</h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[54ch] mx-auto">
-            A wirl has a URL your colleagues can open with the login they already have. They can fork it, fix it, and ship it back. Every version is a wirl too, and every one of them is on the list.
+            Every app has a URL your colleagues can open with the login they already have. They can fork it, fix it, and ship it back. Every version lands on the list too.
           </p>
           <div className="mt-8 overflow-hidden">
             <ShareScene />
@@ -98,7 +98,7 @@ export default function Home() {
       <section className={`${wrap} py-16 md:py-24 text-center`}>
         <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>You decide who can open what.</h2>
         <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-          One screen with every wirl, the teams that can reach it, and everything that happened inside. Turn a team off and they are out of every wirl that team could open. Export the log when security asks.
+          One screen with every app, the teams that can reach it, and everything that happened inside. Turn a team off and they are out of every app that team could open. Export the log when security asks.
         </p>
         <div className="mt-10">
           <AdminPanel />

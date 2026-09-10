@@ -16,7 +16,7 @@ export default function Docs() {
           Docs land when the beta opens.
         </h1>
         <p className="mt-6 text-[17px] text-ink/85 max-w-[46ch] mx-auto leading-relaxed">
-          They will cover shipping a wirl, defining teams and permissions, reading the audit log, and driving all of it from your coding agent over MCP.
+          They will cover shipping an app, defining teams and permissions, reading the audit log, and driving all of it from your coding agent over MCP.
         </p>
         <Link href="/#waitlist" className="px-btn inline-block mt-8 px-5 py-2.5 font-pixel text-[18px] leading-none">
           Join the waitlist
