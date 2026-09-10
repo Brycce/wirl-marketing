@@ -115,7 +115,7 @@ export function WirlScene() {
       <At x={300} y={236}><Sprite rows={ARROW} scale={5} /></At>
 
       <At x={380} y={150}><Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} /></At>
-      <At x={450} y={178}><Sprite rows={SWIRL} scale={6} swap={{ K: 'k' }} /></At>
+      <At x={460} y={172}><Sprite rows={SWIRL} scale={5} swap={{ K: 'k' }} /></At>
       <At x={540} y={120}><Sprite rows={LOCK_CLOSED} scale={6} /></At>
       <Label x={510} y={302}>Wirl</Label>
 
