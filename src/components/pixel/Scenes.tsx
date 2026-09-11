@@ -159,29 +159,33 @@ export function ShareScene() {
 
 /* The admin's screen: every app, who can open it, and the log. */
 const TEAMS = ['Fin', 'Sup', 'Eng', 'Ppl', 'Legal'];
-const ROWS: [string, boolean[]][] = [
-  ['customer-credits', [false, true, false, false, false]],
-  ['supplier-payments', [true, false, false, false, false]],
-  ['candidate-pipeline', [false, false, false, true, false]],
-  ['incident-handover', [false, false, true, false, false]],
-  ['nda-lookup', [false, false, false, false, true]],
-  ['budget-lines', [true, false, false, false, false]],
+const ROWS: [string, string, string, boolean[]][] = [
+  ['customer-credits', 'sam', 'stripe · postgres', [false, true, false, false, false]],
+  ['supplier-payments', 'claude', 'stripe · netsuite', [true, false, false, false, false]],
+  ['candidate-pipeline', 'mei', 'greenhouse', [false, false, false, true, false]],
+  ['incident-handover', 'omar', 'pagerduty · slack', [false, false, true, false, false]],
+  ['nda-lookup', 'cursor', 'google drive', [false, false, false, false, true]],
+  ['budget-lines', 'dana', 'sheets · postgres', [true, false, false, false, false]],
 ];
 
 export function AdminPanel() {
   return (
-    <div className="px-window max-w-3xl mx-auto">
+    <div className="px-window max-w-4xl mx-auto">
       <div className="flex items-center justify-between px-4 py-2 border-b-[3px] border-ink bg-sand font-pixel text-[17px] leading-none">
         <span className="inline-flex items-center gap-2"><Sprite rows={SWIRL} scale={1.6} /> harbor.co · admin</span>
         <span className="inline-flex items-center gap-3"><span>apps</span><span className="text-dim">teams</span><span className="text-dim">log</span></span>
       </div>
       <div className="p-4 font-pixel text-[16px] leading-none overflow-x-auto">
-        <div className="grid grid-cols-[1fr_repeat(5,44px)] gap-y-2 items-center min-w-[440px]">
+        <div className="grid grid-cols-[1fr_72px_150px_repeat(5,44px)] gap-y-2 gap-x-2 items-center min-w-[660px]">
           <div className="text-dim">app</div>
+          <div className="text-dim">built by</div>
+          <div className="text-dim">uses</div>
           {TEAMS.map((t) => <div key={t} className="text-dim text-center">{t}</div>)}
-          {ROWS.map(([name, access]) => (
+          {ROWS.map(([name, by, uses, access]) => (
             <div key={name} className="contents">
               <div className="py-1">{name}</div>
+              <div className="text-dim">{by}</div>
+              <div className="text-dim truncate">{uses}</div>
               {access.map((on, i) => (
                 <div key={i} className="flex justify-center">
                   <span className={`px-tag block w-5 h-5 ${on ? 'bg-gb-green' : 'bg-sand'}`} />

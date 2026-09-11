@@ -14,7 +14,7 @@ const situations = [
   },
   {
     title: 'Security asks for the list.',
-    body: 'You send the list. Every app, who can open it, and what happened inside each one. It took a minute, not a week of asking around.',
+    body: 'You send the list. Every app, who built it, what it connects to, who can open it, and what happened inside. It took a minute, not a week of asking around.',
   },
 ];
 
@@ -25,7 +25,7 @@ const h2 = 'font-pixel font-bold leading-[1.05] text-balance';
 const faqs: [string, string][] = [
   [
     'What is Wirl?',
-    'A hosted place to run internal tools. Your team, or its coding agents, ship an app to Wirl and it comes back at a URL behind your company login, open only to the teams you choose, with an audit log of what happens inside.',
+    'Wirl is where your team deploys the internal tools they vibe-code, and where you get the full picture: every app, who built it, which credentials and data sources it uses, and who can open it.',
   ],
   [
     'Does it work with apps built by AI agents?',
@@ -134,9 +134,9 @@ export default function Home() {
 
       {/* Admin */}
       <section className={`${wrap} py-16 md:py-24 text-center`}>
-        <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>You decide who can open what.</h2>
+        <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>You get the full picture.</h2>
         <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-          One screen with every app, the teams that can reach it, and everything that happened inside. Turn a team off and they are out of every app that team could open. Export the log when security asks.
+          One screen with every internal app people have shipped: who built it, which credentials and data sources it uses, which teams can open it, and everything that happened inside. When security asks, you send the screen.
         </p>
         <div className="mt-10">
           <AdminPanel />

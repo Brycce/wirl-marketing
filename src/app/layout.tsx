@@ -4,7 +4,7 @@ import "./globals.css";
 const SITE = 'https://wirl.dev';
 const TITLE = 'Wirl: a secure place for the internal tools your team builds';
 const DESCRIPTION =
-  'Host the internal tools your team builds, by hand or with AI agents. Every app ships behind your company login, with team permissions and an audit log.';
+  'Where your team deploys the internal tools they vibe-code, and where you get the full picture: every app, its credentials and data sources, and who can open it.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
