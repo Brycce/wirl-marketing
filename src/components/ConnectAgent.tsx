@@ -50,8 +50,8 @@ export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
   }
 
   return (
-    <div id={id} className="max-w-2xl mx-auto text-left scroll-mt-8">
-      <div className="flex flex-wrap gap-2 mb-3" role="tablist" aria-label="Choose your coding agent">
+    <div id={id} className="max-w-2xl mx-auto text-center scroll-mt-8">
+      <div className="flex flex-wrap justify-center gap-2 mb-3" role="tablist" aria-label="Choose your coding agent">
         {AGENTS.map((a) => (
           <button
             key={a.id}
@@ -65,8 +65,8 @@ export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
         ))}
       </div>
       <div className="px-window-green p-4 md:p-5">
-        <pre className="font-term text-[20px] md:text-[22px] leading-tight whitespace-pre-wrap break-all scanlines">{agent.snippet}</pre>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
+        <pre className="font-term text-[20px] md:text-[22px] leading-tight whitespace-pre-wrap break-all scanlines text-center">{agent.snippet}</pre>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
           <button onClick={copy} className="px-btn px-btn-sun px-4 py-2 font-pixel text-[16px] leading-none">
             {copied ? 'Copied' : 'Copy'}
           </button>

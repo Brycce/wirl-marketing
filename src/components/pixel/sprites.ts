@@ -233,3 +233,29 @@ export const HEART: SpriteMap = [
   '..RRR..',
   '...R...',
 ];
+
+export const PULL_REQUEST: SpriteMap = [
+  'KKKKKKKKKKKKKK',
+  'KWWWWWWWWWWWWK',
+  'KWKKWWKKKKKWWK',
+  'KWKKWWWWWWWWWK',
+  'KWWKWWKKKKKKWK',
+  'KWWWKWWWWWWWWK',
+  'KWKKWWKKKKKWWK',
+  'KWKKWWWWWWWWWK',
+  'KWWWWWWWWWWWWK',
+  'KRRRRRRRRRRRRK',
+  'KRRRRRRRRRRRRK',
+  'KKKKKKKKKKKKKK',
+];
+
+export const CLOCK: SpriteMap = [
+  '..KKKK..',
+  '.K....K.',
+  'K..K...K',
+  'K..K...K',
+  'K..KKK.K',
+  'K......K',
+  '.K....K.',
+  '..KKKK..',
+];

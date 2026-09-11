@@ -100,7 +100,7 @@ export default function Home() {
         <div className={`${wrap} py-16 md:py-20 text-center`}>
           <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Right now their apps live everywhere.</h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[54ch] mx-auto">
-            A dashboard on a personal Vercel account. A tool on the intern&apos;s laptop. A password in a Notion page. A URL that was never meant to be public. Nobody has the list, and nobody knows which of them can read customer data.
+            A dashboard on a personal Vercel account. A tool on the intern&apos;s laptop. A pull request that sits until an engineer finds time to review it. A URL that was never meant to be public. Nobody has the list, and nobody knows which of them can read customer data.
           </p>
           <div className="mt-10 overflow-hidden">
             <MessScene />

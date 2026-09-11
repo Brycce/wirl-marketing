@@ -1,6 +1,6 @@
 import Sprite from './Sprite';
 import {
-  SWIRL, APP, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, PAGE, SIGN,
+  SWIRL, APP, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
   LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, ARROW, CHECK, HEART,
 } from './sprites';
 
@@ -86,10 +86,10 @@ export function MessScene() {
       <At x={396} y={150} className="flicker"><Sprite rows={FLAME} scale={3} /></At>
       <Label x={330} y={266}>the intern&apos;s laptop</Label>
 
-      <At x={600} y={185}><Sprite rows={PAGE} scale={5} /></At>
-      <At x={612} y={148} className="bob-3"><Sprite rows={APP} scale={3} swap={{ b: 'P' }} /></At>
-      <At x={668} y={150}><Sprite rows={LOCK_OPEN} scale={3} /></At>
-      <Label x={590} y={266}>a password in a notion page</Label>
+      <At x={600} y={190}><Sprite rows={PULL_REQUEST} scale={5} /></At>
+      <At x={612} y={150} className="bob-3"><Sprite rows={APP} scale={3} swap={{ b: 'P' }} /></At>
+      <At x={676} y={152} className="flicker"><Sprite rows={CLOCK} scale={3} /></At>
+      <Label x={594} y={266}>a PR waiting on an engineer</Label>
 
       <At x={880} y={200}><Sprite rows={SIGN} scale={5} /></At>
       <At x={892} y={162} className="bob-4"><Sprite rows={APP} scale={3} swap={{ b: 'O' }} /></At>
