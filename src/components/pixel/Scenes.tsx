@@ -1,6 +1,6 @@
 import Sprite from './Sprite';
 import {
-  SWIRL, APP, APP_BLANK, DUST, HAMMER, HARDHAT, BANG, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
+  SWIRL, APP, APP_BLANK, DUST, HAMMER, HARDHAT, BANG, CRANE, HOOK, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
   LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, CHECK, HEART,
 } from './sprites';
 
@@ -107,6 +107,15 @@ export function WirlScene() {
       <Ground y={290} />
 
       {/* Two agents build something in a cartoon dust cloud, then throw it into Wirl. */}
+      <At x={0} y={146}><Sprite rows={CRANE} scale={4} /></At>
+      <At x={140} y={166}>
+        <div className="relative overflow-hidden" style={{ width: 16, height: 70 }}>
+          <div className="hook-drop absolute left-0 top-0" style={{ width: 16, height: 70 }}>
+            <div className="absolute bg-ink" style={{ left: 6, top: 0, width: 3, height: 52 }} />
+            <Sprite rows={HOOK} scale={3} className="absolute" style={{ left: 0, top: 52 }} />
+          </div>
+        </div>
+      </At>
       <At x={60} y={238} className="jig">
         <div className="relative">
           <Sprite rows={ROBOT} scale={4} />

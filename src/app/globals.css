@@ -188,6 +188,20 @@ body { font-optical-sizing: auto; }
   33%, 100% { opacity: 0; }
 }
 
+.hook-drop { animation: hook-drop 10s steps(1) infinite; }
+@keyframes hook-drop {
+  0%       { transform: translateY(-58px); }
+  4%       { transform: translateY(-30px); }
+  8%, 12%  { transform: translateY(0); }
+  14%      { transform: translateY(-30px); }
+  16%      { transform: translateY(-58px); }
+  20%      { transform: translateY(-24px); }
+  24%, 28% { transform: translateY(0); }
+  30%      { transform: translateY(-30px); }
+  32%      { transform: translateY(-58px); }
+  36%, 100% { transform: translateY(-58px); }
+}
+
 /* The finished app: pops out of the dust, then gets thrown into Wirl. */
 .fly-in { animation: fly-in 10s ease-in-out infinite; }
 @keyframes fly-in {
@@ -223,7 +237,7 @@ body { font-optical-sizing: auto; }
 @keyframes spark { 0%, 65%, 73%, 100% { opacity: 0; transform: scale(1); } 66% { opacity: 1; transform: scale(1); } 71% { opacity: 1; transform: scale(2.2); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .fly-in, .hop-b, .cloud-shake, .spit, .pop, .spark, .dust, .hammer, .jig, .bang-1, .bang-2, .bang-3, .hat-fly { animation: none; }
+  .fly-in, .hop-b, .cloud-shake, .spit, .pop, .spark, .dust, .hammer, .jig, .bang-1, .bang-2, .bang-3, .hat-fly, .hook-drop { animation: none; }
   .dust, .hammer, .bang-1, .bang-2, .bang-3, .hat-fly { opacity: 0; }
   .fly-in { opacity: 1; }
   .spit { opacity: 1; transform: translate(94px, 55px); }
