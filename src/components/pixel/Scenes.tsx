@@ -1,6 +1,6 @@
 import Sprite from './Sprite';
 import {
-  SWIRL, APP, APP_BLANK, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
+  SWIRL, APP, APP_BLANK, DUST, HAMMER, HARDHAT, BANG, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
   LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, CHECK, HEART,
 } from './sprites';
 
@@ -106,10 +106,28 @@ export function WirlScene() {
     <Stage h={340}>
       <Ground y={290} />
 
-      {/* Two agents pass an app between them, then throw it into the cloud. */}
-      <At x={60} y={238} className="hop-a"><Sprite rows={ROBOT} scale={4} /></At>
-      <At x={170} y={238} className="hop-b"><Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} /></At>
-      <At x={66} y={196} className="fly-in"><Sprite rows={APP} scale={3} /></At>
+      {/* Two agents build something in a cartoon dust cloud, then throw it into Wirl. */}
+      <At x={60} y={238} className="jig">
+        <div className="relative">
+          <Sprite rows={ROBOT} scale={4} />
+          <Sprite rows={HARDHAT} scale={4} className="absolute" style={{ left: 4, top: -8 }} />
+        </div>
+      </At>
+      <At x={170} y={238} className="jig">
+        <div className="hop-b relative">
+          <Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} />
+          <Sprite rows={HARDHAT} scale={4} className="absolute" style={{ left: 4, top: -8 }} />
+        </div>
+      </At>
+      <At x={176} y={196} className="fly-in"><Sprite rows={APP} scale={3} /></At>
+
+      <At x={30} y={186} className="dust"><Sprite rows={DUST} scale={9} /></At>
+      <At x={196} y={160} className="hammer"><Sprite rows={HAMMER} scale={4} /></At>
+      <At x={52} y={172} className="bang-1"><Sprite rows={BANG} scale={3} /></At>
+      <At x={150} y={150} className="bang-2"><Sprite rows={BANG} scale={3} /></At>
+      <At x={236} y={210} className="bang-3"><Sprite rows={BANG} scale={3} /></At>
+      <At x={120} y={176} className="hat-fly"><Sprite rows={HARDHAT} scale={4} /></At>
+
       <Label x={60} y={302}>your agents</Label>
 
       {/* Wirl: the cloud shakes when the app goes in. */}

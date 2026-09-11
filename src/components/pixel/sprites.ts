@@ -272,3 +272,50 @@ export const APP_BLANK: SpriteMap = [
   'KWWWWWWWWWWK',
   'KKKKKKKKKKKK',
 ];
+
+// A cartoon build: the dust cloud two people disappear into when they're
+// hammering something together, plus the hammer, hats, and sparks that poke out.
+export const DUST: SpriteMap = [
+  '........KKKK......KKK.....',
+  '......KKWWWWKK..KKWWWKK...',
+  '....KKWWWWWWWWKKWWWWWWWK..',
+  '..KKWWWWWWWWWWWWWWWWWWWWK.',
+  '.KWWWWWWWWWWWWWWWWWWWWWWWK',
+  'KWWWWWWWWWWWWWWWWWWWWWWWWK',
+  'KWWWWWWWWWWWWWWWWWWWWWWWWK',
+  'KWWWWWWWWWWWWWWWWWWWWWWWWK',
+  '.KWWWWWWWWWWWWWWWWWWWWWWK.',
+  '..KKWWWWWWWWWWWWWWWWWWKK..',
+  '....KKWWWWWWWWKKKWWWWKK...',
+  '......KKKKKKKK...KKKKK....',
+];
+
+export const HAMMER: SpriteMap = [
+  '....KKKKKK',
+  '....KDDDDK',
+  '....KDDDDK',
+  '....KKKKKK',
+  '......KK..',
+  '.....KK...',
+  '....KK....',
+  '...KK.....',
+  '..KK......',
+  '.KK.......',
+];
+
+export const HARDHAT: SpriteMap = [
+  '...KKKK...',
+  '..KYYYYK..',
+  '.KYYYYYYK.',
+  'KKKKKKKKKK',
+];
+
+export const BANG: SpriteMap = [
+  '...K...',
+  '...K...',
+  '.K.K.K.',
+  'KKKYKKK',
+  '.K.K.K.',
+  '...K...',
+  '...K...',
+];
