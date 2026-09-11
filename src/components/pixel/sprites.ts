@@ -259,3 +259,16 @@ export const CLOCK: SpriteMap = [
   '.K....K.',
   '..KKKK..',
 ];
+
+// An app with nothing drawn inside, so the mark can sit on it.
+export const APP_BLANK: SpriteMap = [
+  'KKKKKKKKKKKK',
+  'KbbbbbbbbbbK',
+  'KKKKKKKKKKKK',
+  'KWWWWWWWWWWK',
+  'KWWWWWWWWWWK',
+  'KWWWWWWWWWWK',
+  'KWWWWWWWWWWK',
+  'KWWWWWWWWWWK',
+  'KKKKKKKKKKKK',
+];

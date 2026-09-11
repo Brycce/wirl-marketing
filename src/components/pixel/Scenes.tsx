@@ -1,7 +1,7 @@
 import Sprite from './Sprite';
 import {
-  SWIRL, APP, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
-  LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, ARROW, CHECK, HEART,
+  SWIRL, APP, APP_BLANK, DESK_A, DESK_B, PERSON, ROBOT, CLOUD, LAPTOP, SIGN, PULL_REQUEST, CLOCK,
+  LOCK_OPEN, LOCK_CLOSED, SKULL, WARN, FLAME, CHECK, HEART,
 } from './sprites';
 
 function Stage({ h, children, className = '' }: { h: number; children: React.ReactNode; className?: string }) {
@@ -106,22 +106,35 @@ export function WirlScene() {
     <Stage h={340}>
       <Ground y={290} />
 
-      <At x={30} y={238} className="walk-1"><Sprite rows={ROBOT} scale={4} /></At>
-      <At x={36} y={198} className="walk-1"><Sprite rows={APP} scale={3} /></At>
-      <At x={120} y={238} className="walk-2"><Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} /></At>
-      <At x={126} y={198} className="walk-2"><Sprite rows={APP} scale={3} swap={{ b: 'R' }} /></At>
-      <Label x={30} y={302}>your agents</Label>
+      {/* Two agents pass an app between them, then throw it into the cloud. */}
+      <At x={60} y={238} className="hop-a"><Sprite rows={ROBOT} scale={4} /></At>
+      <At x={170} y={238} className="hop-b"><Sprite rows={ROBOT} scale={4} swap={{ B: 'P' }} /></At>
+      <At x={66} y={196} className="fly-in"><Sprite rows={APP} scale={3} /></At>
+      <Label x={60} y={302}>your agents</Label>
 
-      <At x={300} y={236}><Sprite rows={ARROW} scale={5} /></At>
-
-      <At x={380} y={150}><Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} /></At>
-      <At x={460} y={172}><Sprite rows={SWIRL} scale={5} swap={{ K: 'k' }} /></At>
-      <At x={540} y={120}><Sprite rows={LOCK_CLOSED} scale={6} /></At>
+      {/* Wirl: the cloud shakes when the app goes in. */}
+      <At x={380} y={150} className="cloud-shake">
+        <div className="relative">
+          <Sprite rows={CLOUD} scale={11} swap={{ W: 'L' }} />
+          <Sprite rows={SWIRL} scale={5} swap={{ K: 'k' }} className="absolute" style={{ left: 80, top: 22 }} />
+          <Sprite rows={LOCK_CLOSED} scale={6} className="absolute" style={{ left: 160, top: -30 }} />
+        </div>
+      </At>
       <Label x={510} y={302}>Wirl</Label>
 
-      <At x={640} y={232}><Sprite rows={ARROW} scale={4} /></At>
-      <At x={684} y={212} className="bob-2"><Sprite rows={APP} scale={3} swap={{ b: 'g' }} /></At>
-      <At x={700} y={176}><Sprite rows={LOCK_CLOSED} scale={3} /></At>
+      {/* Sparks where it comes out. */}
+      <At x={606} y={178} className="spark"><div className="w-2 h-2 bg-ink" /></At>
+      <At x={620} y={196} className="spark"><div className="w-2 h-2 bg-ink" /></At>
+      <At x={598} y={206} className="spark"><div className="w-2 h-2 bg-ink" /></At>
+
+      {/* The app, on Wirl: green bar, the mark on it, a lock over it. */}
+      <At x={596} y={190} className="spit">
+        <div className="relative" style={{ width: 60, height: 45 }}>
+          <Sprite rows={APP_BLANK} scale={5} swap={{ b: 'g' }} />
+          <Sprite rows={SWIRL} scale={2} className="absolute" style={{ left: 18, top: 18 }} />
+          <Sprite rows={LOCK_CLOSED} scale={3} className="pop absolute" style={{ left: 18, top: -30 }} />
+        </div>
+      </At>
       <Label x={650} y={302}>the app, on Wirl</Label>
 
       <At x={790} y={110}>
