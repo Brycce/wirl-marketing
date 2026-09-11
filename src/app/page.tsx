@@ -40,7 +40,7 @@ export default function Home() {
             Let your people build.
           </h1>
           <p className="mt-6 text-[17px] md:text-lg leading-relaxed max-w-[48ch] mx-auto text-ink/85">
-            Wirl hosts the internal tools your team builds, by hand or with agents. Each one ships to a URL behind your login, with a team that can open it and a log of what happens.
+            Wirl hosts the internal tools your team builds, by hand or with agents. Every app lands behind your company login, open to the team you pick, with a log of everything that happens inside.
           </p>
           <p className="mt-3 font-pixel text-[18px] text-dim leading-none">
             Fun for the people building. Boring for the people responsible. On purpose.
