@@ -21,6 +21,44 @@ const situations = [
 const wrap = 'max-w-6xl mx-auto px-6';
 const h2 = 'font-pixel font-bold leading-[1.05] text-balance';
 
+
+const faqs: [string, string][] = [
+  [
+    'What is Wirl?',
+    'A hosted place to run internal tools. Your team, or its coding agents, ship an app to Wirl and it comes back at a URL behind your company login, open only to the teams you choose, with an audit log of what happens inside.',
+  ],
+  [
+    'Does it work with apps built by AI agents?',
+    'Yes. Point Claude Code, Cursor, or any MCP-compatible agent at Wirl and it can deploy directly. Login, permissions, and logging apply to every app the same way, however it was built.',
+  ],
+  [
+    'Who can open an app on Wirl?',
+    'People signed in with your company login who are on a team you have granted. There is no public URL unless you make one. Remove someone from a team and they lose every app that team could open.',
+  ],
+  [
+    'What does the audit log record?',
+    'Deploys, who opened which app, what they exported or changed, denied access attempts, and permission changes. An access review becomes a query instead of a week of asking around.',
+  ],
+  [
+    'Is Wirl a replacement for Vercel?',
+    'For internal tools, yes: it is where they get deployed and hosted. Keep whatever you use for your public product. Wirl is for the apps that should never have been public in the first place.',
+  ],
+  [
+    'When can I use it?',
+    'Wirl is in private beta. Join the waitlist and we will write when your workspace is ready.',
+  ],
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([q, a]) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-cream text-ink">
@@ -115,6 +153,24 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={`${wrap} pb-16 md:pb-24`}>
+        <h2 className="font-pixel font-bold text-4xl md:text-5xl leading-none text-center text-balance">Questions people ask.</h2>
+        <div className="mt-10 max-w-3xl mx-auto space-y-4">
+          {faqs.map(([q, a]) => (
+            <details key={q} className="px-window group">
+              <summary className="cursor-pointer list-none px-5 py-4 font-pixel text-[20px] leading-none flex items-center justify-between gap-4">
+                <span>{q}</span>
+                <span className="font-pixel text-2xl leading-none group-open:hidden" aria-hidden="true">+</span>
+                <span className="font-pixel text-2xl leading-none hidden group-open:inline" aria-hidden="true">-</span>
+              </summary>
+              <p className="px-5 pb-5 text-[15px] leading-relaxed text-dim border-t-[3px] border-ink pt-4">{a}</p>
+            </details>
+          ))}
+        </div>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       </section>
 
       {/* Closing */}
