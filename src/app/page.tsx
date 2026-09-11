@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Wordmark from '@/components/Wordmark';
 import WaitlistForm from '@/components/WaitlistForm';
+import ConnectAgent from '@/components/ConnectAgent';
+import Sprite from '@/components/pixel/Sprite';
+import { ROBOT } from '@/components/pixel/sprites';
 import { HeroScene, MessScene, WirlScene, ShareScene, AdminPanel, Terminal } from '@/components/pixel/Scenes';
 
 const situations = [
@@ -29,7 +32,7 @@ const faqs: [string, string][] = [
   ],
   [
     'Does it work with apps built by AI agents?',
-    'Yes. Point Claude Code, Cursor, or any MCP-compatible agent at Wirl and it can deploy directly. Login, permissions, and logging apply to every app the same way, however it was built.',
+    'Yes. Connect Claude Code, Codex, Cursor, or any MCP-compatible agent to Wirl and it can deploy directly. Login, permissions, and logging apply to every app the same way, however it was built.',
   ],
   [
     'Who can open an app on Wirl?',
@@ -45,7 +48,7 @@ const faqs: [string, string][] = [
   ],
   [
     'When can I use it?',
-    'Wirl is in private beta. Join the waitlist and we will write when your workspace is ready.',
+    'Connect your coding agent to the Wirl MCP server and ask it to deploy something. Wirl is in private beta, so if you would rather talk first, join the waitlist and we will write when your workspace is ready.',
   ],
 ];
 
@@ -67,7 +70,7 @@ export default function Home() {
         <div className="flex items-center gap-5 font-pixel text-[17px] leading-none">
           <Link href="/docs" className="hidden sm:inline text-dim hover:text-ink">Docs</Link>
           <a href="https://app.wirl.dev/login" className="hidden sm:inline text-dim hover:text-ink">Log in</a>
-          <a href="#waitlist" className="px-btn px-4 py-2">Join the waitlist</a>
+          <a href="#connect" className="px-btn px-4 py-2">Connect your agent</a>
         </div>
       </nav>
 
@@ -84,7 +87,7 @@ export default function Home() {
             Fun for the people building. Boring for the people responsible. On purpose.
           </p>
           <div className="mt-8">
-            <WaitlistForm id="waitlist-email-hero" center />
+            <ConnectAgent />
           </div>
         </div>
         <div className="mt-12 overflow-hidden">
@@ -116,6 +119,33 @@ export default function Home() {
         </div>
         <div className="mt-10">
           <Terminal />
+        </div>
+      </section>
+
+      {/* Bring your own coding agent */}
+      <section className="bg-sand border-y-[3px] border-ink">
+        <div className={`${wrap} py-16 md:py-24 text-center`}>
+          <h2 className="font-pixel font-bold text-4xl md:text-5xl leading-none text-balance">Bring your own coding agent.</h2>
+          <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
+            Wirl is an MCP server. Whatever your team already writes code with can deploy to it, and every app gets the same login, teams, and log.
+          </p>
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
+            {[
+              ['Claude Code', 'One command in the terminal.', 'B'],
+              ['Codex', 'Two lines in config.toml.', 'P'],
+              ['Cursor', 'One click, or one JSON file.', 'O'],
+              ['Anything with MCP', 'Point it at the URL. Sign in once.', 'g'],
+            ].map(([name, note, tone]) => (
+              <div key={name} className="px-window p-4 flex items-start gap-3">
+                <Sprite rows={ROBOT} scale={3} swap={{ B: tone }} className="shrink-0" />
+                <div>
+                  <div className="font-pixel text-[20px] leading-none">{name}</div>
+                  <div className="mt-2 text-[14px] text-dim leading-snug">{note}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <a href="#connect" className="inline-block mt-8 px-btn px-btn-sun px-5 py-2.5 font-pixel text-[18px] leading-none">Connect yours</a>
         </div>
       </section>
 
