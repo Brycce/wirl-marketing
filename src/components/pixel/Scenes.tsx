@@ -6,7 +6,16 @@ import {
 
 function Stage({ h, children, className = '' }: { h: number; children: React.ReactNode; className?: string }) {
   return (
-    <div className={`stage ${className}`} style={{ '--h': `${h}px` } as React.CSSProperties} aria-hidden="true">
+    <div className={`stage hidden sm:block ${className}`} style={{ '--h': `${h}px` } as React.CSSProperties} aria-hidden="true">
+      <div className="stage-inner">{children}</div>
+    </div>
+  );
+}
+
+// The same scene, laid out again for a phone: 380px wide, full pixel size.
+function StageM({ h, children, className = '' }: { h: number; children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`stage-m sm:hidden ${className}`} style={{ '--h': `${h}px` } as React.CSSProperties} aria-hidden="true">
       <div className="stage-inner">{children}</div>
     </div>
   );
@@ -16,8 +25,8 @@ function At({ x, y, children, className = '' }: { x: number; y: number; children
   return <div className={`absolute ${className}`} style={{ left: x, top: y }}>{children}</div>;
 }
 
-function Ground({ y }: { y: number }) {
-  return <div className="absolute left-0 right-0 bg-ink" style={{ top: y, height: 4 }} />;
+function Ground({ y, h = 4 }: { y: number; h?: number }) {
+  return <div className="absolute left-0 right-0 bg-ink" style={{ top: y, height: h }} />;
 }
 
 function Bubble({ x, y, children }: { x: number; y: number; children: React.ReactNode }) {
@@ -28,21 +37,21 @@ function Bubble({ x, y, children }: { x: number; y: number; children: React.Reac
   );
 }
 
-function Label({ x, y, children }: { x: number; y: number; children: React.ReactNode }) {
+function Label({ x, y, children, size = 16 }: { x: number; y: number; children: React.ReactNode; size?: number }) {
   return (
     <At x={x} y={y}>
-      <div className="font-pixel text-[16px] leading-none whitespace-nowrap">{children}</div>
+      <div className="font-pixel leading-none whitespace-nowrap" style={{ fontSize: size }}>{children}</div>
     </At>
   );
 }
 
-function Desk({ x, y, shirt, hair = 'H' }: { x: number; y: number; shirt: string; hair?: string }) {
+function Desk({ x, y, shirt, hair = 'H', scale = 4 }: { x: number; y: number; shirt: string; hair?: string; scale?: number }) {
   const swap = { b: shirt, H: hair };
   return (
     <At x={x} y={y}>
-      <div className="relative" style={{ width: 120, height: 64 }}>
-        <Sprite rows={DESK_A} scale={4} swap={swap} className="frame-a absolute left-0 top-0" />
-        <Sprite rows={DESK_B} scale={4} swap={swap} className="frame-b absolute left-0 top-0" />
+      <div className="relative" style={{ width: 30 * scale, height: 16 * scale }}>
+        <Sprite rows={DESK_A} scale={scale} swap={swap} className="frame-a absolute left-0 top-0" />
+        <Sprite rows={DESK_B} scale={scale} swap={swap} className="frame-b absolute left-0 top-0" />
       </div>
     </At>
   );
@@ -51,6 +60,7 @@ function Desk({ x, y, shirt, hair = 'H' }: { x: number; y: number; shirt: string
 /* Four people, four terminals, four things being built. */
 export function HeroScene() {
   return (
+    <>
     <Stage h={300}>
       <Ground y={250} />
       <Desk x={20} y={186} shirt="b" />
@@ -66,12 +76,23 @@ export function HeroScene() {
       <Bubble x={690} y={76}>one more feature</Bubble>
       <Bubble x={960} y={66}>it works?!</Bubble>
     </Stage>
+    <StageM h={230}>
+      <Ground y={200} h={3} />
+      <Desk x={30} y={152} shirt="b" scale={3} />
+      <Desk x={230} y={152} shirt="R" hair="h" scale={3} />
+      <At x={44} y={112} className="bob-1"><Sprite rows={APP} scale={2.5} /></At>
+      <At x={244} y={112} className="bob-2"><Sprite rows={APP} scale={2.5} swap={{ b: 'R' }} /></At>
+      <Bubble x={60} y={62}>refunds thing, done</Bubble>
+      <Bubble x={250} y={70}>it works?!</Bubble>
+    </StageM>
+    </>
   );
 }
 
 /* Where it all ends up today. */
 export function MessScene() {
   return (
+    <>
     <Stage h={300}>
       <Ground y={250} />
 
@@ -96,6 +117,31 @@ export function MessScene() {
       <At x={946} y={150} className="flicker"><Sprite rows={WARN} scale={3} /></At>
       <Label x={870} y={266}>a public URL, by accident</Label>
     </Stage>
+    <StageM h={380}>
+      <Ground y={170} h={3} />
+      <At x={30} y={138}><Sprite rows={CLOUD} scale={4} /></At>
+      <At x={44} y={108} className="bob-1"><Sprite rows={APP} scale={2} /></At>
+      <At x={76} y={106}><Sprite rows={LOCK_OPEN} scale={2} /></At>
+      <At x={100} y={118}><Sprite rows={SKULL} scale={2} /></At>
+      <Label x={20} y={180} size={14}>someone&apos;s personal vercel</Label>
+
+      <At x={250} y={138}><Sprite rows={LAPTOP} scale={4} /></At>
+      <At x={262} y={108} className="bob-2"><Sprite rows={APP} scale={2} swap={{ b: 'R' }} /></At>
+      <At x={300} y={98} className="flicker"><Sprite rows={FLAME} scale={2} /></At>
+      <Label x={242} y={180} size={14}>the intern&apos;s laptop</Label>
+
+      <Ground y={340} h={3} />
+      <At x={36} y={292}><Sprite rows={PULL_REQUEST} scale={4} /></At>
+      <At x={46} y={262} className="bob-3"><Sprite rows={APP} scale={2} swap={{ b: 'P' }} /></At>
+      <At x={94} y={262} className="flicker"><Sprite rows={CLOCK} scale={2} /></At>
+      <Label x={14} y={350} size={14}>a PR waiting on an engineer</Label>
+
+      <At x={262} y={300}><Sprite rows={SIGN} scale={4} /></At>
+      <At x={272} y={268} className="bob-4"><Sprite rows={APP} scale={2} swap={{ b: 'O' }} /></At>
+      <At x={312} y={256} className="flicker"><Sprite rows={WARN} scale={2} /></At>
+      <Label x={212} y={350} size={14}>a public URL, by accident</Label>
+    </StageM>
+    </>
   );
 }
 
@@ -103,6 +149,7 @@ export function MessScene() {
 export function WirlScene() {
   const policy = ['login required', 'teams only', 'audit log on', 'no public URLs'];
   return (
+    <>
     <Stage h={340}>
       <Ground y={290} />
 
@@ -176,12 +223,79 @@ export function WirlScene() {
         </div>
       </At>
     </Stage>
+    <StageM h={440}>
+      <Ground y={190} h={3} />
+      <At x={0} y={64}><Sprite rows={CRANE} scale={3.5} /></At>
+      <At x={122} y={80}>
+        <div className="relative overflow-hidden" style={{ width: 16, height: 70 }}>
+          <div className="hook-drop absolute left-0 top-0" style={{ width: 16, height: 70 }}>
+            <div className="absolute bg-ink" style={{ left: 6, top: 0, width: 3, height: 52 }} />
+            <Sprite rows={HOOK} scale={3} className="absolute" style={{ left: 0, top: 52 }} />
+          </div>
+        </div>
+      </At>
+      <At x={60} y={151} className="jig">
+        <div className="relative">
+          <Sprite rows={ROBOT} scale={3} />
+          <Sprite rows={HARDHAT} scale={3} className="absolute" style={{ left: 3, top: -6 }} />
+        </div>
+      </At>
+      <At x={120} y={151} className="jig">
+        <div className="hop-b relative">
+          <Sprite rows={ROBOT} scale={3} swap={{ B: 'P' }} />
+          <Sprite rows={HARDHAT} scale={3} className="absolute" style={{ left: 3, top: -6 }} />
+        </div>
+      </At>
+      <At x={126} y={118} className="fly-in-m"><Sprite rows={APP} scale={2.5} /></At>
+      <At x={30} y={110} className="dust"><Sprite rows={DUST} scale={6} /></At>
+      <At x={150} y={96} className="hammer"><Sprite rows={HAMMER} scale={3} /></At>
+      <At x={44} y={100} className="bang-1"><Sprite rows={BANG} scale={2} /></At>
+      <At x={110} y={88} className="bang-2"><Sprite rows={BANG} scale={2} /></At>
+      <At x={170} y={140} className="bang-3"><Sprite rows={BANG} scale={2} /></At>
+      <At x={90} y={100} className="hat-fly"><Sprite rows={HARDHAT} scale={3} /></At>
+      <Label x={56} y={198} size={14}>your agents</Label>
+
+      <At x={200} y={20} className="cloud-shake">
+        <div className="relative">
+          <Sprite rows={CLOUD} scale={7} swap={{ W: 'L' }} />
+          <Sprite rows={SWIRL} scale={3} swap={{ K: 'k' }} className="absolute" style={{ left: 50, top: 12 }} />
+          <Sprite rows={LOCK_CLOSED} scale={4} className="absolute" style={{ left: 112, top: -18 }} />
+        </div>
+      </At>
+      <Label x={258} y={84} size={14}>Wirl</Label>
+
+      <At x={330} y={62} className="spark"><div className="w-1.5 h-1.5 bg-ink" /></At>
+      <At x={340} y={76} className="spark"><div className="w-1.5 h-1.5 bg-ink" /></At>
+      <At x={326} y={88} className="spark"><div className="w-1.5 h-1.5 bg-ink" /></At>
+      <At x={330} y={70} className="spit-m">
+        <div className="relative" style={{ width: 30, height: 22 }}>
+          <Sprite rows={APP_BLANK} scale={2.5} swap={{ b: 'g' }} />
+          <Sprite rows={SWIRL} scale={1} className="absolute" style={{ left: 9, top: 9 }} />
+          <Sprite rows={LOCK_CLOSED} scale={2} className="pop absolute" style={{ left: 7, top: -18 }} />
+        </div>
+      </At>
+      <Label x={252} y={198} size={14}>the app, on Wirl</Label>
+
+      <At x={20} y={232}>
+        <div className="px-window w-[340px] p-4">
+          <div className="font-pixel text-[20px] leading-none mb-3">governance policy</div>
+          {policy.map((p) => (
+            <div key={p} className="flex items-center gap-3 py-1.5 border-t-2 border-ink/15 font-pixel text-[17px] leading-none">
+              <Sprite rows={CHECK} scale={3} /> {p}
+            </div>
+          ))}
+          <div className="mt-3 font-term text-[20px] leading-none text-gb-mid">deploy: allowed <span className="blink">_</span></div>
+        </div>
+      </At>
+    </StageM>
+    </>
   );
 }
 
 /* Colleagues pass an app around and make it better. */
 export function ShareScene() {
   return (
+    <>
     <Stage h={240}>
       <Ground y={200} />
       <At x={190} y={144}><Sprite rows={PERSON} scale={4} /></At>
@@ -194,6 +308,19 @@ export function ShareScene() {
       <Bubble x={470} y={60}>nice. added a filter</Bubble>
       <Bubble x={790} y={74}>shipped it again</Bubble>
     </Stage>
+    <StageM h={220}>
+      <Ground y={180} h={3} />
+      <At x={40} y={138}><Sprite rows={PERSON} scale={3} /></At>
+      <At x={175} y={138}><Sprite rows={PERSON} scale={3} swap={{ b: 'R', H: 'h' }} /></At>
+      <At x={310} y={138}><Sprite rows={PERSON} scale={3} swap={{ b: 'P' }} /></At>
+      <At x={108} y={118} className="bob-1"><Sprite rows={APP_BLANK} scale={2.5} swap={{ b: 'g' }} /></At>
+      <At x={244} y={118} className="bob-3"><Sprite rows={APP_BLANK} scale={2.5} swap={{ b: 'g' }} /></At>
+      <At x={190} y={108} className="bob-2"><Sprite rows={HEART} scale={2} /></At>
+      <Bubble x={8} y={70}>fixed the export</Bubble>
+      <Bubble x={128} y={34}>nice. added a filter</Bubble>
+      <Bubble x={246} y={74}>shipped it again</Bubble>
+    </StageM>
+    </>
   );
 }
 

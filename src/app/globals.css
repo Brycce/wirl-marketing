@@ -244,3 +244,32 @@ body { font-optical-sizing: auto; }
   .pop { transform: scale(1); }
   .spark { opacity: 0; }
 }
+
+/* Phone stages: 380px wide, drawn at full pixel size, no shrinking. */
+.stage-m { --sm: 1; width: calc(380px * var(--sm)); height: calc(var(--h) * var(--sm)); margin: 0 auto; position: relative; }
+.stage-m > .stage-inner { position: absolute; left: 0; top: 0; width: 380px; height: var(--h); transform: scale(var(--sm)); transform-origin: top left; }
+@media (max-width: 400px) { .stage-m { --sm: 0.9; } }
+
+/* The Wirl loop on a phone: same beats, shorter distances. */
+.fly-in-m { animation: fly-in-m 10s ease-in-out infinite; }
+@keyframes fly-in-m {
+  0%, 37%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
+  38%       { transform: translate(0, -8px) scale(1.25) rotate(0deg); opacity: 1; }
+  40%, 45%  { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  50%       { transform: translate(60px, -150px) scale(1) rotate(180deg); }
+  56%       { transform: translate(124px, -78px) scale(1) rotate(360deg); opacity: 1; }
+  57%, 100% { transform: translate(124px, -78px) scale(1) rotate(360deg); opacity: 0; }
+}
+.spit-m { animation: spit-m 10s ease-out infinite; }
+@keyframes spit-m {
+  0%, 65%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  66%       { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  71%       { transform: translate(18px, -30px) rotate(-20deg); }
+  76%, 97%  { transform: translate(-30px, 98px) rotate(0deg); opacity: 1; }
+  100%      { transform: translate(-30px, 98px) rotate(0deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fly-in-m, .spit-m { animation: none; }
+  .fly-in-m { opacity: 1; }
+  .spit-m { opacity: 1; transform: translate(-30px, 98px); }
+}
