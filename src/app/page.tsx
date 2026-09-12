@@ -9,15 +9,15 @@ import { HeroScene, MessScene, WirlScene, ShareScene, AdminPanel, Terminal } fro
 const situations = [
   {
     title: 'Finance needs a tool by Friday.',
-    body: 'Someone describes it to an agent on Tuesday. It is live behind the company sign-in that afternoon, and only Finance can open it. Nobody filed a ticket, and nobody had to wire up a login.',
+    body: 'Someone describes it to an agent on Tuesday. It is live behind the company sign-in that afternoon, open to everyone at the company or only to the people she names. Nobody filed a ticket, and nobody had to wire up a login.',
   },
   {
     title: 'An agent ships something at 2am.',
-    body: 'It cannot ship it public, and it cannot ship it to everyone. Whatever it built is on Wirl by morning, with the team it picked and a record of what it did.',
+    body: 'It cannot ship it public unless someone chooses that. Whatever it built is on Wirl by morning, company-only, with a record of what it did. If what it shipped breaks, Wirl rolls it back to the last version that worked, and the record says so.',
   },
   {
     title: 'Security asks for the list.',
-    body: 'You send the list. Every app, who built it, what it connects to, who can open it, and what happened inside. It took a minute, not a week of asking around.',
+    body: 'You send the list. Every app, who built it, what it connects to, who can open it, and what happened inside. It is the Connections and Activity pages, and it took a minute rather than a week of asking around.',
   },
 ];
 
@@ -28,27 +28,27 @@ const h2 = 'font-pixel font-bold leading-[1.05] text-balance';
 const faqs: [string, string][] = [
   [
     'What is Wirl?',
-    'Wirl is where your team deploys the internal tools they vibe-code, and where you get the full picture: every app, who built it, which credentials and data sources it uses, and who can open it.',
+    'A place to put the internal tools your team builds, by hand or with a coding agent. Every app lands behind your company\'s sign-in, open to your company or to the people you name, with a record of who built it, what it connects to, and what happened inside.',
   ],
   [
     'Does it work with apps built by AI agents?',
-    'Yes. Connect Claude Code, Codex, Cursor, or any MCP-compatible agent to Wirl and it can deploy directly. Login, permissions, and logging apply to every app the same way, however it was built.',
+    'It is built for them. Add Wirl to Claude Code, Codex, Cursor, or anything that speaks MCP, and ask the agent to deploy. It gets a URL back, and the keys for any API the app needs go from your browser into Wirl\'s vault, never through the agent.',
   ],
   [
     'Who can open an app on Wirl?',
-    'People signed in with your company login who are on a team you have granted. There is no public URL unless you make one. Remove someone from a team and they lose every app that team could open.',
+    'By default, everyone who signs in with your company\'s Google account, and nobody else. The person who built it can narrow that to named people, or open it to anyone with the link. Every change is on the record.',
   ],
   [
     'What does the audit log record?',
-    'Deploys, who opened which app, what they exported or changed, denied access attempts, and permission changes. An access review becomes a query instead of a week of asking around.',
+    'Who deployed, shared, opened, was refused, changed a key, or was removed, and what each app called through its connections, by host. Never the contents of a request or a response, and never a key.',
   ],
   [
     'Is Wirl a replacement for Vercel?',
-    'For internal tools, yes: it is where they get deployed and hosted. Keep whatever you use for your public product. Wirl is for the apps that should never have been public in the first place.',
+    'No. Vercel is for the site you show the world. Wirl is for the tools you show your colleagues: private by default, connected to your internal systems, with an admin who can see all of it. Static apps and server-side apps written as one module both work; it is not a general host.',
   ],
   [
     'When can I use it?',
-    'Connect your coding agent to the Wirl MCP server and ask it to deploy something. Wirl is in private beta, so if you would rather talk first, join the waitlist and we will write when your workspace is ready.',
+    'Private beta now. Connect your coding agent and ask it to deploy something, or leave a work email and we will get you in.',
   ],
 ];
 
@@ -81,7 +81,7 @@ export default function Home() {
             Let your people build.
           </h1>
           <p className="mt-6 text-[17px] md:text-lg leading-relaxed max-w-[48ch] mx-auto text-ink/85">
-            Wirl hosts the internal tools your team builds, by hand or with agents. Every app lands behind your company login, open to the team you pick, with a log of everything that happens inside.
+            Wirl hosts the internal tools your team builds, by hand or with agents. Every app lands behind your company&apos;s sign-in, open to your company or to the people you name, with a record of who built it, what it connects to, and what happened inside.
           </p>
           <p className="mt-3 font-pixel text-[18px] text-dim leading-none">
             Fun for the people building. Boring for the people responsible. On purpose.
@@ -112,7 +112,7 @@ export default function Home() {
       <section className={`${wrap} py-16 md:py-24 text-center`}>
         <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Give their agents a place to ship.</h2>
         <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-          Point Claude Code or Cursor at Wirl. When it deploys, the app lands behind your login, open only to the teams you pick, logged. Your governance policy is checked at deploy time, not in a review three weeks later.
+          Point Claude Code, Codex, or Cursor at Wirl and ask it to deploy. The app lands behind your company&apos;s sign-in, open to everyone at your company or only to the people you name. What it connects to is declared and checked at deploy time, its keys never pass through the agent, and every call is logged.
         </p>
         <div className="mt-10 overflow-hidden">
           <WirlScene />
@@ -127,14 +127,15 @@ export default function Home() {
         <div className={`${wrap} py-16 md:py-24 text-center`}>
           <h2 className="font-pixel font-bold text-4xl md:text-5xl leading-none text-balance">Bring your own coding agent.</h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-            Wirl is an MCP server. Whatever your team already writes code with can deploy to it, and every app gets the same login, teams, and log.
+            Wirl is an MCP server. Whatever your team already writes code with can deploy to it, and every app gets the same sign-in, the same sharing, and the same record.
           </p>
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
             {[
               ['Claude Code', 'One command in the terminal.', 'B'],
-              ['Codex', 'Two lines in config.toml.', 'P'],
+              ['Codex', 'Three lines in config.toml.', 'P'],
               ['Cursor', 'One click, or one JSON file.', 'O'],
-              ['Anything with MCP', 'Point it at the URL. Sign in once.', 'g'],
+              ['Anything with MCP', 'Run the command. Sign in once.', 'g'],
+              ['No MCP needed', 'npx wirl skill writes the file Claude Code reads.', 'Y'],
             ].map(([name, note, tone]) => (
               <div key={name} className="px-window p-4 flex items-start gap-3">
                 <Sprite rows={ROBOT} scale={3} swap={{ B: tone }} className="shrink-0" />
@@ -149,13 +150,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Built in */}
+      <section className={`${wrap} py-16 md:py-24`}>
+        <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto text-center`}>Built in, not bolted on.</h2>
+        <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            ['The agent never sees your keys.', 'Declare the connection, deploy, follow one link, and type the key in your own browser. It goes straight into Wirl\'s vault. Every call the app makes through it is logged by host.'],
+            ['Your company is already in.', 'Sign in with your work Google account and everyone at your company is in. No invites, no admin setup. The first person from a company makes the company\'s space.'],
+            ['It runs on your machine the same way.', 'npx wirl dev gives you the same database shape, the same identity headers, and the same broker for your API calls as the deployed app.'],
+            ['Fork it.', 'npx wirl pull gives anyone who can open an app its source, to keep building.'],
+            ['Rolls back on its own.', 'A deploy that starts failing in its first half hour goes back to the last healthy version, and the record says so.'],
+            ['Company-only by default.', 'Private for a personal account, company-wide for a work one. Public only when an owner chooses it, and that choice is on the record too.'],
+          ].map(([title, body]) => (
+            <div key={title} className="px-window p-5">
+              <div className="font-pixel text-[21px] leading-none">{title}</div>
+              <p className="mt-3 text-[14.5px] text-dim leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Share */}
       <section className="bg-gb-pale border-y-[3px] border-ink">
         <div className={`${wrap} py-16 md:py-20 text-center`}>
           <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>Share it. Improve it.<br />Ship it again.</h2>
           <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[54ch] mx-auto">
-            Every app has a URL your colleagues can open with the login they already have. They can fork it, fix it, and ship it back. Every version lands on the list too.
+            Every app has a URL your colleagues can open with the sign-in they already have. Anyone who can open it can pull the source, fix it, and ship it again. Every version lands on the list.
           </p>
+          <div className="mt-6 px-window-green inline-block px-5 py-3 font-term text-[20px] md:text-[22px] leading-none scanlines">
+            <span className="text-gb-green">$</span> npx wirl pull supplier-payments
+          </div>
           <div className="mt-8 overflow-hidden">
             <ShareScene />
           </div>
@@ -166,7 +190,7 @@ export default function Home() {
       <section className={`${wrap} py-16 md:py-24 text-center`}>
         <h2 className={`${h2} text-3xl md:text-5xl max-w-[22ch] mx-auto`}>You get the full picture.</h2>
         <p className="mt-5 text-[15px] md:text-base text-dim leading-relaxed max-w-[56ch] mx-auto">
-          One screen with every internal app people have shipped: who built it, which credentials and data sources it uses, which teams can open it, and everything that happened inside. When security asks, you send the screen.
+          One screen with every internal app people have shipped: who built it, what it connects to and whether it still needs a key, who can open it, and what it called last. When security asks, you send the screen.
         </p>
         <div className="mt-10">
           <AdminPanel />

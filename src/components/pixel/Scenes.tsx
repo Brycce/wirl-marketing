@@ -145,9 +145,9 @@ export function MessScene() {
   );
 }
 
-/* Agents carry apps into Wirl. Policy checked on the way in; the app comes out locked. */
+/* Agents build an app and throw it into Wirl. Connections are checked on the way in; the app comes out locked. */
 export function WirlScene() {
-  const policy = ['login required', 'teams only', 'audit log on', 'no public URLs'];
+  const policy = ['login required', 'company-only by default', 'keys never in the app', 'audit log on', 'rolls back on its own'];
   return (
     <>
     <Stage h={340}>
@@ -211,19 +211,19 @@ export function WirlScene() {
       </At>
       <Label x={650} y={302}>the app, on Wirl</Label>
 
-      <At x={790} y={110}>
+      <At x={790} y={64}>
         <div className="px-window w-[300px] p-4">
-          <div className="font-pixel text-[20px] leading-none mb-3">governance policy</div>
+          <div className="font-pixel text-[20px] leading-none mb-3">governance, built in</div>
           {policy.map((p) => (
             <div key={p} className="flex items-center gap-3 py-1.5 border-t-2 border-ink/15 font-pixel text-[17px] leading-none">
               <Sprite rows={CHECK} scale={3} /> {p}
             </div>
           ))}
-          <div className="mt-3 font-term text-[20px] leading-none text-gb-mid">deploy: allowed <span className="blink">_</span></div>
+          <div className="mt-3 font-term text-[20px] leading-none text-gb-mid">deployed · company-only · 1 key needed <span className="blink">_</span></div>
         </div>
       </At>
     </Stage>
-    <StageM h={440}>
+    <StageM h={500}>
       <Ground y={190} h={3} />
       <At x={0} y={64}><Sprite rows={CRANE} scale={3.5} /></At>
       <At x={122} y={80}>
@@ -278,13 +278,13 @@ export function WirlScene() {
 
       <At x={20} y={232}>
         <div className="px-window w-[340px] p-4">
-          <div className="font-pixel text-[20px] leading-none mb-3">governance policy</div>
+          <div className="font-pixel text-[20px] leading-none mb-3">governance, built in</div>
           {policy.map((p) => (
             <div key={p} className="flex items-center gap-3 py-1.5 border-t-2 border-ink/15 font-pixel text-[17px] leading-none">
               <Sprite rows={CHECK} scale={3} /> {p}
             </div>
           ))}
-          <div className="mt-3 font-term text-[20px] leading-none text-gb-mid">deploy: allowed <span className="blink">_</span></div>
+          <div className="mt-3 font-term text-[20px] leading-none text-gb-mid">deployed · company-only · 1 key needed <span className="blink">_</span></div>
         </div>
       </At>
     </StageM>
@@ -325,47 +325,45 @@ export function ShareScene() {
 }
 
 /* The admin's screen: every app, who can open it, and the log. */
-const TEAMS = ['Fin', 'Sup', 'Eng', 'Ppl', 'Legal'];
-const ROWS: [string, string, string, boolean[]][] = [
-  ['customer-credits', 'sam', 'stripe · postgres', [false, true, false, false, false]],
-  ['supplier-payments', 'claude', 'stripe · netsuite', [true, false, false, false, false]],
-  ['candidate-pipeline', 'mei', 'greenhouse', [false, false, false, true, false]],
-  ['incident-handover', 'omar', 'pagerduty · slack', [false, false, true, false, false]],
-  ['nda-lookup', 'cursor', 'google drive', [false, false, false, false, true]],
-  ['budget-lines', 'dana', 'sheets · postgres', [true, false, false, false, false]],
+// The product's own columns. "Built by" is a person; the agent is how, not who.
+const ROWS: [string, string, string, string, string][] = [
+  ['customer-credits', 'sam · via Claude Code', 'stripe · postgres', 'Company', 'api.stripe.com · 09:41'],
+  ['supplier-payments', 'dana · via Claude Code', 'stripe · netsuite (needs a key)', '3 people', '—'],
+  ['candidate-pipeline', 'mei · via Cursor', 'greenhouse', 'Company', 'api.greenhouse.io · 09:12'],
+  ['incident-handover', 'omar · via Claude Code', 'pagerduty · slack', 'Company', 'events.pagerduty.com · 09:03'],
+  ['nda-lookup', 'priya · by hand', 'google-drive', '2 people', 'www.googleapis.com · 08:55'],
 ];
 
 export function AdminPanel() {
   return (
-    <div className="px-window max-w-4xl mx-auto">
+    <div className="px-window max-w-5xl mx-auto">
       <div className="flex items-center justify-between px-4 py-2 border-b-[3px] border-ink bg-sand font-pixel text-[17px] leading-none">
         <span className="inline-flex items-center gap-2"><Sprite rows={SWIRL} scale={1.6} /> harbor.co · admin</span>
-        <span className="inline-flex items-center gap-3"><span>apps</span><span className="text-dim">teams</span><span className="text-dim">log</span></span>
+        <span className="inline-flex items-center gap-3"><span>apps</span><span className="text-dim">connections</span><span className="text-dim">activity</span></span>
       </div>
       <div className="p-4 font-pixel text-[16px] leading-none overflow-x-auto">
-        <div className="grid grid-cols-[1fr_72px_150px_repeat(5,44px)] gap-y-2 gap-x-2 items-center min-w-[660px]">
+        <div className="grid grid-cols-[150px_180px_240px_100px_1fr] gap-y-2 gap-x-3 items-center min-w-[920px]">
           <div className="text-dim">app</div>
           <div className="text-dim">built by</div>
           <div className="text-dim">uses</div>
-          {TEAMS.map((t) => <div key={t} className="text-dim text-center">{t}</div>)}
-          {ROWS.map(([name, by, uses, access]) => (
+          <div className="text-dim">who can open it</div>
+          <div className="text-dim">last called</div>
+          {ROWS.map(([name, by, uses, who, last]) => (
             <div key={name} className="contents">
-              <div className="py-1">{name}</div>
-              <div className="text-dim">{by}</div>
+              <div className="py-1 truncate">{name}</div>
+              <div className="text-dim truncate">{by}</div>
               <div className="text-dim truncate">{uses}</div>
-              {access.map((on, i) => (
-                <div key={i} className="flex justify-center">
-                  <span className={`px-tag block w-5 h-5 ${on ? 'bg-gb-green' : 'bg-sand'}`} />
-                </div>
-              ))}
+              <div className="truncate">{who}</div>
+              <div className="text-dim truncate">{last}</div>
             </div>
           ))}
         </div>
       </div>
       <div className="px-4 py-3 border-t-[3px] border-ink bg-gb-dark text-gb-light font-term text-[19px] leading-tight scanlines">
-        <div>09:42:05 priya@harbor.co denied nda-lookup · not in Legal</div>
-        <div>09:43:01 Wirl revoked lee@harbor.co · left Finance</div>
-        <div>09:43:20 omar@harbor.co opened incident-handover <span className="blink">_</span></div>
+        <div>09:42:05 priya@harbor.co denied nda-lookup · not shared</div>
+        <div>09:43:01 dana@harbor.co revoked stripe for supplier-payments</div>
+        <div>09:43:20 omar@harbor.co opened incident-handover</div>
+        <div>09:44:10 wirl rolled supplier-payments back v4 → v3 · 5 failures <span className="blink">_</span></div>
       </div>
     </div>
   );
@@ -375,11 +373,13 @@ export function AdminPanel() {
 export function Terminal() {
   return (
     <div className="px-window-green max-w-3xl mx-auto p-5 font-term text-[22px] leading-tight scanlines">
-      <div><span className="text-gb-green">$</span> claude mcp add --transport http wirl https://app.wirl.dev/mcp</div>
+      <div><span className="text-gb-green">$</span> claude mcp add wirl -- npx -y @wirl/mcp</div>
       <div className="mt-3"><span className="text-gb-green">&gt;</span> build a supplier payments tool for finance and deploy it</div>
-      <div className="mt-3 pl-4">created   supplier-payments</div>
-      <div className="pl-4">policy    login ok · teams ok · audit ok</div>
-      <div className="pl-4">live      supplier-payments.harbor.wirl.app <span className="blink">_</span></div>
+      <div className="mt-3 pl-4">Deployed supplier-payments v1 (3 files).</div>
+      <div className="pl-4">https://harbor--supplier-payments.wirl.app</div>
+      <div className="pl-4">Visible to everyone at harbor.co. Share by name to add someone outside it.</div>
+      <div className="mt-3 pl-4">Needs a key: stripe. Add it here and the app starts working:</div>
+      <div className="pl-4">https://app.wirl.dev/apps/harbor/supplier-payments/connections <span className="blink">_</span></div>
     </div>
   );
 }

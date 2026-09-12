@@ -52,7 +52,7 @@ export default async function Image() {
           A secure place for the internal tools your team makes. Governance built in.
         </div>
         <div style={{ display: 'flex', gap: 16, marginTop: 48 }}>
-          {['anyone can ship', 'login on every app', 'team permissions', 'audit log'].map((text) => (
+          {['anyone can ship', 'login on every app', 'keys never in the app', 'audit log'].map((text) => (
             <div key={text} style={{ background: '#FBF7E9', border: '4px solid #1F2A1F', boxShadow: '6px 6px 0 #8BAC0F', padding: '10px 22px', fontSize: 28 }}>
               {text}
             </div>

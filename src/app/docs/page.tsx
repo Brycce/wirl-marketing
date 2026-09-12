@@ -4,7 +4,7 @@ import Wordmark from '@/components/Wordmark';
 
 export const metadata: Metadata = {
   title: 'Docs',
-  description: 'Wirl documentation lands when the private beta opens: shipping an app, teams and permissions, the audit log, and driving it all from your coding agent over MCP.',
+  description: 'Wirl documentation lands when the private beta opens: shipping an app, who can open what, connections and keys, running it on your machine, the audit log, the MCP tools, and driving it all from your coding agent over MCP.',
   alternates: { canonical: '/docs' },
 };
 
@@ -23,7 +23,7 @@ export default function Docs() {
           Docs land when the beta opens.
         </h1>
         <p className="mt-6 text-[17px] text-ink/85 max-w-[46ch] mx-auto leading-relaxed">
-          They will cover shipping an app, defining teams and permissions, reading the audit log, and driving all of it from your coding agent over MCP.
+          They will cover shipping an app, who can open what, connections and keys, running it on your machine, reading the audit log, the MCP tools, and driving all of it from your coding agent.
         </p>
         <Link href="/#waitlist" className="px-btn inline-block mt-8 px-5 py-2.5 font-pixel text-[18px] leading-none">
           Join the waitlist

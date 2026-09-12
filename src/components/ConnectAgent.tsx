@@ -3,34 +3,41 @@
 import { useState } from 'react';
 
 // Getting started is connecting your coding agent to Wirl's MCP server.
-// One block, one tab per agent, one copy button.
+// One block, one tab per agent, one copy button. These are today's stdio
+// commands; when the hosted endpoint ships, this list is the only thing to change.
 
-const CURSOR_DEEPLINK = 'cursor://anysphere.cursor-deeplink/mcp/install?name=wirl&config=eyJ1cmwiOiJodHRwczovL2FwcC53aXJsLmRldi9tY3AifQ==';
+const CURSOR_DEEPLINK = 'cursor://anysphere.cursor-deeplink/mcp/install?name=wirl&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkB3aXJsL21jcCJdfQ==';
 
 const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   {
     id: 'claude',
     label: 'Claude Code',
-    hint: 'Run this in your terminal. It opens the browser once to sign in.',
-    snippet: 'claude mcp add --transport http wirl https://app.wirl.dev/mcp',
+    hint: 'Run this once. The first time you ask your agent to deploy, it shows you a link and a code; approve it in the browser and you are in.',
+    snippet: 'claude mcp add wirl -- npx -y @wirl/mcp',
   },
   {
     id: 'codex',
     label: 'Codex',
-    hint: 'Add this to ~/.codex/config.toml.',
-    snippet: '[mcp_servers.wirl]\nurl = "https://app.wirl.dev/mcp"',
+    hint: 'Add these three lines to ~/.codex/config.toml.',
+    snippet: '[mcp_servers.wirl]\ncommand = "npx"\nargs = ["-y", "@wirl/mcp"]',
   },
   {
     id: 'cursor',
     label: 'Cursor',
     hint: 'Add this to .cursor/mcp.json, or use the button.',
-    snippet: '{ "mcpServers": { "wirl": { "url": "https://app.wirl.dev/mcp" } } }',
+    snippet: '{ "mcpServers": { "wirl": { "command": "npx", "args": ["-y", "@wirl/mcp"] } } }',
   },
   {
     id: 'other',
-    label: 'Anything else',
-    hint: 'Any client that speaks MCP over HTTP. Sign-in happens in the browser.',
-    snippet: 'https://app.wirl.dev/mcp',
+    label: 'Other MCP',
+    hint: 'Any client that speaks MCP. Run the command. Sign in once.',
+    snippet: '{ "mcpServers": { "wirl": { "command": "npx", "args": ["-y", "@wirl/mcp"] } } }',
+  },
+  {
+    id: 'skill',
+    label: 'No MCP',
+    hint: 'Writes the skill file Claude Code reads. No MCP needed.',
+    snippet: 'npx wirl skill',
   },
 ];
 
@@ -75,7 +82,7 @@ export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
               Add to Cursor
             </a>
           )}
-          <span className="font-sans text-[13px] text-gb-light/80">{agent.hint}</span>
+          <span className="font-sans text-[13px] text-gb-light/80 max-w-[44ch]">{agent.hint}</span>
         </div>
       </div>
       <p className="mt-3 text-[13px] text-dim">
