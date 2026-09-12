@@ -4,7 +4,7 @@ import WaitlistForm from '@/components/WaitlistForm';
 import ConnectAgent from '@/components/ConnectAgent';
 import Sprite from '@/components/pixel/Sprite';
 import { ROBOT } from '@/components/pixel/sprites';
-import { HeroScene, MessScene, WirlScene, ShareScene, AdminPanel, Terminal } from '@/components/pixel/Scenes';
+import { HeroScene, MessScene, WirlScene, ShareScene, AdminPanel } from '@/components/pixel/Scenes';
 
 const situations = [
   {
@@ -116,9 +116,6 @@ export default function Home() {
         </p>
         <div className="mt-10 overflow-hidden">
           <WirlScene />
-        </div>
-        <div className="mt-10">
-          <Terminal />
         </div>
       </section>
 

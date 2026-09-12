@@ -368,18 +368,3 @@ export function AdminPanel() {
     </div>
   );
 }
-
-/* The green screen. */
-export function Terminal() {
-  return (
-    <div className="px-window-green max-w-3xl mx-auto p-5 font-term text-[22px] leading-tight scanlines">
-      <div><span className="text-gb-green">$</span> claude mcp add wirl -- npx -y @wirl/mcp</div>
-      <div className="mt-3"><span className="text-gb-green">&gt;</span> build a supplier payments tool for finance and deploy it</div>
-      <div className="mt-3 pl-4">Deployed supplier-payments v1 (3 files).</div>
-      <div className="pl-4">https://harbor--supplier-payments.wirl.app</div>
-      <div className="pl-4">Visible to everyone at harbor.co. Share by name to add someone outside it.</div>
-      <div className="mt-3 pl-4">Needs a key: stripe. Add it here and the app starts working:</div>
-      <div className="pl-4">https://app.wirl.dev/apps/harbor/supplier-payments/connections <span className="blink">_</span></div>
-    </div>
-  );
-}
