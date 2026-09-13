@@ -54,9 +54,8 @@ export function ShareScene() {
 }
 
 /* Where internal tools live today: four small sheets, each a bad idea. */
-const mess: { label: string; tilt: string; art: React.ReactNode }[] = [
+const mess: { tilt: string; art: React.ReactNode }[] = [
   {
-    label: "someone's personal Vercel",
     tilt: '-rotate-1',
     art: (
       <Scene id="m1" w={120} h={92}>
@@ -68,7 +67,6 @@ const mess: { label: string; tilt: string; art: React.ReactNode }[] = [
     ),
   },
   {
-    label: "the intern's laptop",
     tilt: 'rotate-1',
     art: (
       <Scene id="m2" w={120} h={92}>
@@ -78,7 +76,6 @@ const mess: { label: string; tilt: string; art: React.ReactNode }[] = [
     ),
   },
   {
-    label: 'a pull request waiting on an engineer',
     tilt: 'rotate-2',
     art: (
       <Scene id="m3" w={120} h={92}>
@@ -88,7 +85,6 @@ const mess: { label: string; tilt: string; art: React.ReactNode }[] = [
     ),
   },
   {
-    label: 'a public URL, by accident',
     tilt: '-rotate-2',
     art: (
       <Scene id="m4" w={120} h={92}>
@@ -105,13 +101,13 @@ const mess: { label: string; tilt: string; art: React.ReactNode }[] = [
   },
 ];
 
-export function MessTiles() {
+export function MessTiles({ labels }: { labels: [string, string, string, string] }) {
   return (
     <div className="grid grid-cols-2 gap-4 md:gap-5">
-      {mess.map((t) => (
-        <div key={t.label} className={`paper p-4 ${t.tilt}`}>
+      {mess.map((t, i) => (
+        <div key={labels[i]} className={`paper p-4 ${t.tilt}`}>
           <div className="mx-auto w-[120px]">{t.art}</div>
-          <p className="mt-3 text-center text-[13.5px] font-medium leading-snug">{t.label}</p>
+          <p className="mt-3 text-center text-[13.5px] font-medium leading-snug">{labels[i]}</p>
         </div>
       ))}
     </div>
@@ -151,9 +147,9 @@ export function AdminTable() {
         <span className="text-dim">5 apps · 3 admins</span>
       </div>
       <div className="mt-4 overflow-x-auto">
-        <table className="w-full min-w-[440px] table-fixed text-[12.5px] leading-snug">
+        <table className="w-full min-w-[440px] md:min-w-0 table-fixed text-[12.5px] leading-snug">
           <colgroup>
-            <col className="w-[27%]" /><col className="w-[25%]" /><col className="w-[20%]" /><col className="w-[15%]" /><col className="w-[13%]" />
+            <col className="w-[25%]" /><col className="w-[25%]" /><col className="w-[20%]" /><col className="w-[15%]" /><col className="w-[15%]" />
           </colgroup>
           <thead>
             <tr className="text-[10.5px] uppercase tracking-wider text-dim">

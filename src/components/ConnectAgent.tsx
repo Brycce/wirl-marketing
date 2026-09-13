@@ -41,7 +41,7 @@ const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   },
 ];
 
-export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
+export default function ConnectAgent({ id = 'connect', after }: { id?: string; after: string }) {
   const [active, setActive] = useState('claude');
   const [copied, setCopied] = useState(false);
   const agent = AGENTS.find((a) => a.id === active) ?? AGENTS[0];
@@ -86,7 +86,11 @@ export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
         </div>
       </div>
       <p className="mt-3 text-[14px] text-dim">
-        Then ask your agent to build something and deploy it. Not on an agent yet? <a href="#waitlist" className="underline underline-offset-4 hover:text-ink">Join the waitlist</a>.
+        {after.split(/(waitlist)/i).map((part, i) =>
+          /^waitlist$/i.test(part)
+            ? <a key={i} href="#waitlist" className="underline underline-offset-4 hover:text-ink">{part}</a>
+            : <span key={i}>{part}</span>
+        )}
       </p>
     </div>
   );

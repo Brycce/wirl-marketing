@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const SITE = 'https://wirl.dev';
-const TITLE = 'Wirl: a secure place for the internal tools your team builds';
+const TITLE = 'Wirl: internal tools on a link only your company can open';
 const DESCRIPTION =
-  'Where your team deploys the internal tools they vibe-code, and where you get the full picture: every app, its credentials and data sources, and who can open it.';
+  "Your people build an internal tool, by hand or with a coding agent, and deploy it to a link behind your company's Google sign-in. You get the list: every app, who built it, what it connects to, who can open it.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
