@@ -57,35 +57,35 @@ export default function ConnectAgent({ id = 'connect' }: { id?: string }) {
   }
 
   return (
-    <div id={id} className="max-w-2xl mx-auto text-center scroll-mt-8">
-      <div className="flex flex-wrap justify-center gap-2 mb-3" role="tablist" aria-label="Choose your coding agent">
+    <div id={id} className="max-w-xl scroll-mt-8">
+      <div className="flex flex-wrap gap-2 mb-3" role="tablist" aria-label="Choose your coding agent">
         {AGENTS.map((a) => (
           <button
             key={a.id}
             role="tab"
             aria-selected={a.id === active}
             onClick={() => { setActive(a.id); setCopied(false); }}
-            className={`px-tag px-3 py-1.5 font-pixel text-[16px] leading-none transition-colors ${a.id === active ? 'bg-ink text-cream' : 'bg-card hover:bg-sand'}`}
+            className={`chip ${a.id === active ? 'chip-on' : 'hover:bg-sand'}`}
           >
             {a.label}
           </button>
         ))}
       </div>
-      <div className="px-window-green p-4 md:p-5">
-        <pre className="font-term text-[20px] md:text-[22px] leading-tight whitespace-pre-wrap break-all scanlines text-center">{agent.snippet}</pre>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-          <button onClick={copy} className="px-btn px-btn-sun px-4 py-2 font-pixel text-[16px] leading-none">
+      <div className="paper-dark p-4 md:p-5">
+        <pre className="font-mono text-[14.5px] md:text-[15px] leading-relaxed whitespace-pre-wrap break-all text-[#DDEBDD]">{agent.snippet}</pre>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button onClick={copy} className="btn btn-sun btn-sm">
             {copied ? 'Copied' : 'Copy'}
           </button>
           {agent.id === 'cursor' && (
-            <a href={CURSOR_DEEPLINK} className="px-btn px-4 py-2 font-pixel text-[16px] leading-none">
+            <a href={CURSOR_DEEPLINK} className="btn btn-sm bg-[#33402F]">
               Add to Cursor
             </a>
           )}
-          <span className="font-sans text-[13px] text-gb-light/80 max-w-[44ch]">{agent.hint}</span>
+          <span className="text-[13px] leading-snug text-[#DDEBDD]/70 max-w-[42ch]">{agent.hint}</span>
         </div>
       </div>
-      <p className="mt-3 text-[13px] text-dim">
+      <p className="mt-3 text-[14px] text-dim">
         Then ask your agent to build something and deploy it. Not on an agent yet? <a href="#waitlist" className="underline underline-offset-4 hover:text-ink">Join the waitlist</a>.
       </p>
     </div>

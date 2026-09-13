@@ -1,11 +1,12 @@
-import Sprite from './pixel/Sprite';
-import { SWIRL } from './pixel/sprites';
+import { SWIRL_PATH } from './swirl';
 
-export default function Wordmark({ size = 3 }: { size?: number }) {
+export default function Wordmark({ size = 28 }: { size?: number }) {
   return (
     <span className="inline-flex items-center gap-2">
-      <Sprite rows={SWIRL} scale={size} title="wirl" />
-      <span className="font-pixel font-bold leading-none" style={{ fontSize: size * 9 }}>wirl</span>
+      <svg viewBox="0 0 32 32" width={size} height={size} aria-hidden="true" focusable="false">
+        <path d={SWIRL_PATH} fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <span className="font-display font-semibold leading-none" style={{ fontSize: Math.round(size * 0.95) }}>wirl</span>
     </span>
   );
 }

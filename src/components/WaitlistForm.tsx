@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Sprite from './pixel/Sprite';
-import { CHECK } from './pixel/sprites';
 
 type State = 'idle' | 'submitting' | 'done' | 'error';
 
@@ -37,10 +35,13 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
   if (state === 'done') {
     return (
       <div className={`max-w-md flex items-start gap-3 ${center ? 'mx-auto justify-center' : ''}`}>
-        <Sprite rows={CHECK} scale={4} className="shrink-0 mt-1" />
+        <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" className="shrink-0 mt-0.5">
+          <circle cx="14" cy="14" r="14" fill="#2F7D4F" />
+          <path d="M8 14.5 l4 4 l8 -9" fill="none" stroke="#FCF8F0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
         <div className="text-left">
-          <p className="font-pixel text-xl leading-none">You&apos;re on the list.</p>
-          <p className="text-dim text-sm mt-1.5">We&apos;ll write when your workspace is ready.</p>
+          <p className="font-display font-semibold text-xl leading-none">You&apos;re on the list.</p>
+          <p className="text-dim text-[14px] mt-1.5">We&apos;ll write when your workspace is ready.</p>
         </div>
       </div>
     );
@@ -58,13 +59,9 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@company.com"
           disabled={state === 'submitting'}
-          className="px-input flex-1 min-w-0 px-4 py-2.5 text-[15px] placeholder:text-dim/70 disabled:opacity-60"
+          className="input flex-1 min-w-0 px-4 py-2.5 text-[15px] placeholder:text-dim/70 disabled:opacity-60"
         />
-        <button
-          type="submit"
-          disabled={state === 'submitting'}
-          className="px-btn px-5 py-2.5 font-pixel text-[18px] leading-none disabled:opacity-60 whitespace-nowrap"
-        >
+        <button type="submit" disabled={state === 'submitting'} className="btn disabled:opacity-60">
           {state === 'submitting' ? 'Joining' : 'Join the waitlist'}
         </button>
       </div>
