@@ -21,11 +21,11 @@ export function SnailMark({ size = 32, className = '', fast = false }: { size?: 
         <path d={STALK_A} />
         <path d={STALK_B} />
         {fast && (
-          <>
+          <g className="speed">
             <path d="M48 10 h7" />
             <path d="M49.5 17.5 h9" />
             <path d="M48 25 h7" />
-          </>
+          </g>
         )}
       </g>
       <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" />

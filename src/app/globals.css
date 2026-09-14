@@ -95,8 +95,35 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .spark-c { animation: spark-c 7s steps(1) infinite; opacity: 0; }
 @keyframes spark-c { 0%, 53% { opacity: 0; } 54% { opacity: 1; } 58% { opacity: 0; } 59% { opacity: 1; } 63%, 100% { opacity: 0; } }
 
+/* The snail. It sprints along the desk, waits, and goes again. */
+.dash { transform-box: fill-box; transform-origin: 50% 50%; animation: dash 7s cubic-bezier(.2,.9,.2,1) infinite; }
+@keyframes dash {
+  0%, 34% { transform: translateX(0); opacity: 1; }
+  40% { transform: translateX(-110px); opacity: 1; }
+  74% { transform: translateX(-110px); opacity: 1; }
+  76% { transform: translateX(-110px); opacity: 0; }
+  77% { transform: translateX(0); opacity: 0; }
+  79%, 100% { transform: translateX(0); opacity: 1; }
+}
+.race-1, .race-2, .race-3 { transform-box: fill-box; transform-origin: 50% 50%; animation: race 6s cubic-bezier(.2,.9,.2,1) infinite; }
+.race-2 { animation-delay: .35s; }
+.race-3 { animation-delay: .7s; }
+@keyframes race {
+  0%, 24% { transform: translateX(0); opacity: 1; }
+  32% { transform: translateX(-400px); opacity: 1; }
+  62% { transform: translateX(-400px); opacity: 1; }
+  64% { transform: translateX(-400px); opacity: 0; }
+  65% { transform: translateX(0); opacity: 0; }
+  68%, 100% { transform: translateX(0); opacity: 1; }
+}
+.wordmark .speed { opacity: 0; transition: opacity .18s ease; }
+.wordmark:hover .speed { opacity: 1; }
+.wordmark-mark { transition: transform .25s cubic-bezier(.2,.9,.2,1); }
+.wordmark:hover .wordmark-mark { transform: translateX(-3px); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .dash, .race-1, .race-2, .race-3 { animation: none; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .ship-in, .cloud-puff, .ship-out, .spark-a, .spark-b, .pass-a, .pass-b, .spark-c { animation: none; }
   .ship-out, .pass-b, .spark-a, .spark-b, .spark-c { opacity: 0; }
   .pass-a { opacity: 1; }

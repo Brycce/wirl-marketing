@@ -1,4 +1,5 @@
 import { Scene, Piece, Ground, Person, Robot, AppCard, Cloud, Lock, Laptop, Desk, Warn, Flame, Clock, Skull, Spark, Defs, P } from './Paper';
+import { PaperSnail } from './Snail';
 
 /* One person at a desk, an agent beside them, and the apps they are making.
    Fewer, bigger pieces: the panel is small, so every sheet has to read. */
@@ -7,13 +8,16 @@ export function HeroScene() {
   return (
     <Scene id={id} w={380} h={330}>
       <Cloud id={id} x={236} y={14} s={0.5} tone="#FFFFFF" />
-      <AppCard id={id} x={54} y={82} tone={P.blue} r={-5} className="float-1" />
       <AppCard id={id} x={168} y={40} tone={P.coral} r={3} className="float-2" />
       <Person id={id} x={70} y={178} shirt={P.coral} skin={0} hair={0} style="cap" sit />
       <Desk id={id} x={28} y={228} w={250} />
       <Laptop id={id} x={150} y={181} />
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
+      <g className="dash">
+        <PaperSnail id={id} x={232} y={186} s={0.6} fast />
+        <AppCard id={id} x={254} y={165} w={40} h={30} tone={P.blue} r={-8} />
+      </g>
     </Scene>
   );
 }
@@ -180,5 +184,18 @@ export function AdminTable() {
         ))}
       </div>
     </div>
+  );
+}
+
+/* Three snails, one carrying an app, crossing the closing panel in half a second. */
+export function RaceScene() {
+  const id = 'race';
+  return (
+    <svg viewBox="0 0 560 130" width="100%" className="block h-auto" aria-hidden="true" focusable="false">
+      <Defs id={id} />
+      <g className="race-1"><PaperSnail id={id} x={420} y={6} s={0.55} fast /></g>
+      <g className="race-2"><PaperSnail id={id} x={470} y={44} s={0.55} fast shell={P.coral} body="#BFD9EA" spiral={P.paper} /></g>
+      <g className="race-3"><PaperSnail id={id} x={440} y={82} s={0.55} fast shell={P.lilac} body="#F0C9BC" /><AppCard id={id} x={458} y={70} w={34} h={26} tone={P.green} onWirl r={-6} /></g>
+    </svg>
   );
 }

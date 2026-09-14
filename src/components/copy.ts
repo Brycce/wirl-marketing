@@ -65,6 +65,6 @@ export const copy: Copy = {
     { q: 'Is it a Vercel replacement?', a: 'For internal tools, yes. Vercel is still for the site you show the world.' },
     { q: 'When can I use it?', a: 'Private beta now. Connect your agent and deploy something, or leave your email.' },
   ],
-  closing_h2: 'Let your people build.',
-  closing_p: "Private beta. Leave your email and we'll get you in.",
+  closing_h2: 'Not that kind of snail.',
+  closing_p: "Fast, because everything it needs is on its back. Private beta. Leave your email and we'll get you in.",
 };
