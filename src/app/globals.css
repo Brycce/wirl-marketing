@@ -56,61 +56,32 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .flicker-soft { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker-soft 1.4s ease-in-out infinite; }
 @keyframes flicker-soft { 0%, 100% { transform: scale(1) rotate(0); } 33% { transform: scale(1.06) rotate(-3deg); } 66% { transform: scale(.96) rotate(3deg); } }
 
-/* Wirl: the courier. Ten seconds. Rest by the agent, take the app, run under
-   the cloud, get the lock, run on to the person, rest, reset. */
-.courier { transform-box: fill-box; transform-origin: 50% 100%; animation: courier 10s cubic-bezier(.3,.7,.2,1) infinite; }
-@keyframes courier {
-  0%, 21% { transform: translateX(0) scale(1, 1); opacity: 1; }
-  23% { transform: translateX(-6px) scale(0.9, 1.08); opacity: 1; }
-  24.5% { transform: translateX(6px) scale(1.18, 0.88); opacity: 1; }
-  28.5% { transform: translateX(82px) scale(1.06, 0.96); opacity: 1; }
-  30%, 45% { transform: translateX(75px) scale(1, 1); opacity: 1; }
-  47% { transform: translateX(69px) scale(0.9, 1.08); opacity: 1; }
-  48.5% { transform: translateX(81px) scale(1.18, 0.88); opacity: 1; }
-  52.5% { transform: translateX(175px) scale(1.06, 0.96); opacity: 1; }
-  54%, 88% { transform: translateX(168px) scale(1, 1); opacity: 1; }
-  90% { transform: translateX(168px) scale(1, 1); opacity: 0; }
-  90.5% { transform: translateX(0) scale(1, 1); opacity: 0; }
-  93%, 100% { transform: translateX(0) scale(1, 1); opacity: 1; }
+/* Wirl: the door. The new app runs up to the door, goes in, and comes out the
+   other side wearing its lock. Ten seconds. */
+.door-in { transform-box: fill-box; transform-origin: 50% 100%; animation: door-in 10s cubic-bezier(.3,.7,.2,1) infinite; }
+@keyframes door-in {
+  0%, 16% { transform: translateX(0) scale(1, 1); opacity: 1; }
+  18% { transform: translateX(-6px) scale(0.9, 1.08); opacity: 1; }
+  19.5% { transform: translateX(6px) scale(1.18, 0.88); opacity: 1; }
+  25% { transform: translateX(150px) scale(1, 1); opacity: 1; }
+  27%, 100% { transform: translateX(150px) scale(1, 1); opacity: 0; }
 }
-.courier .strips { opacity: 0; animation: strips-courier 10s linear infinite; }
-@keyframes strips-courier { 0%, 24% { opacity: 0; } 25%, 29% { opacity: 1; } 31%, 48% { opacity: 0; } 49%, 53% { opacity: 1; } 55%, 100% { opacity: 0; } }
-.courier .stalks { transform-box: fill-box; transform-origin: 50% 100%; animation: stalks-courier 10s ease-in-out infinite; }
-@keyframes stalks-courier {
-  0%, 10%, 21% { transform: rotate(0); }
-  5%, 16% { transform: rotate(6deg); }
-  23% { transform: rotate(-12deg); }
-  25%, 29% { transform: rotate(20deg); }
-  32%, 45% { transform: rotate(0); }
-  47% { transform: rotate(-12deg); }
-  49%, 53% { transform: rotate(20deg); }
-  56%, 100% { transform: rotate(0); }
+.door-in .strips { opacity: 0; animation: strips-door-in 10s linear infinite; }
+@keyframes strips-door-in { 0%, 19% { opacity: 0; } 20%, 24% { opacity: 1; } 26%, 100% { opacity: 0; } }
+.door-out { transform-box: fill-box; transform-origin: 50% 100%; animation: door-out 10s cubic-bezier(.3,.7,.2,1) infinite; }
+@keyframes door-out {
+  0%, 31% { transform: translateX(0) scale(1, 1); opacity: 0; }
+  31.5% { transform: translateX(0) scale(1.1, 0.95); opacity: 1; }
+  38% { transform: translateX(62px) scale(1.04, 0.98); opacity: 1; }
+  41%, 90% { transform: translateX(56px) scale(1, 1); opacity: 1; }
+  92%, 100% { transform: translateX(56px) scale(1, 1); opacity: 0; }
 }
-/* The app starts in the agent's hands and hops onto the shell. */
-.parcel { transform-box: fill-box; transform-origin: 50% 50%; animation: parcel 10s ease-in-out infinite; }
-@keyframes parcel {
-  0%, 14% { transform: translate(-73px, 3px); }
-  17% { transform: translate(-36px, -22px); }
-  20%, 100% { transform: translate(0, 0); }
-}
-.parcel-plain { animation: parcel-plain 10s steps(1) infinite; }
-@keyframes parcel-plain { 0%, 38% { opacity: 1; } 38.5%, 100% { opacity: 0; } }
-.parcel-locked { opacity: 0; animation: parcel-locked 10s steps(1) infinite; }
-@keyframes parcel-locked { 0%, 38% { opacity: 0; } 38.5%, 100% { opacity: 1; } }
-/* The lock falls out of the cloud onto the app, then becomes its badge. */
-.lock-drop { transform-box: fill-box; transform-origin: 50% 50%; opacity: 0; animation: lock-drop 10s cubic-bezier(.5,0,.8,.4) infinite; }
-@keyframes lock-drop {
-  0%, 32% { transform: translate(2px, -124px); opacity: 0; }
-  33% { transform: translate(2px, -124px); opacity: 1; }
-  37% { transform: translate(0, 0); opacity: 1; }
-  38.5% { transform: translate(0, 0) scale(0.6); opacity: 0; }
-  100% { transform: translate(0, 0) scale(0.6); opacity: 0; }
-}
-.cloud-puff { transform-box: fill-box; transform-origin: 50% 50%; animation: cloud-puff 10s ease-in-out infinite; }
-@keyframes cloud-puff { 0%, 31% { transform: scale(1); } 33% { transform: scale(1.05); } 36% { transform: scale(0.99); } 39%, 100% { transform: scale(1); } }
-.spark-a, .spark-b { animation: spark 10s steps(1) infinite; opacity: 0; }
-.spark-b { animation-delay: .25s; }
-@keyframes spark { 0%, 36% { opacity: 0; } 37% { opacity: 1; } 39% { opacity: 0; } 40% { opacity: 1; } 42%, 100% { opacity: 0; } }
+.door-out .strips { opacity: 0; animation: strips-door-out 10s linear infinite; }
+@keyframes strips-door-out { 0%, 31% { opacity: 0; } 32%, 38% { opacity: 1; } 40%, 100% { opacity: 0; } }
+.door-out .stalks { transform-box: fill-box; transform-origin: 50% 100%; animation: stalks-door-out 10s ease-in-out infinite; }
+@keyframes stalks-door-out { 0%, 31% { transform: rotate(-20deg); } 42%, 55% { transform: rotate(0); } 60% { transform: rotate(6deg); } 66%, 100% { transform: rotate(0); } }
+.spark-a { animation: spark 10s steps(1) infinite; opacity: 0; }
+@keyframes spark { 0%, 40% { opacity: 0; } 41% { opacity: 1; } 43% { opacity: 0; } 44% { opacity: 1; } 46%, 100% { opacity: 0; } }
 
 /* Share: the ferry. Eight seconds. Run to the colleague, come back with more. */
 .ferry { transform-box: fill-box; transform-origin: 50% 100%; animation: ferry 8s cubic-bezier(.3,.7,.2,1) infinite; }
@@ -140,12 +111,33 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
   54%, 58% { transform: rotate(20deg); }
   61%, 100% { transform: rotate(0); }
 }
-.ferry-plain { animation: ferry-plain 8s steps(1) infinite; }
-@keyframes ferry-plain { 0%, 40% { opacity: 1; } 40.5%, 99% { opacity: 0; } 99.5%, 100% { opacity: 1; } }
-.ferry-extra { opacity: 0; animation: ferry-extra 8s steps(1) infinite; }
-@keyframes ferry-extra { 0%, 40% { opacity: 0; } 40.5%, 99% { opacity: 1; } 99.5%, 100% { opacity: 0; } }
+.ferry .badge-star { opacity: 0; animation: badge-star 8s steps(1) infinite; }
+@keyframes badge-star { 0%, 40% { opacity: 0; } 40.5%, 99% { opacity: 1; } 99.5%, 100% { opacity: 0; } }
 .spark-c { animation: spark-c 8s steps(1) infinite; opacity: 0; }
 @keyframes spark-c { 0%, 39% { opacity: 0; } 40% { opacity: 1; } 42% { opacity: 0; } 43% { opacity: 1; } 45%, 100% { opacity: 0; } }
+
+/* The hero lanes. Each app comes out of the door, pauses at the lock, and runs
+   down the link. Seven and a half seconds, three staggered. */
+.lane { transform-box: fill-box; transform-origin: 50% 100%; animation: lane 7.5s cubic-bezier(.3,.7,.2,1) infinite; }
+.lane-2 { animation-delay: 2.5s; }
+.lane-3 { animation-delay: 5s; }
+@keyframes lane {
+  0% { transform: translateX(0) scale(1, 1); }
+  8% { transform: translateX(-114px) scale(1.06, 0.96); }
+  10%, 20% { transform: translateX(-108px) scale(1, 1); }
+  22% { transform: translateX(-102px) scale(0.9, 1.08); }
+  23.5% { transform: translateX(-116px) scale(1.18, 0.88); }
+  33% { transform: translateX(-560px) scale(1.1, 0.95); }
+  33.5%, 100% { transform: translateX(-560px) scale(1, 1); }
+}
+.lane .strips { opacity: 0; animation: strips-lane 7.5s linear infinite; }
+.lane-2 .strips { animation-delay: 2.5s; }
+.lane-3 .strips { animation-delay: 5s; }
+@keyframes strips-lane { 0%, 1% { opacity: 1; } 7%, 22% { opacity: 0; } 24%, 32% { opacity: 1; } 34%, 100% { opacity: 0; } }
+.lane .stalks { transform-box: fill-box; transform-origin: 50% 100%; animation: stalks-lane 7.5s ease-in-out infinite; }
+.lane-2 .stalks { animation-delay: 2.5s; }
+.lane-3 .stalks { animation-delay: 5s; }
+@keyframes stalks-lane { 0%, 8% { transform: rotate(-16deg); } 12%, 20% { transform: rotate(4deg); } 22% { transform: rotate(-10deg); } 25%, 32% { transform: rotate(-22deg); } 36%, 100% { transform: rotate(0); } }
 
 /* The hero snail. Nine seconds: rest, crouch, launch off the left edge, slide
    back in from the right with an overshoot, rest. Speed strips exist only in flight. */
@@ -201,13 +193,15 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .zip, .zip .strips, .zip .stalks, .cloud-drift, .race-1, .race-2, .race-3, .race-1 .strips, .race-2 .strips, .race-3 .strips { animation: none; }
+  .zip, .zip .strips, .zip .stalks, .cloud-drift, .lane, .lane .strips, .lane .stalks, .race-1, .race-2, .race-3, .race-1 .strips, .race-2 .strips, .race-3 .strips { animation: none; }
   .strips { opacity: 0; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .cloud-puff, .spark-a, .spark-b, .spark-c,
-  .courier, .courier .strips, .courier .stalks, .parcel, .parcel-plain, .parcel-locked, .lock-drop,
-  .ferry, .ferry .strips, .ferry .stalks, .ferry-plain, .ferry-extra { animation: none; }
-  .spark-a, .spark-b, .spark-c, .lock-drop, .parcel-plain, .ferry-plain, .strips { opacity: 0; }
-  .parcel-locked, .ferry-extra { opacity: 1; }
-  .courier { transform: translateX(168px); }
-  .parcel { transform: none; }
+  .door-in, .door-in .strips, .door-out, .door-out .strips, .door-out .stalks,
+  .ferry, .ferry .strips, .ferry .stalks, .ferry .badge-star { animation: none; }
+  .spark-a, .spark-b, .spark-c, .strips, .door-in { opacity: 0; }
+  .door-out, .ferry .badge-star { opacity: 1; }
+  .door-out { transform: translateX(56px); }
+  .lane { transform: translateX(-108px); }
+  .lane-2 { transform: translateX(-240px); }
+  .lane-3 { transform: translateX(-420px); }
 }

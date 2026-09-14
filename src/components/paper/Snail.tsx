@@ -7,6 +7,7 @@ import { Piece, P } from './Paper';
 // so the stroke exits heading left.
 const SHELL_PHASE = (170 * Math.PI) / 180;
 const SHELL = swirlPath(32, 17, SHELL_PHASE);
+export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
@@ -45,8 +46,8 @@ export function SnailWordmark({ size = 28, fast = false }: { size?: number; fast
 
 /* The cut-paper snail, about 120 wide and 72 tall, facing left.
    Three sheets: foot, shell, head. `shell` and `body` are colours. */
-export function PaperSnail({ id, x = 0, y = 0, s = 1, className, flip = false, fast = false, shell = P.sun, body = '#9CC5A5', spiral = P.ink }: {
-  id: string; x?: number; y?: number; s?: number; className?: string; flip?: boolean; fast?: boolean; shell?: string; body?: string; spiral?: string;
+export function PaperSnail({ id, x = 0, y = 0, s = 1, className, flip = false, fast = false, locked = false, star = false, shell = P.sun, body = '#9CC5A5', spiral = P.ink }: {
+  id: string; x?: number; y?: number; s?: number; className?: string; flip?: boolean; fast?: boolean; locked?: boolean; star?: boolean; shell?: string; body?: string; spiral?: string;
 }) {
   const inner = (
     <>
@@ -65,6 +66,18 @@ export function PaperSnail({ id, x = 0, y = 0, s = 1, className, flip = false, f
         <circle cx="70" cy="40" r="26" fill={shell} />
         <path d={swirlPath(70, 40, SHELL_PHASE)} fill="none" stroke={spiral} strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round" transform="translate(70 40) scale(1.7) translate(-70 -40)" />
       </Piece>
+      {locked && (
+        <Piece id={id} className="badge-lock">
+          <path d="M84 62 v-4 a5 5 0 0 1 10 0 v4" stroke={P.ink} strokeWidth="3" fill="none" strokeLinecap="round" />
+          <rect x="80" y="61" width="18" height="13" rx="3" fill={P.sun} />
+          <circle cx="89" cy="66.5" r="1.8" fill={P.ink} />
+        </Piece>
+      )}
+      {star && (
+        <Piece id={id} className="badge-star" flat>
+          <path transform="translate(50 24)" d="M0 -9 L2.2 -2.2 L9 0 L2.2 2.2 L0 9 L-2.2 2.2 L-9 0 L-2.2 -2.2 Z" fill={P.coral} />
+        </Piece>
+      )}
       <Piece id={id}>
         <g className="stalks">
           <rect x="12" y="22" width="4.5" height="20" rx="2.25" fill={body} transform="rotate(14 14 42)" />
