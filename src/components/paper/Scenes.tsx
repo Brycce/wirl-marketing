@@ -15,7 +15,7 @@ export function HeroScene() {
       <Laptop id={id} x={150} y={181} />
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
-      <g className="idle idle-1"><PaperSnail id={id} x={236} y={207} s={0.3} /></g>
+      <g className="idle idle-1 crawl crawl-desk"><g className="inch"><PaperSnail id={id} x={236} y={207} s={0.3} /></g></g>
     </Scene>
   );
 }
@@ -36,7 +36,7 @@ export function WirlScene() {
       <AppCard id={id} x={174} y={96} onWirl className="ship-out" />
       <Person id={id} x={356} y={180} shirt={P.blue} skin={1} hair={1} style="long" />
       <Ground id={id} y={270} x={14} w={392} />
-      <g className="idle idle-2"><PaperSnail id={id} x={2} y={252} s={0.25} flip shell={P.coral} body="#BFD9EA" spiral={P.paper} /></g>
+      <g className="idle idle-2 crawl crawl-ground"><g className="inch inch-2"><PaperSnail id={id} x={96} y={252} s={0.25} flip shell={P.coral} body="#BFD9EA" spiral={P.paper} /></g></g>
     </Scene>
   );
 }
@@ -52,7 +52,7 @@ export function ShareScene() {
       <AppCard id={id} x={96} y={124} onWirl extra r={-4} className="pass-b" />
       <Spark id={id} x={342} y={86} className="spark-c" />
       <Ground id={id} y={200} x={10} w={380} />
-      <g className="idle idle-3"><PaperSnail id={id} x={262} y={182} s={0.25} shell={P.lilac} body="#F0C9BC" /></g>
+      <g className="idle idle-3 crawl crawl-between"><g className="inch inch-3"><PaperSnail id={id} x={262} y={182} s={0.25} shell={P.lilac} body="#F0C9BC" /></g></g>
     </Scene>
   );
 }

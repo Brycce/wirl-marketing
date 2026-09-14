@@ -101,7 +101,48 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .wordmark-mark { transition: transform .25s cubic-bezier(.2,.9,.2,1); }
 .wordmark:hover .wordmark-mark { transform: translateX(-3px); }
 
-/* The small snails. Still, apart from a look around every few seconds. */
+/* The small snails crawl. Snail pace: inch along a short stretch, pause,
+   turn around, come back. The body stretches a little with every inch. */
+.crawl { transform-box: fill-box; transform-origin: 50% 50%; animation-timing-function: linear; animation-iteration-count: infinite; }
+.crawl-desk { animation-name: crawl-desk; animation-duration: 26s; }
+@keyframes crawl-desk {
+  0% { transform: translateX(0) scaleX(1); }
+  40% { transform: translateX(-30px) scaleX(1); }
+  46% { transform: translateX(-30px) scaleX(1); }
+  46.5% { transform: translateX(-30px) scaleX(-1); }
+  86% { transform: translateX(0) scaleX(-1); }
+  92% { transform: translateX(0) scaleX(-1); }
+  92.5% { transform: translateX(0) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+.crawl-ground { animation-name: crawl-ground; animation-duration: 64s; }
+@keyframes crawl-ground {
+  0% { transform: translateX(0) scaleX(1); }
+  42% { transform: translateX(150px) scaleX(1); }
+  47% { transform: translateX(150px) scaleX(1); }
+  47.5% { transform: translateX(150px) scaleX(-1); }
+  89% { transform: translateX(0) scaleX(-1); }
+  94% { transform: translateX(0) scaleX(-1); }
+  94.5% { transform: translateX(0) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+.crawl-between { animation-name: crawl-between; animation-duration: 72s; animation-delay: -20s; }
+@keyframes crawl-between {
+  0% { transform: translateX(0) scaleX(1); }
+  42% { transform: translateX(-160px) scaleX(1); }
+  47% { transform: translateX(-160px) scaleX(1); }
+  47.5% { transform: translateX(-160px) scaleX(-1); }
+  89% { transform: translateX(0) scaleX(-1); }
+  94% { transform: translateX(0) scaleX(-1); }
+  94.5% { transform: translateX(0) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+.inch { transform-box: fill-box; transform-origin: 100% 100%; animation: inch 1.8s ease-in-out infinite; }
+.inch-2 { animation-delay: -0.6s; }
+.inch-3 { animation-delay: -1.2s; }
+@keyframes inch { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(1.08); } }
+
+/* And they look around every few seconds. */
 .idle .stalks { transform-box: fill-box; transform-origin: 50% 100%; animation: idle-stalks 7s ease-in-out infinite; }
 .idle-2 .stalks { animation-delay: -2.3s; }
 .idle-3 .stalks { animation-delay: -4.6s; }
@@ -109,7 +150,7 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .idle .stalks { animation: none; }
+  .idle .stalks, .crawl, .inch { animation: none; }
   .wordmark .speed, .wordmark-mark { transition: none; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .ship-in, .cloud-puff, .ship-out, .spark-a, .spark-b, .pass-a, .pass-b, .spark-c { animation: none; }
   .ship-out, .pass-b, .spark-a, .spark-b, .spark-c { opacity: 0; }
