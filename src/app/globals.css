@@ -95,8 +95,22 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .spark-c { animation: spark-c 7s steps(1) infinite; opacity: 0; }
 @keyframes spark-c { 0%, 53% { opacity: 0; } 54% { opacity: 1; } 58% { opacity: 0; } 59% { opacity: 1; } 63%, 100% { opacity: 0; } }
 
+/* The wordmark gets going on hover. */
+.wordmark .speed { opacity: 0; transition: opacity .18s ease; }
+.wordmark:hover .speed { opacity: 1; }
+.wordmark-mark { transition: transform .25s cubic-bezier(.2,.9,.2,1); }
+.wordmark:hover .wordmark-mark { transform: translateX(-3px); }
+
+/* The small snails. Still, apart from a look around every few seconds. */
+.idle .stalks { transform-box: fill-box; transform-origin: 50% 100%; animation: idle-stalks 7s ease-in-out infinite; }
+.idle-2 .stalks { animation-delay: -2.3s; }
+.idle-3 .stalks { animation-delay: -4.6s; }
+@keyframes idle-stalks { 0%, 70%, 100% { transform: rotate(0); } 76% { transform: rotate(-9deg); } 84% { transform: rotate(5deg); } 90% { transform: rotate(0); } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .idle .stalks { animation: none; }
+  .wordmark .speed, .wordmark-mark { transition: none; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .ship-in, .cloud-puff, .ship-out, .spark-a, .spark-b, .pass-a, .pass-b, .spark-c { animation: none; }
   .ship-out, .pass-b, .spark-a, .spark-b, .spark-c { opacity: 0; }
   .pass-a { opacity: 1; }

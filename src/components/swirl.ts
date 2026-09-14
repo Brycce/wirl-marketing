@@ -7,13 +7,13 @@ const B = 1.02;
 const PHASE = (3 * Math.PI) / 4;
 const STEPS = 96;
 
-export function swirlPath(cx = 16, cy = 16): string {
+export function swirlPath(cx = 16, cy = 16, phase = PHASE): string {
   const total = TURNS * Math.PI * 2;
   const pts: string[] = [];
   for (let i = 0; i <= STEPS; i++) {
     const t = (i / STEPS) * total;
     const r = A + B * t;
-    pts.push(`${(cx + r * Math.cos(t + PHASE)).toFixed(2)} ${(cy + r * Math.sin(t + PHASE)).toFixed(2)}`);
+    pts.push(`${(cx + r * Math.cos(t + phase)).toFixed(2)} ${(cy + r * Math.sin(t + phase)).toFixed(2)}`);
   }
   return `M${pts[0]} L${pts.slice(1).join(' ')}`;
 }

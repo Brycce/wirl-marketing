@@ -1,7 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ImageResponse } from 'next/og';
-import { SWIRL_PATH } from '@/components/swirl';
+import { swirlPath } from '@/components/swirl';
+
+const SHELL = swirlPath(32, 17, (170 * Math.PI) / 180);
 
 export const dynamic = 'force-static';
 export const alt = 'Wirl. Let your people build.';
@@ -32,8 +34,15 @@ export default async function Image() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 36 }}>
-          <svg viewBox="0 0 32 32" width="64" height="64">
-            <path d={SWIRL_PATH} fill="none" stroke="#1F2A1F" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+          <svg viewBox="0 0 48 36" width="85" height="64">
+            <g fill="none" stroke="#1F2A1F" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d={SHELL} />
+              <path d="M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2" />
+              <path d="M8.6 22.4 L5.6 15.2" />
+              <path d="M9.6 22.4 L10.6 14.6" />
+            </g>
+            <circle cx="5.4" cy="14.6" r="2.1" fill="#1F2A1F" />
+            <circle cx="10.8" cy="14" r="2.1" fill="#1F2A1F" />
           </svg>
           <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1, letterSpacing: -2.5 }}>wirl</div>
         </div>
