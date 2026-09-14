@@ -24,7 +24,7 @@ function HeroWithSnail({ fast = false }: { fast?: boolean }) {
       <Laptop id={id} x={150} y={181} />
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
-      <g className={fast ? 'dash' : 'crawl'}>
+      <g className={fast ? 'zip' : 'crawl'}>
         <PaperSnail id={id} x={232} y={186} s={0.6} fast={fast} />
         <AppCard id={id} x={254} y={165} w={40} h={30} tone={P.blue} r={-8} />
       </g>

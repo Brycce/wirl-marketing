@@ -1,10 +1,29 @@
 import { Scene, Piece, Ground, Person, Robot, AppCard, Cloud, Lock, Laptop, Desk, Warn, Flame, Clock, Skull, Spark, Defs, P } from './Paper';
 import { PaperSnail } from './Snail';
 
-/* One person at a desk, an agent beside them, and the apps they are making.
-   Fewer, bigger pieces: the panel is small, so every sheet has to read. */
+/* The snail is the scene. It rests with an app on its back under the cloud,
+   crouches, launches off the left edge, and slides back in from the right. */
 export function HeroScene() {
   const id = 'hero';
+  return (
+    <Scene id={id} w={380} h={330}>
+      <g className="cloud-drift">
+        <Cloud id={id} x={200} y={22} s={0.62} tone="#FFFFFF" />
+        <Lock id={id} x={262} y={62} s={0.6} />
+      </g>
+      <AppCard id={id} x={30} y={56} w={60} h={44} tone={P.coral} r={-5} className="float-2" />
+      <Ground id={id} y={272} x={14} w={352} />
+      <g className="zip">
+        <PaperSnail id={id} x={118} y={195} s={1.1} fast />
+        <AppCard id={id} x={163} y={168} w={64} h={48} tone={P.blue} r={-7} />
+      </g>
+    </Scene>
+  );
+}
+
+/* Kept for the concept page. */
+export function DeskScene() {
+  const id = 'desk';
   return (
     <Scene id={id} w={380} h={330}>
       <Cloud id={id} x={236} y={14} s={0.5} tone="#FFFFFF" />
@@ -14,15 +33,12 @@ export function HeroScene() {
       <Laptop id={id} x={150} y={181} />
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
-      <g className="dash">
-        <PaperSnail id={id} x={232} y={186} s={0.6} fast />
-        <AppCard id={id} x={254} y={165} w={40} h={30} tone={P.blue} r={-8} />
-      </g>
     </Scene>
   );
 }
 
-/* The agent hands the app up, the cloud takes it, and it comes back out on Wirl. */
+/* The agent hands the app to the snail. The snail runs it under the cloud,
+   the lock drops on, and it runs on to the person who asked for it. Ten seconds. */
 export function WirlScene() {
   const id = 'wirl';
   return (
@@ -31,28 +47,38 @@ export function WirlScene() {
         <Cloud id={id} x={100} y={30} />
         <Lock id={id} x={194} y={72} s={0.9} />
       </g>
-      <Spark id={id} x={82} y={40} className="spark-a" />
-      <Spark id={id} x={334} y={26} className="spark-b" />
+      <Spark id={id} x={150} y={170} className="spark-a" />
+      <Spark id={id} x={262} y={182} className="spark-b" />
       <Robot id={id} x={30} y={200} arms="up" />
-      <AppCard id={id} x={70} y={168} tone={P.coral} r={-6} className="ship-in" />
-      <AppCard id={id} x={174} y={96} onWirl className="ship-out" />
       <Person id={id} x={356} y={180} shirt={P.blue} skin={1} hair={1} style="long" />
       <Ground id={id} y={270} x={14} w={392} />
+      <g className="courier">
+        <PaperSnail id={id} x={90} y={217} s={0.75} flip fast />
+        <g className="parcel">
+          <AppCard id={id} x={103} y={193} w={48} h={36} tone={P.coral} r={-6} className="parcel-plain" />
+          <AppCard id={id} x={103} y={193} w={48} h={36} onWirl r={-6} className="parcel-locked" />
+        </g>
+        <Lock id={id} x={117} y={196} s={0.6} className="lock-drop" />
+      </g>
     </Scene>
   );
 }
 
-/* One colleague hands an app to another; it comes back with one more thing in it. */
+/* The snail ferries the app from one colleague to the other; it comes back
+   with one more thing in it. Eight seconds. */
 export function ShareScene() {
   const id = 'share';
   return (
     <Scene id={id} w={400} h={240}>
       <Person id={id} x={40} y={110} shirt={P.coral} skin={3} hair={3} style="curly" />
       <Person id={id} x={316} y={110} shirt={P.lilac} skin={2} hair={2} style="cap" />
-      <AppCard id={id} x={96} y={124} onWirl r={-4} className="pass-a" />
-      <AppCard id={id} x={96} y={124} onWirl extra r={-4} className="pass-b" />
-      <Spark id={id} x={342} y={86} className="spark-c" />
+      <Spark id={id} x={300} y={96} className="spark-c" />
       <Ground id={id} y={200} x={10} w={380} />
+      <g className="ferry">
+        <PaperSnail id={id} x={92} y={150} s={0.7} flip fast />
+        <AppCard id={id} x={105} y={133} w={44} h={33} onWirl r={-5} className="ferry-plain" />
+        <AppCard id={id} x={105} y={133} w={44} h={33} onWirl extra r={-5} className="ferry-extra" />
+      </g>
     </Scene>
   );
 }
