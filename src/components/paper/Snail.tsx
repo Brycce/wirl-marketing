@@ -11,14 +11,22 @@ const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
-export function SnailMark({ size = 32, className = '' }: { size?: number; className?: string }) {
+export function SnailMark({ size = 32, className = '', fast = false }: { size?: number; className?: string; fast?: boolean }) {
+  const w = fast ? 60 : 48;
   return (
-    <svg viewBox="0 0 48 36" width={size * 1.33} height={size} className={className} aria-hidden="true" focusable="false">
+    <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} aria-hidden="true" focusable="false">
       <g fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
         <path d={SHELL} />
         <path d={BODY} />
         <path d={STALK_A} />
         <path d={STALK_B} />
+        {fast && (
+          <>
+            <path d="M48 10 h7" />
+            <path d="M49.5 17.5 h9" />
+            <path d="M48 25 h7" />
+          </>
+        )}
       </g>
       <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" />
       <circle cx="10.8" cy="14" r="2.1" fill="currentColor" />
@@ -26,10 +34,10 @@ export function SnailMark({ size = 32, className = '' }: { size?: number; classN
   );
 }
 
-export function SnailWordmark({ size = 28 }: { size?: number }) {
+export function SnailWordmark({ size = 28, fast = false }: { size?: number; fast?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2">
-      <SnailMark size={size} />
+      <SnailMark size={size} fast={fast} />
       <span className="font-display font-bold leading-none tracking-[-0.04em]" style={{ fontSize: Math.round(size * 0.95) }}>wirl</span>
     </span>
   );
@@ -37,11 +45,18 @@ export function SnailWordmark({ size = 28 }: { size?: number }) {
 
 /* The cut-paper snail, about 120 wide and 72 tall, facing left.
    Three sheets: foot, shell, head. `shell` and `body` are colours. */
-export function PaperSnail({ id, x = 0, y = 0, s = 1, className, flip = false, shell = P.sun, body = '#9CC5A5', spiral = P.ink }: {
-  id: string; x?: number; y?: number; s?: number; className?: string; flip?: boolean; shell?: string; body?: string; spiral?: string;
+export function PaperSnail({ id, x = 0, y = 0, s = 1, className, flip = false, fast = false, shell = P.sun, body = '#9CC5A5', spiral = P.ink }: {
+  id: string; x?: number; y?: number; s?: number; className?: string; flip?: boolean; fast?: boolean; shell?: string; body?: string; spiral?: string;
 }) {
   const inner = (
     <>
+      {fast && (
+        <Piece id={id} flat>
+          <rect x="112" y="34" width="26" height="5" rx="2.5" fill={P.paper} />
+          <rect x="118" y="46" width="38" height="5" rx="2.5" fill={P.paper} />
+          <rect x="112" y="58" width="26" height="5" rx="2.5" fill={P.paper} />
+        </Piece>
+      )}
       <Piece id={id}>
         <rect x="14" y="52" width="100" height="18" rx="9" fill={body} />
         <circle cx="22" cy="44" r="12" fill={body} />

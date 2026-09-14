@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const wrap = 'max-w-6xl mx-auto px-6';
 const h2 = 'font-display font-bold leading-[1.1] tracking-[-0.03em] text-[1.6rem] md:text-[2rem]';
 
-/* The hero scene with a snail on the floor, carrying an app. It crawls, slowly. */
-function HeroWithSnail() {
-  const id = 'hero-snail';
+/* The hero scene with a snail on the desk, carrying an app. Fast or slow. */
+function HeroWithSnail({ fast = false }: { fast?: boolean }) {
+  const id = fast ? 'hero-fast' : 'hero-snail';
   return (
     <Scene id={id} w={380} h={330}>
       <Cloud id={id} x={236} y={14} s={0.5} tone="#FFFFFF" />
@@ -24,8 +24,8 @@ function HeroWithSnail() {
       <Laptop id={id} x={150} y={181} />
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
-      <g className="crawl">
-        <PaperSnail id={id} x={232} y={186} s={0.6} />
+      <g className={fast ? 'dash' : 'crawl'}>
+        <PaperSnail id={id} x={232} y={186} s={0.6} fast={fast} />
         <AppCard id={id} x={254} y={165} w={40} h={30} tone={P.blue} r={-8} />
       </g>
     </Scene>
@@ -38,8 +38,25 @@ export default function SnailConcept() {
       <style>{`
         .crawl { transform-box: fill-box; transform-origin: 50% 50%; animation: crawl 26s ease-in-out infinite alternate; }
         @keyframes crawl { from { transform: translateX(0); } to { transform: translateX(-70px); } }
-        .stalk-wiggle { transform-box: fill-box; transform-origin: 50% 100%; animation: wiggle 3s ease-in-out infinite; }
-        @keyframes wiggle { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
+        .dash { transform-box: fill-box; transform-origin: 50% 50%; animation: dash 6s cubic-bezier(.2,.9,.2,1) infinite; }
+        @keyframes dash {
+          0%, 30% { transform: translateX(0); opacity: 1; }
+          38% { transform: translateX(-110px); opacity: 1; }
+          70% { transform: translateX(-110px); opacity: 1; }
+          72% { transform: translateX(-110px); opacity: 0; }
+          73% { transform: translateX(0); opacity: 0; }
+          75%, 100% { transform: translateX(0); opacity: 1; }
+        }
+        .race-1, .race-2, .race-3 { transform-box: fill-box; transform-origin: 50% 50%; animation: race 5s cubic-bezier(.2,.9,.2,1) infinite; }
+        .race-2 { animation-delay: .35s; } .race-3 { animation-delay: .7s; }
+        @keyframes race {
+          0%, 20% { transform: translateX(0); opacity: 1; }
+          30% { transform: translateX(-400px); opacity: 1; }
+          60% { transform: translateX(-400px); opacity: 1; }
+          62% { transform: translateX(-400px); opacity: 0; }
+          63% { transform: translateX(0); opacity: 0; }
+          66%, 100% { transform: translateX(0); opacity: 1; }
+        }
       `}</style>
       <nav className={`${wrap} flex items-center justify-between py-5`}>
         <Link href="/" className="text-ink"><Wordmark /></Link>
@@ -47,10 +64,52 @@ export default function SnailConcept() {
       </nav>
 
       <section className={`${wrap} pt-8 pb-10`}>
-        <h1 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-[2.4rem] md:text-[3rem] max-w-[18ch]">The wirl is a shell.</h1>
+        <h1 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-[2.4rem] md:text-[3rem] max-w-[18ch]">The wirl is a snail.</h1>
         <p className="mt-4 text-[17px] text-ink/80 max-w-[52ch] leading-relaxed">
           The mark already ends where a body would start. One stroke leaves the spiral at the bottom, runs along the ground, and lifts into a head. Nothing else about the mark changes.
         </p>
+      </section>
+
+      {/* Fast */}
+      <section className={`${wrap} py-10`}>
+        <h2 className={h2}>Second pass: the snails are fast.</h2>
+        <p className="mt-3 text-[16px] text-ink/75 max-w-[54ch]">Fast because everything it needs is already on its back. Sign-in, keys, and the log come with the app, so there is nothing to set up before it goes.</p>
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          <div className="paper p-8 flex items-end gap-8">
+            <span className="text-ink"><SnailMark size={110} fast /></span>
+            <span className="text-ink"><SnailMark size={56} fast /></span>
+            <span className="text-ink"><SnailMark size={28} fast /></span>
+          </div>
+          <div className="paper p-8 flex flex-col gap-6 justify-center">
+            <div className="flex items-center gap-8"><span className="text-[13px] text-dim w-24">wordmark</span><SnailWordmark size={34} fast /></div>
+            <div className="flex items-center gap-8"><span className="text-[13px] text-dim w-24">on dark</span><span className="paper-dark px-4 py-2 inline-flex items-center"><SnailWordmark size={28} fast /></span></div>
+            <div className="flex items-center gap-8"><span className="text-[13px] text-dim w-24">favicon</span><span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-ink text-cream"><SnailMark size={13} fast /></span><span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-sun text-ink"><SnailMark size={16} fast /></span></div>
+          </div>
+        </div>
+        <div className="mt-6 panel grain bg-butter overflow-hidden">
+          <svg viewBox="0 0 560 130" width="100%" className="block h-auto" aria-hidden="true">
+            <Defs id="race" />
+            <g className="race-1"><PaperSnail id="race" x={420} y={6} s={0.55} fast /></g>
+            <g className="race-2"><PaperSnail id="race" x={470} y={44} s={0.55} fast shell={P.coral} body="#BFD9EA" spiral={P.paper} /></g>
+            <g className="race-3"><PaperSnail id="race" x={440} y={82} s={0.55} fast shell={P.lilac} body="#F0C9BC" /><AppCard id="race" x={458} y={70} w={34} h={26} tone={P.green} onWirl r={-6} /></g>
+          </svg>
+        </div>
+        <div className="mt-6 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h3 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-[2.2rem] md:text-[2.6rem]">Not that kind of snail.</h3>
+            <p className="mt-4 text-[17px] text-ink/80 leading-relaxed max-w-[44ch]">It does not have to build a login, wire up keys, or find a place to live. It just goes.</p>
+            <ul className="mt-5 space-y-2 text-[16px] text-ink/85">
+              <li>Fast, because everything it needs is on its back.</li>
+              <li>Ships in minutes. Carries its own sign-in.</li>
+              <li>The only thing it leaves behind is the log.</li>
+            </ul>
+          </div>
+          <div className="panel grain bg-sky"><HeroWithSnail fast /></div>
+        </div>
+      </section>
+
+      <section className={`${wrap} pt-6`}>
+        <h2 className={h2}>First pass, for comparison</h2>
       </section>
 
       {/* The mark */}
