@@ -19,7 +19,7 @@ export default function Docs() {
         </div>
       </nav>
       <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-24 text-center">
-        <h1 className="font-display font-semibold text-[2.75rem] md:text-6xl leading-[1.05] tracking-[-0.015em] max-w-[16ch] mx-auto text-balance">
+        <h1 className="font-display font-bold text-[2.5rem] md:text-[3.5rem] leading-[1.05] tracking-[-0.025em] max-w-[16ch] mx-auto text-balance">
           Docs land when the beta opens.
         </h1>
         <p className="mt-6 text-[17px] text-ink/85 max-w-[46ch] mx-auto leading-relaxed">

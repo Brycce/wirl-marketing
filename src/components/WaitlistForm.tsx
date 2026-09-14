@@ -40,7 +40,7 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
           <path d="M8 14.5 l4 4 l8 -9" fill="none" stroke="#FCF8F0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <div className="text-left">
-          <p className="font-display font-semibold text-xl leading-none">You&apos;re on the list.</p>
+          <p className="font-display font-bold text-xl leading-none">You&apos;re on the list.</p>
           <p className="text-dim text-[14px] mt-1.5">We&apos;ll write when your workspace is ready.</p>
         </div>
       </div>

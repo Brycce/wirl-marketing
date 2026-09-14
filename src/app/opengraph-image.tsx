@@ -13,7 +13,7 @@ export const contentType = 'image/png';
 const fontFile = (name: string) => readFile(path.join(process.cwd(), 'src/app/fonts', name));
 
 export default async function Image() {
-  const [fraunces, bricolage] = await Promise.all([fontFile('Fraunces-600.ttf'), fontFile('BricolageGrotesque-500.ttf')]);
+  const [bold, regular] = await Promise.all([fontFile('BricolageGrotesque-700.ttf'), fontFile('BricolageGrotesque-500.ttf')]);
 
   return new ImageResponse(
     (
@@ -27,7 +27,7 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           padding: '60px',
-          fontFamily: 'Fraunces',
+          fontFamily: 'Bricolage',
           color: '#1F2A1F',
         }}
       >
@@ -35,11 +35,11 @@ export default async function Image() {
           <svg viewBox="0 0 32 32" width="64" height="64">
             <path d={SWIRL_PATH} fill="none" stroke="#1F2A1F" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <div style={{ fontSize: 60, fontWeight: 600, lineHeight: 1 }}>wirl</div>
+          <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1, letterSpacing: -1 }}>wirl</div>
         </div>
-        <div style={{ fontSize: 92, lineHeight: 1, textAlign: 'center', fontWeight: 600, letterSpacing: -1 }}>Let your people build.</div>
+        <div style={{ fontSize: 84, lineHeight: 1, textAlign: 'center', fontWeight: 700, letterSpacing: -3 }}>Let your people build.</div>
         <div style={{ fontSize: 32, color: '#5E5A4C', marginTop: 28, textAlign: 'center', fontFamily: 'Bricolage' }}>
-          Internal tools on a link only your company can open. Governance built in.
+          Internal tools on a link only your company can open.
         </div>
         <div style={{ display: 'flex', gap: 14, marginTop: 44 }}>
           {['anyone can ship', 'login on every app', 'keys never in the app', 'audit log'].map((text) => (
@@ -64,8 +64,8 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: 'Fraunces', data: fraunces, weight: 600, style: 'normal' },
-        { name: 'Bricolage', data: bricolage, weight: 500, style: 'normal' },
+        { name: 'Bricolage', data: bold, weight: 700, style: 'normal' },
+        { name: 'Bricolage', data: regular, weight: 500, style: 'normal' },
       ],
     }
   );
