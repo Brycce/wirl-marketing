@@ -36,9 +36,6 @@ export function Defs({ id }: { id: string }) {
         <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
         <feDropShadow dx="0" dy="2.5" stdDeviation="2.4" floodColor="#1F2A1F" floodOpacity="0.24" />
       </filter>
-      <pattern id="check" width="14" height="14" patternUnits="userSpaceOnUse">
-        <rect width="7" height="7" fill="#FCF8F0" /><rect x="7" y="7" width="7" height="7" fill="#FCF8F0" />
-      </pattern>
       <filter id={`${id}-flat`} x="-25%" y="-25%" width="150%" height="150%">
         <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="3" result="warp" />
         <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
@@ -280,113 +277,5 @@ export function Spark({ id, x = 0, y = 0, s = 1, className }: Common) {
     <Piece id={id} x={x} y={y} s={s} className={className} flat>
       <path d="M0 -9 L2.2 -2.2 L9 0 L2.2 2.2 L0 9 L-2.2 2.2 L-9 0 L-2.2 -2.2 Z" fill={P.sun} />
     </Piece>
-  );
-}
-
-/* Race-world pieces. */
-
-/* A road: a paper band with a dashed centre line and, optionally, the link
-   painted on it like a lane marking. */
-export function Road({ id, x = 0, y = 0, w = 380, h = 64, label, tone = '#CDBDA0', className }: Common & { w?: number; h?: number; label?: string; tone?: string }) {
-  const dashes = [];
-  for (let dx = 12; dx < w - 12; dx += 34) dashes.push(dx);
-  return (
-    <Piece id={id} x={x} y={y} className={className}>
-      <rect width={w} height={h} rx="6" fill={tone} />
-      {dashes.map((dx) => <rect key={dx} x={dx} y={h / 2 - 2} width="18" height="4" rx="2" fill={P.paper} opacity="0.7" />)}
-      {label && (
-        <text x={w / 2} y={h - 12} textAnchor="middle" fontFamily="'JetBrains Mono', ui-monospace, monospace" fontSize="13" fontWeight="700" fill={P.paper} letterSpacing="0.5">{label}</text>
-      )}
-    </Piece>
-  );
-}
-
-/* A gate the snails pass through: two posts and a beam with a lock and a light. */
-export function Gate({ id, x = 0, y = 0, h = 200, w = 110, className }: Common & { h?: number; w?: number }) {
-  return (
-    <>
-      <Piece id={id} x={x} y={y} className={className}>
-        <rect x="0" y="22" width="12" height={h - 22} rx="4" fill={P.dark} />
-        <rect x={w - 12} y="22" width="12" height={h - 22} rx="4" fill={P.dark} />
-        <rect x="-6" y="0" width={w + 12} height="26" rx="6" fill={P.ink} />
-      </Piece>
-      <Lock id={id} x={x + w / 2 - 12} y={y + 30} s={0.7} />
-      <circle cx={x + w - 24} cy={y + 13} r="5" fill={P.red} className="gate-light" />
-    </>
-  );
-}
-
-/* A checkered finish flag on a pole. */
-export function Flag({ id, x = 0, y = 0, s = 1, className }: Common) {
-  const cells = [];
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) if ((r + c) % 2 === 0) cells.push([c, r]);
-  return (
-    <Piece id={id} x={x} y={y} s={s} className={className}>
-      <rect x="0" y="0" width="5" height="96" rx="2.5" fill={P.dark} />
-      <rect x="5" y="2" width="60" height="36" rx="3" fill={P.paper} />
-      {cells.map(([c, r]) => <rect key={`${c}${r}`} x={5 + c * 12} y={2 + r * 12} width="12" height="12" fill={P.ink} />)}
-    </Piece>
-  );
-}
-
-/* The pit stop: a canopy with the mark on it, on two posts. */
-export function Canopy({ id, x = 0, y = 0, w = 180, className, mark }: Common & { w?: number; mark: string }) {
-  return (
-    <Piece id={id} x={x} y={y} className={className}>
-      <rect x="14" y="30" width="10" height="150" rx="4" fill={P.dark} />
-      <rect x={w - 24} y="30" width="10" height="150" rx="4" fill={P.dark} />
-      <path d={`M0 34 L${w} 34 L${w - 14} 0 L14 0 Z`} fill={P.sun} />
-      <rect x="0" y="30" width={w} height="10" rx="4" fill={P.coral} />
-      <g transform={`translate(${w / 2 - 16} 2) scale(0.9)`}>
-        <path d={mark} fill="none" stroke={P.ink} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-    </Piece>
-  );
-}
-
-/* A striped barrier across the road. */
-export function Barrier({ id, x = 0, y = 0, s = 1, className }: Common) {
-  return (
-    <Piece id={id} x={x} y={y} s={s} className={className}>
-      <rect x="6" y="18" width="6" height="30" fill={P.dark} />
-      <rect x="68" y="18" width="6" height="30" fill={P.dark} />
-      <rect x="0" y="6" width="80" height="16" rx="4" fill={P.paper} />
-      {[0, 2, 4].map((i) => <rect key={i} x={4 + i * 16} y="6" width="10" height="16" fill={P.red} transform={`skewX(-20) translate(${(i * 16 + 4) * 0.36} 0)`} />)}
-    </Piece>
-  );
-}
-
-/* A rain cloud. */
-export function RainCloud({ id, x = 0, y = 0, s = 1, className }: Common) {
-  return (
-    <Piece id={id} x={x} y={y} s={s} className={className}>
-      <rect x="0" y="26" width="90" height="22" rx="11" fill={P.grey} />
-      <circle cx="26" cy="26" r="17" fill={P.grey} />
-      <circle cx="50" cy="20" r="21" fill={P.grey} />
-      <circle cx="72" cy="28" r="14" fill={P.grey} />
-      {[14, 34, 54, 74].map((rx, i) => <rect key={rx} x={rx} y={52 + (i % 2) * 6} width="4" height="12" rx="2" fill={P.blue} opacity="0.8" />)}
-    </Piece>
-  );
-}
-
-/* A doorway in a wall: the company's door. The opening is dark; the wall runs
-   to the right so whatever is inside stays hidden until it comes through. */
-export function Doorway({ id, x = 0, y = 0, h = 170, wall = 120, name, className, hollow = false }: Common & { h?: number; wall?: number; name?: string; hollow?: boolean }) {
-  return (
-    <>
-      {!hollow && (
-        <Piece id={id} x={x} y={y} className={className} flat>
-          <rect x="8" y="8" width="44" height={h - 8} fill={P.ink} />
-        </Piece>
-      )}
-      <Piece id={id} x={x} y={y} className={className}>
-        <rect x="52" y="-30" width={wall} height={h + 30} rx="4" fill={P.paper} />
-        <rect x="0" y="0" width="60" height="10" rx="3" fill={P.dark} />
-        <rect x="0" y="0" width="8" height={h} rx="3" fill={P.dark} />
-        <rect x="52" y="0" width="8" height={h} rx="3" fill={P.dark} />
-        {name && <text x={58} y="-10" textAnchor="start" fontFamily="Inter, system-ui, sans-serif" fontSize="12" fontWeight="700" fill={P.ink}>{name}</text>}
-      </Piece>
-      <Lock id={id} x={x + 13} y={y + 14} s={0.6} />
-    </>
   );
 }

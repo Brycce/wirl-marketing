@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import Wordmark from '@/components/Wordmark';
 import WaitlistForm from '@/components/WaitlistForm';
 import ConnectAgent from '@/components/ConnectAgent';
-import { HeroScene, MessTiles, WirlScene, ShareScene, AdminTable, RobotIcon, RaceScene } from '@/components/paper/Scenes';
+import { HeroScene, MessTiles, WirlScene, ShareScene, AdminTable, RobotIcon } from '@/components/paper/Scenes';
 import { copy } from '@/components/copy';
 
 const faqJsonLd = {
@@ -189,10 +189,9 @@ export default function Home() {
 
       {/* Closing */}
       <section id="waitlist" className={`${wrap} pb-16 scroll-mt-8`}>
-        <div className="panel grain bg-butter px-6 pt-4 pb-14 md:pb-20 text-center overflow-hidden">
-          <div className="max-w-3xl mx-auto"><RaceScene /></div>
+        <div className="panel grain bg-butter px-6 py-14 md:py-20 text-center">
           <h2 className={h2}>{copy.closing_h2}</h2>
-          <p className="mt-4 text-[16px] text-ink/75 max-w-[44ch] mx-auto">{copy.closing_p}</p>
+          <p className="mt-4 text-[16px] text-ink/75 max-w-[40ch] mx-auto">{copy.closing_p}</p>
           <div className="mt-8">
             <WaitlistForm id="waitlist-email-footer" center />
           </div>

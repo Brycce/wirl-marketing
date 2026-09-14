@@ -34,15 +34,12 @@ export default async function Image() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 36 }}>
-          <svg viewBox="0 0 60 36" width="107" height="64">
+          <svg viewBox="0 0 48 36" width="85" height="64">
             <g fill="none" stroke="#1F2A1F" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
               <path d={SHELL} />
               <path d="M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2" />
               <path d="M8.6 22.4 L5.6 15.2" />
               <path d="M9.6 22.4 L10.6 14.6" />
-              <path d="M48 10 h7" />
-              <path d="M49.5 17.5 h9" />
-              <path d="M48 25 h7" />
             </g>
             <circle cx="5.4" cy="14.6" r="2.1" fill="#1F2A1F" />
             <circle cx="10.8" cy="14" r="2.1" fill="#1F2A1F" />
