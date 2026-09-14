@@ -26,7 +26,7 @@ const agentArt: [string, string][] = [
 ];
 
 const wrap = 'max-w-6xl mx-auto px-6';
-const h2 = 'font-display font-bold leading-[1.08] tracking-[-0.02em] text-balance text-[2rem] md:text-[2.5rem]';
+const h2 = 'font-display font-bold leading-[1.1] tracking-[-0.03em] text-balance text-[1.9rem] md:text-[2.4rem]';
 const lede = 'mt-5 text-[17px] leading-relaxed text-ink/80';
 
 /* Text on one side, the picture on the other. Flip swaps them on wide screens;
@@ -61,7 +61,7 @@ export default function Home() {
         <Split
           text={
             <div>
-              <h1 className="font-display font-bold leading-[1.04] tracking-[-0.025em] text-balance text-[2.5rem] sm:text-[3.1rem] lg:text-[3.5rem]">
+              <h1 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-balance text-[2.4rem] sm:text-[3rem] lg:text-[3.4rem]">
                 {copy.hero_h1}
               </h1>
               <p className="mt-6 text-[17px] md:text-[18px] leading-relaxed text-ink/85 max-w-[46ch]">{copy.hero_p}</p>
@@ -132,7 +132,7 @@ export default function Home() {
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {copy.builtin_cards.map(({ title, body }) => (
             <div key={title} className="paper p-5">
-              <div className="font-display font-bold text-[19px] leading-tight tracking-[-0.01em]">{title}</div>
+              <div className="font-display font-bold text-[18px] leading-tight tracking-[-0.02em]">{title}</div>
               <p className="mt-2.5 text-[15px] text-ink/75 leading-relaxed">{body}</p>
             </div>
           ))}

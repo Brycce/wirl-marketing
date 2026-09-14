@@ -55,8 +55,8 @@ export const copy: Copy = {
   ],
   share_h2: 'Share the link or the code.',
   share_p: 'Anyone who can open an app can pull its source, change it, and ship it again.',
-  admin_h2: 'You get the list.',
-  admin_p: 'Every app on one screen: who built it, with which agent, what it connects to, who can open it, when it was last called. Plus the log.',
+  admin_h2: 'Admins get the complete view.',
+  admin_p: "Every internal app that's running, who built it, what data it's accessing, and who can open it. Plus a log of what each one did.",
   faq: [
     { q: 'What is Wirl?', a: "A place to host the internal tools your people build, behind your company's Google sign-in by default." },
     { q: 'Does it work with AI coding agents?', a: 'Yes. Claude Code, Codex, Cursor, anything that speaks MCP.' },

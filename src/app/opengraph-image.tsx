@@ -13,7 +13,7 @@ export const contentType = 'image/png';
 const fontFile = (name: string) => readFile(path.join(process.cwd(), 'src/app/fonts', name));
 
 export default async function Image() {
-  const [bold, regular] = await Promise.all([fontFile('BricolageGrotesque-700.ttf'), fontFile('BricolageGrotesque-500.ttf')]);
+  const [bold, regular] = await Promise.all([fontFile('Inter-700.ttf'), fontFile('Inter-500.ttf')]);
 
   return new ImageResponse(
     (
@@ -27,7 +27,7 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           padding: '60px',
-          fontFamily: 'Bricolage',
+          fontFamily: 'Inter',
           color: '#1F2A1F',
         }}
       >
@@ -35,10 +35,10 @@ export default async function Image() {
           <svg viewBox="0 0 32 32" width="64" height="64">
             <path d={SWIRL_PATH} fill="none" stroke="#1F2A1F" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1, letterSpacing: -1 }}>wirl</div>
+          <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1, letterSpacing: -2.5 }}>wirl</div>
         </div>
-        <div style={{ fontSize: 84, lineHeight: 1, textAlign: 'center', fontWeight: 700, letterSpacing: -3 }}>Let your people build.</div>
-        <div style={{ fontSize: 32, color: '#5E5A4C', marginTop: 28, textAlign: 'center', fontFamily: 'Bricolage' }}>
+        <div style={{ fontSize: 84, lineHeight: 1, textAlign: 'center', fontWeight: 700, letterSpacing: -3.5 }}>Let your people build.</div>
+        <div style={{ fontSize: 32, color: '#5E5A4C', marginTop: 28, textAlign: 'center', fontFamily: 'Inter' }}>
           Internal tools on a link only your company can open.
         </div>
         <div style={{ display: 'flex', gap: 14, marginTop: 44 }}>
@@ -51,7 +51,7 @@ export default async function Image() {
                 boxShadow: '0 10px 22px -12px rgba(31,42,31,0.45)',
                 padding: '12px 24px',
                 fontSize: 26,
-                fontFamily: 'Bricolage',
+                fontFamily: 'Inter',
                 fontWeight: 500,
               }}
             >
@@ -64,8 +64,8 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: 'Bricolage', data: bold, weight: 700, style: 'normal' },
-        { name: 'Bricolage', data: regular, weight: 500, style: 'normal' },
+        { name: 'Inter', data: bold, weight: 700, style: 'normal' },
+        { name: 'Inter', data: regular, weight: 500, style: 'normal' },
       ],
     }
   );
