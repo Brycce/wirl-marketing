@@ -7,6 +7,7 @@ import { Piece, P } from './Paper';
 // so the stroke exits heading left.
 const SHELL_PHASE = (170 * Math.PI) / 180;
 const SHELL = swirlPath(32, 17, SHELL_PHASE);
+export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';

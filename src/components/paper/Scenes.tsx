@@ -1,21 +1,25 @@
-import { Scene, Piece, Ground, Person, Robot, AppCard, Cloud, Lock, Laptop, Desk, Warn, Flame, Clock, Skull, Spark, Defs, P } from './Paper';
-import { PaperSnail } from './Snail';
+import { Scene, Piece, Ground, Person, Robot, AppCard, Cloud, Lock, Laptop, Desk, Warn, Flame, Clock, Spark, Defs, P, Road, Gate, Flag, Canopy, Barrier, RainCloud } from './Paper';
+import { PaperSnail, MARK } from './Snail';
 
-/* The snail is the scene. It rests with an app on its back under the cloud,
-   crouches, launches off the left edge, and slides back in from the right. */
+/* The hero: the link is the road. Snails carrying apps come through the gate
+   on the right, pause for the check, and run down the link. */
 export function HeroScene() {
   const id = 'hero';
   return (
     <Scene id={id} w={380} h={330}>
-      <g className="cloud-drift">
-        <Cloud id={id} x={200} y={22} s={0.62} tone="#FFFFFF" />
-        <Lock id={id} x={262} y={62} s={0.6} />
+      <Road id={id} x={-10} y={222} w={400} h={70} label="harbor--supplier-payments.wirl.run" />
+      <Gate id={id} x={262} y={46} h={210} w={96} />
+      <g className="lane lane-1">
+        <PaperSnail id={id} x={400} y={172} s={0.82} fast />
+        <AppCard id={id} x={434} y={152} w={48} h={36} tone={P.blue} r={-7} />
       </g>
-      <AppCard id={id} x={30} y={56} w={60} h={44} tone={P.coral} r={-5} className="float-2" />
-      <Ground id={id} y={272} x={14} w={352} />
-      <g className="zip">
-        <PaperSnail id={id} x={118} y={195} s={1.1} fast />
-        <AppCard id={id} x={163} y={168} w={64} h={48} tone={P.blue} r={-7} />
+      <g className="lane lane-2">
+        <PaperSnail id={id} x={400} y={172} s={0.82} fast shell={P.coral} body="#BFD9EA" spiral={P.paper} />
+        <AppCard id={id} x={434} y={152} w={48} h={36} tone={P.lilac} r={-7} />
+      </g>
+      <g className="lane lane-3">
+        <PaperSnail id={id} x={400} y={172} s={0.82} fast shell={P.lilac} body="#F0C9BC" />
+        <AppCard id={id} x={434} y={152} w={48} h={36} tone={P.coral} r={-7} />
       </g>
     </Scene>
   );
@@ -37,47 +41,44 @@ export function DeskScene() {
   );
 }
 
-/* The agent hands the app to the snail. The snail runs it under the cloud,
-   the lock drops on, and it runs on to the person who asked for it. Ten seconds. */
+/* The pit stop. The snail runs in with the app, the agent drops the lock on
+   under the canopy, and it runs out to the person who asked for it. Ten seconds. */
 export function WirlScene() {
   const id = 'wirl';
   return (
     <Scene id={id} w={420} h={300}>
-      <g className="cloud-puff">
-        <Cloud id={id} x={100} y={30} />
-        <Lock id={id} x={194} y={72} s={0.9} />
-      </g>
-      <Spark id={id} x={150} y={170} className="spark-a" />
-      <Spark id={id} x={262} y={182} className="spark-b" />
-      <Robot id={id} x={30} y={200} arms="up" />
-      <Person id={id} x={356} y={180} shirt={P.blue} skin={1} hair={1} style="long" />
-      <Ground id={id} y={270} x={14} w={392} />
+      <Road id={id} x={-10} y={228} w={440} h={56} />
+      <Canopy id={id} x={116} y={40} w={190} mark={MARK} />
+      <Robot id={id} x={230} y={150} arms="up" />
+      <Person id={id} x={356} y={138} shirt={P.blue} skin={1} hair={1} style="long" />
+      <Spark id={id} x={150} y={150} className="spark-a" />
+      <Spark id={id} x={262} y={162} className="spark-b" />
       <g className="courier">
-        <PaperSnail id={id} x={90} y={217} s={0.75} flip fast />
+        <PaperSnail id={id} x={90} y={175} s={0.75} flip fast />
         <g className="parcel">
-          <AppCard id={id} x={103} y={193} w={48} h={36} tone={P.coral} r={-6} className="parcel-plain" />
-          <AppCard id={id} x={103} y={193} w={48} h={36} onWirl r={-6} className="parcel-locked" />
+          <AppCard id={id} x={103} y={151} w={48} h={36} tone={P.coral} r={-6} className="parcel-plain" />
+          <AppCard id={id} x={103} y={151} w={48} h={36} onWirl r={-6} className="parcel-locked" />
         </g>
-        <Lock id={id} x={117} y={196} s={0.6} className="lock-drop" />
+        <Lock id={id} x={117} y={154} s={0.6} className="lock-drop" />
       </g>
     </Scene>
   );
 }
 
-/* The snail ferries the app from one colleague to the other; it comes back
-   with one more thing in it. Eight seconds. */
+/* The relay. The snail ferries the app to the colleague and comes back with
+   one more line in it. Eight seconds. */
 export function ShareScene() {
   const id = 'share';
   return (
     <Scene id={id} w={400} h={240}>
-      <Person id={id} x={40} y={110} shirt={P.coral} skin={3} hair={3} style="curly" />
-      <Person id={id} x={316} y={110} shirt={P.lilac} skin={2} hair={2} style="cap" />
-      <Spark id={id} x={300} y={96} className="spark-c" />
-      <Ground id={id} y={200} x={10} w={380} />
+      <Road id={id} x={-10} y={176} w={420} h={50} />
+      <Person id={id} x={40} y={86} shirt={P.coral} skin={3} hair={3} style="curly" />
+      <Person id={id} x={316} y={86} shirt={P.lilac} skin={2} hair={2} style="cap" />
+      <Spark id={id} x={300} y={72} className="spark-c" />
       <g className="ferry">
-        <PaperSnail id={id} x={92} y={150} s={0.7} flip fast />
-        <AppCard id={id} x={105} y={133} w={44} h={33} onWirl r={-5} className="ferry-plain" />
-        <AppCard id={id} x={105} y={133} w={44} h={33} onWirl extra r={-5} className="ferry-extra" />
+        <PaperSnail id={id} x={92} y={130} s={0.7} flip fast />
+        <AppCard id={id} x={105} y={113} w={44} h={33} onWirl r={-5} className="ferry-plain" />
+        <AppCard id={id} x={105} y={113} w={44} h={33} onWirl extra r={-5} className="ferry-extra" />
       </g>
     </Scene>
   );
@@ -89,10 +90,8 @@ const mess: { tilt: string; art: React.ReactNode }[] = [
     tilt: '-rotate-1',
     art: (
       <Scene id="m1" w={120} h={92}>
-        <Cloud id="m1" x={2} y={28} s={0.5} />
-        <AppCard id="m1" x={30} y={6} w={52} h={40} tone={P.blue} r={-4} />
-        <Lock id="m1" x={80} y={40} s={0.55} open />
-        <Skull id="m1" x={12} y={56} s={0.9} />
+        <RainCloud id="m1" x={18} y={0} s={0.8} />
+        <PaperSnail id="m1" x={14} y={44} s={0.7} shell={P.blue} body={P.slate} spiral={P.paper} />
       </Scene>
     ),
   },
@@ -100,8 +99,9 @@ const mess: { tilt: string; art: React.ReactNode }[] = [
     tilt: 'rotate-1',
     art: (
       <Scene id="m2" w={120} h={92}>
-        <Laptop id="m2" x={16} y={36} s={1.05} />
-        <Flame id="m2" x={80} y={8} s={1.1} className="flicker-soft" />
+        <Laptop id="m2" x={22} y={40} s={1.05} />
+        <PaperSnail id="m2" x={30} y={2} s={0.5} shell={P.coral} body="#F0C9BC" spiral={P.paper} />
+        <Flame id="m2" x={88} y={14} s={1} className="flicker-soft" />
       </Scene>
     ),
   },
@@ -109,8 +109,9 @@ const mess: { tilt: string; art: React.ReactNode }[] = [
     tilt: 'rotate-2',
     art: (
       <Scene id="m3" w={120} h={92}>
-        <AppCard id="m3" x={16} y={18} w={70} h={54} tone={P.grey} r={-2} />
-        <Clock id="m3" x={82} y={8} />
+        <Barrier id="m3" x={66} y={36} s={0.65} />
+        <PaperSnail id="m3" x={0} y={40} s={0.62} flip shell={P.lilac} body="#BFDCC5" />
+        <Clock id="m3" x={92} y={4} s={0.9} />
       </Scene>
     ),
   },
@@ -118,14 +119,9 @@ const mess: { tilt: string; art: React.ReactNode }[] = [
     tilt: '-rotate-2',
     art: (
       <Scene id="m4" w={120} h={92}>
-        <Piece id="m4" x={54} y={34}><rect width="7" height="58" fill={P.dark} /></Piece>
-        <Piece id="m4" x={18} y={16}>
-          <rect width="78" height="30" rx="5" fill={P.coral} />
-          <circle cx="17" cy="15" r="8" fill={P.sky} />
-          <ellipse cx="17" cy="15" rx="3.5" ry="8" fill={P.blue} opacity="0.55" />
-          <rect x="31" y="11" width="38" height="8" rx="4" fill={P.paper} />
-        </Piece>
-        <Warn id="m4" x={90} y={2} />
+        <Road id="m4" x={-20} y={60} w={80} h={24} />
+        <PaperSnail id="m4" x={56} y={38} s={0.6} flip shell={P.sun} body="#9CC5A5" />
+        <Warn id="m4" x={90} y={6} />
       </Scene>
     ),
   },
@@ -213,12 +209,15 @@ export function AdminTable() {
   );
 }
 
-/* Three snails, one carrying an app, crossing the closing panel in half a second. */
+/* The finish. Three snails, one carrying an app, cross the line in half a second. */
 export function RaceScene() {
   const id = 'race';
   return (
     <svg viewBox="0 0 560 130" width="100%" className="block h-auto" aria-hidden="true" focusable="false">
       <Defs id={id} />
+      <Road id={id} x={-10} y={54} w={580} h={76} tone="#E9D9A8" />
+      <Piece id={id} x={60} y={54} flat><rect width="14" height="76" fill={P.ink} opacity="0.85" /><rect x="0" y="0" width="14" height="76" fill="url(#check)" /></Piece>
+      <Flag id={id} x={40} y={-30} s={0.9} />
       <g className="race-1"><PaperSnail id={id} x={420} y={6} s={0.55} fast /></g>
       <g className="race-2"><PaperSnail id={id} x={470} y={44} s={0.55} fast shell={P.coral} body="#BFD9EA" spiral={P.paper} /></g>
       <g className="race-3"><PaperSnail id={id} x={440} y={82} s={0.55} fast shell={P.lilac} body="#F0C9BC" /><AppCard id={id} x={458} y={70} w={34} h={26} tone={P.green} onWirl r={-6} /></g>
