@@ -25,8 +25,8 @@ function HeroWithSnail() {
       <Robot id={id} x={296} y={190} />
       <Ground id={id} y={258} x={14} w={352} />
       <g className="crawl">
-        <PaperSnail id={id} x={210} y={209} s={0.7} />
-        <AppCard id={id} x={238} y={186} w={44} h={32} tone={P.blue} r={-8} />
+        <PaperSnail id={id} x={232} y={186} s={0.6} />
+        <AppCard id={id} x={254} y={165} w={40} h={30} tone={P.blue} r={-8} />
       </g>
     </Scene>
   );
@@ -37,7 +37,7 @@ export default function SnailConcept() {
     <div className="min-h-screen bg-cream text-ink">
       <style>{`
         .crawl { transform-box: fill-box; transform-origin: 50% 50%; animation: crawl 26s ease-in-out infinite alternate; }
-        @keyframes crawl { from { transform: translateX(0); } to { transform: translateX(-150px); } }
+        @keyframes crawl { from { transform: translateX(0); } to { transform: translateX(-70px); } }
         .stalk-wiggle { transform-box: fill-box; transform-origin: 50% 100%; animation: wiggle 3s ease-in-out infinite; }
         @keyframes wiggle { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
       `}</style>
@@ -102,7 +102,7 @@ export default function SnailConcept() {
       {/* In the hero */}
       <section className={`${wrap} py-10`}>
         <h2 className={h2}>In the hero</h2>
-        <p className="mt-3 text-[16px] text-ink/75 max-w-[52ch]">It carries the app across the floor. It takes twenty-six seconds to cross the panel, which is the joke, and the only slow thing on the page.</p>
+        <p className="mt-3 text-[16px] text-ink/75 max-w-[52ch]">It carries the app along the desk. It takes twenty-six seconds to get anywhere, which is the joke, and the only slow thing on the page.</p>
         <div className="mt-6 grid md:grid-cols-2 gap-10 items-center">
           <div>
             <h3 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-[2.2rem] md:text-[2.6rem]">Every app carries its own shell.</h3>
