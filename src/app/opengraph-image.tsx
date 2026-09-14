@@ -48,7 +48,7 @@ export default async function Image() {
         </div>
         <div style={{ fontSize: 84, lineHeight: 1, textAlign: 'center', fontWeight: 700, letterSpacing: -3.5 }}>Let your people build.</div>
         <div style={{ fontSize: 32, color: '#5E5A4C', marginTop: 28, textAlign: 'center', fontFamily: 'Inter' }}>
-          Internal tools on a link only your company can open.
+          Internal tools, behind your company login.
         </div>
         <div style={{ display: 'flex', gap: 14, marginTop: 44 }}>
           {['anyone can ship', 'login on every app', 'keys never in the app', 'audit log'].map((text) => (

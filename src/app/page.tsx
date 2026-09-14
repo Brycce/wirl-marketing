@@ -28,6 +28,7 @@ const agentArt: [string, string][] = [
 const wrap = 'max-w-6xl mx-auto px-6';
 const h2 = 'font-display font-bold leading-[1.1] tracking-[-0.03em] text-balance text-[1.9rem] md:text-[2.4rem]';
 const lede = 'mt-5 text-[17px] leading-relaxed text-ink/80';
+const bullets = 'mt-4 space-y-2 text-[16px] leading-relaxed text-ink/85 list-disc pl-5 marker:text-green';
 
 /* Text on one side, the picture on the other. Flip swaps them on wide screens;
    on a phone the text always comes first. */
@@ -82,6 +83,9 @@ export default function Home() {
           text={
             <div>
               <h2 className={h2}>{copy.mess_h2}</h2>
+              <ul className={`${bullets} marker:text-coral`}>
+                {copy.mess_bullets.map((b) => <li key={b}>{b}</li>)}
+              </ul>
               <p className={lede}>{copy.mess_p}</p>
             </div>
           }
@@ -96,10 +100,9 @@ export default function Home() {
             <div>
               <h2 className={h2}>{copy.wirl_h2}</h2>
               <p className={lede}>{copy.wirl_p}</p>
-              <p className="mt-6 text-[12px] uppercase tracking-wider text-dim font-semibold">Governance, built in</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {copy.chips.map((c) => <span key={c} className="chip">{c}</span>)}
-              </div>
+              <ul className={bullets}>
+                {copy.wirl_bullets.map((b) => <li key={b}>{b}</li>)}
+              </ul>
             </div>
           }
           art={<Panel tone="bg-mint"><WirlScene /></Panel>}
@@ -163,6 +166,9 @@ export default function Home() {
             <div>
               <h2 className={h2}>{copy.admin_h2}</h2>
               <p className={lede}>{copy.admin_p}</p>
+              <ul className={bullets}>
+                {copy.admin_bullets.map((b) => <li key={b}>{b}</li>)}
+              </ul>
             </div>
           }
           art={<Panel tone="bg-lilac"><AdminTable /></Panel>}
