@@ -95,33 +95,11 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .spark-c { animation: spark-c 7s steps(1) infinite; opacity: 0; }
 @keyframes spark-c { 0%, 53% { opacity: 0; } 54% { opacity: 1; } 58% { opacity: 0; } 59% { opacity: 1; } 63%, 100% { opacity: 0; } }
 
-/* The wordmark gets going on hover: it leans forward, a wave runs along the
-   inside of its belly, the ground streams past underneath, and three gusts
-   blow by behind it. Everything leaves faster than it arrives. */
+/* The wordmark gets going on hover. */
+.wordmark .speed { opacity: 0; transition: opacity .18s ease; }
+.wordmark:hover .speed { opacity: 1; }
 .wordmark-mark { transition: transform .25s cubic-bezier(.2,.9,.2,1); }
 .wordmark:hover .wordmark-mark { transform: translateX(-3px); }
-
-.wordmark .crease, .wordmark .track, .wordmark .speed { opacity: 0; transition: opacity .1s ease; }
-.wordmark:hover .crease { opacity: 1; transition: opacity .2s ease; }
-.wordmark:hover .track { opacity: 1; transition: opacity .2s ease .06s; }
-.wordmark:hover .speed { opacity: 1; transition: opacity .2s ease .1s; }
-
-/* The ground: a dashed line sliding backwards under him. */
-.wordmark:hover .track { animation: track .5s linear infinite; }
-@keyframes track { to { stroke-dashoffset: -7.5; } }
-
-/* The gusts: each one blows in beside him and streams away behind, staggered
-   so they never move as a block. */
-.wordmark .wind { opacity: 0; }
-.wordmark:hover .wind { animation: wind .8s linear infinite; }
-.wordmark:hover .wind-2 { animation-duration: .66s; animation-delay: .11s; }
-.wordmark:hover .wind-3 { animation-duration: .92s; animation-delay: .27s; }
-@keyframes wind {
-  0% { transform: translateX(-2px); opacity: 0; }
-  20% { opacity: .9; }
-  62% { opacity: .9; }
-  100% { transform: translateX(8px); opacity: 0; }
-}
 
 /* The small snails crawl. Snail pace: inch along a short stretch, pause,
    turn around, come back. The body stretches a little with every inch. */
@@ -173,9 +151,7 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .idle .stalks, .crawl, .inch { animation: none; }
-  .wordmark .speed, .wordmark .crease, .wordmark .track, .wordmark-mark { transition: none; }
-  .wordmark:hover .track, .wordmark:hover .wind { animation: none; }
-  .wordmark .crease, .wordmark .track, .wordmark .speed { opacity: 0; }
+  .wordmark .speed, .wordmark-mark { transition: none; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .ship-in, .cloud-puff, .ship-out, .spark-a, .spark-b, .pass-a, .pass-b, .spark-c { animation: none; }
   .ship-out, .pass-b, .spark-a, .spark-b, .spark-c { opacity: 0; }
   .pass-a { opacity: 1; }
