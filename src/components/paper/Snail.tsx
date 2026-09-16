@@ -11,7 +11,9 @@ export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
 
 // The belly ripple. The body is sampled as a polyline so every frame has the
-// same number of points, then a bump travels from the tail to the head.
+// same number of points, then a wave train travels from the tail to the head,
+// the way a snail's foot actually moves. One and a half wavelengths fit on the
+// belly, so there is always a hump somewhere and the loop is seamless.
 // Both ends stay put: the tail meets the shell, the head is where the eyes are.
 type Pt = [number, number];
 function cubic(t: number, a: Pt, b: Pt, c: Pt, d: Pt): Pt {
@@ -30,8 +32,8 @@ function bellyFrame(phase: number | null): string {
     const [x, y] = cubic(s, [34.17, 29.31], [27, 31.8], [15, 33.2], [9, 30.2]);
     let dy = 0;
     if (phase !== null) {
-      const g = Math.exp(-((s - phase) * (s - phase)) / (2 * 0.09 * 0.09));
-      dy = -2.2 * g * Math.sin(Math.PI * s);
+      const hump = 0.5 + 0.5 * Math.cos(2 * Math.PI * (1.5 * s - phase));
+      dy = -2.0 * hump * hump * Math.sin(Math.PI * s);
     }
     pts.push(`${x.toFixed(2)} ${(y + dy).toFixed(2)}`);
   }
@@ -42,7 +44,8 @@ function bellyFrame(phase: number | null): string {
   return `M${pts[0]} L${pts.slice(1).join(' ')}`;
 }
 const BELLY_REST = bellyFrame(null);
-const BELLY_FRAMES = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => bellyFrame(k / 7)).concat(bellyFrame(null)).join(';');
+const WAVE_STEPS = 12;
+const BELLY_FRAMES = Array.from({ length: WAVE_STEPS + 1 }, (_, k) => bellyFrame((k % WAVE_STEPS) / WAVE_STEPS)).join(';');
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
@@ -54,7 +57,7 @@ export function SnailMark({ size = 32, className = '', fast = false }: { size?: 
         <path d={SHELL} />
         {fast ? (
           <path d={BELLY_REST}>
-            <animate attributeName="d" values={BELLY_FRAMES} dur="0.55s" begin="indefinite" repeatCount="indefinite" calcMode="linear" />
+            <animate attributeName="d" values={BELLY_FRAMES} dur="0.7s" begin="indefinite" repeatCount="indefinite" calcMode="linear" />
           </path>
         ) : (
           <path d={BODY} />
