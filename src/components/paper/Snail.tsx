@@ -9,6 +9,40 @@ const SHELL_PHASE = (170 * Math.PI) / 180;
 const SHELL = swirlPath(32, 17, SHELL_PHASE);
 export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
+
+// The belly ripple. The body is sampled as a polyline so every frame has the
+// same number of points, then a bump travels from the tail to the head.
+// Both ends stay put: the tail meets the shell, the head is where the eyes are.
+type Pt = [number, number];
+function cubic(t: number, a: Pt, b: Pt, c: Pt, d: Pt): Pt {
+  const u = 1 - t;
+  return [
+    u * u * u * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * c[0] + t * t * t * d[0],
+    u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t * t * t * d[1],
+  ];
+}
+const BELLY = 12;
+const CURL = 4;
+function bellyFrame(phase: number | null): string {
+  const pts: string[] = [];
+  for (let i = 0; i <= BELLY; i++) {
+    const s = i / BELLY;
+    const [x, y] = cubic(s, [34.17, 29.31], [27, 31.8], [15, 33.2], [9, 30.2]);
+    let dy = 0;
+    if (phase !== null) {
+      const g = Math.exp(-((s - phase) * (s - phase)) / (2 * 0.09 * 0.09));
+      dy = -2.2 * g * Math.sin(Math.PI * s);
+    }
+    pts.push(`${x.toFixed(2)} ${(y + dy).toFixed(2)}`);
+  }
+  for (let i = 1; i <= CURL; i++) {
+    const [x, y] = cubic(i / CURL, [9, 30.2], [4.6, 28], [4.2, 23.4], [8.2, 22.2]);
+    pts.push(`${x.toFixed(2)} ${y.toFixed(2)}`);
+  }
+  return `M${pts[0]} L${pts.slice(1).join(' ')}`;
+}
+const BELLY_REST = bellyFrame(null);
+const BELLY_FRAMES = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => bellyFrame(k / 7)).concat(bellyFrame(null)).join(';');
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
@@ -18,7 +52,13 @@ export function SnailMark({ size = 32, className = '', fast = false }: { size?: 
     <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} aria-hidden="true" focusable="false">
       <g fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
         <path d={SHELL} />
-        <path d={BODY} />
+        {fast ? (
+          <path d={BELLY_REST}>
+            <animate attributeName="d" values={BELLY_FRAMES} dur="0.55s" begin="indefinite" repeatCount="indefinite" calcMode="linear" />
+          </path>
+        ) : (
+          <path d={BODY} />
+        )}
         <path d={STALK_A} />
         <path d={STALK_B} />
         {fast && (
