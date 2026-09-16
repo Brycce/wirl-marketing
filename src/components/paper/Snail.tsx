@@ -10,11 +10,12 @@ const SHELL = swirlPath(32, 17, SHELL_PHASE);
 export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
 
-// The belly ripple. The body is sampled as a polyline so every frame has the
-// same number of points, then a wave train travels from the tail to the head,
-// the way a snail's foot actually moves. One and a half wavelengths fit on the
-// belly, so there is always a hump somewhere and the loop is seamless.
-// Both ends stay put: the tail meets the shell, the head is where the eyes are.
+// The tummy. The silhouette stays put; a second, thinner crease line sits
+// inside it, and a wave train travels along that from the tail to the head,
+// the way a snail's foot actually moves. Two lines give the body volume, and
+// only the inner one moves, so the mark never looks like a wobbling worm.
+// One and a half wavelengths fit on the belly, so there is always a hump
+// somewhere and the loop has no seam.
 type Pt = [number, number];
 function cubic(t: number, a: Pt, b: Pt, c: Pt, d: Pt): Pt {
   const u = 1 - t;
@@ -23,29 +24,30 @@ function cubic(t: number, a: Pt, b: Pt, c: Pt, d: Pt): Pt {
     u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t * t * t * d[1],
   ];
 }
-const BELLY = 12;
-const CURL = 4;
-function bellyFrame(phase: number | null): string {
+const BELLY_A: Pt = [34.17, 29.31];
+const BELLY_B: Pt = [27, 31.8];
+const BELLY_C: Pt = [15, 33.2];
+const BELLY_D: Pt = [9, 30.2];
+const CREASE_N = 16;
+const CREASE_LIFT = 3.5;
+function creaseFrame(phase: number | null): string {
   const pts: string[] = [];
-  for (let i = 0; i <= BELLY; i++) {
-    const s = i / BELLY;
-    const [x, y] = cubic(s, [34.17, 29.31], [27, 31.8], [15, 33.2], [9, 30.2]);
+  for (let i = 0; i <= CREASE_N; i++) {
+    const u = i / CREASE_N;
+    const s = 0.14 + u * 0.74;
+    const [x, y] = cubic(s, BELLY_A, BELLY_B, BELLY_C, BELLY_D);
     let dy = 0;
     if (phase !== null) {
       const hump = 0.5 + 0.5 * Math.cos(2 * Math.PI * (1.5 * s - phase));
-      dy = -2.0 * hump * hump * Math.sin(Math.PI * s);
+      dy = -1.55 * hump * hump * Math.sin(Math.PI * u);
     }
-    pts.push(`${x.toFixed(2)} ${(y + dy).toFixed(2)}`);
-  }
-  for (let i = 1; i <= CURL; i++) {
-    const [x, y] = cubic(i / CURL, [9, 30.2], [4.6, 28], [4.2, 23.4], [8.2, 22.2]);
-    pts.push(`${x.toFixed(2)} ${y.toFixed(2)}`);
+    pts.push(`${x.toFixed(2)} ${(y - CREASE_LIFT + dy).toFixed(2)}`);
   }
   return `M${pts[0]} L${pts.slice(1).join(' ')}`;
 }
-const BELLY_REST = bellyFrame(null);
+const CREASE_REST = creaseFrame(null);
 const WAVE_STEPS = 12;
-const BELLY_FRAMES = Array.from({ length: WAVE_STEPS + 1 }, (_, k) => bellyFrame((k % WAVE_STEPS) / WAVE_STEPS)).join(';');
+const CREASE_FRAMES = Array.from({ length: WAVE_STEPS + 1 }, (_, k) => creaseFrame((k % WAVE_STEPS) / WAVE_STEPS)).join(';');
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
@@ -55,21 +57,23 @@ export function SnailMark({ size = 32, className = '', fast = false }: { size?: 
     <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} aria-hidden="true" focusable="false">
       <g fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
         <path d={SHELL} />
-        {fast ? (
-          <path d={BELLY_REST}>
-            <animate attributeName="d" values={BELLY_FRAMES} dur="0.7s" begin="indefinite" repeatCount="indefinite" calcMode="linear" />
+        <path d={BODY} />
+        {fast && (
+          <path className="crease" d={CREASE_REST} strokeWidth="1.5" strokeOpacity="0.55">
+            <animate attributeName="d" values={CREASE_FRAMES} dur="0.7s" begin="indefinite" repeatCount="indefinite" calcMode="linear" />
           </path>
-        ) : (
-          <path d={BODY} />
         )}
         <path d={STALK_A} />
         <path d={STALK_B} />
         {fast && (
-          <g className="speed">
-            <path d="M48 10 h7" />
-            <path d="M49.5 17.5 h9" />
-            <path d="M48 25 h7" />
-          </g>
+          <>
+            <path className="track" d="M7.5 35.1 H33.5" strokeWidth="1.4" strokeOpacity="0.45" strokeDasharray="3 4.5" />
+            <g className="speed" strokeWidth="2.4" strokeOpacity="0.75">
+              <path className="wind wind-1" d="M43.5 9.8 h5.5" />
+              <path className="wind wind-2" d="M43 17.4 h8" />
+              <path className="wind wind-3" d="M43.5 25 h5" />
+            </g>
+          </>
         )}
       </g>
       <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" />
