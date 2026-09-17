@@ -1,9 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { ImageResponse } from 'next/og';
-import { swirlPath } from '@/components/swirl';
+import { pinnedShellPath, SHELL_REST_TURNS } from '@/components/swirl';
 
-const SHELL = swirlPath(32, 17, (170 * Math.PI) / 180);
+// The resting mark, same coil as the wordmark in the nav.
+const SHELL = pinnedShellPath(SHELL_REST_TURNS);
 
 export const dynamic = 'force-static';
 export const alt = 'Wirl. Let your people build.';
