@@ -95,14 +95,25 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 .spark-c { animation: spark-c 7s steps(1) infinite; opacity: 0; }
 @keyframes spark-c { 0%, 53% { opacity: 0; } 54% { opacity: 1; } 58% { opacity: 0; } 59% { opacity: 1; } 63%, 100% { opacity: 0; } }
 
-/* The wordmark gets going on hover. Only where hover is real, so a tap on a
-   phone never leaves the speed lines stuck on; Wordmark.tsx uses the same test
-   for the shell, so the two halves always happen together. */
-.wordmark .speed { opacity: 0; transition: opacity .18s ease; }
+/* The wordmark gets going on hover. Wordmark.tsx pulls the head back for a
+   moment, then lets it lurch forward. The lean and the air streaking past both
+   wait for that release, so they read as caused by it. Only where hover is
+   real, the same test the script uses, so a tap on a phone never strands them. */
+.wordmark .streak { opacity: 0; stroke-dasharray: 0 100; }
 .wordmark-mark { transition: transform .25s cubic-bezier(.2,.9,.2,1); }
 @media (hover: hover) {
-  .wordmark:hover .speed { opacity: 1; }
-  .wordmark:hover .wordmark-mark { transform: translateX(-3px); }
+  .wordmark:hover .wordmark-mark { transform: translateX(-3px); transition-delay: .11s; }
+  .wordmark:hover .streak { animation: streak .52s cubic-bezier(.45,0,.85,.55) .12s infinite; }
+  .wordmark:hover .streak-2 { animation-duration: .46s; animation-delay: .3s; }
+  .wordmark:hover .streak-3 { animation-duration: .58s; animation-delay: .21s; }
+}
+/* Each streak starts as nothing at the back of the shell, stretches out as it
+   speeds away behind him, and thins to nothing past the end. */
+@keyframes streak {
+  0% { stroke-dasharray: 0 100; stroke-dashoffset: 0; opacity: 0; }
+  14% { opacity: 1; }
+  55% { stroke-dasharray: 40 100; }
+  100% { stroke-dasharray: 16 100; stroke-dashoffset: -100; opacity: 0; }
 }
 
 /* The small snails crawl. Snail pace: inch along a short stretch, pause,
@@ -155,8 +166,9 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .idle .stalks, .crawl, .inch { animation: none; }
-  .wordmark .speed, .wordmark-mark { transition: none; }
+  .wordmark-mark { transition: none; }
   .wordmark:hover .wordmark-mark { transform: none; }
+  .wordmark:hover .streak { animation: none; }
   .float-1, .float-2, .float-3, .blink-slow, .flicker-soft, .ship-in, .cloud-puff, .ship-out, .spark-a, .spark-b, .pass-a, .pass-b, .spark-c { animation: none; }
   .ship-out, .pass-b, .spark-a, .spark-b, .spark-c { opacity: 0; }
   .pass-a { opacity: 1; }

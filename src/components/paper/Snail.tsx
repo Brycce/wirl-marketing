@@ -53,14 +53,15 @@ function bellyLength(dx: number) {
 const STRETCH_TABLE: Pt[] = [];
 {
   const base = bellyLength(0);
-  for (let dx = 0; dx <= 40; dx += 0.25) STRETCH_TABLE.push([bellyLength(dx) - base, dx]);
+  // Negative dx pulls the head back toward the shell for the wind-up.
+  for (let dx = -8; dx <= 40; dx += 0.25) STRETCH_TABLE.push([bellyLength(dx) - base, dx]);
 }
 
 export const BODY_REST = BODY;
 
-/** How far the head has to move forward to take up `extra` units of line. */
+/** How far the head moves forward to take up `extra` units of line (negative pulls it back). */
 export function headShiftForLength(extra: number): number {
-  if (extra <= 0) return 0;
+  if (extra <= STRETCH_TABLE[0][0]) return STRETCH_TABLE[0][1];
   for (let i = 1; i < STRETCH_TABLE.length; i++) {
     const [l1, d1] = STRETCH_TABLE[i];
     if (l1 >= extra) {
@@ -73,7 +74,7 @@ export function headShiftForLength(extra: number): number {
 
 /** The body with its head moved forward by dx. */
 export function bodyPath(dx: number): string {
-  if (dx <= 0) return BODY;
+  if (dx === 0) return BODY;
   const k = bellyStretch(dx);
   const f = (n: number) => n.toFixed(2);
   return `M34.17 29.31 C ${f(stretchX(27, k))} 31.8, ${f(stretchX(15, k))} 33.2, ${f(BELLY_END_X - dx)} 30.2 C ${f(4.6 - dx)} 28, ${f(4.2 - dx)} 23.4, ${f(8.2 - dx)} 22.2`;
@@ -96,10 +97,10 @@ export function SnailMark({ size = 32, className = '', fast = false, shellRef, b
           <circle cx="10.8" cy="14" r="2.1" fill="currentColor" stroke="none" />
         </g>
         {fast && (
-          <g className="speed">
-            <path d="M48 10 h7" />
-            <path d="M49.5 17.5 h9" />
-            <path d="M48 25 h7" />
+          <g className="streaks" strokeWidth="2.4" strokeOpacity="0.85">
+            <path className="streak streak-1" d="M43.5 10 H60" pathLength={100} />
+            <path className="streak streak-2" d="M46 17.4 H62" pathLength={100} />
+            <path className="streak streak-3" d="M43.5 25 H60" pathLength={100} />
           </g>
         )}
       </g>

@@ -33,6 +33,9 @@ const ANGLE_END = TURNS * Math.PI * 2 + PIN_PHASE;
 // The shell only opens a sliver: with the line length fixed, that is enough
 // to make him lurch forward about 3px in the nav, which is all it needs.
 export const SHELL_OPEN_TURNS = 2.117;
+// The wind-up before the lurch: a moment tighter than rest, which pulls the
+// head back 2.4 units so the release has somewhere to come from.
+export const SHELL_RETRACT_TURNS = 2.255;
 // 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
 export const SHELL_REST_TURNS = 2.2;
 
