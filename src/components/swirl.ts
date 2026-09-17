@@ -34,15 +34,29 @@ export const SHELL_OPEN_TURNS = TURNS;
 // 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
 export const SHELL_REST_TURNS = 2.2;
 
-export function pinnedShellPath(turns: number): string {
+function pinnedShellPoints(turns: number): [number, number][] {
   const total = turns * Math.PI * 2;
   const b = (R_END - A) / total;
   const phase = ANGLE_END - total;
-  const pts: string[] = [];
+  const pts: [number, number][] = [];
   for (let i = 0; i <= PIN_STEPS; i++) {
     const t = (i / PIN_STEPS) * total;
     const r = A + b * t;
-    pts.push(`${(PIN_CX + r * Math.cos(t + phase)).toFixed(2)} ${(PIN_CY + r * Math.sin(t + phase)).toFixed(2)}`);
+    pts.push([PIN_CX + r * Math.cos(t + phase), PIN_CY + r * Math.sin(t + phase)]);
   }
+  return pts;
+}
+
+export function pinnedShellPath(turns: number): string {
+  const pts = pinnedShellPoints(turns).map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`);
   return `M${pts[0]} L${pts.slice(1).join(' ')}`;
+}
+
+// How much line the coil uses. Fewer turns use less, and the rest has to go
+// somewhere: Wordmark hands it to the body, so the snail comes out of its shell.
+export function pinnedShellLength(turns: number): number {
+  const pts = pinnedShellPoints(turns);
+  let len = 0;
+  for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+  return len;
 }
