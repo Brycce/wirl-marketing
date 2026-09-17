@@ -12,6 +12,11 @@ const OPEN_MS = 420;
 const CLOSE_MS = 240;
 const SPAN = Math.abs(SHELL_REST_TURNS - SHELL_OPEN_TURNS);
 
+// Same test as the CSS that shows the speed lines, plus reduced motion.
+function canUnfurl() {
+  return window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 export default function Wordmark({ size = 28 }: { size?: number }) {
   const shell = useRef<SVGPathElement>(null);
   const turns = useRef(SHELL_REST_TURNS);
@@ -19,22 +24,37 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
 
   useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
+  function draw(el: SVGPathElement, value: number) {
+    turns.current = value;
+    el.setAttribute('d', pinnedShellPath(value));
+  }
+
   function wind(target: number, fullMs: number) {
     const el = shell.current;
     if (!el) return;
-    if (!window.matchMedia('(hover: hover)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     cancelAnimationFrame(frame.current);
+    // If animation is not allowed (or stopped being allowed mid-hover), make
+    // sure the shell is at rest and leave it there.
+    if (!canUnfurl()) {
+      if (turns.current !== SHELL_REST_TURNS) draw(el, SHELL_REST_TURNS);
+      return;
+    }
     const from = turns.current;
     // Interrupted halfway? Take only the time the remaining distance needs.
     const ms = fullMs * (Math.abs(target - from) / SPAN);
-    if (ms < 1) return;
-    const start = performance.now();
+    if (ms < 1) {
+      draw(el, target);
+      return;
+    }
+    // The clock starts on the first frame, not in the event handler: the
+    // frame's timestamp can be earlier than the handler, which would make the
+    // first step run backwards.
+    let start: number | null = null;
     const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / ms);
+      if (start === null) start = now;
+      const t = Math.min(1, Math.max(0, (now - start) / ms));
       const eased = 1 - Math.pow(1 - t, 3);
-      turns.current = from + (target - from) * eased;
-      el.setAttribute('d', pinnedShellPath(turns.current));
+      draw(el, from + (target - from) * eased);
       if (t < 1) frame.current = requestAnimationFrame(tick);
     };
     frame.current = requestAnimationFrame(tick);

@@ -31,7 +31,8 @@ const R_END = A + B * TURNS * Math.PI * 2;
 const ANGLE_END = TURNS * Math.PI * 2 + PIN_PHASE;
 
 export const SHELL_OPEN_TURNS = TURNS;
-export const SHELL_REST_TURNS = 2.35;
+// 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
+export const SHELL_REST_TURNS = 2.2;
 
 export function pinnedShellPath(turns: number): string {
   const total = turns * Math.PI * 2;
