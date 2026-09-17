@@ -1,4 +1,5 @@
-import { swirlPath } from '../swirl';
+import type { Ref } from 'react';
+import { swirlPath, pinnedShellPath } from '../swirl';
 import { Piece, P } from './Paper';
 
 // Concept: the wirl is a shell. One stroke leaves the spiral at the bottom,
@@ -12,25 +13,97 @@ const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
-export function SnailMark({ size = 32, className = '', fast = false }: { size?: number; className?: string; fast?: boolean }) {
+// Coming out of the shell. The body is a belly (first curve, from the shell to
+// under the head) and a neck (second curve, up to the stalks). To lengthen it,
+// the head moves forward by dx: the belly stretches along x from the point where
+// it leaves the shell, and the neck, stalks, and eyes slide along with the head
+// without changing shape. Nothing bends; the line just gets longer.
+type Pt = [number, number];
+const JOIN: Pt = [34.17, 29.31];
+const BELLY_END_X = 9;
+function bellyStretch(dx: number) {
+  return (JOIN[0] - (BELLY_END_X - dx)) / (JOIN[0] - BELLY_END_X);
+}
+function stretchX(x: number, k: number) {
+  return JOIN[0] + (x - JOIN[0]) * k;
+}
+function cubicAt(t: number, a: Pt, b: Pt, c: Pt, d: Pt): Pt {
+  const u = 1 - t;
+  return [
+    u * u * u * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * c[0] + t * t * t * d[0],
+    u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t * t * t * d[1],
+  ];
+}
+function bellyLength(dx: number) {
+  const k = bellyStretch(dx);
+  const b: Pt = [stretchX(27, k), 31.8];
+  const c: Pt = [stretchX(15, k), 33.2];
+  const d: Pt = [BELLY_END_X - dx, 30.2];
+  let len = 0;
+  let prev = JOIN;
+  for (let i = 1; i <= 64; i++) {
+    const p = cubicAt(i / 64, JOIN, b, c, d);
+    len += Math.hypot(p[0] - prev[0], p[1] - prev[1]);
+    prev = p;
+  }
+  return len;
+}
+// Extra belly length for each head position, so a length can be turned back
+// into a position without solving anything per frame.
+const STRETCH_TABLE: Pt[] = [];
+{
+  const base = bellyLength(0);
+  // Negative dx pulls the head back toward the shell for the wind-up.
+  for (let dx = -8; dx <= 40; dx += 0.25) STRETCH_TABLE.push([bellyLength(dx) - base, dx]);
+}
+
+export const BODY_REST = BODY;
+
+/** How far the head moves forward to take up `extra` units of line (negative pulls it back). */
+export function headShiftForLength(extra: number): number {
+  if (extra <= STRETCH_TABLE[0][0]) return STRETCH_TABLE[0][1];
+  for (let i = 1; i < STRETCH_TABLE.length; i++) {
+    const [l1, d1] = STRETCH_TABLE[i];
+    if (l1 >= extra) {
+      const [l0, d0] = STRETCH_TABLE[i - 1];
+      return d0 + ((d1 - d0) * (extra - l0)) / (l1 - l0);
+    }
+  }
+  return STRETCH_TABLE[STRETCH_TABLE.length - 1][1];
+}
+
+/** The body with its head moved forward by dx. */
+export function bodyPath(dx: number): string {
+  if (dx === 0) return BODY;
+  const k = bellyStretch(dx);
+  const f = (n: number) => n.toFixed(2);
+  return `M34.17 29.31 C ${f(stretchX(27, k))} 31.8, ${f(stretchX(15, k))} 33.2, ${f(BELLY_END_X - dx)} 30.2 C ${f(4.6 - dx)} 28, ${f(4.2 - dx)} 23.4, ${f(8.2 - dx)} 22.2`;
+}
+
+export function SnailMark({ size = 32, className = '', fast = false, shellRef, bodyRef, headRef, shellTurns }: {
+  size?: number; className?: string; fast?: boolean; shellTurns?: number;
+  shellRef?: Ref<SVGPathElement>; bodyRef?: Ref<SVGPathElement>; headRef?: Ref<SVGGElement>;
+}) {
   const w = fast ? 60 : 48;
   return (
-    <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} aria-hidden="true" focusable="false">
+    <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} style={{ overflow: 'visible' }} aria-hidden="true" focusable="false">
       <g fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d={SHELL} />
-        <path d={BODY} />
-        <path d={STALK_A} />
-        <path d={STALK_B} />
+        <path ref={shellRef} d={shellTurns ? pinnedShellPath(shellTurns) : SHELL} />
+        <path ref={bodyRef} d={BODY} />
+        <g ref={headRef}>
+          <path d={STALK_A} />
+          <path d={STALK_B} />
+          <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" stroke="none" />
+          <circle cx="10.8" cy="14" r="2.1" fill="currentColor" stroke="none" />
+        </g>
         {fast && (
-          <g className="speed">
-            <path d="M48 10 h7" />
-            <path d="M49.5 17.5 h9" />
-            <path d="M48 25 h7" />
+          <g className="streaks" strokeWidth="2.4" strokeOpacity="0.85">
+            <path className="streak streak-1" d="M43.5 10 H60" pathLength={100} />
+            <path className="streak streak-2" d="M46 17.4 H62" pathLength={100} />
+            <path className="streak streak-3" d="M43.5 25 H60" pathLength={100} />
           </g>
         )}
       </g>
-      <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" />
-      <circle cx="10.8" cy="14" r="2.1" fill="currentColor" />
     </svg>
   );
 }
