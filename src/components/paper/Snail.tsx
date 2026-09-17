@@ -1,4 +1,5 @@
-import { swirlPath } from '../swirl';
+import type { Ref } from 'react';
+import { swirlPath, pinnedShellPath } from '../swirl';
 import { Piece, P } from './Paper';
 
 // Concept: the wirl is a shell. One stroke leaves the spiral at the bottom,
@@ -12,12 +13,14 @@ const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22
 const STALK_A = 'M8.6 22.4 L5.6 15.2';
 const STALK_B = 'M9.6 22.4 L10.6 14.6';
 
-export function SnailMark({ size = 32, className = '', fast = false }: { size?: number; className?: string; fast?: boolean }) {
+export function SnailMark({ size = 32, className = '', fast = false, shellRef, shellTurns }: {
+  size?: number; className?: string; fast?: boolean; shellRef?: Ref<SVGPathElement>; shellTurns?: number;
+}) {
   const w = fast ? 60 : 48;
   return (
     <svg viewBox={`0 0 ${w} 36`} width={size * (w / 36)} height={size} className={className} aria-hidden="true" focusable="false">
       <g fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d={SHELL} />
+        <path ref={shellRef} d={shellTurns ? pinnedShellPath(shellTurns) : SHELL} />
         <path d={BODY} />
         <path d={STALK_A} />
         <path d={STALK_B} />
