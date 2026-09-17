@@ -30,9 +30,9 @@ const PIN_STEPS = 128;
 const R_END = A + B * TURNS * Math.PI * 2;
 const ANGLE_END = TURNS * Math.PI * 2 + PIN_PHASE;
 
-// Opening to 1.95 rather than all the way to 1.75 keeps the reach subtle:
-// the head moves about 8px in the nav instead of 15.
-export const SHELL_OPEN_TURNS = 1.95;
+// The shell only opens a sliver: with the line length fixed, that is enough
+// to make him lurch forward about 3px in the nav, which is all it needs.
+export const SHELL_OPEN_TURNS = 2.117;
 // 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
 export const SHELL_REST_TURNS = 2.2;
 
