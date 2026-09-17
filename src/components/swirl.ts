@@ -30,7 +30,9 @@ const PIN_STEPS = 128;
 const R_END = A + B * TURNS * Math.PI * 2;
 const ANGLE_END = TURNS * Math.PI * 2 + PIN_PHASE;
 
-export const SHELL_OPEN_TURNS = TURNS;
+// Opening to 1.95 rather than all the way to 1.75 keeps the reach subtle:
+// the head moves about 8px in the nav instead of 15.
+export const SHELL_OPEN_TURNS = 1.95;
 // 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
 export const SHELL_REST_TURNS = 2.2;
 
