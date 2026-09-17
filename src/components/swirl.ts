@@ -36,6 +36,9 @@ export const SHELL_OPEN_TURNS = 2.117;
 // The wind-up before the lurch: a moment tighter than rest, which pulls the
 // head back 2.4 units so the release has somewhere to come from.
 export const SHELL_RETRACT_TURNS = 2.255;
+// Hustling: while hovered his neck pumps between the lurch (2.117, head 3.6
+// units ahead) and here (head 1.4 units ahead), so the reach never grows.
+export const SHELL_BOB_BACK_TURNS = 2.167;
 // 2.2 is as tight as it goes before the rings close up at 22px on a 1x screen.
 export const SHELL_REST_TURNS = 2.2;
 

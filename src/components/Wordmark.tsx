@@ -2,21 +2,29 @@
 
 import { useEffect, useRef } from 'react';
 import { SnailMark, BODY_REST, bodyPath, headShiftForLength } from './paper/Snail';
-import { pinnedShellLength, pinnedShellPath, SHELL_OPEN_TURNS, SHELL_REST_TURNS, SHELL_RETRACT_TURNS } from './swirl';
+import { pinnedShellLength, pinnedShellPath, SHELL_BOB_BACK_TURNS, SHELL_OPEN_TURNS, SHELL_REST_TURNS, SHELL_RETRACT_TURNS } from './swirl';
 
 // The wirl is a snail with its shell wound up tight. The shell and the body are
 // one line of fixed length, so everything is driven by one number, how many
 // turns the shell has: fewer turns and the spare line comes out the front.
 // Hover and he winds up (pulls his head back, shell tighter), then lurches
-// forward as the air streaks past. Leave and he settles back to rest.
+// forward as the air streaks past, then keeps his neck pumping back and forth
+// for as long as you stay, hustling. Leave and he settles back to rest.
 const RETRACT_MS = 110;
 const LURCH_MS = 300;
 const SETTLE_MS = 240;
+// One pump: a slightly slower draw back, then a quicker thrust forward.
+const BOB_BACK_MS = 170;
+const BOB_FORWARD_MS = 130;
 const REST_SHELL_LENGTH = pinnedShellLength(SHELL_REST_TURNS);
 
 type Segment = { to: number; ms: number; ease: (t: number) => number };
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const easeInOut = (t: number) => 0.5 - 0.5 * Math.cos(Math.PI * t);
+const HUSTLE: Segment[] = [
+  { to: SHELL_BOB_BACK_TURNS, ms: BOB_BACK_MS, ease: easeInOut },
+  { to: SHELL_OPEN_TURNS, ms: BOB_FORWARD_MS, ease: easeOut },
+];
 
 // Same test as the CSS that runs the lean and the streaks, plus reduced motion.
 function canMove() {
@@ -50,7 +58,8 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     h.setAttribute('transform', `translate(${(-dx).toFixed(2)} 0)`);
   }
 
-  function play(segments: Segment[]) {
+  // Runs the segments in order, then repeats `loop` until something else plays.
+  function play(segments: Segment[], loop?: Segment[]) {
     cancelAnimationFrame(frame.current);
     // If motion is not allowed (or stopped being allowed mid-hover), put him
     // back at rest and leave him there.
@@ -58,23 +67,35 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
       if (turns.current !== SHELL_REST_TURNS) draw(SHELL_REST_TURNS);
       return;
     }
+    let list = segments;
     let index = 0;
     let from = turns.current;
-    // Each segment's clock starts on its first frame, not in the event handler:
-    // a frame's timestamp can be earlier than the handler, which would make the
-    // first step run backwards.
+    // The clock starts on the first frame, not in the event handler: a frame's
+    // timestamp can be earlier than the handler, which would make the first
+    // step run backwards. After that, each segment starts exactly when the one
+    // before it ended, so the pumping keeps an even rhythm with no stalls.
     let start: number | null = null;
+    const progress = (seg: Segment, now: number) => Math.min(1, Math.max(0, (now - (start as number)) / Math.max(1, seg.ms)));
     const tick = (now: number) => {
-      const seg = segments[index];
       if (start === null) start = now;
-      const t = seg.ms <= 0 ? 1 : Math.min(1, Math.max(0, (now - start) / seg.ms));
-      draw(t < 1 ? from + (seg.to - from) * seg.ease(t) : seg.to);
-      if (t >= 1) {
-        index += 1;
-        if (index >= segments.length) return;
+      let seg = list[index];
+      let t = progress(seg, now);
+      while (t >= 1) {
         from = seg.to;
-        start = null;
+        start += Math.max(1, seg.ms);
+        index += 1;
+        if (index >= list.length) {
+          if (!loop) {
+            draw(seg.to);
+            return;
+          }
+          list = loop;
+          index = 0;
+        }
+        seg = list[index];
+        t = progress(seg, now);
       }
+      draw(from + (seg.to - from) * seg.ease(t));
       frame.current = requestAnimationFrame(tick);
     };
     frame.current = requestAnimationFrame(tick);
@@ -83,14 +104,17 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
   function lurch() {
     const atRest = Math.abs(turns.current - SHELL_REST_TURNS) < 0.005;
     if (atRest) {
-      play([
-        { to: SHELL_RETRACT_TURNS, ms: RETRACT_MS, ease: easeInOut },
-        { to: SHELL_OPEN_TURNS, ms: LURCH_MS, ease: easeOut },
-      ]);
+      play(
+        [
+          { to: SHELL_RETRACT_TURNS, ms: RETRACT_MS, ease: easeInOut },
+          { to: SHELL_OPEN_TURNS, ms: LURCH_MS, ease: easeOut },
+        ],
+        HUSTLE,
+      );
     } else {
       // Caught mid-settle: no wind-up, just go, for the time the distance needs.
       const share = Math.abs(SHELL_OPEN_TURNS - turns.current) / Math.abs(SHELL_OPEN_TURNS - SHELL_RETRACT_TURNS);
-      play([{ to: SHELL_OPEN_TURNS, ms: LURCH_MS * share, ease: easeOut }]);
+      play([{ to: SHELL_OPEN_TURNS, ms: LURCH_MS * Math.min(1, share), ease: easeOut }], HUSTLE);
     }
   }
 
