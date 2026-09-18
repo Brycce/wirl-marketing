@@ -10,32 +10,15 @@ const SHELL_PHASE = (170 * Math.PI) / 180;
 const SHELL = swirlPath(32, 17, SHELL_PHASE);
 export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
-// The head: two stalks, each with a solid pill-shaped eye floating just past
-// its tip, like the round dots the mark always had but a little longer. Wordmark.tsx swivels
-// each stalk on its base toward the pointer, tilts each eye a little further
-// as follow-through, and squashes the eyes flat to blink. Drawn at rest here,
-// so the server and the first client render agree.
-const EYE_W = 3.6;
-const EYE_H = 5.8;
-// A little air between the end of the stalk and the eye, so the eye reads as
-// its own shape and a blink reads as it closing. The stalk's round cap reaches
-// 1.7 past its tip (half the 3.4 stroke).
-const EYE_GAP = 1.3;
-const EYE_OUT = 1.7 + EYE_GAP + EYE_H / 2;
-export const EYES = (
-  [
-    { base: [8.6, 22.4], tip: [6.2, 16.8] },
-    { base: [9.6, 22.4], tip: [10.8, 16.4] },
-  ] as { base: [number, number]; tip: [number, number] }[]
-).map(({ base, tip }) => {
-  const dx = tip[0] - base[0];
-  const dy = tip[1] - base[1];
-  const len = Math.hypot(dx, dy);
-  // Angle that turns "up" into the stalk's direction.
-  const angle = (Math.atan2(dx, -dy) * 180) / Math.PI;
-  const eye: [number, number] = [+(tip[0] + (dx / len) * EYE_OUT).toFixed(2), +(tip[1] + (dy / len) * EYE_OUT).toFixed(2)];
-  return { base, tip, eye, angle: +angle.toFixed(2) };
-});
+// The head: the mark's original two stalks and round dot eyes, unchanged at
+// rest. Wordmark.tsx swivels each stalk on its base toward the pointer and
+// squashes the dots flat to blink. Drawn at rest here, so the server and the
+// first client render agree.
+const EYE_R = 2.1;
+export const EYES: { base: [number, number]; tip: [number, number]; eye: [number, number] }[] = [
+  { base: [8.6, 22.4], tip: [5.6, 15.2], eye: [5.4, 14.6] },
+  { base: [9.6, 22.4], tip: [10.6, 14.6], eye: [10.8, 14] },
+];
 
 // Coming out of the shell. The body is a belly (first curve, from the shell to
 // under the head) and a neck (second curve, up to the stalks). To lengthen it,
@@ -115,13 +98,13 @@ export function SnailMark({ size = 32, className = '', fast = false, shellRef, b
         <path ref={shellRef} d={shellTurns ? pinnedShellPath(shellTurns) : SHELL} />
         <path ref={bodyRef} d={BODY} />
         <g ref={headRef}>
-          {EYES.map(({ base, tip, eye, angle }) => (
+          {EYES.map(({ base, tip, eye }) => (
             <g key={tip.join(',')} className="stalk" data-bx={base[0]} data-by={base[1]}>
               <path d={`M${base[0]} ${base[1]} L${tip[0]} ${tip[1]}`} />
-              <g transform={`translate(${eye[0]} ${eye[1]}) rotate(${angle})`}>
+              <g transform={`translate(${eye[0]} ${eye[1]})`}>
                 <g className="eye">
                   <g className="lid">
-                    <rect x={-EYE_W / 2} y={-EYE_H / 2} width={EYE_W} height={EYE_H} rx={EYE_W / 2} fill="currentColor" stroke="none" />
+                    <circle r={EYE_R} fill="currentColor" stroke="none" />
                   </g>
                 </g>
               </g>
