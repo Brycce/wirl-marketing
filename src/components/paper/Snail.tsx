@@ -10,8 +10,15 @@ const SHELL_PHASE = (170 * Math.PI) / 180;
 const SHELL = swirlPath(32, 17, SHELL_PHASE);
 export const MARK = swirlPath(16, 16);
 const BODY = 'M34.17 29.31 C 27 31.8, 15 33.2, 9 30.2 C 4.6 28, 4.2 23.4, 8.2 22.2';
-const STALK_A = 'M8.6 22.4 L5.6 15.2';
-const STALK_B = 'M9.6 22.4 L10.6 14.6';
+// The head: the mark's original two stalks and round dot eyes, unchanged at
+// rest. Wordmark.tsx swivels each stalk on its base toward the pointer and
+// squashes the dots flat to blink. Drawn at rest here, so the server and the
+// first client render agree.
+const EYE_R = 2.1;
+export const EYES: { base: [number, number]; tip: [number, number]; eye: [number, number] }[] = [
+  { base: [8.6, 22.4], tip: [5.6, 15.2], eye: [5.4, 14.6] },
+  { base: [9.6, 22.4], tip: [10.6, 14.6], eye: [10.8, 14] },
+];
 
 // Coming out of the shell. The body is a belly (first curve, from the shell to
 // under the head) and a neck (second curve, up to the stalks). To lengthen it,
@@ -91,10 +98,18 @@ export function SnailMark({ size = 32, className = '', fast = false, shellRef, b
         <path ref={shellRef} d={shellTurns ? pinnedShellPath(shellTurns) : SHELL} />
         <path ref={bodyRef} d={BODY} />
         <g ref={headRef}>
-          <path d={STALK_A} />
-          <path d={STALK_B} />
-          <circle cx="5.4" cy="14.6" r="2.1" fill="currentColor" stroke="none" />
-          <circle cx="10.8" cy="14" r="2.1" fill="currentColor" stroke="none" />
+          {EYES.map(({ base, tip, eye }) => (
+            <g key={tip.join(',')} className="stalk" data-bx={base[0]} data-by={base[1]}>
+              <path d={`M${base[0]} ${base[1]} L${tip[0]} ${tip[1]}`} />
+              <g transform={`translate(${eye[0]} ${eye[1]})`}>
+                <g className="eye">
+                  <g className="lid">
+                    <circle r={EYE_R} fill="currentColor" stroke="none" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          ))}
         </g>
         {fast && (
           <g className="streaks" strokeWidth="2.4" strokeOpacity="0.85">
