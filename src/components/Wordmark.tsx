@@ -26,6 +26,26 @@ const HUSTLE: Segment[] = [
   { to: SHELL_OPEN_TURNS, ms: BOB_FORWARD_MS, ease: easeOut },
 ];
 
+// The eyes. Each stalk swivels on its base toward the pointer, and each eye
+// tilts a little further on top, a beat later, so the look has some
+// follow-through. Every few seconds he blinks, sometimes twice.
+const SWIVEL_MAX_DEG = 12;
+const SWIVEL_FULL_AT_PX = 260;
+const TILT_MAX_DEG = 14;
+const TILT_FULL_AT_PX = 180;
+const SWIVEL_EASE_MS = 140;
+const TILT_EASE_MS = 230;
+const BLINK_MS = 190;
+const BLINK_GAP_MS = 250;
+
+function blinkLid(t: number) {
+  // Close quickly, hold a hair, open a little slower.
+  if (t < 0.36) return 1 - 0.9 * (t / 0.36) ** 2;
+  if (t < 0.55) return 0.1;
+  const u = (t - 0.55) / 0.45;
+  return 0.1 + 0.9 * (1 - (1 - u) ** 3);
+}
+
 // Same test as the CSS that runs the lean and the streaks, plus reduced motion.
 function canMove() {
   return window.matchMedia('(hover: hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -39,6 +59,99 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
   const frame = useRef(0);
 
   useEffect(() => () => cancelAnimationFrame(frame.current), []);
+
+  // Eyes that follow you and blink. Runs only while something is changing.
+  useEffect(() => {
+    const headEl = head.current;
+    if (!headEl) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canTrack = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const stalks = Array.from(headEl.querySelectorAll<SVGGElement>('.stalk'));
+    const eyes = Array.from(headEl.querySelectorAll<SVGGElement>('.eye'));
+    const lids = Array.from(headEl.querySelectorAll<SVGGElement>('.lid'));
+    const bases = stalks.map((s) => [Number(s.dataset.bx), Number(s.dataset.by)] as const);
+    const swivel = stalks.map(() => 0);
+    const tilt = stalks.map(() => 0);
+    let pointer: { x: number; y: number } | null = null;
+    let blinkAt = -1;
+    let blinks = 0;
+    let loop = 0;
+    let last = 0;
+    let timer = 0;
+
+    function targets(i: number) {
+      if (!pointer) return { s: 0, t: 0 };
+      const stalkM = stalks[i].getScreenCTM();
+      const eyeM = eyes[i].getScreenCTM();
+      if (!stalkM || !eyeM) return { s: 0, t: 0 };
+      const baseX = stalkM.a * bases[i][0] + stalkM.c * bases[i][1] + stalkM.e;
+      const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+      return {
+        s: clamp((pointer.x - baseX) / SWIVEL_FULL_AT_PX) * SWIVEL_MAX_DEG,
+        t: clamp((pointer.x - eyeM.e) / TILT_FULL_AT_PX) * TILT_MAX_DEG,
+      };
+    }
+
+    function tick(t: number) {
+      const dt = last ? Math.min(64, t - last) : 16;
+      last = t;
+      let moving = false;
+      const ks = 1 - Math.exp(-dt / SWIVEL_EASE_MS);
+      const kt = 1 - Math.exp(-dt / TILT_EASE_MS);
+      stalks.forEach((_, i) => {
+        const g = targets(i);
+        swivel[i] += (g.s - swivel[i]) * ks;
+        tilt[i] += (g.t - tilt[i]) * kt;
+        if (Math.abs(g.s - swivel[i]) > 0.02 || Math.abs(g.t - tilt[i]) > 0.02) moving = true;
+        stalks[i].setAttribute('transform', `rotate(${swivel[i].toFixed(2)} ${bases[i][0]} ${bases[i][1]})`);
+        eyes[i].setAttribute('transform', `rotate(${tilt[i].toFixed(2)})`);
+      });
+      let lid = 1;
+      if (blinkAt >= 0) {
+        const p = (t - blinkAt) / BLINK_MS;
+        if (p >= 1) {
+          blinks -= 1;
+          blinkAt = blinks > 0 ? t + BLINK_GAP_MS - BLINK_MS : -1;
+        } else if (p >= 0) {
+          lid = blinkLid(p);
+        }
+        if (blinkAt >= 0) moving = true;
+      }
+      lids.forEach((l) => (lid === 1 ? l.removeAttribute('transform') : l.setAttribute('transform', `scale(1 ${lid.toFixed(3)})`)));
+      loop = moving ? requestAnimationFrame(tick) : 0;
+      if (!moving) last = 0;
+    }
+
+    function wake() {
+      if (!loop) loop = requestAnimationFrame(tick);
+    }
+
+    function scheduleBlink() {
+      timer = window.setTimeout(() => {
+        blinks = Math.random() < 0.22 ? 2 : 1;
+        blinkAt = performance.now();
+        wake();
+        scheduleBlink();
+      }, 2400 + Math.random() * 3200);
+    }
+
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
+      pointer = { x: e.clientX, y: e.clientY };
+      wake();
+    };
+    if (canTrack) {
+      window.addEventListener('pointermove', onMove, { passive: true });
+      window.addEventListener('scroll', wake, { passive: true });
+    }
+    scheduleBlink();
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('scroll', wake);
+      window.clearTimeout(timer);
+      cancelAnimationFrame(loop);
+    };
+  }, []);
 
   function draw(value: number) {
     const s = shell.current;
