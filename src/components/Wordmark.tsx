@@ -31,6 +31,12 @@ const HUSTLE: Segment[] = [
 // follows the direction to the pointer, so a pointer straight below leaves him
 // upright, and he drifts back to his resting pose when the pointer goes still.
 // Every so often he blinks, now and then twice.
+//
+// The eyes also have a little weight. Each one rides its stalk like a mass on
+// a spring, so when his neck thrusts forward the eyes swing back, when it
+// draws back they swing forward, and when he stops they wobble and settle. The
+// two stalks are tuned a little apart, so the back eye swings slightly less
+// and they come to rest a beat apart.
 const SWIVEL_MAX_DEG = 16;
 const SWIVEL_SOFTEN_PX = 36;
 const SWIVEL_EASE_MS = [150, 210];
@@ -38,6 +44,12 @@ const SETTLE_AFTER_MS = 1800;
 const BLINK_MS = 200;
 const BLINK_GAP_MS = 160;
 const BLINK_CLOSED = 0.32;
+const BOB_HZ = [4.6, 5.2];
+const BOB_DAMPING = 0.3;
+const BOB_GAIN = 0.85;
+const BOB_MAX_DEG = 16;
+const STALK_LENGTH = 8.45;
+const BOB_STEP_MS = 4;
 
 function blinkLid(t: number) {
   // Close quickly, hold a hair, open a little slower. Never fully flat, so a
@@ -65,6 +77,10 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
   const head = useRef<SVGGElement>(null);
   const turns = useRef(SHELL_REST_TURNS);
   const frame = useRef(0);
+  // Where the head is (in mark units, forward is negative), and a way for the
+  // hover animation to wake the eyes so they can feel it move.
+  const headX = useRef(0);
+  const wakeEyes = useRef<() => void>(() => {});
 
   useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
@@ -78,6 +94,20 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     const lids = Array.from(headEl.querySelectorAll<SVGGElement>('.lid'));
     const bases = stalks.map((s) => [Number(s.dataset.bx), Number(s.dataset.by)] as const);
     const swivel = stalks.map(() => 0);
+    // Each eye's sideways position and speed, in the same units as headX.
+    const eyeX = stalks.map(() => 0);
+    const eyeV = stalks.map(() => 0);
+    const bob = stalks.map(() => 0);
+    let anchor = 0;
+
+    // Eyes at rest on the head wherever it is now. The head can move while the
+    // eyes are stopped, so this runs every time they start.
+    function reseed() {
+      anchor = headX.current;
+      eyeX.fill(anchor);
+      eyeV.fill(0);
+      bob.fill(0);
+    }
     let pointer: { x: number; y: number } | null = null;
     let movedAt = 0;
     let blinkAt = -1;
@@ -100,18 +130,50 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
       return (SWIVEL_MAX_DEG * dx) / Math.hypot(dx, dy, SWIVEL_SOFTEN_PX);
     }
 
+    // Moves each eye along as the head goes from where it was last frame to
+    // where it is now, in small steps so the spring stays steady.
+    function swing(dt: number) {
+      const from = anchor;
+      const to = headX.current;
+      anchor = to;
+      const steps = Math.max(1, Math.ceil(dt / BOB_STEP_MS));
+      const h = dt / 1000 / steps;
+      let moving = from !== to;
+      stalks.forEach((_, i) => {
+        const w = 2 * Math.PI * BOB_HZ[i % BOB_HZ.length];
+        for (let n = 1; n <= steps; n++) {
+          const a = from + ((to - from) * n) / steps;
+          eyeV[i] += (-w * w * (eyeX[i] - a) - 2 * BOB_DAMPING * w * eyeV[i]) * h;
+          eyeX[i] += eyeV[i] * h;
+        }
+        const lag = eyeX[i] - to;
+        if (from === to && Math.abs(lag) < 0.004 && Math.abs(eyeV[i]) < 0.05) {
+          eyeX[i] = to;
+          eyeV[i] = 0;
+          bob[i] = 0;
+          return;
+        }
+        moving = true;
+        // An eye left behind tips its stalk back, toward the tail.
+        const deg = ((BOB_GAIN * lag) / STALK_LENGTH) * (180 / Math.PI);
+        bob[i] = BOB_MAX_DEG * Math.tanh(deg / BOB_MAX_DEG);
+      });
+      return moving;
+    }
+
     function tick(t: number) {
       const dt = last ? Math.min(64, t - last) : 16;
       last = t;
-      let moving = false;
+      let moving = swing(dt);
       stalks.forEach((_, i) => {
         const goal = target(i, t);
         const k = 1 - Math.exp(-dt / SWIVEL_EASE_MS[i % SWIVEL_EASE_MS.length]);
         swivel[i] += (goal - swivel[i]) * k;
         if (Math.abs(goal - swivel[i]) > 0.02) moving = true;
         else swivel[i] = goal;
-        if (swivel[i] === 0) stalks[i].removeAttribute('transform');
-        else stalks[i].setAttribute('transform', `rotate(${swivel[i].toFixed(2)} ${bases[i][0]} ${bases[i][1]})`);
+        const lean = swivel[i] + bob[i];
+        if (lean === 0) stalks[i].removeAttribute('transform');
+        else stalks[i].setAttribute('transform', `rotate(${lean.toFixed(2)} ${bases[i][0]} ${bases[i][1]})`);
       });
       let lid = 1;
       if (blinkAt >= 0) {
@@ -132,6 +194,7 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     function wake() {
       if (running && !loop) loop = requestAnimationFrame(tick);
     }
+    wakeEyes.current = wake;
 
     function scheduleBlink() {
       blinkTimer = window.setTimeout(() => {
@@ -166,6 +229,7 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     function start() {
       if (running) return;
       running = true;
+      reseed();
       if (fine.matches) {
         window.addEventListener('pointermove', onMove, { passive: true });
         document.addEventListener('pointerout', onLeave, { passive: true });
@@ -190,6 +254,7 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
       blinkAt = -1;
       blinks = 0;
       swivel.fill(0);
+      reseed();
       stalks.forEach((s) => s.removeAttribute('transform'));
       lids.forEach((l) => l.removeAttribute('transform'));
     }
@@ -200,6 +265,7 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     if (!reduce.matches) start();
     return () => {
       reduce.removeEventListener('change', onPreference);
+      wakeEyes.current = () => {};
       stop();
     };
   }, []);
@@ -211,13 +277,16 @@ export default function Wordmark({ size = 28 }: { size?: number }) {
     if (!s || !b || !h) return;
     turns.current = value;
     s.setAttribute('d', pinnedShellPath(value));
+    wakeEyes.current();
     if (value === SHELL_REST_TURNS) {
+      headX.current = 0;
       b.setAttribute('d', BODY_REST);
       h.removeAttribute('transform');
       return;
     }
     // Every bit of line the shell gives up (or takes back) goes into the body.
     const dx = headShiftForLength(REST_SHELL_LENGTH - pinnedShellLength(value));
+    headX.current = -dx;
     b.setAttribute('d', bodyPath(dx));
     h.setAttribute('transform', `translate(${(-dx).toFixed(2)} 0)`);
   }
