@@ -1,0 +1,156 @@
+/* Cartoon cast. Everything here is scoped to this page by the module.
+   Motion is small and CSS only; everything stops under reduced motion, and
+   every loop's resting (un-animated) state is its end state. */
+
+.root {
+  background: #FFF7EA;
+  color: #2B2233;
+  overflow-x: clip;
+}
+
+/* Stages: every scene sits in a rounded comic panel. */
+.stage {
+  border: 2.5px solid #2B2233;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #fff;
+}
+.stageSm { border-radius: 20px; }
+.art { display: block; width: 100%; height: auto; }
+
+/* Buttons, tabs, inputs, cards ------------------------------------ */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: #FFC53D; color: #2B2233; border: 2.5px solid #2B2233; border-radius: 12px;
+  padding: .7rem 1.1rem; font-weight: 700; font-size: 15px; line-height: 1; white-space: nowrap;
+  box-shadow: 0 4px 0 #2B2233;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 #2B2233; }
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #2B2233; }
+.btnSm { padding: .5rem .85rem; font-size: 14px; border-radius: 10px; box-shadow: 0 3px 0 #2B2233; }
+.btnSm:hover { box-shadow: 0 4px 0 #2B2233; }
+.btnWhite { background: #fff; }
+
+.tab {
+  display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; background: #fff; color: #2B2233;
+  border: 2px solid #2B2233; padding: .44rem .72rem .44rem .6rem; font-size: 14px; font-weight: 600; line-height: 1;
+  transition: background .12s ease, color .12s ease;
+}
+.tab:hover { background: #FFF1B8; }
+.tabOn, .tabOn:hover { background: #2B2233; color: #FFF7EA; }
+.tabMark { width: 16px; height: 16px; flex: none; }
+
+.code {
+  background: #2B2233; border: 2.5px solid #2B2233; border-radius: 18px; padding: 18px 20px;
+  box-shadow: 0 5px 0 #FFC53D, 0 5px 0 2.5px #2B2233;
+}
+
+.input {
+  background: #fff; color: #2B2233; border: 2.5px solid #2B2233; border-radius: 12px; box-shadow: 0 4px 0 #2B2233;
+}
+.input::placeholder { color: #857B90; }
+.input:focus { outline: none; box-shadow: 0 4px 0 #2B2233, 0 0 0 5px rgba(255, 197, 61, .75); }
+
+.card {
+  background: #fff; border: 2.5px solid #2B2233; border-radius: 20px; box-shadow: 0 5px 0 #2B2233;
+}
+
+.chipDark {
+  display: inline-flex; align-items: center; gap: .6rem; background: #2B2233; color: #FFF7EA;
+  border-radius: 14px; padding: .8rem 1rem; font-size: 14.5px; line-height: 1.2;
+  box-shadow: 0 5px 0 #FFC53D, 0 5px 0 2.5px #2B2233;
+}
+
+.num {
+  display: inline-grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 999px;
+  background: #fff; border: 2.5px solid #2B2233; font-weight: 800; font-size: 14px; line-height: 1;
+  box-shadow: 0 2px 5px rgba(43, 34, 51, .18);
+}
+
+/* The headline stickers (lab treatment C) --------------------------- */
+
+.stkRow { display: inline-flex; align-items: center; gap: .03em; vertical-align: -.3em; margin-left: .04em; }
+.stk {
+  display: block; flex: none; width: .92em; height: .92em;
+  filter: drop-shadow(0 .01em .017em rgba(43, 34, 51, .14)) drop-shadow(0 .037em .072em rgba(43, 34, 51, .26));
+  transition: transform .22s cubic-bezier(.2, .8, .2, 1), filter .22s cubic-bezier(.2, .8, .2, 1);
+}
+.stk > svg {
+  display: block; width: 100%; height: 100%; overflow: visible;
+  transform: rotate(var(--tilt, 0deg)); transition: transform .22s cubic-bezier(.2, .8, .2, 1);
+}
+.stkMore {
+  width: .6em; height: .6em;
+  filter: drop-shadow(0 .008em .014em rgba(43, 34, 51, .12)) drop-shadow(0 .024em .05em rgba(43, 34, 51, .2));
+}
+@media (hover: hover) {
+  .stk:not(.stkMore):hover {
+    transform: translateY(-.05em);
+    filter: drop-shadow(0 .012em .02em rgba(43, 34, 51, .12)) drop-shadow(0 .08em .11em rgba(43, 34, 51, .24));
+  }
+  .stk:not(.stkMore):hover > svg { transform: rotate(calc(var(--tilt, 0deg) * .4)); }
+}
+
+/* The sunflower underline under "company login" draws itself once. */
+.uwrap { position: relative; white-space: nowrap; z-index: 0; }
+.uline { position: absolute; left: -3%; width: 106%; bottom: -.14em; height: .34em; z-index: -1; overflow: visible; }
+.uline path { stroke-dasharray: 100; stroke-dashoffset: 0; animation: draw .9s .5s cubic-bezier(.6, 0, .3, 1) both; }
+@keyframes draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* Small shared loops ------------------------------------------------ */
+
+.steam { animation: steam 3.2s ease-in-out infinite; }
+@keyframes steam { 0%, 100% { opacity: .15; transform: translateY(3px); } 50% { opacity: .8; transform: translateY(-2px); } }
+
+.flower { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 4s ease-in-out infinite; }
+@keyframes sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+.dot1, .dot2, .dot3 { animation: dot 1s ease-in-out infinite; }
+.dot2 { animation-delay: .15s; }
+.dot3 { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+
+.blink { transform-box: fill-box; transform-origin: 50% 50%; animation: blink 6s infinite; }
+@keyframes blink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+
+.bob { animation: bob 6s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* Hero: a ten second loop ------------------------------------------- */
+
+.typing { opacity: 0; animation: typing 10s infinite; }
+@keyframes typing { 0%, 11% { opacity: 1; } 12%, 100% { opacity: 0; } }
+
+.say { transform-box: fill-box; transform-origin: 0% 50%; animation: say 10s infinite; }
+@keyframes say {
+  0%, 11.9% { opacity: 0; transform: scale(.92); }
+  14% { opacity: 1; transform: scale(1.03); }
+  15.5%, 94% { opacity: 1; transform: scale(1); }
+  97%, 100% { opacity: 0; transform: scale(1); }
+}
+
+.shackle { animation: shackle 10s infinite; }
+@keyframes shackle {
+  0%, 13% { transform: translateY(-3.5px); }
+  15.5% { transform: translateY(.8px); }
+  16.5%, 94% { transform: translateY(0); }
+  97%, 100% { transform: translateY(-3.5px); }
+}
+.ring { transform-box: fill-box; transform-origin: 50% 50%; opacity: 0; animation: ring 10s infinite; }
+@keyframes ring { 0%, 15% { opacity: 0; transform: scale(.6); } 16% { opacity: .9; transform: scale(.8); } 27%, 100% { opacity: 0; transform: scale(2.3); } }
+
+.pumpL { animation: pumpL 10s infinite; }
+.pumpR { animation: pumpR 10s infinite; }
+@keyframes pumpL { 0%, 15% { transform: rotate(0); } 18% { transform: rotate(10deg); } 21% { transform: rotate(0); } 24% { transform: rotate(10deg); } 27%, 100% { transform: rotate(0); } }
+@keyframes pumpR { 0%, 15% { transform: rotate(0); } 18% { transform: rotate(-10deg); } 21% { transform: rotate(0); } 24% { transform: rotate(-10deg); } 27%, 100% { transform: rotate(0); } }
+
+.blinkJonah { transform-box: fill-box; transform-origin: 50% 50%; animation: blinkJ 10s infinite; }
+@keyframes blinkJ { 0%, 29%, 31.6%, 73%, 75.6%, 100% { transform: scaleY(1); } 30.3%, 74.3% { transform: scaleY(.1); } }
+.sipJonah { animation: sipJ 10s ease-in-out infinite; }
+@keyframes sipJ { 0%, 55% { transform: rotate(0); } 60%, 66% { transform: rotate(-34deg); } 71%, 100% { transform: rotate(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .root *, .root *::before, .root *::after { animation: none !important; transition: none !important; }
+}
