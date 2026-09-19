@@ -7,7 +7,7 @@ import { LogoStickerArt } from '../marks';
 type Row = {
   app: string;
   who: Who;
-  agent: 'claude' | 'cursor' | 'codex' | 'hand';
+  agent: 'claude' | 'cursor' | 'codex' | 'other';
   uses: string[];
   open: { everyone: true } | { people: Who[]; count: number };
   last: string;
@@ -17,9 +17,9 @@ type Row = {
 const ROWS: Row[] = [
   { app: 'supplier-payments', who: 'priya', agent: 'claude', uses: ['api.stripe.com'], open: { everyone: true }, last: '2 min ago', fresh: true },
   { app: 'candidate-pipeline', who: 'mia', agent: 'cursor', uses: ['Greenhouse'], open: { people: ['mia', 'lena', 'tom'], count: 6 }, last: '1 hr ago', fresh: true },
-  { app: 'incident-handover', who: 'sam', agent: 'hand', uses: ['PagerDuty', 'Slack'], open: { everyone: true }, last: 'Today' },
+  { app: 'incident-handover', who: 'sam', agent: 'other', uses: ['PagerDuty', 'Slack'], open: { everyone: true }, last: 'Today' },
   { app: 'nda-lookup', who: 'lena', agent: 'codex', uses: ['Google Drive'], open: { people: ['lena', 'priya'], count: 3 }, last: 'Yesterday' },
-  { app: 'budget-lines', who: 'tom', agent: 'claude', uses: ['Postgres'], open: { everyone: true }, last: '3 days ago' },
+  { app: 'budget-lines', who: 'tom', agent: 'claude', uses: ['Google Sheets'], open: { everyone: true }, last: '3 days ago' },
 ];
 
 function Face({ who, size = 30 }: { who: Who; size?: number }) {
@@ -31,16 +31,14 @@ function Face({ who, size = 30 }: { who: Who; size?: number }) {
 }
 
 function AgentBadge({ agent }: { agent: Row['agent'] }) {
-  if (agent === 'hand') {
+  if (agent === 'other') {
+    // Any other agent that speaks MCP: the same round "+" as the headline and the sticker sheet.
     return (
       <svg viewBox="-4 -4 32 32" width={22} height={22} aria-hidden="true" className="tb-agent-badge">
-        <g transform="rotate(-8 12 12)">
+        <g transform="rotate(4 12 12)">
           <circle cx={12} cy={12} r={13} fill={K.paper} />
-          <g transform="translate(12 12) rotate(40)">
-            <rect x={-3} y={-10} width={6} height={15} rx={1} fill={K.sun} stroke={K.ink} strokeWidth={1.4} />
-            <path d="M-3 5 L0 10 L3 5 Z" fill={K.edge} stroke={K.ink} strokeWidth={1.4} strokeLinejoin="round" />
-            <rect x={-3} y={-12} width={6} height={3} rx={1} fill={K.pink} stroke={K.ink} strokeWidth={1.4} />
-          </g>
+          <circle cx={12} cy={12} r={10} fill={K.mint} stroke={K.ink} strokeWidth={1.6} />
+          <path d="M12 6.8v10.4M6.8 12h10.4" fill="none" stroke={K.ink} strokeWidth={2.6} strokeLinecap="round" />
         </g>
       </svg>
     );
@@ -54,7 +52,7 @@ function AgentBadge({ agent }: { agent: Row['agent'] }) {
   );
 }
 
-const AGENT_LABEL: Record<Row['agent'], string> = { claude: 'Claude Code', cursor: 'Cursor', codex: 'Codex', hand: 'by hand' };
+const AGENT_LABEL: Record<Row['agent'], string> = { claude: 'Claude Code', cursor: 'Cursor', codex: 'Codex', other: 'Another MCP agent' };
 
 export function AdminTable() {
   return (
@@ -69,7 +67,7 @@ export function AdminTable() {
         <thead>
           <tr>
             <th>App</th>
-            <th>Built by</th>
+            <th><span className="tb-hide-phone">Built </span>by</th>
             <th className="tb-col-uses">Uses</th>
             <th className="tb-col-who">Who can open</th>
             <th>Last used</th>
@@ -104,6 +102,9 @@ export function AdminTable() {
               </td>
             </tr>
           ))}
+          <tr className="tb-more">
+            <td colSpan={5}>+ 2 more: <span className="tb-app">customer-credits</span>, <span className="tb-app">spend-requests</span></td>
+          </tr>
         </tbody>
       </table>
       <svg className="tb-admin-cursor" viewBox="-2 -2 32 44" width={30} height={42} aria-hidden="true">
@@ -117,12 +118,12 @@ const LOG = [
   ['09:41', 'wirl', 'rolled supplier-payments back to v3'],
   ['09:12', 'priya@harbor.co', 'set the Stripe key · browser to vault'],
   ['09:02', 'supplier-payments', '→ api.stripe.com · 14 calls'],
-  ['08:58', 'sam@harbor.co', 'was refused at incident-handover'],
+  ['08:58', 'sam@harbor.co', 'was refused at candidate-pipeline'],
 ];
 
 export function LogCard() {
   return (
-    <div className="tb-log" role="img" aria-label="The log: wirl rolled supplier-payments back to v3; priya set the Stripe key from the browser to the vault; supplier-payments called api.stripe.com 14 times; sam was refused at incident-handover.">
+    <div className="tb-log" role="img" aria-label="The log: wirl rolled supplier-payments back to v3; priya set the Stripe key from the browser to the vault; supplier-payments called api.stripe.com 14 times; sam was refused at candidate-pipeline.">
       <div className="tb-log-bar" aria-hidden="true"><span className="tb-dots"><i /><i /><i /></span><span>Log</span></div>
       <ol className="tb-log-lines" aria-hidden="true">
         {LOG.map(([t, who, what], i) => (

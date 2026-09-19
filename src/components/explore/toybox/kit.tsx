@@ -137,11 +137,11 @@ export function Win({ x, y, w, h, r = 14, fill = K.paper, edge = K.edge, bar = K
 }
 
 /* A terminal or agent chat: the same window, dark. */
-export function Term({ x, y, w, h, barH = 36, children, stroke = K.ink, face = K.term }: {
-  x: number; y: number; w: number; h: number; barH?: number; children?: ReactNode; stroke?: string; face?: string;
+export function Term({ x, y, w, h, barH = 36, children, stroke = K.ink, face = K.term, bar = K.termBar }: {
+  x: number; y: number; w: number; h: number; barH?: number; children?: ReactNode; stroke?: string; face?: string; bar?: string;
 }) {
   return (
-    <Win x={x} y={y} w={w} h={h} fill={face} edge={K.termEdge} bar={K.termBar} barH={barH} stroke={stroke} dotFill="#3B4A42">
+    <Win x={x} y={y} w={w} h={h} fill={face} edge={K.termEdge} bar={bar} barH={barH} stroke={stroke} dotFill="#3B4A42">
       {children}
     </Win>
   );
@@ -373,18 +373,21 @@ export function AvatarStack({ x, y, r = 14, who, step }: { x: number; y: number;
 
 /* A multiplayer cursor: an arrow in the person's colour with a name tag.
    (x, y) is the tip. */
-export function NamedCursor({ x, y, who, s = 1, className, tag = true }: { x: number; y: number; who: Who; s?: number; className?: string; tag?: boolean }) {
+export function NamedCursor({ x, y, who, s = 1, className, tag = true, tagLeft = false }: {
+  x: number; y: number; who: Who; s?: number; className?: string; tag?: boolean; tagLeft?: boolean;
+}) {
   const p = PEOPLE[who];
   const first = p.name.split(' ')[0];
   const tw = textW(first, 15) + 20;
+  const tx = tagLeft ? -tw - 2 : 17;
   return (
     <g className={className}>
       <g transform={`translate(${x} ${y}) scale(${s})`}>
         <path d="M0 0 L0 33 L8.2 25.8 L13.8 38.4 L20.4 35.6 L14.8 23.2 L25.6 23.2 Z" fill={p.color} stroke={K.ink} strokeWidth={2.8} />
         {tag && (
           <g>
-            <rect x={17} y={36} width={tw} height={26} rx={13} fill={p.color} stroke={K.ink} strokeWidth={2.4} />
-            <text x={17 + tw / 2} y={36 + 18.2} fontSize={15} fill={p.tagText} textAnchor="middle" fontWeight={800}>{first}</text>
+            <rect x={tx} y={36} width={tw} height={26} rx={13} fill={p.color} stroke={K.ink} strokeWidth={2.4} />
+            <text x={tx + tw / 2} y={36 + 18.2} fontSize={15} fill={p.tagText} textAnchor="middle" fontWeight={800}>{first}</text>
           </g>
         )}
       </g>

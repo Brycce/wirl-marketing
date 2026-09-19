@@ -15,9 +15,9 @@ export const MONO = { fontFamily: '"JetBrains Mono", ui-monospace, SFMono-Regula
 /* ---------- App window ---------- */
 
 export function AppWindow({
-  w, h, name, bar = C.green, barText = C.ink, lock = false, children, bar_h = 32, url,
+  w, h, name, bar = C.green, barText = C.ink, lock = false, children, bar_h = 32, url, dots = true, nameSize = 14,
 }: {
-  w: number; h: number; name: string; bar?: string; barText?: string; lock?: boolean; children?: ReactNode; bar_h?: number; url?: string;
+  w: number; h: number; name: string; bar?: string; barText?: string; lock?: boolean; children?: ReactNode; bar_h?: number; url?: string; dots?: boolean; nameSize?: number;
 }) {
   const r = 12;
   return (
@@ -25,8 +25,8 @@ export function AppWindow({
       <rect x={0} y={0} width={w} height={h} rx={r} fill={C.white} />
       <path d={`M0 ${bar_h} V${r} Q0 0 ${r} 0 H${w - r} Q${w} 0 ${w} ${r} V${bar_h} Z`} fill={bar} />
       <path d={`M0 ${bar_h} H${w}`} {...O} />
-      {[15, 28, 41].map((x) => <circle key={x} cx={x} cy={bar_h / 2} r={4} fill={C.white} stroke={C.ink} strokeWidth={1.8} />)}
-      <text x={55} y={bar_h / 2 + 4.8} fontSize={14} fontWeight={650} fill={barText} style={FONT}>{name}</text>
+      {dots && [15, 28, 41].map((x) => <circle key={x} cx={x} cy={bar_h / 2} r={4} fill={C.white} stroke={C.ink} strokeWidth={1.8} />)}
+      <text x={dots ? 55 : 13} y={bar_h / 2 + nameSize * 0.34} fontSize={nameSize} fontWeight={650} fill={barText} style={FONT}>{name}</text>
       {lock && <MiniLock x={w - 26} y={bar_h / 2 - 9} />}
       {url && (
         <g>
@@ -239,6 +239,13 @@ export function SnailHole({ x = 0, y = 0, size = 16, border = 3 }: { x?: number;
     <g transform={`translate(${x} ${y}) scale(${k})`} strokeLinecap="round" strokeLinejoin="round">
       <g fill="#D9D4C8" stroke="#D9D4C8" strokeWidth={3.4 + (border * 2 + 2) / k}>{shapes}</g>
       <g fill="#EEEBE4" stroke="#EEEBE4" strokeWidth={3.4 + (border * 2) / k}>{shapes}</g>
+      {/* The faint print of the sticker that was here. */}
+      <g fill="none" stroke="#CFC9BB" strokeWidth={3.4}>
+        <path d={shell} />
+        <path d={SNAIL_BODY} />
+        {SNAIL_EYES.map(([bx, by, ex, ey]) => <path key={ex} d={`M${bx} ${by} L${ex} ${ey}`} />)}
+      </g>
+      {SNAIL_EYES.map(([, , ex, ey]) => <circle key={`d${ex}`} cx={ex} cy={ey} r={2.1} fill="#CFC9BB" />)}
     </g>
   );
 }
@@ -314,14 +321,14 @@ export function Safe({ dialClass }: { dialClass?: string }) {
   );
 }
 
-/* A key tag on a ring, with a label. w x 34 */
-export function KeyTag({ w = 118, text = 'STRIPE_KEY' }: { w?: number; text?: string }) {
+/* A key tag with a label, its ring on the right end (the end that goes in first). w x 34 */
+export function KeyTag({ w = 132, text = 'STRIPE_KEY' }: { w?: number; text?: string }) {
   return (
     <g>
-      <circle cx={12} cy={17} r={9} fill="none" stroke={C.ink} strokeWidth={2.5} />
-      <path d={`M20 5 H${w - 8} Q${w} 5 ${w} 13 V21 Q${w} 29 ${w - 8} 29 H20 L12 17 Z`} fill={C.white} {...O} />
-      <circle cx={24} cy={17} r={2.6} fill="none" stroke={C.ink} strokeWidth={2} />
-      <text x={33} y={21.5} fontSize={12.5} fontWeight={700} fill={C.ink} style={MONO}>{text}</text>
+      <circle cx={w - 11} cy={17} r={9} fill="none" stroke={C.ink} strokeWidth={2.5} />
+      <path d={`M8 5 H${w - 30} L${w - 19} 17 L${w - 30} 29 H8 Q0 29 0 21 V13 Q0 5 8 5 Z`} fill={C.white} {...O} />
+      <circle cx={w - 31} cy={17} r={2.6} fill="none" stroke={C.ink} strokeWidth={2} />
+      <text x={11} y={21.5} fontSize={12.5} fontWeight={700} fill={C.ink} style={MONO}>{text}</text>
     </g>
   );
 }
@@ -334,12 +341,12 @@ export function Receipt({ w, h, lines, size = 12.5, title }: { w: number; h: num
   const step = w / n;
   for (let k = n; k > 0; k--) d += ` L${(k - 0.5) * step} ${h} L${(k - 1) * step} ${h - z}`;
   d += ' Z';
-  const top = title ? 38 : 24;
+  const top = title ? 52 : 24;
   return (
     <g>
       <path d={d} fill={C.white} {...O} />
       {title && <text x={12} y={22} fontSize={11.5} fontWeight={700} fill={C.dim} style={FONT} letterSpacing="0.06em">{title}</text>}
-      {title && <path d={`M12 30 H${w - 12}`} stroke={C.ink} strokeWidth={1.5} strokeDasharray="3 4" opacity={0.5} />}
+      {title && <path d={`M12 32 H${w - 12}`} stroke={C.ink} strokeWidth={1.5} strokeDasharray="3 4" opacity={0.45} />}
       {lines.map(([a, b], i) => (
         <g key={a + i}>
           <text x={12} y={top + i * (size + 9)} fontSize={size} fill={C.ink} style={MONO}>{a}</text>
@@ -459,7 +466,7 @@ export function Clock({ handClass }: { handClass?: string }) {
       <circle cx={29} cy={29} r={21} fill="none" stroke={C.ink} strokeWidth={1.4} opacity={0.3} />
       {[0, 90, 180, 270].map((a) => <path key={a} d="M29 6 V10" stroke={C.ink} strokeWidth={2.4} strokeLinecap="round" transform={`rotate(${a} 29 29)`} />)}
       <path d="M29 29 L20 22" stroke={C.ink} strokeWidth={3} strokeLinecap="round" />
-      <g className={handClass} style={{ transformOrigin: '29px 29px' }}>
+      <g className={handClass}>
         <path d="M29 29 V12" stroke={C.tomato} strokeWidth={2.6} strokeLinecap="round" />
       </g>
       <circle cx={29} cy={29} r={3} fill={C.ink} />

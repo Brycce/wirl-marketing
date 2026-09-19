@@ -30,7 +30,7 @@ function outline(node: ReactNode): string {
 function KissCut({ d, border, gap = 2.2 }: { d: string; border: number; gap?: number }) {
   return (
     <g>
-      <path d={d} fill="none" stroke={CUT} strokeWidth={border + gap * 2 + 1.2} strokeDasharray="1.6 1.6" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={CUT} strokeWidth={border + gap * 2 + 1.2} strokeDasharray="1.4 1.4" strokeLinecap="butt" strokeLinejoin="round" />
       <path d={d} fill={SHEET} stroke={SHEET} strokeWidth={border + gap * 2} strokeLinejoin="round" />
     </g>
   );
@@ -89,8 +89,8 @@ function SkillCell() {
             <path d={d} fill={SHEET} stroke={SHEET} strokeWidth={3.6} />
             <path d={d} fill={K.paper} stroke={K.ink} strokeWidth={1} />
             <path d="M15.5 1.5 V7 H21" fill={K.edge} stroke={K.ink} strokeWidth={1} />
-            <rect x={5.6} y={10.4} width={13.8} height={5.2} rx={1.2} fill={K.sun} stroke={K.ink} strokeWidth={0.8} />
-            <text className="mono" x={12.5} y={14.3} fontSize={3.6} fontWeight={800} fill={K.ink} textAnchor="middle">SKILL.md</text>
+            <rect x={2.6} y={10.2} width={19.8} height={5.6} rx={1.4} fill={K.sun} stroke={K.ink} strokeWidth={0.8} />
+            <text className="mono" x={12.5} y={14.2} fontSize={3.3} fontWeight={800} fill={K.ink} textAnchor="middle">SKILL.md</text>
             <path d="M6.5 18.4 H16 M6.5 20.4 H12.5" stroke={K.edge} strokeWidth={1} />
           </g>
         </g>

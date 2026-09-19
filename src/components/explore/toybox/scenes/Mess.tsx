@@ -12,15 +12,15 @@ function PersonalVercel() {
     <svg viewBox={box} className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
       <DieCut cut={<rect x={22} y={26} width={236} height={176} rx={16} />} tilt={-3} cx={140} cy={115}>
         <Win x={26} y={30} w={228} h={164} barH={34} bar={K.edge}>
-          <LinkBar x={36} y={72} w={208} h={28} text="priyas-app.vercel.app" size={14} lockColor="#8A8474" />
+          <LinkBar x={34} y={72} w={212} h={28} text="priyas-app.vercel.app" size={13} lockColor="#8A8474" />
           <rect x={36} y={112} width={208} height={70} rx={10} fill={K.term} stroke={K.ink} strokeWidth={2} />
           <text className="mono" x={50} y={138} fontSize={14} fill={K.termText}>STRIPE_KEY =</text>
-          <text className="mono" x={50} y={164} fontSize={14} fill={K.sun}>&quot;sk_live_51H…&quot;</text>
+          <text className="mono" x={62} y={164} fontSize={14} fill={K.sun}>&quot;sk_live_51H…&quot;</text>
         </Win>
         <path
           className="tb-scribble"
           pathLength={100}
-          d="M72 178 C34 176 30 147 104 145 C176 143 214 152 203 168 C193 183 118 184 72 178 C52 175 46 166 60 156"
+          d="M84 180 C40 179 36 146 116 144 C196 142 232 152 222 168 C212 184 136 186 84 180 C60 177 52 166 68 156"
           fill="none"
           stroke={K.tomato}
           strokeWidth={4.5}
@@ -42,16 +42,16 @@ function InternLaptop() {
           <>
             <rect x={48} y={34} width={178} height={130} rx={14} />
             <rect x={26} y={160} width={222} height={22} rx={10} />
-            <rect x={160} y={12} width={78} height={70} rx={4} />
-            <rect x={238} y={132} width={20} height={46} rx={6} />
+            <rect x={188} y={12} width={80} height={76} rx={4} />
+            <rect x={236} y={128} width={30} height={52} rx={8} />
           </>
         }
       >
         {/* Lid */}
         <rect x={48} y={34} width={178} height={130} rx={14} fill={K.term} stroke={K.ink} strokeWidth={3} />
         <rect x={60} y={46} width={154} height={106} rx={6} fill={K.paper} stroke={K.ink} strokeWidth={2} />
-        <rect x={68} y={54} width={138} height={24} rx={12} fill={K.wash} stroke={K.ink} strokeWidth={2} />
-        <text className="mono" x={80} y={71} fontSize={14} fill={K.ink}>localhost:3000</text>
+        <rect x={66} y={54} width={128} height={24} rx={12} fill={K.wash} stroke={K.ink} strokeWidth={2} />
+        <text className="mono" x={74} y={70.5} fontSize={13.5} fill={K.ink}>localhost:3000</text>
         <rect x={70} y={90} width={60} height={8} rx={4} fill={K.edge} />
         <rect x={70} y={106} width={124} height={8} rx={4} fill={K.edge} />
         <rect x={70} y={122} width={96} height={8} rx={4} fill={K.edge} />
@@ -60,18 +60,19 @@ function InternLaptop() {
         <path d="M118 164 V168 Q118 172 122 172 H152 Q156 172 156 168 V164" fill="none" stroke={K.ink} strokeWidth={2} />
         {/* Sticky note on the bezel */}
         <g className="tb-flutter">
-          <g transform="rotate(7 199 48)">
-            <rect x={164} y={16} width={72} height={64} rx={3} fill="#FFE66B" stroke={K.ink} strokeWidth={2.5} />
-            <rect x={164} y={16} width={72} height={12} fill="#F5D640" />
-            <path d="M164 28 H236" stroke={K.ink} strokeWidth={1.5} opacity={0.3} />
-            <text x={200} y={49} fontSize={14} fontWeight={800} fill={K.ink} textAnchor="middle">Last day</text>
-            <text x={200} y={67} fontSize={14} fontWeight={800} fill={K.tomato} textAnchor="middle">Friday!</text>
+          <g transform="rotate(8 226 50)">
+            <rect x={192} y={18} width={70} height={64} rx={3} fill="#FFE66B" stroke={K.ink} strokeWidth={2.5} />
+            <rect x={192} y={18} width={70} height={12} fill="#F5D640" />
+            <path d="M192 30 H262" stroke={K.ink} strokeWidth={1.5} opacity={0.3} />
+            <text x={227} y={51} fontSize={14} fontWeight={800} fill={K.ink} textAnchor="middle">Last day</text>
+            <text x={227} y={69} fontSize={14} fontWeight={800} fill={K.tomato} textAnchor="middle">Friday!</text>
           </g>
         </g>
         {/* Coffee */}
-        <path d="M240 136 H258 L256 172 Q256 178 250 178 H248 Q242 178 242 172 Z" fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
-        <path d="M240 146 H258" stroke={K.coral} strokeWidth={4} strokeLinecap="butt" />
-        <path className="tb-steam" d="M246 128 q-4 -6 0 -12 M253 126 q4 -6 0 -12" fill="none" stroke={K.ink} strokeWidth={2} opacity={0.5} />
+        <path d="M252 150 h4 a6 6 0 0 1 0 14 h-4" fill="none" stroke={K.ink} strokeWidth={2.5} />
+        <path d="M234 144 H254 V172 Q254 178 248 178 H240 Q234 178 234 172 Z" fill={K.coral} stroke={K.ink} strokeWidth={2.5} />
+        <path d="M238 150 V160" stroke={K.paper} strokeWidth={2} opacity={0.8} />
+        <path className="tb-steam" d="M240 136 q-4 -6 0 -12 M248 134 q4 -6 0 -12" fill="none" stroke={K.ink} strokeWidth={2} opacity={0.5} />
       </DieCut>
     </svg>
   );
@@ -135,11 +136,11 @@ function PublicAccident() {
           ))}
         </Win>
         {/* Strangers, crowding round */}
-        <Arrow x={206} y={122} color="#7FD1C9" s={0.72} rot={-14} className="tb-jit tb-jit-1" />
-        <Arrow x={168} y={146} color="#F2A541" s={0.72} rot={6} className="tb-jit tb-jit-2" />
-        <Arrow x={246} y={150} color="#B07CE8" s={0.72} rot={-30} className="tb-jit tb-jit-3" />
-        <Arrow x={200} y={170} color="#9BD35A" s={0.72} rot={10} className="tb-jit tb-jit-4" />
-        <Arrow x={128} y={116} color="#F07A9A" s={0.72} rot={-4} className="tb-jit tb-jit-5" />
+        <Arrow x={140} y={98} color="#7FD1C9" s={0.72} rot={-14} className="tb-jit tb-jit-1" />
+        <Arrow x={122} y={132} color="#F2A541" s={0.72} rot={6} className="tb-jit tb-jit-2" />
+        <Arrow x={252} y={112} color="#B07CE8" s={0.72} rot={-8} className="tb-jit tb-jit-3" />
+        <Arrow x={196} y={166} color="#9BD35A" s={0.72} rot={-20} className="tb-jit tb-jit-4" />
+        <Arrow x={78} y={150} color="#F07A9A" s={0.72} rot={-4} className="tb-jit tb-jit-5" />
       </DieCut>
     </svg>
   );

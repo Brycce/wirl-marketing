@@ -107,7 +107,7 @@ export function AppStickerArt({ app }: { app: AppSticker }) {
         <rect x={10} y={10} width={150} height={104} rx={12} fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
         <path d={`M10 36 V22 A12 12 0 0 1 22 10 H148 A12 12 0 0 1 160 22 V36 Z`} fill={app.bar} />
         <path d="M10 36 H160" stroke={K.ink} strokeWidth={2} />
-        <text className="mono" x={20} y={28} fontSize={11.5} fontWeight={700} fill={app.barText}>{app.name}</text>
+        <text className="mono" x={19} y={28.5} fontSize={12.6} fontWeight={700} fill={app.barText}>{app.name}</text>
         {app.inner}
         <rect x={10} y={10} width={150} height={104} rx={12} fill="none" stroke={K.ink} strokeWidth={2.5} />
         <circle cx={150} cy={106} r={15} fill={K.green} stroke={K.ink} strokeWidth={2.5} />

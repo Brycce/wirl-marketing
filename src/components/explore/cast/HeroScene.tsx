@@ -3,10 +3,10 @@
 // harbor link, and Jonah leans in with his mug to look.
 
 import s from './cast.module.css';
-import { Bubble, Bust, C, Desk, Dots, LaptopLid, Mug, Plant, POSE, Sticker, T, Tick, Win, mirror, mix, withPose } from './kit';
+import { Bubble, Bust, C, Desk, Dots, LaptopLid, Mug, Plant, POSE, Sticker, T, Tick, Win, mirror, withPose } from './kit';
 
 const W = 520;
-const H = 620;
+const H = 600;
 const DESK = 522;
 
 const ROWS = [
@@ -55,12 +55,10 @@ export function PaymentsApp({ w, rows = ROWS, extra }: { w: number; rows?: typeo
 }
 
 export default function HeroScene() {
-  const floor = mix(C.sky, C.ink, 0.08);
   const wall = C.sky;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className={s.art} role="img" aria-label="Priya cheers behind her laptop. Her coding agent says: Deployed. Only people at Harbor can open it. Above her floats the supplier payments app with a green lock and its harbor link, and her coworker Jonah leans in with his mug to look.">
       <rect width={W} height={H} fill={wall} />
-      <rect y={DESK + 50} width={W} height={H - DESK - 50} fill={floor} />
 
       {/* The app she just made. */}
       <g transform="translate(262 122) rotate(-2)">
@@ -73,13 +71,13 @@ export default function HeroScene() {
       </g>
 
       {/* Jonah, leaning in from the right with his mug. */}
-      <g transform={`translate(476 ${DESK - 100}) rotate(-9)`}>
+      <g transform={`translate(454 ${DESK - 98}) rotate(-6)`}>
         <Bust
           who="jonah"
-          height={120}
+          height={180}
           face={{ eyes: 'wide', brows: 'up', mouth: 'o', look: [-2.4, -2.2], blink: s.blinkJonah }}
           arms={[
-            withPose(POSE.mug, { pts: [[-38, 58], [-50, 98], [-22, 70]], hold: <Mug x={-17} y={7} />, foreClass: s.sipJonah }),
+            withPose(POSE.mug, { pts: [[-38, 58], [-50, 98], [-26, 72]], hold: <Mug x={17} y={7} flip />, foreClass: s.sipJonah }),
           ]}
         />
       </g>
@@ -94,7 +92,7 @@ export default function HeroScene() {
         />
       </g>
 
-      <Desk x={10} y={DESK} w={500} />
+      <Desk x={10} y={DESK} w={500} panel={120} />
       <LaptopLid x={132} y={DESK} w={168} h={100}>
         <Sticker kind="claude" x={-28} y={0} size={46} rot={-8} />
         <Sticker kind="anchor" x={40} y={-24} size={24} rot={8} />

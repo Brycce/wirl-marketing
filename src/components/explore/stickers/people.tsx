@@ -26,10 +26,10 @@ type Person = {
 
 export const PEOPLE: Record<Who, Person> = {
   priya: { name: 'Priya N.', skin: 2, shirt: [C.tomato, C.tomatoDark], hair: '#2A2320', collar: 'crew', blink: 4.4 },
-  tom: { name: 'Tom R.', skin: 0, shirt: [C.sun, C.sunDark], hair: '#6B3E23', collar: 'crew', blink: 5.3 },
+  tom: { name: 'Tom A.', skin: 0, shirt: [C.sun, C.sunDark], hair: '#6B3E23', collar: 'crew', blink: 5.3 },
   lena: { name: 'Lena K.', skin: 1, shirt: [C.cobalt, C.cobaltDark], hair: '#E0A63A', collar: 'shirt', blink: 6.1 },
   sam: { name: 'Sam O.', skin: 3, shirt: [C.green, C.greenDark], hair: '#2A2320', collar: 'crew', blink: 4.9 },
-  mia: { name: 'Mia L.', skin: 0, shirt: [C.lilac, C.lilacDark], hair: '#6B3E23', collar: 'shirt', blink: 5.7 },
+  mia: { name: 'Mia R.', skin: 0, shirt: [C.lilac, C.lilacDark], hair: '#6B3E23', collar: 'shirt', blink: 5.7 },
   jo: { name: 'Jo P.', skin: 1, shirt: [C.sky, C.skyDark], hair: '#6B3E23', collar: 'hood', blink: 4.6 },
   ade: { name: 'Ade B.', skin: 3, shirt: [C.gum, C.gumDark], hair: '#2A2320', collar: 'crew', blink: 5.1 },
   stranger: { name: 'Stranger', skin: 1, shirt: ['#8C929B', '#737982'], hair: '#8C929B', collar: 'none', blink: 5 },

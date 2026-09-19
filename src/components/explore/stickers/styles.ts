@@ -120,9 +120,10 @@ export const CSS = String.raw`
 .sb-loop-press { transform-box: fill-box; transform-origin: 50% 50%; animation: sb-press 10s ease-in-out 2.2s infinite; }
 @keyframes sb-press { 0%, 34% { transform: none; } 36% { transform: scale(.95); } 39%, 100% { transform: none; } }
 .sb-loop-signin { animation: sb-signin 10s ease-in-out 2.2s infinite; }
-@keyframes sb-signin { 0%, 41% { opacity: 1; } 47%, 82% { opacity: 0; } 88%, 100% { opacity: 1; } }
+/* One screen out, then the other in, so the two never sit on top of each other. */
+@keyframes sb-signin { 0%, 40% { opacity: 1; } 43%, 85% { opacity: 0; } 88%, 100% { opacity: 1; } }
 .sb-loop-app { opacity: 0; animation: sb-app 10s ease-in-out 2.2s infinite; }
-@keyframes sb-app { 0%, 41% { opacity: 0; } 47%, 82% { opacity: 1; } 88%, 100% { opacity: 0; } }
+@keyframes sb-app { 0%, 43% { opacity: 0; } 46%, 82% { opacity: 1; } 85%, 100% { opacity: 0; } }
 
 /* The link's corner lifts and settles, every seven seconds. */
 .peel-loop .sb-art { animation: sb-peel-clip 7s ease-in-out infinite; }
@@ -193,10 +194,56 @@ export const CSS = String.raw`
   box-shadow: 0 0 0 1px rgba(31,42,31,.06), 0 1px 1px rgba(31,42,31,.14), 0 3px 6px rgba(31,42,31,.14); transition: transform .18s cubic-bezier(.2,.8,.2,1); }
 .sb-faq details[open] .sb-toggle { transform: rotate(45deg); }
 
-/* Footer snail: every twenty seconds he's peeled up and stuck down a bit further along. */
-.sb-foot-snail { position: absolute; top: -9px; left: 0; width: 26px; animation: sb-hop 200s steps(1) infinite; }
-.sb-foot-snail > span { display: block; animation: sb-restick 20s ease-in-out infinite; transform-origin: 30% 80%; filter: drop-shadow(0 1px 1px rgba(31,42,31,.2)) drop-shadow(0 2px 3px rgba(31,42,31,.14)); }
-@keyframes sb-restick { 0%, 90%, 100% { transform: none; } 93% { transform: translateY(-5px) rotate(-10deg); } 96% { transform: translateY(-5px) rotate(-6deg); } }
+/* Footer snail: every twenty seconds he's peeled up and stuck down 12px
+   further along the rule; at the end of his stretch he turns round. */
+.sb-foot-snail { position: absolute; top: -20px; left: 38%; width: 27px; animation: sb-hop 800s infinite; animation-timing-function: steps(20, jump-end); }
+@keyframes sb-hop { 0% { transform: translateX(0); } 50% { transform: translateX(240px); } 100% { transform: translateX(0); } }
+.sb-face { display: block; transform: scaleX(-1); animation: sb-face 800s steps(1) infinite; }
+@keyframes sb-face { 0% { transform: scaleX(-1); } 50% { transform: scaleX(1); } 100% { transform: scaleX(-1); } }
+.sb-restick { display: block; animation: sb-restick 20s ease-in-out infinite; transform-origin: 20% 100%; filter: drop-shadow(0 1px 1px rgba(31,42,31,.22)) drop-shadow(0 2px 3px rgba(31,42,31,.14)); }
+.sb-restick svg { display: block; }
+@keyframes sb-restick { 0%, 86%, 100% { transform: none; } 90%, 99% { transform: translateY(-4px) rotate(-12deg); } }
+
+/* Step numbers: small round stickers. */
+.sb-num { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 999px; background: #1F2A1F; color: #fff; font-size: 13px; font-weight: 700; box-shadow: 0 0 0 3px #fff, 0 2px 5px 3px rgba(31,42,31,.12); translate: 0 -2px; }
+
+/* Admin: the table as one big sticker, the log stuck over its corner. */
+.sb-tablestk { background: #fff; border-radius: 18px; padding: 7px; rotate: -1deg; filter: var(--shadow); }
+.sb-tablewin { border: 2.5px solid #1F2A1F; border-radius: 12px; background: #fff; overflow: hidden; container-type: inline-size; }
+/* The table where it fits; a card per app where it doesn't. */
+.sb-adm-table { display: none; }
+@container (min-width: 540px) { .sb-adm-table { display: table; } .sb-adm-cards { display: none; } }
+.sb-logstk {
+  background: #1F2A1F; color: #E8F1E8; border-radius: 14px; padding: 12px 14px 12px; rotate: 2deg;
+  box-shadow: 0 0 0 5px #fff, 0 1px 1px 5px rgba(31,42,31,.16), 0 10px 18px rgba(31,42,31,.24);
+  font-size: 13px; line-height: 1;
+}
+.sb-log-pos { position: relative; margin: -18px 10px 0 auto; width: min(88%, 470px); }
+.sb-log-view { height: 78px; overflow: hidden; }
+.sb-log-row { height: 26px; display: flex; align-items: center; gap: 9px; white-space: nowrap; min-width: 0; }
+.sb-log-tag { flex: none; color: #1F2A1F; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 3px 6px; }
+.sb-log-list { transform: translateY(-78px); animation: sb-log 18s ease-in-out infinite; }
+@keyframes sb-log {
+  0%, 31% { transform: translateY(-78px); }
+  33.3%, 64.6% { transform: translateY(-52px); }
+  66.6%, 97.9% { transform: translateY(-26px); }
+  100% { transform: translateY(0); }
+}
+@media (max-width: 639px) {
+  .sb-log-pos { margin: 18px 4px 0; width: auto; rotate: 1deg; }
+  /* Phones: the three lines, wrapped in full, standing still. */
+  .sb-log-view { height: auto; }
+  .sb-log-list { transform: none; animation: none; display: grid; gap: 8px; }
+  .sb-log-row { height: auto; white-space: normal; align-items: flex-start; line-height: 1.4; }
+  .sb-log-row:nth-child(n+4) { display: none; }
+  .sb-log-row .truncate { overflow: visible; text-overflow: clip; white-space: normal; }
+}
+.sb-live { display: inline-flex; align-items: center; gap: 6px; }
+.sb-live i { width: 7px; height: 7px; border-radius: 99px; background: #22A861; animation: sb-pulse 2s ease-in-out infinite; }
+@keyframes sb-pulse { 50% { opacity: .35; } }
+.sb-armed .sb-wait:not(.is-in) .sb-tablestk, .sb-armed .sb-wait:not(.is-in) .sb-logstk { opacity: 0; }
+.sb-armed .sb-wait.is-in .sb-tablestk { animation: sb-slap .36s cubic-bezier(.3,.7,.3,1) backwards; }
+.sb-armed .sb-wait.is-in .sb-logstk { animation: sb-slap .36s cubic-bezier(.3,.7,.3,1) .25s backwards; }
 
 /* Headline logo stickers */
 .sb-logos { display: inline-flex; align-items: center; gap: .04em; vertical-align: -.3em; margin-left: .03em; }
@@ -215,17 +262,22 @@ export const CSS = String.raw`
 /* Sticker sheet */
 .sb-sheet { background: #fff; border-radius: 26px; rotate: -.6deg; box-shadow: 0 0 0 1px rgba(31,42,31,.05), 0 1px 1px rgba(31,42,31,.12), 0 10px 24px rgba(31,42,31,.12); }
 .sb-sheet-item { display: flex; flex-direction: column; align-items: flex-start; text-decoration: none; color: inherit; }
-.sb-sheet-item .sb-stk { filter: none; }
+.sb-sheet-stk { position: relative; display: block; width: 104px; height: 104px; margin-left: -8px; }
+.sb-sheet-stk > svg, .sb-lift, .sb-lift > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; display: block; }
+.sb-lift { transition: transform .24s cubic-bezier(.2,.8,.2,1), filter .24s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 .5px .5px rgba(31,42,31,.12)); }
+.sb-curl { opacity: 0; transition: opacity .12s ease; }
+.sb-flat { transition: opacity .12s ease; }
 @media (hover: hover) {
-  .sb-sheet-item:hover .sb-stk { filter: var(--lift); }
-  .sb-sheet-item:hover .sb-rot { rotate: -3deg; translate: 0 -5px; }
-  .sb-sheet-item:hover .sb-art { clip-path: var(--p1); }
-  .sb-sheet-item:hover .sb-flap path { scale: 1; }
-  .sb-sheet-item:hover .sb-kiss { opacity: 1; }
+  .sb-sheet-item:hover .sb-lift, .sb-sheet-item:focus-visible .sb-lift { transform: translate(-3px, -8px) rotate(-5deg); filter: var(--lift); }
+  .sb-sheet-item:hover .sb-curl, .sb-sheet-item:focus-visible .sb-curl { opacity: 1; }
+  .sb-sheet-item:hover .sb-flat, .sb-sheet-item:focus-visible .sb-flat { opacity: 0; }
 }
-.sb-sheet-item .sb-art { clip-path: var(--p0); transition: clip-path .25s cubic-bezier(.2,.8,.2,1); }
-.sb-sheet-item .sb-flap path { transition: scale .25s cubic-bezier(.2,.8,.2,1); }
 .sb-sheet-item:focus-visible { outline: 3px solid #3D63FF; outline-offset: 6px; border-radius: 16px; }
+/* Phones: one row per sticker, the name beside it. */
+@media (max-width: 639px) {
+  .sb-sheet-item { flex-direction: row; align-items: center; gap: 14px; }
+  .sb-sheet-stk { width: 72px; height: 72px; margin-left: -6px; }
+}
 
 /* Card corner stickers lift with their card. */
 @media (hover: hover) {

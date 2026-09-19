@@ -86,7 +86,7 @@ export function Ol({ fill, w = 3, far, shade, shadeFill, children, className, st
   const off = far === true ? [-6, -5] : far || null;
   const tone = shadeFill ?? sh(fill);
   return (
-    <g className={className} style={style} transform={transform}>
+    <g transform={transform}><g className={className} style={style}>
       {w > 0 && (
         <g fill={C.ink} stroke={C.ink} strokeWidth={w * 2} strokeLinejoin="round" strokeLinecap="round">
           {children}
@@ -107,7 +107,7 @@ export function Ol({ fill, w = 3, far, shade, shadeFill, children, className, st
           </g>
         </>
       )}
-    </g>
+    </g></g>
   );
 }
 
@@ -151,7 +151,7 @@ export function T({ x, y, children, size = 18, weight = 600, fill = C.ink, ancho
 export type Eyes = 'open' | 'happy' | 'wide' | 'tired' | 'closed' | 'down';
 export type Brows = 'calm' | 'up' | 'worried' | 'focus' | 'raise' | 'none';
 export type Mouth = 'smile' | 'grin' | 'o' | 'flat' | 'wobbly' | 'tongue' | 'smirk' | 'grimace' | 'none' | 'open' | 'bigO';
-export type Face = { eyes?: Eyes; brows?: Brows; mouth?: Mouth; look?: [number, number]; blush?: boolean; blink?: string; blinkStyle?: CSSProperties };
+export type Face = { eyes?: Eyes; brows?: Brows; mouth?: Mouth; look?: [number, number]; blush?: boolean; blink?: string; blinkStyle?: CSSProperties; scan?: string };
 
 // The head: 56 wide, 61 tall, centred on 0,0. Ears at the sides.
 export const HEAD = 'M0 -31 C17 -31 28 -19 28 -3 C28 16 17 30 0 30 C-17 30 -28 16 -28 -3 C-28 -19 -17 -31 0 -31 Z';
@@ -230,8 +230,16 @@ function MouthShape({ kind }: { kind: Mouth }) {
   }
 }
 
-export function FaceParts({ face, skin }: { face: Face; skin: string }) {
-  const { eyes = 'open', brows = 'calm', mouth = 'smile', look = [0, 0], blush = true, blink, blinkStyle } = face;
+export function FaceParts({ face, skin, part = 'all' }: { face: Face; skin: string; part?: 'all' | 'brows' | 'rest' }) {
+  const { eyes = 'open', brows = 'calm', mouth = 'smile', look = [0, 0], blush = true, blink, blinkStyle, scan } = face;
+  if (part === 'brows') {
+    return (
+      <g>
+        <Brow x={-10.5} kind={brows} side={-1} />
+        <Brow x={10.5} kind={brows} side={1} />
+      </g>
+    );
+  }
   const canBlink = eyes === 'open' || eyes === 'wide' || eyes === 'tired';
   const eyeEls = (
     <>
@@ -247,9 +255,13 @@ export function FaceParts({ face, skin }: { face: Face; skin: string }) {
           <ellipse cx="16.5" cy="9" rx="5.4" ry="3.4" />
         </g>
       )}
-      {canBlink && blink ? <g className={blink} style={blinkStyle}>{eyeEls}</g> : eyeEls}
-      <Brow x={-10.5} kind={brows} side={-1} />
-      <Brow x={10.5} kind={brows} side={1} />
+      <g className={scan}>{canBlink && blink ? <g className={blink} style={blinkStyle}>{eyeEls}</g> : eyeEls}</g>
+      {part === 'all' && (
+        <>
+          <Brow x={-10.5} kind={brows} side={-1} />
+          <Brow x={10.5} kind={brows} side={1} />
+        </>
+      )}
       <Line d="M-0.5 3.5 C3.6 5 4.4 8.6 0.4 9.8" w={2.4} color={sh(skin, 0.5)} />
       <MouthShape kind={mouth} />
     </g>
@@ -288,9 +300,9 @@ type Look = {
   chest?: ReactNode; // lanyards, braids: over the torso
 };
 
-const HAIR_DARK = '#34232B';
+export const HAIR_DARK = '#34232B';
 
-function PriyaHair() {
+export function PriyaHair() {
   return (
     <>
       {/* The pencil goes through the bun: drawn first, the bun covers its middle. */}
@@ -552,14 +564,16 @@ export function topOf(who: Who) {
 export function Head({ who, face = {}, className, transform, style }: { who: Who; face?: Face; className?: string; transform?: string; style?: CSSProperties }) {
   const L = LOOKS[who];
   return (
-    <g className={className} transform={transform} style={style}>
+    <g transform={transform}><g className={className} style={style}>
       {L.hairBack}
       <HeadBase skin={L.skin} />
       {who === 'tom' && L.over}
-      <FaceParts face={face} skin={L.skin} />
+      <FaceParts face={face} skin={L.skin} part={who === 'sam' ? 'rest' : 'all'} />
       {who !== 'tom' && L.over}
       {L.hairFront}
-    </g>
+      {/* Sam's eyebrow does the talking, so it sits over her fringe. */}
+      {who === 'sam' && <FaceParts face={face} skin={L.skin} part="brows" />}
+    </g></g>
   );
 }
 
@@ -817,7 +831,7 @@ export function Bust({ who, face = {}, arms = [], height = 100, className, trans
   const behind = arms.filter((a) => a.behind);
   const front = arms.filter((a) => !a.behind);
   return (
-    <g className={className} transform={transform} style={style}>
+    <g transform={transform}><g className={className} style={style}>
       {behind.map((a, i) => <Arm key={`b${i}`} pose={a} color={L.top} skin={L.skin} />)}
       <Outfit who={who} height={height} />
       <Neck skin={L.skin} />
@@ -826,21 +840,53 @@ export function Bust({ who, face = {}, arms = [], height = 100, className, trans
       {extra}
       <Head who={who} face={face} className={headClass} style={headStyle} />
       {front.map((a, i) => <Arm key={`f${i}`} pose={a} color={L.top} skin={L.skin} />)}
+    </g></g>
+  );
+}
+
+// A leg as a filled quadrilateral from hip point a to ankle point b.
+function legPath(a: [number, number], b: [number, number], wTop: number, wBot: number) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const len = Math.hypot(dx, dy);
+  const [nx, ny] = [-dy / len, dx / len];
+  const p = (q: [number, number], w: number, sgn: number) => `${(q[0] + nx * w * sgn).toFixed(1)} ${(q[1] + ny * w * sgn).toFixed(1)}`;
+  return `M${p(a, wTop / 2, 1)} L${p(b, wBot / 2, 1)} L${p(b, wBot / 2, -1)} L${p(a, wTop / 2, -1)} Z`;
+}
+
+// Legs and shoes for anyone standing. Hips at y = top, soles at y = bottom.
+// `walk` puts one foot forward. Everything is one outlined silhouette.
+export function Legs({ top, bottom, color = '#4B4459', shoe = C.white, stance = 'stand', className }: { top: number; bottom: number; color?: string; shoe?: string; stance?: 'stand' | 'walk' | 'wide'; className?: string }) {
+  const ank = bottom - 10;
+  const feet: [number, number][] = stance === 'walk' ? [[-30, ank], [26, ank - 2]] : stance === 'wide' ? [[-28, ank], [28, ank]] : [[-19, ank], [19, ank]];
+  const hips: [number, number][] = [[-20, top + 18], [20, top + 18]];
+  return (
+    <g className={className}>
+      <Ol fill={color} far={[-6, 0]}>
+        <rect x="-44" y={top} width="88" height="34" rx="12" />
+        <path d={legPath(hips[0], feet[0], 40, 26)} />
+        <path d={legPath(hips[1], feet[1], 40, 26)} />
+      </Ol>
+      <Line d={`M0 ${top + 22} V${top + 34}`} w={2} color={sh(color, 0.4)} />
+      <Ol fill={shoe} far={[0, -3]} shadeFill={sh(shoe, 0.12)}>
+        <path d={`M${feet[0][0] + 12} ${bottom} L${feet[0][0] - 20} ${bottom} C${feet[0][0] - 24} ${bottom} ${feet[0][0] - 24} ${bottom - 12} ${feet[0][0] - 12} ${bottom - 14} L${feet[0][0] + 12} ${bottom - 16} Z`} />
+        <path d={`M${feet[1][0] - 12} ${bottom} L${feet[1][0] + 20} ${bottom} C${feet[1][0] + 24} ${bottom} ${feet[1][0] + 24} ${bottom - 12} ${feet[1][0] + 12} ${bottom - 14} L${feet[1][0] - 12} ${bottom - 16} Z`} />
+      </Ol>
     </g>
   );
 }
 
-// Legs and shoes for anyone standing. Hips at y = 38 + torso height.
-export function Legs({ top, bottom, color = '#4A4A6A', shoe = C.ink, spread = 0, className }: { top: number; bottom: number; color?: string; shoe?: string; spread?: number; className?: string }) {
+// A whole standing person. Head centre at 0,0; soles at y = 232.
+export function Figure({ who, face, arms, legs = '#4B4459', shoe, stance = 'stand', className, transform, style, headClass, extra, back }: {
+  who: Who; face?: Face; arms?: ArmPose[]; legs?: string; shoe?: string; stance?: 'stand' | 'walk' | 'wide'; className?: string; transform?: string; style?: CSSProperties; headClass?: string; extra?: ReactNode; back?: ReactNode;
+}) {
   return (
-    <g className={className}>
-      <Ol fill={color} far={[-5, 0]}>
-        <path d={`M-40 ${top} L-36 ${bottom} L-4 ${bottom} L0 ${top + 20} L4 ${bottom} L36 ${bottom} L40 ${top} Z`} transform={spread ? `translate(0 0)` : undefined} />
-      </Ol>
-      <Ol fill={shoe}>
-        <path d={`M-40 ${bottom + 12} C-42 ${bottom + 2} -34 ${bottom - 3} -24 ${bottom - 3} L-6 ${bottom - 3} C-3 ${bottom - 3} -2 ${bottom + 2} -2 ${bottom + 6} L-2 ${bottom + 12} Z`} />
-        <path d={`M40 ${bottom + 12} C42 ${bottom + 2} 34 ${bottom - 3} 24 ${bottom - 3} L6 ${bottom - 3} C3 ${bottom - 3} 2 ${bottom + 2} 2 ${bottom + 6} L2 ${bottom + 12} Z`} />
-      </Ol>
+    <g transform={transform}>
+      <g className={className} style={style}>
+        {back}
+        <Legs top={122} bottom={232} color={legs} shoe={shoe} stance={stance} />
+        <Bust who={who} face={face} arms={arms} height={96} headClass={headClass} extra={extra} />
+      </g>
     </g>
   );
 }
@@ -850,16 +896,16 @@ export function Legs({ top, bottom, color = '#4A4A6A', shoe = C.ink, spread = 0,
 /* ------------------------------------------------------------------ */
 
 // Jonah's mug and Dana's. Base centre at 0,0, 26 wide, 30 tall, handle right.
-export function Mug({ x = 0, y = 0, rot = 0, scale = 1, kind = 'anchor', steam = false, className }: { x?: number; y?: number; rot?: number; scale?: number; kind?: 'anchor' | 'it' | 'plain'; steam?: boolean; className?: string }) {
+export function Mug({ x = 0, y = 0, rot = 0, scale = 1, kind = 'anchor', steam = false, flip = false, color = C.white, className }: { x?: number; y?: number; rot?: number; scale?: number; kind?: 'anchor' | 'it' | 'plain'; steam?: boolean; flip?: boolean; color?: string; className?: string }) {
   return (
-    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${scale})`}><g className={className}>
+    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${flip ? -scale : scale} ${scale})`}><g className={className}>
       {steam && (
         <g className={s.steam}>
           <Line d="M-5 -36 q-4 -5 0 -10 q4 -5 0 -10" w={2.2} color={C.dim} />
           <Line d="M5 -34 q-4 -5 0 -10 q4 -5 0 -10" w={2.2} color={C.dim} />
         </g>
       )}
-      <Ol fill={C.white} far={[-4, 0]} shadeFill="#E4DEEE">
+      <Ol fill={color} far={[-4, 0]} shadeFill={color === C.white ? '#E4DEEE' : sh(color)}>
         <path d="M13 -24 C24 -24 24 -8 13 -8 L13 -12 C19 -12 19 -20 13 -20 Z" />
         <rect x="-13" y="-30" width="26" height="30" rx="4" />
       </Ol>
@@ -869,7 +915,7 @@ export function Mug({ x = 0, y = 0, rot = 0, scale = 1, kind = 'anchor', steam =
           <path d="M0 -18.6 V-6 M-4 -14 H4 M-7 -10 Q-6 -5 0 -5 Q6 -5 7 -10" />
         </g>
       )}
-      {kind === 'it' && <T x={-0.5} y={-9} size={13} weight={800} fill={C.violet} anchor="middle">IT</T>}
+      {kind === 'it' && <g transform={flip ? 'scale(-1 1)' : undefined}><T x={-0.5} y={-9} size={13} weight={800} fill={C.violet} anchor="middle">IT</T></g>}
     </g></g>
   );
 }
@@ -886,7 +932,7 @@ export function Plant({ x, y, stage = 2, scale = 1, className }: { x: number; y:
           {stage >= 3 && <path d="M0 -38 C-6 -38 -12 -46 -10 -56 C-2 -54 1 -46 0 -38 Z" />}
         </Ol>
         {stage === 4 && (
-          <g transform="translate(2 -56)" className={s.flower}>
+          <g transform="translate(2 -56)"><g className={s.flower}>
             <Ol fill={C.gum}>
               <circle cx="0" cy="-8" r="5.5" />
               <circle cx="7.6" cy="-2.5" r="5.5" />
@@ -895,7 +941,7 @@ export function Plant({ x, y, stage = 2, scale = 1, className }: { x: number; y:
               <circle cx="-7.6" cy="-2.5" r="5.5" />
             </Ol>
             <circle r="4" fill={C.sun} stroke={C.ink} strokeWidth={2} />
-          </g>
+          </g></g>
         )}
       </g>
       <Ol fill={C.pot} far={[-4, 0]}>
@@ -919,10 +965,10 @@ export function Lock({ x, y, scale = 1, color = C.green, shackleClass }: { x: nu
 
 export function Tick({ x, y, r = 9, fill = C.green, className }: { x: number; y: number; r?: number; fill?: string; className?: string }) {
   return (
-    <g transform={`translate(${x} ${y})`} className={className}>
+    <g transform={`translate(${x} ${y})`}><g className={className}>
       <circle r={r} fill={fill} stroke={C.ink} strokeWidth={2} />
       <path d={`M${-r * 0.42} ${r * 0.02} L${-r * 0.1} ${r * 0.34} L${r * 0.45} ${-r * 0.3}`} fill="none" stroke={C.white} strokeWidth={r * 0.26} strokeLinecap="round" strokeLinejoin="round" />
-    </g>
+    </g></g>
   );
 }
 
@@ -976,11 +1022,11 @@ export function Bubble({ x, y, w, h, fill = C.white, tail, r = 16, className, ch
 // Typing dots.
 export function Dots({ x, y, className, color = C.dim }: { x: number; y: number; className?: string; color?: string }) {
   return (
-    <g transform={`translate(${x} ${y})`} className={className} fill={color}>
+    <g transform={`translate(${x} ${y})`}><g className={className} fill={color}>
       <circle className={s.dot1} cx="-10" cy="0" r="3.6" />
       <circle className={s.dot2} cx="0" cy="0" r="3.6" />
       <circle className={s.dot3} cx="10" cy="0" r="3.6" />
-    </g>
+    </g></g>
   );
 }
 
@@ -1004,7 +1050,7 @@ function outlineOf(node: ReactNode): string {
   return '';
 }
 
-export type StickerKind = 'claude' | 'codex' | 'cursor' | 'plus' | 'snail' | 'anchor';
+export type StickerKind = 'claude' | 'codex' | 'cursor' | 'plus' | 'doc' | 'snail' | 'anchor';
 
 // Where a sticker's corner comes up: just past one corner of the mark, like
 // the headline's Cursor sticker. (x, y) is that corner, angle points outward.
@@ -1016,9 +1062,11 @@ const PEELS: Partial<Record<StickerKind, { x: number; y: number; angle: number; 
 
 // A die-cut sticker stuck onto something in the drawing: a white cut border
 // with a thin ink cut line, a soft shadow, the logo untouched on top.
-// (x, y) is its centre; size is the logo's width in scene units.
-export function Sticker({ kind, x, y, size, rot = 0, peel = false, className, flapClass }: {
-  kind: StickerKind; x: number; y: number; size: number; rot?: number; peel?: boolean; className?: string; flapClass?: string;
+// (x, y) is its centre; size is the logo's width in scene units. With
+// `peelMore`, a second copy with a deeper fold is drawn for hover states
+// (the page crossfades them with the two class names).
+export function Sticker({ kind, x, y, size, rot = 0, peel = false, className, peelMore }: {
+  kind: StickerKind; x: number; y: number; size: number; rot?: number; peel?: boolean; className?: string; peelMore?: [string, string];
 }) {
   const id = useUid('stk');
   const k = size / 24;
@@ -1055,16 +1103,19 @@ export function Sticker({ kind, x, y, size, rot = 0, peel = false, className, fl
         </g>
       </>
     );
+  } else if (kind === 'doc') {
+    // A skill file, for agents with no MCP: the same glyph as the connect tab.
+    shape = <circle cx="12" cy="12" r="11.5" />;
+    art = (
+      <g fill="none" stroke={C.ink} strokeOpacity={0.6} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7.5 4.5h6.5l3.5 3.5v11.5h-10z" />
+        <path d="M10 12h5M10 15.5h5" />
+      </g>
+    );
   } else {
     // plus: a plain round sticker, for any other agent.
     shape = <circle cx="12" cy="12" r="11.5" />;
     art = <path d="M12 5.5v13M5.5 12h13" fill="none" stroke={C.ink} strokeOpacity={0.6} strokeWidth={3} strokeLinecap="round" />;
-  }
-  const pl = peel ? PEELS[kind] : undefined;
-  let fold: { x: number; y: number; a: number } | null = null;
-  if (pl) {
-    const rad = (pl.angle * Math.PI) / 180;
-    fold = { x: +(pl.x + pl.depth * Math.cos(rad)).toFixed(2), y: +(pl.y + pl.depth * Math.sin(rad)).toFixed(2), a: pl.angle };
   }
   const sheet = (fillC: string) => (
     <>
@@ -1072,30 +1123,51 @@ export function Sticker({ kind, x, y, size, rot = 0, peel = false, className, fl
       <g fill={fillC} stroke={fillC} strokeWidth={border} strokeLinejoin="round">{shape}</g>
     </>
   );
+  const pl = peel ? PEELS[kind] : undefined;
+  const variant = (depth: number | null, key: string, cls?: string) => {
+    let fold: { x: number; y: number; a: number } | null = null;
+    if (pl && depth !== null) {
+      const rad = (pl.angle * Math.PI) / 180;
+      fold = { x: +(pl.x + depth * Math.cos(rad)).toFixed(2), y: +(pl.y + depth * Math.sin(rad)).toFixed(2), a: pl.angle };
+    }
+    const keep = `${id}-${key}-keep`;
+    return (
+      <g className={cls} key={key}>
+        {fold && (
+          <clipPath id={keep}>
+            <rect x="-60" y="-60" width="60" height="120" transform={`translate(${fold.x} ${fold.y}) rotate(${fold.a})`} />
+          </clipPath>
+        )}
+        <g clipPath={fold ? `url(#${keep})` : undefined}>
+          {sheet(C.white)}
+          {art}
+        </g>
+        {fold && (
+          // The corner that came up, mirrored across the fold so we see its back.
+          <g clipPath={`url(#${keep})`}>
+            <g transform={`translate(${fold.x} ${fold.y}) rotate(${fold.a}) scale(-1 1) rotate(${-fold.a}) translate(${-fold.x} ${-fold.y})`}>
+              {sheet('#E9E3F2')}
+            </g>
+          </g>
+        )}
+      </g>
+    );
+  };
   return (
     <g transform={`translate(${x} ${y})`}><g className={className}><g transform={`rotate(${rot}) scale(${k}) translate(-12 -12)`}>
       <defs>
         <filter id={`${id}-sh`} x="-40%" y="-40%" width="180%" height="180%">
           <feDropShadow dx="0" dy={0.9} stdDeviation={0.9} floodColor={C.ink} floodOpacity={0.28} />
         </filter>
-        {fold && (
-          <clipPath id={`${id}-keep`}>
-            <rect x="-60" y="-60" width="60" height="120" transform={`translate(${fold.x} ${fold.y}) rotate(${fold.a})`} />
-          </clipPath>
-        )}
       </defs>
       <g filter={`url(#${id}-sh)`}>
-        <g clipPath={fold ? `url(#${id}-keep)` : undefined}>
-          {sheet(C.white)}
-          {art}
-        </g>
-        {fold && (
-          // The corner that came up, mirrored across the fold so we see its back.
-          <g clipPath={`url(#${id}-keep)`}>
-            <g className={flapClass} transform={`translate(${fold.x} ${fold.y}) rotate(${fold.a}) scale(-1 1) rotate(${-fold.a}) translate(${-fold.x} ${-fold.y})`}>
-              {sheet('#E9E3F2')}
-            </g>
-          </g>
+        {pl && peelMore ? (
+          <>
+            {variant(pl.depth, 'a', peelMore[0])}
+            {variant(Math.max(0.2, pl.depth - 1.1), 'b', peelMore[1])}
+          </>
+        ) : (
+          variant(pl ? pl.depth : null, 'a')
         )}
       </g>
     </g></g></g>
@@ -1121,14 +1193,40 @@ export function LaptopLid({ x, y, w = 150, h = 100, children, className }: { x: 
   );
 }
 
-// A desk top seen from the front: a slab and its front edge.
-export function Desk({ x, y, w, h = 18, legs = true, depth = 40 }: { x: number; y: number; w: number; h?: number; legs?: boolean; depth?: number }) {
+// A laptop seen from the front, screen toward us. (x, y) is the top left of
+// the lid; children draw on the screen, origin at its top left.
+export function LaptopScreen({ x, y, w, h, children, deck = true, dark = false }: { x: number; y: number; w: number; h: number; children?: ReactNode; deck?: boolean; dark?: boolean }) {
+  const b = 8;
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <Ol fill={C.ink}>
+        <rect x="0" y="0" width={w} height={h} rx="12" />
+      </Ol>
+      <rect x={b} y={b} width={w - b * 2} height={h - b * 2} rx="5" fill={dark ? '#1E1824' : C.white} />
+      <g transform={`translate(${b} ${b})`}>{children}</g>
+      {deck && (
+        <Ol fill={C.metal} far={[0, -3]}>
+          <path d={`M-6 ${h} H${w + 6} L${w + 14} ${h + 12} H-14 Z`} />
+        </Ol>
+      )}
+    </g>
+  );
+}
+
+// A desk seen from the front: a slab, and either legs or a front panel
+// that runs down out of frame (so nobody behind it needs legs).
+export function Desk({ x, y, w, h = 18, legs = true, panel = 0 }: { x: number; y: number; w: number; h?: number; legs?: boolean; panel?: number }) {
   return (
     <g>
-      {legs && (
+      {legs && !panel && (
         <Ol fill={sh(C.wood, 0.3)}>
-          <rect x={x + 18} y={y + h} width="12" height={depth + 200} />
-          <rect x={x + w - 30} y={y + h} width="12" height={depth + 200} />
+          <rect x={x + 18} y={y + h} width="12" height="240" />
+          <rect x={x + w - 30} y={y + h} width="12" height="240" />
+        </Ol>
+      )}
+      {panel > 0 && (
+        <Ol fill="#F7D9B4" far={[-10, 0]} shadeFill="#EBC596">
+          <rect x={x + 8} y={y + h - 4} width={w - 16} height={panel} />
         </Ol>
       )}
       <Ol fill={C.wood} far={[0, -4]} shadeFill={sh(C.wood, 0.14)}>

@@ -10,8 +10,8 @@ import {
   Padlock, Pointer, SnailSticker, MONO,
 } from '../objects';
 
-const WIN_W = 360;
-const WIN_H = 272;
+const WIN_W = 390;
+const WIN_H = 236;
 
 /* What a colleague sees at the link: Harbor's sign-in, then the app. */
 export function SupplierWindow({ loop = false, w = WIN_W, h = WIN_H }: { loop?: boolean; w?: number; h?: number }) {
@@ -19,33 +19,33 @@ export function SupplierWindow({ loop = false, w = WIN_W, h = WIN_H }: { loop?: 
   return (
     <AppWindow w={w} h={h} name="supplier-payments" bar={C.green}>
       <g className={loop ? 'sb-loop-signin' : undefined}>
-        <HarborMark x={cx - 58} y={62} />
-        <text x={cx - 30} y={82} fontSize={19} fontWeight={750} fill={C.ink} style={FONT} letterSpacing="-0.02em">harbor.co</text>
-        <g transform={`translate(${cx - GOOGLE_W / 2} 110)`}>
+        <HarborMark x={cx - 58} y={58} />
+        <text x={cx - 30} y={77} fontSize={19} fontWeight={750} fill={C.ink} style={FONT} letterSpacing="-0.02em">harbor.co</text>
+        <g transform={`translate(${cx - GOOGLE_W / 2} 100)`}>
           <GoogleButton className={loop ? 'sb-loop-press' : undefined} />
         </g>
-        <MiniLock x={cx - 118} y={186} s={0.95} />
-        <text x={cx - 96} y={200} fontSize={13.5} fontWeight={500} fill={C.dim} style={FONT}>Only people at harbor.co can open this</text>
+        <MiniLock x={cx - 132} y={171} s={0.95} />
+        <text x={cx - 110} y={185} fontSize={14.5} fontWeight={500} fill={C.dim} style={FONT}>Only people at harbor.co can open this</text>
       </g>
       {loop && (
         <g className="sb-loop-app">
-          <text x={18} y={64} fontSize={16} fontWeight={750} fill={C.ink} style={FONT} letterSpacing="-0.01em">Supplier payments</text>
-          <g transform={`translate(${w - 124} 49)`}>
-            <rect x={0} y={0} width={108} height={24} rx={12} fill="#EEF8F2" stroke={C.ink} strokeWidth={1.8} />
-            <circle cx={13} cy={12} r={5} fill={C.sun} stroke={C.ink} strokeWidth={1.4} />
-            <text x={23} y={16.3} fontSize={12} fontWeight={600} fill={C.ink} style={FONT}>tom@harbor.co</text>
+          <text x={18} y={62} fontSize={16} fontWeight={750} fill={C.ink} style={FONT} letterSpacing="-0.01em">Supplier payments</text>
+          <g transform={`translate(${w - 154} 45)`}>
+            <rect x={0} y={0} width={138} height={26} rx={13} fill="#EEF8F2" stroke={C.ink} strokeWidth={1.8} />
+            <circle cx={14} cy={13} r={5.5} fill={C.sun} stroke={C.ink} strokeWidth={1.4} />
+            <text x={25} y={17.8} fontSize={13} fontWeight={600} fill={C.ink} style={FONT}>tom@harbor.co</text>
           </g>
           {[
             ['Northwind Freight', '$12,400'],
             ['Coastal Paper Co.', '$3,180'],
             ['Pier 9 Supplies', '$860'],
           ].map(([name, amt], i) => (
-            <g key={name} transform={`translate(0 ${86 + i * 52})`}>
+            <g key={name} transform={`translate(0 ${78 + i * 48})`}>
               <path d={`M16 0 H${w - 16}`} stroke="#ECE9E2" strokeWidth={1.5} />
-              <text x={18} y={31} fontSize={14.5} fontWeight={600} fill={C.ink} style={FONT}>{name}</text>
-              <text x={w - 92} y={31} fontSize={14} fontWeight={600} fill={C.ink} style={MONO} textAnchor="end">{amt}</text>
-              <rect x={w - 76} y={12} width={58} height={28} rx={14} fill={C.sun} stroke={C.ink} strokeWidth={2} />
-              <text x={w - 47} y={31} fontSize={13.5} fontWeight={700} fill={C.ink} style={FONT} textAnchor="middle">Pay</text>
+              <text x={18} y={29} fontSize={15} fontWeight={600} fill={C.ink} style={FONT}>{name}</text>
+              <text x={w - 92} y={29} fontSize={14.5} fontWeight={600} fill={C.ink} style={MONO} textAnchor="end">{amt}</text>
+              <rect x={w - 76} y={10} width={58} height={28} rx={14} fill={C.sun} stroke={C.ink} strokeWidth={2} />
+              <text x={w - 47} y={29} fontSize={14} fontWeight={700} fill={C.ink} style={FONT} textAnchor="middle">Pay</text>
             </g>
           ))}
         </g>
@@ -68,67 +68,67 @@ export function HeroArt() {
   const uid = 'hero';
   return (
     <Scene
-      W={548} H={560} MW={340} MH={540}
+      W={548} H={520} MW={340} MH={524}
       tone={C.cobalt}
       className="sb-hero"
       label="Priya, at a laptop with Claude, Codex and Cursor stickers on it, asks her agent to deploy supplier-payments. It answers with a link, harbor--supplier-payments.wirl.run, which opens the app behind a Google sign-in that only people at harbor.co can use."
     >
       {/* Priya, peeking over her laptop. */}
-      <Sticker w={FACE_W} h={FACE_H} d={[82, 26, 1.06, 3]} m={[46, 18, 0.9, 3]} i={0}>
+      <Sticker w={FACE_W} h={FACE_H} d={[76, 14, 1.3, 3]} m={[44, 12, 1.04, 3]} i={0}>
         <Face who="priya" />
       </Sticker>
-      <Sticker w={220} h={128} d={[26, 104, 1, -3]} m={[16, 86, 0.82, -3]} i={0}>
-        <LaptopBack w={220} h={128}>
-          <MarkSticker id="claude" x={24} y={20} size={24} uid={`${uid}-l1`} r={-12} back />
-          <MarkSticker id="codex" x={160} y={18} size={24} uid={`${uid}-l2`} r={10} back />
-          <MarkSticker id="cursor" x={112} y={66} size={24} uid={`${uid}-l3`} r={-6} back />
-          <SnailSticker x={42} y={74} size={17} r={8} border={3} />
+      <Sticker w={250} h={146} d={[16, 100, 1, -3]} m={[8, 88, 0.72, -3]} i={0}>
+        <LaptopBack w={250} h={146}>
+          <MarkSticker id="claude" x={28} y={24} size={26} uid={`${uid}-l1`} r={-12} back />
+          <MarkSticker id="codex" x={186} y={20} size={26} uid={`${uid}-l2`} r={10} back />
+          <MarkSticker id="cursor" x={128} y={76} size={26} uid={`${uid}-l3`} r={-6} back />
+          <SnailSticker x={48} y={86} size={19} r={8} border={3} />
         </LaptopBack>
       </Sticker>
 
       {/* Her message. One line on wide screens, two on a phone. */}
-      <Sticker w={244} h={48} d={[252, 34, 1, -2]} m={false} i={1}>
+      <Sticker w={244} h={48} d={[222, 22, 1, -2]} m={false} i={1}>
         <Bubble w={244} h={48} tail="bl">
           <text x={20} y={30} fontSize={16} fontWeight={600} fill={C.ink} style={FONT}>Deploy supplier-payments</text>
         </Bubble>
       </Sticker>
-      <Sticker w={150} h={64} d={false} m={[178, 18, 1, -2]} i={1}>
-        <Bubble w={150} h={64} tail="bl">
+      <Sticker w={168} h={64} d={false} m={[160, 18, 1, -2]} i={1}>
+        <Bubble w={168} h={64} tail="bl">
           <text x={16} y={27} fontSize={15} fontWeight={600} fill={C.ink} style={FONT}>Deploy</text>
           <text x={16} y={47} fontSize={15} fontWeight={600} fill={C.ink} style={FONT}>supplier-payments</text>
         </Bubble>
       </Sticker>
 
       {/* The agent's answer, with the link slapped half over it. */}
-      <Sticker w={168} h={48} d={[300, 104, 1, 2]} m={[150, 106, 0.92, 2]} i={2}>
-        <Bubble w={168} h={48} tail="br">
-          <text x={18} y={30} fontSize={16} fontWeight={600} fill={C.ink} style={FONT}>Done. It&apos;s live:</text>
-        </Bubble>
-      </Sticker>
-      <Sticker w={36} h={36} pad={8} d={[482, 128, 1, 8]} m={[298, 140, 0.9, 8]} i={2} cut={<circle cx={18} cy={18} r={16} />}>
+      <Sticker w={36} h={36} pad={8} d={[278, 100, 1, -6]} m={[16, 204, 0.95, -6]} i={2} cut={<circle cx={18} cy={18} r={17} />}>
         <circle cx={18} cy={18} r={18} fill={C.white} />
         <MarkSticker id="claude" x={4} y={4} size={28} uid={`${uid}-av`} border={0} />
       </Sticker>
-      <Sticker w={LINK_W} h={40} d={[222, 144, 1, -3]} m={[18, 196, 0.98, -3]} i={3} peel={{ a: 20, mode: 'loop', radius: 10 }}>
+      <Sticker w={200} h={76} d={[324, 96, 1, 2]} m={[60, 198, 0.9, 2]} i={2}>
+        <Bubble w={200} h={76} tail="none">
+          <text x={18} y={31} fontSize={16} fontWeight={600} fill={C.ink} style={FONT}>Done. It&apos;s live:</text>
+        </Bubble>
+      </Sticker>
+      <Sticker w={LINK_W} h={40} d={[224, 146, 1, -3]} m={[18, 244, 0.98, -3]} i={3} peel={{ a: 20, mode: 'loop', radius: 10 }}>
         <LinkTag />
       </Sticker>
 
       {/* The app at that link. */}
-      <Sticker w={WIN_W} h={WIN_H} d={[104, 250, 1, 1.5]} m={[14, 262, 0.86, 1.5]} i={4} hover={false}>
+      <Sticker w={WIN_W} h={WIN_H} d={[80, 250, 1, 1.5]} m={[12, 314, 0.8, 1.5]} i={4} hover={false}>
         <SupplierWindow loop />
       </Sticker>
-      <Sticker w={44} h={54} d={[438, 226, 1.05, 10]} m={[282, 244, 0.9, 10]} i={5}>
+      <Sticker w={44} h={54} d={[444, 228, 1.05, 10]} m={[290, 298, 0.86, 10]} i={5}>
         <Padlock />
       </Sticker>
 
       {/* The pointer rests by the link, then goes and signs in. */}
       <Sticker
         w={22} h={30} pad={9}
-        d={[500, 176, 1, 0]} m={[300, 226, 1, 0]}
+        d={[504, 188, 1, 0]} m={[240, 280, 1, 0]}
         i={5}
         inner="sb-loop-ptr"
         hover={false}
-        style={{ ['--dpdx' as string]: -202, ['--dpdy' as string]: 208, ['--mpdx' as string]: -127, ['--mpdy' as string]: 152 }}
+        style={{ ['--dpdx' as string]: -226, ['--dpdy' as string]: 184, ['--mpdx' as string]: -66, ['--mpdy' as string]: 132 }}
         className="sb-ptr"
       >
         <Pointer />

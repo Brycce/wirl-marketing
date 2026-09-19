@@ -52,6 +52,17 @@ function Headline({ text }: { text: string }) {
   );
 }
 
+/* Hyphenated words (sign-in, Company-only) never break at the hyphen. */
+function Keep({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\S+-\S+)/).map((part, i) =>
+        i % 2 === 1 ? <span key={i} className="whitespace-nowrap">{part}</span> : part
+      )}
+    </>
+  );
+}
+
 /* Text beside the picture, alternating sides; on a phone, text first. */
 function Split({ text, art, flip = false }: { text: ReactNode; art: ReactNode; flip?: boolean }) {
   return (
@@ -103,7 +114,7 @@ export default function ToyboxPage() {
           <Split
             text={
               <>
-                <h2 className="tb-h2">{tb.mess_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.mess_h2} /></h2>
                 <ul className="tb-list" style={{ ['--dot' as string]: K.tomato }}>
                   {tb.mess_bullets.map((b) => <li key={b}>{b}</li>)}
                 </ul>
@@ -120,7 +131,7 @@ export default function ToyboxPage() {
             flip
             text={
               <>
-                <h2 className="tb-h2">{tb.wirl_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.wirl_h2} /></h2>
                 <p className="tb-lede">{tb.wirl_p}</p>
                 <ol className="tb-steps">
                   {tb.steps.map((s, i) => (
@@ -139,7 +150,7 @@ export default function ToyboxPage() {
         {/* Bring your own agent */}
         <section className="wrap tb-agents">
           <div className="tb-agents-text">
-            <h2 className="tb-h2">{tb.agents_h2}</h2>
+            <h2 className="tb-h2"><Keep text={tb.agents_h2} /></h2>
             <p className="tb-lede">{tb.agents_p}</p>
             <a href="#connect" className="tbtn" style={{ marginTop: 28 }}>Connect yours</a>
           </div>
@@ -168,7 +179,7 @@ export default function ToyboxPage() {
           <Split
             text={
               <>
-                <h2 className="tb-h2">{tb.signin_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.signin_h2} /></h2>
                 <p className="tb-lede">{tb.signin_p}</p>
               </>
             }
@@ -181,7 +192,7 @@ export default function ToyboxPage() {
             flip
             text={
               <>
-                <h2 className="tb-h2">{tb.only_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.only_h2} /></h2>
                 <p className="tb-lede">{tb.only_p}</p>
               </>
             }
@@ -193,7 +204,7 @@ export default function ToyboxPage() {
           <Split
             text={
               <>
-                <h2 className="tb-h2">{tb.keys_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.keys_h2} /></h2>
                 <p className="tb-lede">{tb.keys_p}</p>
               </>
             }
@@ -206,14 +217,14 @@ export default function ToyboxPage() {
             flip
             text={
               <>
-                <h2 className="tb-h2">{tb.rollback_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.rollback_h2} /></h2>
                 <p className="tb-lede">{tb.rollback_p}</p>
               </>
             }
             art={
               <div className="tb-rb">
                 <RollbackScene />
-                <div className="tb-logchip"><span className="tb-log-t">09:41</span> <b>wirl</b> rolled supplier-payments back to v3</div>
+                <div className="tb-logchip"><span className="tb-log-t">09:41</span> <b>wirl</b> rolled <span className="tb-nowrap">supplier-payments</span> back to v3</div>
               </div>
             }
           />
@@ -223,7 +234,7 @@ export default function ToyboxPage() {
           <Split
             text={
               <>
-                <h2 className="tb-h2">{tb.share_h2}</h2>
+                <h2 className="tb-h2"><Keep text={tb.share_h2} /></h2>
                 <p className="tb-lede">{tb.share_p}</p>
                 <div className="tb-cmd"><span>$</span> {tb.share_cmd}</div>
                 <p className="tb-lede tb-small"><b>{tb.share_laptop_title}.</b> {tb.share_laptop}</p>
@@ -236,7 +247,7 @@ export default function ToyboxPage() {
         <Slab id="admins" tone="bg-lilac" className="tb-admin-slab">
           <div className="tb-admin-split">
             <div className="text">
-              <h2 className="tb-h2">{tb.admin_h2}</h2>
+              <h2 className="tb-h2"><Keep text={tb.admin_h2} /></h2>
               <p className="tb-lede">{tb.admin_p}</p>
               <ul className="tb-list" style={{ ['--dot' as string]: K.green }}>
                 {tb.admin_bullets.map((b) => <li key={b}>{b}</li>)}
@@ -283,7 +294,7 @@ export default function ToyboxPage() {
             {APPS.slice(0, 4).map((app) => <li key={app.name}><AppStickerArt app={app} /></li>)}
           </ul>
           <div className="tb-cl-card">
-            <h2 className="tb-h2">{tb.closing_h2}</h2>
+            <h2 className="tb-h2"><Keep text={tb.closing_h2} /></h2>
             <p className="tb-lede">{tb.closing_p}</p>
             <Waitlist id="waitlist-email-footer" />
           </div>

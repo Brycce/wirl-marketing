@@ -103,7 +103,7 @@ export default function Connect({ id = 'connect', after }: { id?: string; after:
         ))}
       </div>
       <div className="sb-code p-4 md:p-5">
-        <pre className="sb-mono text-[14.5px] md:text-[15px] leading-relaxed whitespace-pre-wrap break-all">
+        <pre className="sb-mono text-[14.5px] md:text-[15px] leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]">
           <span className="text-[#22A861] select-none">{agent.id === 'codex' || agent.id === 'cursor' || agent.id === 'other' ? '' : '$ '}</span>{agent.snippet}
         </pre>
         <div className="mt-4 flex flex-wrap items-center gap-3">

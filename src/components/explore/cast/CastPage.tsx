@@ -8,6 +8,14 @@ import StickerRow from './StickerRow';
 import Connect from './Connect';
 import Waitlist from './Waitlist';
 import HeroScene from './HeroScene';
+import MessScene from './MessScene';
+import DeployScene from './DeployScene';
+import { SPOTS } from './Spots';
+import ShareScene from './ShareScene';
+import AgentsScene from './AgentsScene';
+import AdminScene from './AdminScene';
+import FaqJonah from './FaqJonah';
+import TeamScene from './TeamScene';
 import { C, Sticker, type StickerKind } from './kit';
 
 const wrap = 'mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8';
@@ -21,10 +29,10 @@ const faqJsonLd = {
 };
 
 /* Text on one side, the scene on the other. On a phone the text comes first. */
-function Split({ text, art, flip = false, cols = '5/7', center = true }: { text: ReactNode; art: ReactNode; flip?: boolean; cols?: '5/7' | '6/6' | '4/8'; center?: boolean }) {
+function Split({ text, art, flip = false, cols = '5/7', center = true, gap = 'gap-10 md:gap-12 lg:gap-16' }: { text: ReactNode; art: ReactNode; flip?: boolean; cols?: '5/7' | '6/6' | '4/8'; center?: boolean; gap?: string }) {
   const [t, a] = cols === '6/6' ? ['md:col-span-6', 'md:col-span-6'] : cols === '4/8' ? ['md:col-span-4', 'md:col-span-8'] : ['md:col-span-5', 'md:col-span-7'];
   return (
-    <div className={`grid md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 ${center ? 'items-center' : 'items-start'}`}>
+    <div className={`grid md:grid-cols-12 ${gap} ${center ? 'items-center' : 'items-start'}`}>
       <div className={`min-w-0 ${t} ${flip ? 'md:order-2' : ''}`}>{text}</div>
       <div className={`min-w-0 ${a} ${flip ? 'md:order-1' : ''}`}>{art}</div>
     </div>
@@ -33,14 +41,6 @@ function Split({ text, art, flip = false, cols = '5/7', center = true }: { text:
 
 function Stage({ children, tone, className = '' }: { children: ReactNode; tone: string; className?: string }) {
   return <div className={`${s.stage} ${className}`} style={{ background: tone }}>{children}</div>;
-}
-
-function Todo({ tone, label, ratio = '520 / 460' }: { tone: string; label: string; ratio?: string }) {
-  return (
-    <Stage tone={tone}>
-      <div className="grid place-items-center text-[#544A5E] font-semibold" style={{ aspectRatio: ratio }}>{label}</div>
-    </Stage>
-  );
 }
 
 // A small die-cut logo sticker for use in text, like the list of agents.
@@ -80,7 +80,7 @@ function Headline({ text }: { text: string }) {
   );
 }
 
-const AGENT_STICKER: StickerKind[] = ['claude', 'codex', 'cursor', 'plus', 'plus'];
+const AGENT_STICKER: StickerKind[] = ['claude', 'codex', 'cursor', 'plus', 'doc'];
 
 export default function CastPage() {
   return (
@@ -99,6 +99,7 @@ export default function CastPage() {
         <Split
           cols="6/6"
           center={false}
+          gap="gap-10 md:gap-10 lg:gap-12"
           text={
             <div className="md:pt-6">
               <h1 className="font-extrabold leading-[1.04] tracking-[-0.035em] text-balance text-[2.4rem] sm:text-[3rem] lg:text-[3.4rem]">
@@ -132,7 +133,7 @@ export default function CastPage() {
               <p className="mt-6 text-[17px] md:text-[18px] leading-relaxed font-semibold max-w-[46ch]">{copy.mess_p}</p>
             </div>
           }
-          art={<Todo tone={C.peach} label="The mess" ratio="560 / 520" />}
+          art={<Stage tone={C.peach}><MessScene /></Stage>}
         />
       </section>
 
@@ -145,7 +146,7 @@ export default function CastPage() {
               <p className={lede}>{copy.wirl_p}</p>
             </div>
           }
-          art={<Todo tone={C.mint} label="Deploy" ratio="560 / 440" />}
+          art={<Stage tone={C.mint}><DeployScene /></Stage>}
         />
       </section>
 
@@ -154,15 +155,18 @@ export default function CastPage() {
         <h2 className={h2}>{copy.rest_h2}</h2>
         <p className={lede}>{copy.rest_lede}</p>
         <div className="mt-10 grid md:grid-cols-2 gap-5 md:gap-6">
-          {copy.rest_cards.map(({ title, body }) => (
-            <div key={title} className={`${s.card} p-3.5 md:p-4 flex items-center gap-4 md:gap-5`}>
-              <div className={`${s.stage} ${s.stageSm} shrink-0 w-[112px] md:w-[184px]`} style={{ background: C.mint, aspectRatio: '184 / 144' }} />
-              <div className="min-w-0">
+          {copy.rest_cards.map(({ title, body }, i) => {
+            const Art = SPOTS[i];
+            return (
+            <div key={title} className={`${s.card} p-4 flex flex-col sm:flex-row sm:items-center gap-4 md:gap-5`}>
+              <div className={`${s.stage} ${s.stageSm} order-2 sm:order-1 w-full sm:shrink-0 sm:w-[190px] lg:w-[224px]`}><Art /></div>
+              <div className="min-w-0 order-1 sm:order-2 px-1 pt-1 sm:p-0">
                 <h3 className="font-extrabold text-[18px] md:text-[19px] leading-tight tracking-[-0.02em]">{title}</h3>
                 <p className="mt-1.5 text-[15.5px] md:text-[16px] leading-snug text-[#544A5E]">{body}</p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -179,7 +183,17 @@ export default function CastPage() {
               </div>
             </div>
           }
-          art={<Todo tone={C.pink} label="Share" ratio="560 / 420" />}
+          art={
+            <>
+              <Stage tone={C.pink} className="hidden sm:block"><ShareScene /></Stage>
+              {/* Phones: the two desks one above the other, so the screens stay readable. */}
+              <Stage tone={C.pink} className="sm:hidden">
+                <ShareScene half="link" />
+                <div className="border-t-[2.5px] border-dashed border-[#2B2233]" />
+                <ShareScene half="code" />
+              </Stage>
+            </>
+          }
         />
       </section>
 
@@ -201,7 +215,7 @@ export default function CastPage() {
               <a href="#connect" className={`${s.btn} mt-8`}>Connect yours</a>
             </div>
           }
-          art={<Todo tone={C.butter} label="Sticker lineup" ratio="560 / 520" />}
+          art={<Stage tone={C.butter}><AgentsScene /></Stage>}
         />
       </section>
 
@@ -227,15 +241,18 @@ export default function CastPage() {
               </ul>
             </div>
           }
-          art={<Todo tone={C.lilac} label="Admin" ratio="760 / 520" />}
+          art={<AdminScene />}
         />
       </section>
 
       {/* FAQ */}
-      <section className={`${wrap} py-14 md:py-20`}>
+      <section className={`${wrap} ${s.faqWrap} py-14 md:py-20`}>
         <div className="grid md:grid-cols-12 gap-8 md:gap-12">
-          <div className="md:col-span-4">
-            <h2 className={h2}>{copy.faq_h2}</h2>
+          <div className="md:col-span-4 flex md:block items-end gap-4">
+            <h2 className={`${h2} flex-1`}>{copy.faq_h2}</h2>
+            <div className="w-[76px] md:w-[210px] shrink-0 md:mt-10 md:ml-2">
+              <FaqJonah />
+            </div>
           </div>
           <div className="md:col-span-8 space-y-4">
             {copy.faq.map(({ q, a }) => (
@@ -254,7 +271,7 @@ export default function CastPage() {
 
       {/* Closing */}
       <section id="waitlist" className={`${wrap} pb-16 pt-6 scroll-mt-8`}>
-        <div className={`${s.card} p-6 md:p-10 lg:p-12`}>
+        <div className={`${s.card} px-4 pt-7 pb-4 sm:p-6 md:p-10 lg:p-12`}>
           <Split
             text={
               <div>
@@ -265,7 +282,7 @@ export default function CastPage() {
                 </div>
               </div>
             }
-            art={<Todo tone={C.sky} label="Team photo" ratio="560 / 440" />}
+            art={<Stage tone={C.sky}><TeamScene /></Stage>}
           />
         </div>
       </section>
