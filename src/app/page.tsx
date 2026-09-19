@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import Wordmark from '@/components/Wordmark';
 import WaitlistForm from '@/components/WaitlistForm';
 import ConnectAgent from '@/components/ConnectAgent';
+import AgentIcons from '@/components/AgentIcons';
 import { HeroScene, MessTiles, WirlScene, ShareScene, AdminTable, RobotIcon } from '@/components/paper/Scenes';
 import { copy } from '@/components/copy';
 
@@ -41,6 +42,27 @@ function Split({ text, art, flip = false }: { text: ReactNode; art: ReactNode; f
   );
 }
 
+/* The hero headline: one line per \n, and [icons] becomes the row of agent
+   logos. The word before the logos stays on their line. */
+function Headline({ text }: { text: string }) {
+  return (
+    <>
+      {text.split('\n').map((line, i) => {
+        const [before, after] = line.split('[icons]');
+        if (after === undefined) return <span key={line} className="block">{i > 0 && ' '}{line}</span>;
+        const words = before.trimEnd().split(' ');
+        const last = words.pop();
+        return (
+          <span key={line} className="block">
+            {i > 0 && ' '}{words.join(' ')}{' '}
+            <span className="whitespace-nowrap">{last}{'\u00a0'}<AgentIcons />{after}</span>
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
 function Panel({ tone, children }: { tone: string; children: ReactNode }) {
   return <div className={`panel grain ${tone}`}>{children}</div>;
 }
@@ -63,7 +85,7 @@ export default function Home() {
           text={
             <div>
               <h1 className="font-display font-bold leading-[1.06] tracking-[-0.035em] text-balance text-[2.4rem] sm:text-[3rem] lg:text-[3.4rem]">
-                {copy.hero_h1}
+                <Headline text={copy.hero_h1} />
               </h1>
               <p className="mt-6 text-[17px] md:text-[18px] leading-relaxed text-ink/85 max-w-[46ch]">{copy.hero_p}</p>
               {copy.hero_tag && <p className="mt-3 text-[15px] text-dim">{copy.hero_tag}</p>}

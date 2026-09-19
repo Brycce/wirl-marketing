@@ -29,8 +29,8 @@ export type Copy = {
 
 export const copy: Copy = {
   nav_cta: 'Connect your agent',
-  hero_h1: 'Deploy internal tools behind your company login.',
-  hero_p: 'Wirl hosts the internal tools your team builds. Deploy from Claude Code, Codex, or Cursor, and the app is live at a link only people at your company can open, with the Google account they already have.',
+  hero_h1: 'Build internal tools with [icons].\nDeploy them behind your company login.',
+  hero_p: 'Tell your agent to deploy. Wirl hosts the app at a link only people at your company can open, with the Google account they already have.',
   hero_tag: '',
   connect_after: 'Install once, then ask the agent to deploy. The first time, approve it in the browser. No agent yet? Join the waitlist.',
   mess_h2: 'Right now, internal tools live wherever they can.',
