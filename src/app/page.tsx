@@ -51,7 +51,7 @@ export default function Home() {
       <nav className={`${wrap} flex items-center justify-between py-5`}>
         <Link href="/" className="text-ink"><Wordmark /></Link>
         <div className="flex items-center gap-5 text-[15px] font-medium">
-          <Link href="/docs" className="hidden sm:inline text-dim hover:text-ink">Docs</Link>
+          <a href="https://docs.wirl.dev" className="hidden sm:inline text-dim hover:text-ink">Docs</a>
           <a href="https://app.wirl.dev/login" className="hidden sm:inline text-dim hover:text-ink">Log in</a>
           <a href="#connect" className="btn"><span className="sm:hidden">Connect</span><span className="hidden sm:inline">{copy.nav_cta}</span></a>
         </div>
@@ -207,7 +207,7 @@ export default function Home() {
       <footer className={`${wrap} py-10 flex items-center justify-between text-[14px] text-dim`}>
         <span className="text-ink"><Wordmark size={22} /></span>
         <div className="flex gap-6">
-          <Link href="/docs" className="hover:text-ink">Docs</Link>
+          <a href="https://docs.wirl.dev" className="hover:text-ink">Docs</a>
           <a href="#waitlist" className="hover:text-ink">Waitlist</a>
           <span>© 2026 Wirl</span>
         </div>
