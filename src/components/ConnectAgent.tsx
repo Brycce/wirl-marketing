@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { AgentMark } from './AgentIcons';
 
 // Getting started is connecting your coding agent to Wirl's MCP server.
 // One block, one tab per agent, one copy button. These are today's stdio
@@ -67,6 +68,7 @@ export default function ConnectAgent({ id = 'connect', after }: { id?: string; a
             onClick={() => { setActive(a.id); setCopied(false); }}
             className={`chip ${a.id === active ? 'chip-on' : 'hover:bg-sand'}`}
           >
+            <AgentMark id={a.id} className="chip-mark" />
             {a.label}
           </button>
         ))}

@@ -47,11 +47,12 @@ body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 
 .chip {
   display: inline-flex; align-items: center; border-radius: 999px; background: #FCF8F0; color: #1F2A1F;
-  padding: .5rem .85rem; font-size: 14px; font-weight: 600; line-height: 1;
+  padding: .5rem .75rem; font-size: 14px; font-weight: 600; line-height: 1;
   box-shadow: 0 1px 0 rgba(31,42,31,.06), 0 6px 12px -8px rgba(31,42,31,.4);
   transition: background .12s ease, color .12s ease;
 }
 .chip-on { background: #1F2A1F; color: #FBF7EE; }
+.chip-mark { width: 15px; height: 15px; margin: -2px 7px -2px -2px; flex: none; }
 
 .input { background: #fff; border: 1.5px solid #D8D0BC; border-radius: 12px; }
 .input:focus { outline: none; border-color: #1F2A1F; box-shadow: 0 0 0 3px rgba(47,125,79,.22); }

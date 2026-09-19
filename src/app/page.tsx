@@ -55,7 +55,7 @@ function Headline({ text }: { text: string }) {
         return (
           <span key={line} className="block">
             {i > 0 && ' '}{words.join(' ')}{' '}
-            <span className="whitespace-nowrap">{last}{'\u00a0'}<AgentIcons />{after}</span>
+            <span className="whitespace-nowrap">{last}{'\u00a0'}<AgentIcons />{after || <span className="sr-only">.</span>}</span>
           </span>
         );
       })}
