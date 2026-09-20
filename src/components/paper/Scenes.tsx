@@ -139,15 +139,15 @@ const rows: [string, string, string, string, string][] = [
 
 const log = [
   ['09:41', 'wirl rolled supplier-payments back to v3 · 5 failures in 12 min'],
-  ['09:12', 'priya@harbor.co set the Stripe key for supplier-payments · browser to vault'],
-  ['08:58', 'sam@harbor.co was refused at incident-handover'],
+  ['09:12', 'priya@acme.co set the Stripe key for supplier-payments · browser to vault'],
+  ['08:58', 'sam@acme.co was refused at incident-handover'],
 ];
 
 export function AdminTable() {
   return (
     <div className="paper p-5 md:p-6 text-left">
       <div className="flex items-center justify-between text-[13px]">
-        <span className="font-semibold">harbor.co</span>
+        <span className="font-semibold">acme.co</span>
         <span className="text-dim">5 apps · 3 admins</span>
       </div>
       <div className="mt-4 overflow-x-auto">

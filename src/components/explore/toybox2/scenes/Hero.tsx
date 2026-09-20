@@ -2,10 +2,10 @@
 // chat says "deploy", a browser is open at the company link, and a sticker
 // on it says company only. That is the headline, drawn.
 
-import { K, Win, Term, LinkBar, Btn, Avatar, Harbor, NamedCursor, RoundSticker, CastShadow, textW } from '../kit';
+import { K, Win, Term, LinkBar, Btn, Avatar, Acme, NamedCursor, RoundSticker, CastShadow, textW } from '../kit';
 import { LogoSticker } from '../marks';
 
-const LINK = 'harbor--supplier-payments.wirl.run';
+const LINK = 'acme--supplier-payments.wirl.run';
 
 function Row({ y, name, amount, paid }: { y: number; name: string; amount: string; paid?: boolean }) {
   return (
@@ -40,18 +40,18 @@ function Browser() {
         {/* The tab */}
         <path d="M214 90 V60 A10 10 0 0 1 224 50 H414 A10 10 0 0 1 424 60 V90 Z" fill={K.paper} />
         <path d="M214 86 V60 A10 10 0 0 1 224 50 H414 A10 10 0 0 1 424 60 V86" fill="none" stroke={K.ink} strokeWidth={2.5} />
-        <Harbor x={235} y={68} r={10} />
+        <Acme x={235} y={68} r={10} />
         <text x={252} y={74} fontSize={16} fill={K.ink}>supplier-payments</text>
         <path d="M404 64 l8 8 M412 64 l-8 8" stroke={K.ink} strokeWidth={2} opacity={0.5} />
         {/* The link */}
         <LinkBar x={162} y={94} w={406} h={30} text={LINK} size={15} />
         <path d="M150 132 H580" stroke={K.ink} strokeWidth={2.5} />
         {/* The page */}
-        <Harbor x={180} y={162} r={14} />
+        <Acme x={180} y={162} r={14} />
         <text x={203} y={169} fontSize={20} fontWeight={800} fill={K.ink}>Supplier payments</text>
         <rect x={398} y={148} width={170} height={30} rx={15} fill={K.pinkWash} stroke={K.ink} strokeWidth={2} />
         <Avatar who="priya" x={414} y={163} r={11} />
-        <text x={431} y={168.5} fontSize={15} fill={K.ink} fontWeight={600}>priya@harbor.co</text>
+        <text x={431} y={168.5} fontSize={15} fill={K.ink} fontWeight={600}>priya@acme.co</text>
         <Row y={186} name="Northwind Freight" amount="$4,200" paid />
         <Row y={226} name="Kelp & Co" amount="$1,180" />
         <Row y={266} name="Pier 9 Ropes" amount="$640" />
@@ -80,7 +80,7 @@ function Chat({ v }: { v: string }) {
           <text x={58} y={421} fontSize={16} fill={K.termText} fontWeight={600}>Live at</text>
           <text className="mono" x={58} y={447} fontSize={15} fill="#A9CCFF">{LINK}</text>
           <path d={`M58 452 H${58 + textW(LINK, 15, true)}`} stroke="#A9CCFF" strokeWidth={1.6} />
-          <text x={58} y={477} fontSize={16} fill={K.termText} fontWeight={600}>Only people at harbor.co can open it.</text>
+          <text x={58} y={477} fontSize={16} fill={K.termText} fontWeight={600}>Only people at acme.co can open it.</text>
         </g>
       </Term>
       <LogoSticker agent="claude" x={98} y={335} size={24} uid={`hero-chat-${v}`} />
@@ -121,8 +121,8 @@ function CompanyOnly({ v, x, y }: { v: string; x: number; y: number }) {
   );
 }
 
-const LABEL = 'An agent chat says deploy supplier-payments; the app opens in a browser at harbor--supplier-payments.wirl.run with a Company only sticker on it.';
-const LABEL_PHONE = 'An agent chat says deploy supplier-payments and replies with the link harbor--supplier-payments.wirl.run, and only people at harbor.co can open it; the app is open in a browser above.';
+const LABEL = 'An agent chat says deploy supplier-payments; the app opens in a browser at acme--supplier-payments.wirl.run with a Company only sticker on it.';
+const LABEL_PHONE = 'An agent chat says deploy supplier-payments and replies with the link acme--supplier-payments.wirl.run, and only people at acme.co can open it; the app is open in a browser above.';
 
 /* Wide: the browser back right, the chat overlapping its lower left, and the
    sticker alone in the pocket to the window's left. No loose sparkles: the

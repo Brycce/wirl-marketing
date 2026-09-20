@@ -1,7 +1,7 @@
 // Admins: the one screen. Built as HTML with the cartoon styling so the text
 // stays crisp and the table reflows, with SVG faces and logo stickers inside.
 
-import { K, Avatar, Harbor, type Who, PEOPLE } from '../kit';
+import { K, Avatar, Acme, type Who, PEOPLE } from '../kit';
 import { LogoStickerArt } from '../marks';
 
 type Row = {
@@ -56,11 +56,11 @@ const AGENT_LABEL: Record<Row['agent'], string> = { claude: 'Claude Code', curso
 
 export function AdminTable() {
   return (
-    <div className="tb-admin" role="img" aria-label="The admin screen for harbor.co: every internal app, who built it and with which agent, what it connects to, who can open it, and when it was last used.">
+    <div className="tb-admin" role="img" aria-label="The admin screen for acme.co: every internal app, who built it and with which agent, what it connects to, who can open it, and when it was last used.">
       <div className="tb-admin-bar" aria-hidden="true">
         <span className="tb-dots"><i /><i /><i /></span>
-        <svg viewBox="-13 -13 26 26" width={26} height={26}><Harbor x={0} y={0} r={12} /></svg>
-        <b>harbor.co</b><span className="tb-admin-sep">·</span><span>Internal apps</span>
+        <svg viewBox="-13 -13 26 26" width={26} height={26}><Acme x={0} y={0} r={12} /></svg>
+        <b>acme.co</b><span className="tb-admin-sep">·</span><span>Internal apps</span>
         <span className="tb-admin-count">7 apps</span>
       </div>
       <table className="tb-admin-table" aria-hidden="true">
@@ -119,9 +119,9 @@ export function AdminTable() {
 
 const LOG = [
   ['09:41', 'wirl', 'rolled supplier-payments back to v3'],
-  ['09:12', 'priya@harbor.co', 'set the Stripe key · browser to vault'],
+  ['09:12', 'priya@acme.co', 'set the Stripe key · browser to vault'],
   ['09:02', 'supplier-payments', '→ api.stripe.com · 14 calls'],
-  ['08:58', 'sam@harbor.co', 'was refused at candidate-pipeline'],
+  ['08:58', 'sam@acme.co', 'was refused at candidate-pipeline'],
 ];
 
 export function LogCard() {

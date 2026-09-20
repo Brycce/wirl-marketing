@@ -5,16 +5,16 @@
 // link being handed over. Nothing inside a picture is below 17 units in a
 // 560-wide box, which is about 11px when the picture is the width of a phone.
 
-import { K, Win, Term, LinkBar, Btn, Hand, Avatar, AvatarStack, Harbor, GoogleG, Globe, Padlock, CheckBadge, DieCut,
+import { K, Win, Term, LinkBar, Btn, Hand, Avatar, AvatarStack, Acme, GoogleG, Globe, Padlock, CheckBadge, DieCut,
   RoundSticker, NamedCursor, Stamp, CastShadow, MiniLock, Arrow } from '../kit';
 
-const LINK = 'harbor--supplier-payments.wirl.run';
+const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
 
 /* ---------- Sign-in: the Google account chooser, cropped close ---------- */
 function AccountRow({ y, who, flash }: { y: number; who: 'priya' | 'tom'; flash?: boolean }) {
   const name = who === 'priya' ? 'Priya Nair' : 'Tom Abara';
-  const email = `${who}@harbor.co`;
+  const email = `${who}@acme.co`;
   return (
     <g>
       {flash && <rect className="tb-si-flash" x={34} y={y} width={388} height={72} rx={14} fill={K.blueWash} stroke={K.blue} strokeWidth={2.5} />}
@@ -32,7 +32,7 @@ function AccountRow({ y, who, flash }: { y: number; who: 'priya' | 'tom'; flash?
    are signing in to.) */
 export function SigninScene() {
   return (
-    <svg viewBox="0 0 560 400" className="tb-art" role="img" aria-label="A Google account chooser: Choose an account to continue to supplier-payments, with Priya Nair and Tom Abara at harbor.co. A hand taps Priya's row. A No invites sticker sits on the edge of the card." strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 560 400" className="tb-art" role="img" aria-label="A Google account chooser: Choose an account to continue to supplier-payments, with Priya Nair and Tom Abara at acme.co. A hand taps Priya's row. A No invites sticker sits on the edge of the card." strokeLinecap="round" strokeLinejoin="round">
       {/* The chooser, close up */}
       <CastShadow x={18} y={22} w={420} h={358} r={20} dx={14} dy={16} />
       <Win x={18} y={22} w={420} h={358} r={20} barH={46} bar={K.paper} dots={false}>
@@ -72,17 +72,17 @@ export function SigninScene() {
 /* ---------- Company-only: the setting in front of the locked door ---------- */
 export function OnlyScene() {
   return (
-    <svg viewBox="0 0 560 418" className="tb-art" role="img" aria-label="A setting titled Who can open supplier-payments, set to Everyone at harbor.co, with Only these people and Anyone with the link as the other choices. Behind it, what someone outside Harbor, alex@gmail.com, sees at the same link: a big padlock and Only people at harbor.co can open this." strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 560 418" className="tb-art" role="img" aria-label="A setting titled Who can open supplier-payments, set to Everyone at acme.co, with Only these people and Anyone with the link as the other choices. Behind it, what someone outside Acme, alex@gmail.com, sees at the same link: a big padlock and Only people at acme.co can open this." strokeLinecap="round" strokeLinejoin="round">
       {/* The outsider's view. Everything in it sits right of the card in front. */}
       <CastShadow x={158} y={10} w={396} h={254} dx={12} dy={14} />
       <Win x={158} y={10} w={396} h={254} bar={K.edge} barH={40} dots={false}>
         <LinkBar x={168} y={16} w={376} h={30} text={LINK} size={16.6} />
         <Padlock x={406} y={48} s={1} shackleClass="tb-rattle" />
         <text x={436} y={196} fontSize={17.5} fontWeight={800} fill={K.ink} textAnchor="middle">Only people</text>
-        <text x={436} y={218} fontSize={17.5} fontWeight={800} fill={K.ink} textAnchor="middle">at harbor.co</text>
+        <text x={436} y={218} fontSize={17.5} fontWeight={800} fill={K.ink} textAnchor="middle">at acme.co</text>
         <text x={436} y={240} fontSize={17.5} fontWeight={800} fill={K.ink} textAnchor="middle">can open this.</text>
       </Win>
-      {/* Someone outside Harbor, trying the door */}
+      {/* Someone outside Acme, trying the door */}
       <g className="tb-knock">
         <Arrow x={398} y={96} color="#B07CE8" rot={-14} />
         <rect x={402} y={140} width={150} height={28} rx={14} fill="#B07CE8" stroke={K.ink} strokeWidth={2.2} />
@@ -94,7 +94,7 @@ export function OnlyScene() {
         <rect x={14} y={140} width={330} height={270} rx={20} fill={K.paper} stroke={K.ink} strokeWidth={3} />
         <text x={38} y={170} fontSize={20} fontWeight={800} fill={K.ink}>Who can open</text>
         <text x={38} y={194} fontSize={20} fontWeight={800} fill={K.ink}>supplier-payments?</text>
-        {/* Everyone at harbor.co (selected). The three rows finish 12 above the
+        {/* Everyone at acme.co (selected). The three rows finish 12 above the
             card's own bottom edge, so the last one is not flush with it. */}
         <rect x={30} y={200} width={298} height={74} rx={16} fill={K.greenEdge} stroke={K.ink} strokeWidth={2.5} transform="translate(0 4)" />
         <rect x={30} y={200} width={298} height={74} rx={16} fill={K.green} stroke={K.ink} strokeWidth={2.5} />
@@ -102,7 +102,7 @@ export function OnlyScene() {
           <circle cx={56} cy={224} r={13} fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
           <path d="M50 224.5 l4 4 l7.2 -7.8" fill="none" stroke={K.green} strokeWidth={3.2} />
         </g>
-        <text x={80} y={231} fontSize={18} fontWeight={800} fill={K.paper}>Everyone at harbor.co</text>
+        <text x={80} y={231} fontSize={18} fontWeight={800} fill={K.paper}>Everyone at acme.co</text>
         <AvatarStack x={90} y={254} r={11} who={['mia', 'sam', 'lena']} />
         <text x={136} y={260} fontSize={17} fontWeight={800} fill={K.paper}>+209</text>
         {/* Only these people */}
@@ -186,7 +186,7 @@ function AppWin({ x, y, v, broken }: { x: number; y: number; v: string; broken?:
     <Win x={x} y={y} w={236} h={200} bar={K.green} barH={40}>
       <rect x={x + 164} y={y + 8} width={58} height={24} rx={12} fill={K.paper} stroke={K.ink} strokeWidth={2} />
       <text className="mono" x={x + 193} y={y + 26} fontSize={18} fontWeight={800} fill={K.ink} textAnchor="middle">{v}</text>
-      <Harbor x={x + 26} y={y + 64} r={11} />
+      <Acme x={x + 26} y={y + 64} r={11} />
       <text x={x + 44} y={y + 71} fontSize={17} fontWeight={800} fill={K.ink}>Supplier payments</text>
       {[0, 1, 2].map((i) => (
         <g key={i}>
@@ -290,7 +290,7 @@ export function ShareScene() {
           <Win x={344} y={258} w={200} h={134} bar={K.green} barH={34}>
             <rect x={490} y={265} width={44} height={22} rx={11} fill={K.paper} stroke={K.ink} strokeWidth={2} />
             <text className="mono" x={512} y={282} fontSize={17} fontWeight={800} fill={K.ink} textAnchor="middle">v5</text>
-            <Harbor x={364} y={312} r={11} />
+            <Acme x={364} y={312} r={11} />
             <text x={382} y={319} fontSize={17} fontWeight={800} fill={K.ink}>Supplier payments</text>
             <Btn x={362} y={338} w={164} h={38} label="Export CSV" size={17.5} fill={K.sun} edge={K.sunEdge} color={K.ink} />
           </Win>

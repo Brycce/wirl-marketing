@@ -1,10 +1,10 @@
-// Small sticker sets: Harbor's seven apps for the closing slab, and the row of
+// Small sticker sets: Acme's seven apps for the closing slab, and the row of
 // round badges that previews the built-in features.
 
 import type { ReactNode } from 'react';
 import { K, DieCut, Avatar, Padlock } from '../kit';
 
-/* ---------- Harbor's apps, each a little window sticker behind the lock ---------- */
+/* ---------- Acme's apps, each a little window sticker behind the lock ---------- */
 /* lockLeft: in the closing slab's wide pile each tile is dealt down and to one
    side, so the tile below covers whichever bottom corner it lands on. The two
    tiles whose neighbour lands bottom-right wear their lock bottom-left, so no

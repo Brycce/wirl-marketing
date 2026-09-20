@@ -238,15 +238,15 @@ export function Sparkle({ x, y, r = 12, className, fill = K.sun }: { x: number; 
   );
 }
 
-/* Harbor's logo: a white anchor in a blue circle. On every Harbor screen. */
-export function Harbor({ x, y, r = 12 }: { x: number; y: number; r?: number }) {
+/* Acme's logo: a white A in a blue circle. On every Acme screen. */
+export function Acme({ x, y, r = 12 }: { x: number; y: number; r?: number }) {
   const s = r / 12;
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
       <circle r={12} fill={K.blue} stroke={K.ink} strokeWidth={2.2 / s} />
-      <g fill="none" stroke={K.paper} strokeWidth={1.9} strokeLinecap="round">
-        <circle cx={0} cy={-5.6} r={1.9} />
-        <path d="M0 -3.7 V7.2 M-3.6 -1.2 H3.6 M-6.2 2.6 Q-5.2 7.4 0 7.4 Q5.2 7.4 6.2 2.6" />
+      <g fill="none" stroke={K.paper} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M-5.1 6.3 L0 -6.3 L5.1 6.3" />
+        <path d="M-2.6 1.1 H2.6" />
       </g>
     </g>
   );
@@ -273,15 +273,15 @@ export function GoogleG({ x, y, r = 9 }: { x: number; y: number; r?: number }) {
 }
 
 /* ---------- People ----------
-   Harbor's cast, the way software shows people: round avatar faces and
+   Acme's cast, the way software shows people: round avatar faces and
    named multiplayer cursors. */
 export type Who = 'priya' | 'tom' | 'lena' | 'sam' | 'mia';
 export const PEOPLE: Record<Who, { name: string; email: string; skin: string; hair: string; top: string; bg: string; color: string; colorEdge: string; tagText: string }> = {
-  priya: { name: 'Priya Nair', email: 'priya@harbor.co', skin: K.skin[1], hair: '#1E1A1C', top: K.pink, bg: '#FFD6E5', color: K.pink, colorEdge: K.pinkEdge, tagText: K.ink },
-  tom: { name: 'Tom Abara', email: 'tom@harbor.co', skin: K.skin[2], hair: '#2B1D16', top: K.blue, bg: '#C9D8FF', color: K.blue, colorEdge: K.blueEdge, tagText: K.paper },
-  lena: { name: 'Lena K.', email: 'lena@harbor.co', skin: K.skin[0], hair: '#BDB6AE', top: K.green, bg: '#FFE9A8', color: K.green, colorEdge: K.greenEdge, tagText: K.paper },
-  sam: { name: 'Sam O.', email: 'sam@harbor.co', skin: K.skin[1], hair: '#3A2A20', top: '#FF9A76', bg: '#C4EED3', color: K.coral, colorEdge: '#D9714D', tagText: K.ink },
-  mia: { name: 'Mia R.', email: 'mia@harbor.co', skin: K.skin[0], hair: '#7A4A2A', top: '#8E7CF0', bg: '#E4DCFF', color: '#8E7CF0', colorEdge: '#6A58C8', tagText: K.paper },
+  priya: { name: 'Priya Nair', email: 'priya@acme.co', skin: K.skin[1], hair: '#1E1A1C', top: K.pink, bg: '#FFD6E5', color: K.pink, colorEdge: K.pinkEdge, tagText: K.ink },
+  tom: { name: 'Tom Abara', email: 'tom@acme.co', skin: K.skin[2], hair: '#2B1D16', top: K.blue, bg: '#C9D8FF', color: K.blue, colorEdge: K.blueEdge, tagText: K.paper },
+  lena: { name: 'Lena K.', email: 'lena@acme.co', skin: K.skin[0], hair: '#BDB6AE', top: K.green, bg: '#FFE9A8', color: K.green, colorEdge: K.greenEdge, tagText: K.paper },
+  sam: { name: 'Sam O.', email: 'sam@acme.co', skin: K.skin[1], hair: '#3A2A20', top: '#FF9A76', bg: '#C4EED3', color: K.coral, colorEdge: '#D9714D', tagText: K.ink },
+  mia: { name: 'Mia R.', email: 'mia@acme.co', skin: K.skin[0], hair: '#7A4A2A', top: '#8E7CF0', bg: '#E4DCFF', color: '#8E7CF0', colorEdge: '#6A58C8', tagText: K.paper },
 };
 
 function Hair({ who, back }: { who: Who; back: boolean }) {
