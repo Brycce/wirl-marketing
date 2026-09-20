@@ -103,7 +103,10 @@ export function AdminTable() {
             </tr>
           ))}
           <tr className="tb-more">
-            <td colSpan={5}>+ 2 more: <span className="tb-app">customer-credits</span>, <span className="tb-app">spend-requests</span></td>
+            <td colSpan={5}>
+              <span className="tb-more-wide">+ 2 more: <span className="tb-app">customer-credits</span>, <span className="tb-app">spend-requests</span></span>
+              <span className="tb-more-phone">+ 4 more, including <span className="tb-app">customer-credits</span></span>
+            </td>
           </tr>
         </tbody>
       </table>

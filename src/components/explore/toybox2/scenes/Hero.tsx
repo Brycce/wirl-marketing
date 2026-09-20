@@ -45,7 +45,6 @@ function Browser() {
         <path d="M404 64 l8 8 M412 64 l-8 8" stroke={K.ink} strokeWidth={2} opacity={0.5} />
         {/* The link */}
         <LinkBar x={162} y={94} w={406} h={30} text={LINK} size={15} />
-        <rect className="tb-h-linkcover" x={193} y={97} width={316} height={24} fill={K.wash} />
         <path d="M150 132 H580" stroke={K.ink} strokeWidth={2.5} />
         {/* The page */}
         <Harbor x={180} y={162} r={14} />
@@ -53,20 +52,21 @@ function Browser() {
         <rect x={398} y={148} width={170} height={30} rx={15} fill={K.pinkWash} stroke={K.ink} strokeWidth={2} />
         <Avatar who="priya" x={414} y={163} r={11} />
         <text x={431} y={168.5} fontSize={15} fill={K.ink} fontWeight={600}>priya@harbor.co</text>
-        <Row y={186} name="Northwind Freight" amount="£4,200" paid />
-        <Row y={226} name="Kelp & Co" amount="£1,180" />
-        <Row y={266} name="Pier 9 Ropes" amount="£640" />
+        <Row y={186} name="Northwind Freight" amount="$4,200" paid />
+        <Row y={226} name="Kelp & Co" amount="$1,180" />
+        <Row y={266} name="Pier 9 Ropes" amount="$640" />
         <Btn x={466} y={312} w={100} h={34} label="Pay" size={17} faceClass="tb-h-pay" />
       </Win>
     </g>
   );
 }
 
-/* The agent's chat: "deploy", and the reply with the link. */
+/* The agent's chat: "deploy", and the reply with the link. The whole exchange
+   is drawn from the first frame; only the caret after the command blinks. */
 function Chat({ v }: { v: string }) {
   const x = 20;
   const y = 316;
-  const promptW = textW('you › ', 16, true);
+  const cmdW = textW('you › deploy supplier-payments', 16, true);
   return (
     <g>
       <Term x={x} y={y} w={384} h={196} barH={38}>
@@ -74,8 +74,8 @@ function Chat({ v }: { v: string }) {
         <text className="mono" x={40} y={384} fontSize={16} fill={K.termText}>
           <tspan fill={K.sun}>you ›</tspan> deploy supplier-payments
         </text>
-        <rect className="tb-h-typecover" x={40 + promptW - 2} y={368} width={24 * 9.6 + 8} height={22} fill={K.term} />
-        <g className="tb-h-reply">
+        <rect className="tb-h-caret" x={40 + cmdW + 3} y={370} width={9} height={18} fill={K.sun} />
+        <g>
           <circle cx={45} cy={415} r={4.5} fill="#D97757" />
           <text x={58} y={421} fontSize={16} fill={K.termText} fontWeight={600}>Live at</text>
           <text className="mono" x={58} y={447} fontSize={15} fill="#A9CCFF">{LINK}</text>
@@ -92,11 +92,6 @@ function Chat({ v }: { v: string }) {
 function CompanyOnly({ v }: { v: string }) {
   return (
     <g>
-      <g className="tb-h-ticks" stroke={K.ink} strokeWidth={3}>
-        <path d="M470 30 L456 20" />
-        <path d="M464 66 L447 66" />
-        <path d="M474 102 L461 113" />
-      </g>
       <RoundSticker
         x={538}
         y={64}

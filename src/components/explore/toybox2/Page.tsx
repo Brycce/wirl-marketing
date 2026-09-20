@@ -2,6 +2,12 @@
 // outlines, bold flat colour, a toy edge under everything, and die-cut
 // stickers and rubber stamps slapped on top. Every picture is a thing that
 // really exists in Wirl, just bigger and more fun.
+//
+// Setup is told twice at most: the connect block in the hero, then one
+// section that carries the three steps and the any-MCP-agent point. The
+// badge row under it is an index into the bands below, not a second telling.
+// Band colours run coral, sky, pink, lilac, ink, coral, mint, sky, sun:
+// warm, cool, warm, cool, dark in the middle, then back out to the sun.
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -15,7 +21,7 @@ import Connect from './Connect';
 import Waitlist from './Waitlist';
 import HeroScene from './scenes/Hero';
 import MessStickers from './scenes/Mess';
-import StepsScene from './scenes/Steps';
+import SetupScene from './scenes/Setup';
 import AgentSheet from './scenes/Agents';
 import { SigninScene, OnlyScene, KeysScene, RollbackScene, ShareScene } from './scenes/Features';
 import { AdminTable, LogCard } from './scenes/Admin';
@@ -44,7 +50,7 @@ function Headline({ text }: { text: string }) {
         return (
           <span key={line} className="block">
             {i > 0 && ' '}{words.join(' ')}{' '}
-            <span className="whitespace-nowrap">{last}{' '}<HeadlineStickers />{after || <span className="sr-only">.</span>}</span>
+            <span className="whitespace-nowrap">{last}{' '}<HeadlineStickers />{after || <span className="sr-only">.</span>}</span>
           </span>
         );
       })}
@@ -125,8 +131,8 @@ export default function ToyboxPage() {
           />
         </Slab>
 
-        {/* Point the agent at Wirl */}
-        <Slab tone="bg-mint">
+        {/* Setup, told once: the three steps, and any agent that speaks MCP */}
+        <Slab tone="bg-sky">
           <Split
             flip
             text={
@@ -143,25 +149,23 @@ export default function ToyboxPage() {
                 </ol>
               </>
             }
-            art={<StepsScene />}
+            art={<SetupScene />}
           />
+          <div className="tb-byo">
+            <div className="tb-byo-text">
+              <h3 className="tb-h3"><Keep text={tb.agents_h2} /></h3>
+              <p className="tb-byo-p">{tb.agents_p}</p>
+              <a href="#connect" className="tbtn tbtn-sm">Connect yours</a>
+            </div>
+            <AgentSheet notes={tb.agent_notes} slim />
+          </div>
         </Slab>
 
-        {/* Bring your own agent */}
-        <section className="wrap tb-agents">
-          <div className="tb-agents-text">
-            <h2 className="tb-h2"><Keep text={tb.agents_h2} /></h2>
-            <p className="tb-lede">{tb.agents_p}</p>
-            <a href="#connect" className="tbtn" style={{ marginTop: 28 }}>Connect yours</a>
-          </div>
-          <AgentSheet notes={tb.agent_notes} />
-        </section>
-
-        {/* What you don't have to build */}
-        <section className="wrap tb-intro">
-          <div>
-            <h2 className="tb-h2 tb-h2-xl">{tb.builtin_h2}</h2>
-            <p className="tb-lede">{tb.builtin_p}</p>
+        {/* What you don't have to build: an index into the bands below */}
+        <section className="wrap tb-index">
+          <div className="tb-index-head">
+            <h2 className="tb-h2">{tb.builtin_h2}</h2>
+            <p className="tb-index-p">{tb.builtin_p}</p>
           </div>
           <ul className="tb-badges">
             {FEATURE_BADGES.map((b) => (
@@ -175,7 +179,7 @@ export default function ToyboxPage() {
           </ul>
         </section>
 
-        <Slab id="signin" tone="bg-sky">
+        <Slab id="signin" tone="bg-pink">
           <Split
             text={
               <>
@@ -244,7 +248,7 @@ export default function ToyboxPage() {
           />
         </Slab>
 
-        <Slab id="admins" tone="bg-lilac" className="tb-admin-slab">
+        <Slab id="admins" tone="bg-sky" className="tb-admin-slab">
           <div className="tb-admin-split">
             <div className="text">
               <h2 className="tb-h2"><Keep text={tb.admin_h2} /></h2>

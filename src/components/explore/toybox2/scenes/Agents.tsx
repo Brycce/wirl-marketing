@@ -89,8 +89,11 @@ function SkillCell() {
             <path d={d} fill={SHEET} stroke={SHEET} strokeWidth={3.6} />
             <path d={d} fill={K.paper} stroke={K.ink} strokeWidth={1} />
             <path d="M15.5 1.5 V7 H21" fill={K.edge} stroke={K.ink} strokeWidth={1} />
+            {/* The highlighted filename, drawn as a bar rather than lettering: this
+                sticker renders 34px wide on a phone, where any real word would be a
+                3px smudge. The row's own text already says it writes a skill file. */}
             <rect x={2.6} y={10.2} width={19.8} height={5.6} rx={1.4} fill={K.sun} stroke={K.ink} strokeWidth={0.8} />
-            <text className="mono" x={12.5} y={14.2} fontSize={3.3} fontWeight={800} fill={K.ink} textAnchor="middle">SKILL.md</text>
+            <rect x={5} y={12.1} width={15} height={1.8} rx={0.9} fill={K.ink} opacity={0.5} />
             <path d="M6.5 18.4 H16 M6.5 20.4 H12.5" stroke={K.edge} strokeWidth={1} />
           </g>
         </g>
@@ -112,10 +115,10 @@ function EmptySlot() {
   );
 }
 
-export default function AgentSheet({ notes }: { notes: readonly { name: string; note: string }[] }) {
+export default function AgentSheet({ notes, slim = false }: { notes: readonly { name: string; note: string }[]; slim?: boolean }) {
   const cells = [<LogoCell key="c" id="claude" />, <LogoCell key="x" id="codex" />, <LogoCell key="u" id="cursor" />, <PlusCell key="p" />, <SkillCell key="s" />];
   return (
-    <div className="tb-sheet">
+    <div className={`tb-sheet${slim ? ' tb-sheet-slim' : ''}`}>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <defs>
           <filter id="tb-sheet-shadow" x="-30%" y="-30%" width="160%" height="170%" colorInterpolationFilters="sRGB">

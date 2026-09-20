@@ -1,6 +1,6 @@
 // Toybox copy. The approved words from components/copy.ts, regrouped for this
-// section plan: each Wirl bullet gets its own slab and picture, and the
-// built-in cards are folded into those slabs, so nothing approved is lost.
+// section plan. Setup is told once: the connect block in the hero, then one
+// section that carries the three steps and the fact that any MCP agent works.
 // The few new lines are plain and true.
 
 import { copy } from '@/components/copy';
@@ -43,14 +43,18 @@ export const tb = {
   keys_p: "A person types each key into their own browser, straight into Wirl's vault. Never into the code, never through the agent.",
   keys_kicker: copy.builtin_cards[2].title, // Keys skip the agent
 
-  rollback_h2: copy.builtin_cards[3].title, // Bad deploys undo themselves
+  // The card title has no full stop because the tiles don't take one; as an h2 it
+  // sits beside ten headings that all end in one, so it gets the stop here.
+  rollback_h2: `${copy.builtin_cards[3].title}.`, // Bad deploys undo themselves
   rollback_p: 'A deploy that fails in its first half hour goes back to the last healthy version, and the log says so.',
 
   share_h2: copy.share_h2,
   share_p: copy.share_p,
   share_cmd: 'npx wirl pull supplier-payments',
   share_laptop_title: copy.builtin_cards[1].title, // Same thing on your laptop
-  share_laptop: "npx wirl dev gives you production's database shape, identity headers, and API broker.",
+  // No managed database is claimed, and "on your laptop" is left to the title
+  // above it rather than said twice in two consecutive sentences.
+  share_laptop: 'npx wirl dev gives you the same identity headers and API access locally as in production.',
 
   admin_h2: copy.admin_h2,
   admin_p: copy.admin_p,

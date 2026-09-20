@@ -373,12 +373,16 @@ export function AvatarStack({ x, y, r = 14, who, step }: { x: number; y: number;
 
 /* A multiplayer cursor: an arrow in the person's colour with a name tag.
    (x, y) is the tip. */
-export function NamedCursor({ x, y, who, s = 1, className, tag = true, tagLeft = false }: {
-  x: number; y: number; who: Who; s?: number; className?: string; tag?: boolean; tagLeft?: boolean;
+/* tagSize lets a scene keep the name legible when the cursor sits in a picture
+   that is scaled down hard on a phone. The default reproduces the old geometry
+   exactly (26-high pill, text on the 0.7 baseline). */
+export function NamedCursor({ x, y, who, s = 1, className, tag = true, tagLeft = false, tagSize = 15 }: {
+  x: number; y: number; who: Who; s?: number; className?: string; tag?: boolean; tagLeft?: boolean; tagSize?: number;
 }) {
   const p = PEOPLE[who];
   const first = p.name.split(' ')[0];
-  const tw = textW(first, 15) + 20;
+  const th = tagSize * (26 / 15);
+  const tw = textW(first, tagSize) + 20;
   const tx = tagLeft ? -tw - 2 : 17;
   return (
     <g className={className}>
@@ -386,8 +390,8 @@ export function NamedCursor({ x, y, who, s = 1, className, tag = true, tagLeft =
         <path d="M0 0 L0 33 L8.2 25.8 L13.8 38.4 L20.4 35.6 L14.8 23.2 L25.6 23.2 Z" fill={p.color} stroke={K.ink} strokeWidth={2.8} />
         {tag && (
           <g>
-            <rect x={tx} y={36} width={tw} height={26} rx={13} fill={p.color} stroke={K.ink} strokeWidth={2.4} />
-            <text x={tx + tw / 2} y={36 + 18.2} fontSize={15} fill={p.tagText} textAnchor="middle" fontWeight={800}>{first}</text>
+            <rect x={tx} y={36} width={tw} height={th} rx={th / 2} fill={p.color} stroke={K.ink} strokeWidth={2.4} />
+            <text x={tx + tw / 2} y={36 + th * 0.7} fontSize={tagSize} fill={p.tagText} textAnchor="middle" fontWeight={800}>{first}</text>
           </g>
         )}
       </g>

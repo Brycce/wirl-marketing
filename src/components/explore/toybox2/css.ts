@@ -19,11 +19,11 @@ export const CSS = String.raw`
 
 /* Type */
 .tbx .tb-h1 { font-weight: 800; font-size: clamp(38px, 4.3vw, 60px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; }
-.tbx .tb-h2 { font-weight: 800; font-size: clamp(34px, 3.7vw, 52px); line-height: 1.03; letter-spacing: -0.035em; text-wrap: balance; }
-.tbx .tb-lede { margin-top: 20px; font-size: 18px; line-height: 1.55; max-width: 42ch; }
+.tbx .tb-h2 { font-weight: 800; font-size: clamp(32px, 3.7vw, 52px); line-height: 1.03; letter-spacing: -0.035em; text-wrap: balance; }
+.tbx .tb-lede { margin-top: 18px; font-size: 18px; line-height: 1.52; max-width: 42ch; }
 .tbx .tb-lede strong { font-weight: 750; }
 @media (max-width: 640px) { .tbx .tb-lede { font-size: 17px; } }
-.tbx .tb-list { margin-top: 20px; display: grid; gap: 10px; font-size: 17.5px; line-height: 1.5; max-width: 44ch; }
+.tbx .tb-list { margin-top: 18px; display: grid; gap: 9px; font-size: 17.5px; line-height: 1.48; max-width: 44ch; }
 .tbx .tb-list li { position: relative; padding-left: 30px; }
 .tbx .tb-list li::before {
   content: ''; position: absolute; left: 2px; top: .42em; width: 14px; height: 14px; border-radius: 99px;
@@ -38,26 +38,28 @@ export const CSS = String.raw`
 .tbx .tb-kicker svg { width: 20px; height: 20px; flex: none; }
 
 /* Slabs: big rounded blocks of colour, stacked with cream gaps like toy blocks. */
-.tbx .slab { margin: 16px 16px 0; border-radius: 40px; position: relative; isolation: isolate; overflow: hidden; padding: 92px 0; }
-.tbx .slab-in { max-width: 1232px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px); }
+.tbx .slab { margin: 16px 16px 0; border-radius: 40px; position: relative; isolation: isolate; overflow: hidden; padding: 48px 0; scroll-margin-top: 16px; }
+.tbx .slab-in { max-width: 1232px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 64px); }
 .tbx .bg-coral { background: var(--coral); }
 .tbx .bg-mint { background: var(--mint); }
 .tbx .bg-sky { background: var(--sky); }
 .tbx .bg-lilac { background: var(--lilac); }
+.tbx .bg-pink { background: var(--pink); }
 .tbx .bg-sun { background: var(--sun); }
 .tbx .bg-ink { background: var(--ink); color: var(--cream); }
 @media (max-width: 640px) {
-  .tbx .slab { margin: 12px 10px 0; border-radius: 28px; padding: 60px 0 44px; }
+  .tbx .slab { margin: 12px 8px 0; border-radius: 28px; padding: 30px 0 24px; scroll-margin-top: 10px; }
 }
 
 /* Text beside the picture, alternating sides; on a phone, text first. */
-.tbx .split { display: grid; gap: 44px; align-items: center; }
+.tbx .split { display: grid; gap: 18px; align-items: center; }
 .tbx .split > * { min-width: 0; }
 @media (max-width: 959px) { .tbx .split > .art { width: 100%; max-width: 620px; margin: 0 auto; } }
-@media (max-width: 640px) { .tbx .slab .split > .art { width: calc(100% + 24px); max-width: none; margin: 0 -12px; } }
+/* On a phone the picture bleeds to the slab's own edge, so nothing inside it
+   has to shrink below reading size. */
+@media (max-width: 640px) { .tbx .slab .split > .art { width: calc(100% + 36px); max-width: none; margin: 0 -18px; } }
 @media (min-width: 960px) {
-  .tbx .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; }
-  .tbx .split.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .tbx .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
   .tbx .split.flip > .art { order: -1; }
 }
 
@@ -88,20 +90,20 @@ export const CSS = String.raw`
 @media (max-width: 639px) { .tbx .tb-nav-links .tb-plain { display: none; } }
 
 /* Hero */
-.tbx .tb-hero { padding-top: 36px; padding-bottom: 72px; display: grid; gap: 40px; align-items: center; }
-@media (min-width: 1024px) { .tbx .tb-hero { grid-template-columns: minmax(0, 52fr) minmax(0, 48fr); gap: 40px; padding-top: 48px; padding-bottom: 88px; }
-  .tbx .tb-hero-art-wrap { margin-right: -28px; margin-top: -24px; } }
+.tbx .tb-hero { padding-top: 28px; padding-bottom: 48px; display: grid; gap: 30px; align-items: center; }
+@media (min-width: 1024px) { .tbx .tb-hero { grid-template-columns: minmax(0, 52fr) minmax(0, 48fr); gap: 40px; padding-top: 32px; padding-bottom: 52px; }
+  .tbx .tb-hero-art-wrap { margin-right: -28px; margin-top: -20px; } }
 .tbx .tb-hero .tb-lede { font-size: 19px; max-width: 44ch; margin-top: 24px; }
 @media (max-width: 420px) { .tbx .tb-h1 { letter-spacing: -0.04em; } }
-@media (max-width: 640px) { .tbx .tb-hero { padding-top: 16px; padding-bottom: 36px; } .tbx .tb-hero .tb-lede { font-size: 17.5px; } }
+@media (max-width: 640px) { .tbx .tb-hero { padding-top: 12px; padding-bottom: 28px; } .tbx .tb-hero .tb-lede { font-size: 17.5px; } }
 .tbx .tb-hero-art-wrap { position: relative; }
 .tbx .tb-hero-phone { display: none; }
 @media (max-width: 1023px) { .tbx .tb-hero-art-wrap { width: 100%; max-width: 600px; margin: 0 auto; } }
 @media (max-width: 560px) { .tbx .tb-hero-wide { display: none; } .tbx .tb-hero-phone { display: block; } }
 
 /* Connect block */
-.tbx .tb-connect { margin-top: 32px; max-width: 580px; scroll-margin-top: 24px; }
-.tbx .tb-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tbx .tb-connect { margin-top: 26px; max-width: 580px; scroll-margin-top: 24px; }
+.tbx .tb-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
 .tbx .tb-tab {
   display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 14.5px; font-weight: 700; line-height: 1;
   color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; padding: 8px 13px;
@@ -120,7 +122,7 @@ export const CSS = String.raw`
 .tbx .tb-term-bar span { margin-left: 8px; font-size: 13px; font-weight: 650; color: #B9C6BD; }
 .tbx .tb-term-body { padding: 18px 20px 20px; }
 .tbx .tb-term pre { margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; line-height: 1.6; white-space: pre-wrap; word-break: break-all; color: #E9F1EA; }
-.tbx .tb-term-row { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
+.tbx .tb-term-row { margin-top: 13px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
 .tbx .tb-hint { font-size: 14px; line-height: 1.45; color: #C9D6CD; max-width: 44ch; flex: 1 1 220px; }
 .tbx .tb-copy { min-width: 92px; }
 .tbx .tb-copy[data-copied='yes'] { background: #A6E6BE; }
@@ -138,35 +140,28 @@ export const CSS = String.raw`
   25% { opacity: 1; }
   100% { transform: translate(var(--bx), var(--by)) scale(1.15) rotate(90deg); opacity: 0; }
 }
-@media (max-width: 420px) { .tbx .tb-term pre { font-size: 13px; } .tbx .tb-term-body { padding: 16px 14px 18px; } }
-.tbx .tb-after { margin-top: 18px; font-size: 15px; line-height: 1.5; max-width: 52ch; }
+@media (max-width: 420px) { .tbx .tb-term pre { font-size: 13px; } .tbx .tb-term-body { padding: 14px 14px 15px; } }
+.tbx .tb-after { margin-top: 14px; font-size: 15px; line-height: 1.5; max-width: 52ch; }
 .tbx .tb-after a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 
-/* ---------- Hero motion: a 12s story that rests on its final frame. ---------- */
-.tbx .tb-h-typecover { transform-box: fill-box; transform-origin: 100% 50%; transform: scaleX(0); animation: tb-h-type 12s steps(24, end) infinite; }
-@keyframes tb-h-type { 0%, 3% { transform: scaleX(1); } 13%, 97% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
-.tbx .tb-h-reply { transform-box: fill-box; transform-origin: 0 0; animation: tb-h-reply 12s cubic-bezier(.2,.9,.3,1.2) infinite; }
-@keyframes tb-h-reply { 0%, 14% { opacity: 0; transform: scale(.92); } 18%, 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
-.tbx .tb-h-linkcover { transform-box: fill-box; transform-origin: 100% 50%; transform: scaleX(0); animation: tb-h-link 12s cubic-bezier(.6,0,.3,1) infinite; }
-@keyframes tb-h-link { 0%, 19% { transform: scaleX(1); } 25%, 97% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
-.tbx .tb-h-sticker { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-h-slap 12s cubic-bezier(.3,1.4,.5,1) infinite; }
-@keyframes tb-h-slap {
-  0%, 26% { opacity: 0; transform: scale(1.35) rotate(-10deg); }
-  27% { opacity: 1; }
-  30%, 96% { opacity: 1; transform: scale(1) rotate(0); }
-  100% { opacity: 0; transform: scale(1) rotate(0); }
-}
-.tbx .tb-h-ticks { opacity: 0; transform-box: fill-box; transform-origin: 100% 50%; animation: tb-h-ticks 12s ease-out infinite; }
-@keyframes tb-h-ticks { 0%, 29% { opacity: 0; transform: translateX(10px) scale(.6); } 31% { opacity: 1; } 36%, 100% { opacity: 0; transform: translateX(-4px) scale(1.1); } }
-.tbx .tb-h-cursor { animation: tb-h-cursor 12s cubic-bezier(.45,0,.3,1) infinite; }
+/* ---------- Hero motion ----------
+   The frame is complete from the first paint: the command, the reply, the
+   link and the sticker are all drawn. Only the caret blinks and the cursor
+   walks over to Pay, so a screenshot never catches an empty box. */
+.tbx .tb-h-caret { animation: tb-h-caret 1.1s steps(1) infinite; }
+@keyframes tb-h-caret { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+.tbx .tb-h-sticker { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-h-settle 9s ease-in-out infinite; }
+@keyframes tb-h-settle { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(-1.6deg); } 96% { transform: rotate(1deg); } }
+.tbx .tb-h-cursor { animation: tb-h-cursor 9s cubic-bezier(.45,0,.3,1) infinite; }
 @keyframes tb-h-cursor {
-  0%, 33% { transform: translate(-40px, 26px); }
-  41% { transform: translate(0, 0); }
-  43% { transform: translate(0, 3px); }
-  46%, 100% { transform: translate(0, 0); }
+  0%, 22% { transform: translate(-40px, 26px); }
+  34% { transform: translate(0, 0); }
+  36% { transform: translate(0, 3px); }
+  40%, 88% { transform: translate(0, 0); }
+  100% { transform: translate(-40px, 26px); }
 }
-.tbx .tb-h-pay { animation: tb-h-pay 12s ease infinite; }
-@keyframes tb-h-pay { 0%, 42% { transform: translateY(0); } 43.5%, 45% { transform: translateY(4px); } 47%, 100% { transform: translateY(0); } }
+.tbx .tb-h-pay { animation: tb-h-pay 9s ease infinite; }
+@keyframes tb-h-pay { 0%, 35% { transform: translateY(0); } 36.5%, 38% { transform: translateY(4px); } 40%, 100% { transform: translateY(0); } }
 .tbx .tb-twinkle { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-twinkle 2.8s ease-in-out infinite; }
 .tbx .tb-twinkle-2 { animation-delay: -1s; }
 .tbx .tb-twinkle-3 { animation-delay: -1.9s; animation-duration: 2.2s; }
@@ -178,13 +173,14 @@ export const CSS = String.raw`
 @media (min-width: 640px) { .tbx .tb-phone { display: none; } .tbx .tb-wide { display: inline; } }
 
 /* ---------- The mess ---------- */
-.tbx .tb-mess { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 26px; list-style: none; margin: 0; padding: 0; }
+.tbx .tb-mess { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 22px; list-style: none; margin: 0 0 0 auto; padding: 0; max-width: 470px; }
 .tbx .tb-mess li { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
 .tbx .tb-mess li span { font-size: 15.5px; font-weight: 750; text-align: center; line-height: 1.3; }
 .tbx .tb-mess li:nth-child(2) { transform: translateY(18px); }
 .tbx .tb-mess li:nth-child(4) { transform: translateY(18px); }
+@media (max-width: 959px) { .tbx .tb-mess { max-width: none; margin: 0; } }
 @media (max-width: 640px) {
-  .tbx .tb-mess { gap: 18px 10px; }
+  .tbx .tb-mess { gap: 14px 8px; }
   .tbx .tb-mess li span { font-size: 14px; }
   .tbx .tb-mess li:nth-child(2), .tbx .tb-mess li:nth-child(4) { transform: translateY(10px); }
 }
@@ -207,14 +203,14 @@ export const CSS = String.raw`
 }
 
 /* ---------- Steps ---------- */
-.tbx .tb-steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 16px; max-width: 42ch; }
-.tbx .tb-steps li { display: flex; gap: 14px; align-items: flex-start; font-size: 18px; line-height: 1.45; }
+.tbx .tb-steps { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 13px; max-width: 42ch; }
+.tbx .tb-steps li { display: flex; gap: 13px; align-items: flex-start; font-size: 17.5px; line-height: 1.42; }
 .tbx .tb-steps b { font-weight: 750; }
 .tbx .tb-num {
   flex: none; width: 34px; height: 34px; border-radius: 99px; display: grid; place-items: center; margin-top: -3px;
   background: var(--sun); border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); font-weight: 850; font-size: 16px;
 }
-@media (max-width: 640px) { .tbx .tb-steps li { font-size: 17px; } }
+@media (max-width: 640px) { .tbx .tb-steps li { font-size: 16.5px; } }
 .tbx .tb-s-approve { animation: tb-s-press 6s ease infinite; }
 @keyframes tb-s-press { 0%, 14% { transform: translateY(0); } 17%, 21% { transform: translateY(5px); } 24%, 100% { transform: translateY(0); } }
 .tbx .tb-s-hand { animation: tb-s-hand 6s cubic-bezier(.4,0,.3,1) infinite; }
@@ -226,10 +222,18 @@ export const CSS = String.raw`
 .tbx .tb-s-pill { transform-box: fill-box; transform-origin: 50% 100%; animation: tb-bounce 6s ease infinite; }
 @keyframes tb-bounce { 0%, 36% { transform: translateY(0); } 40% { transform: translateY(-8px); } 45% { transform: translateY(0); } 48% { transform: translateY(-2px); } 51%, 100% { transform: translateY(0); } }
 
+/* ---------- Bring your own agent: a strip at the foot of the setup slab ---------- */
+.tbx .tb-byo {
+  margin-top: 32px; padding-top: 28px; border-top: 3px dashed rgba(27,36,32,.22);
+  display: grid; gap: 26px; align-items: center;
+}
+@media (min-width: 1024px) { .tbx .tb-byo { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 44px; } }
+@media (max-width: 640px) { .tbx .tb-byo { margin-top: 30px; padding-top: 26px; gap: 20px; } }
+.tbx .tb-h3 { font-weight: 800; font-size: clamp(24px, 2.1vw, 30px); line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
+.tbx .tb-byo-p { margin-top: 9px; font-size: 16.5px; line-height: 1.5; max-width: 34ch; }
+.tbx .tb-byo-text .tbtn { margin-top: 15px; }
+
 /* ---------- Agents sticker sheet ---------- */
-.tbx .tb-agents { padding-top: 104px; padding-bottom: 88px; display: grid; gap: 40px; align-items: center; }
-@media (min-width: 1024px) { .tbx .tb-agents { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 56px; } }
-@media (max-width: 640px) { .tbx .tb-agents { padding-top: 64px; padding-bottom: 48px; } }
 .tbx .tb-sheet {
   position: relative; background: var(--paper); border: 3px solid var(--ink); border-radius: 28px;
   box-shadow: 0 4px 0 var(--edge), 0 7px 0 var(--ink); padding: 34px 26px 28px;
@@ -246,27 +250,53 @@ export const CSS = String.raw`
 .tbx .tb-sheet-name { margin-top: 10px; font-size: 16px; font-weight: 800; line-height: 1.2; }
 .tbx .tb-sheet-note { margin-top: 5px; font-size: 15px; line-height: 1.35; max-width: 16ch; }
 .tbx .tb-peel-flap { }
+/* The slim sheet: the same stickers, printed small, so setup is one section. */
+.tbx .tb-sheet-slim { padding: 22px 18px 18px; }
+.tbx .tb-sheet-slim::before { inset: 9px; border-radius: 14px; }
+.tbx .tb-sheet-slim .tb-sheet-grid { gap: 10px; }
+.tbx .tb-sheet-slim .tb-sheet-art { max-width: 72px; }
+.tbx .tb-sheet-slim .tb-sheet-name { margin-top: 8px; font-size: 15px; }
+.tbx .tb-sheet-slim .tb-sheet-note { margin-top: 3px; font-size: 14px; max-width: 18ch; }
+.tbx .tb-sheet-slim .tb-sheet-empty { width: 44px; height: 44px; top: 6px; right: 12px; }
 @media (max-width: 760px) {
   .tbx .tb-sheet { padding: 30px 16px 22px; }
   .tbx .tb-sheet-grid { grid-template-columns: 1fr 1fr; gap: 22px 12px; }
   .tbx .tb-sheet-cell:last-child { grid-column: 1 / -1; }
   .tbx .tb-sheet-art { max-width: 112px; }
   .tbx .tb-sheet-empty { width: 40px; height: 40px; top: 10px; right: 14px; }
+  /* On a phone the sheet reads as a list: sticker, name, note, one per line. */
+  .tbx .tb-sheet-slim { padding: 14px 14px 12px; }
+  .tbx .tb-sheet-slim .tb-sheet-grid { grid-template-columns: 1fr; gap: 9px; }
+  /* Sticker in its own column, name over note in the second: as a row the five
+     notes each started at a different x, because the names are different widths. */
+  .tbx .tb-sheet-slim .tb-sheet-cell {
+    display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 10px;
+    align-items: center; text-align: left;
+  }
+  .tbx .tb-sheet-slim .tb-sheet-cell:last-child { grid-column: auto; }
+  .tbx .tb-sheet-slim .tb-sheet-art { grid-row: 1 / 3; width: 34px; max-width: none; }
+  .tbx .tb-sheet-slim .tb-sheet-name { margin-top: 0; font-size: 14.5px; line-height: 1.25; }
+  .tbx .tb-sheet-slim .tb-sheet-note { margin-top: 1px; font-size: 14px; line-height: 1.3; max-width: none; }
+  .tbx .tb-sheet-slim .tb-sheet-empty { display: none; }
 }
 
-/* ---------- Built-in intro ---------- */
-.tbx .tb-intro { padding-top: 24px; padding-bottom: 72px; display: grid; gap: 36px; align-items: end; }
-@media (min-width: 1024px) { .tbx .tb-intro { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; } }
-.tbx .tb-h2-xl { font-size: clamp(38px, 4.4vw, 60px); }
+/* ---------- The index: six badges that jump to their own band ---------- */
+.tbx .tb-index { padding-top: 40px; padding-bottom: 34px; display: grid; gap: 26px; align-items: center; }
+@media (min-width: 1024px) { .tbx .tb-index { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 44px; } }
+.tbx .tb-index .tb-h2 { font-size: clamp(30px, 2.9vw, 40px); }
+.tbx .tb-index-p { margin-top: 10px; font-size: 16.5px; line-height: 1.5; max-width: 34ch; }
 .tbx .tb-badges { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; }
-.tbx .tb-badge-art { width: 100%; max-width: 92px; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
-@media (hover: hover) { .tbx .tb-badges a:hover .tb-badge-art { transform: translateY(-4px) rotate(-4deg); } }
-.tbx .tb-badge-label { font-size: 14.5px; font-weight: 750; text-align: center; line-height: 1.2; white-space: nowrap; }
+.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--ink); text-decoration: none; }
+.tbx .tb-badge-art { width: 100%; max-width: 58px; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+@media (hover: hover) { .tbx .tb-badges a:hover .tb-badge-art { transform: translateY(-4px) rotate(-4deg); } .tbx .tb-badges a:hover .tb-badge-label { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; } }
+.tbx .tb-badge-label { font-size: 14px; font-weight: 750; text-align: center; line-height: 1.2; white-space: nowrap; }
 @media (max-width: 640px) {
-  .tbx .tb-intro { padding-bottom: 44px; }
-  .tbx .tb-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 8px; }
-  .tbx .tb-badge-art { max-width: 76px; }
+  .tbx .tb-index { padding-top: 30px; padding-bottom: 24px; gap: 16px; }
+  /* On a phone the index is a two-column list, so the labels stay full size. */
+  .tbx .tb-badges { grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .tbx .tb-badges a { flex-direction: row; align-items: center; gap: 9px; }
+  .tbx .tb-badge-art { width: 38px; flex: none; max-width: none; }
+  .tbx .tb-badge-label { font-size: 15px; text-align: left; }
 }
 
 /* ---------- Sign-in ---------- */
@@ -326,17 +356,13 @@ export const CSS = String.raw`
 .tbx .tb-nowrap { white-space: nowrap; }
 .tbx .tb-log-t { color: #9FB1A6; }
 .tbx .tb-rb-live { animation: tb-rb-live 8s cubic-bezier(.5,0,.3,1) infinite; }
-@keyframes tb-rb-live { 0%, 8% { transform: translate(304px, 0); } 64% { transform: translate(304px, 0); } 70% { transform: translate(152px, -60px); } 76%, 100% { transform: translate(0, 0); } }
+@keyframes tb-rb-live { 0%, 8% { transform: translate(276px, 0); } 64% { transform: translate(276px, 0); } 70% { transform: translate(138px, -58px); } 76%, 100% { transform: translate(0, 0); } }
 .tbx .tb-rb-err { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-rb-err 8s cubic-bezier(.3,1.7,.5,1) infinite; }
 .tbx .tb-rb-err-2 { animation-name: tb-rb-err-2; }
 .tbx .tb-rb-err-3 { animation-name: tb-rb-err-3; }
 @keyframes tb-rb-err { 0%, 12% { transform: scale(0); } 16%, 100% { transform: scale(1); } }
 @keyframes tb-rb-err-2 { 0%, 18% { transform: scale(0); } 22%, 100% { transform: scale(1); } }
 @keyframes tb-rb-err-3 { 0%, 24% { transform: scale(0); } 28%, 100% { transform: scale(1); } }
-.tbx .tb-rb-draw { stroke-dasharray: 100; stroke-dashoffset: 0; animation: tb-rb-draw 8s ease-in-out infinite; }
-@keyframes tb-rb-draw { 0%, 34% { stroke-dashoffset: 100; } 50%, 100% { stroke-dashoffset: 0; } }
-.tbx .tb-rb-head { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-rb-head 8s ease infinite; }
-@keyframes tb-rb-head { 0%, 48% { transform: scale(0); } 52%, 100% { transform: scale(1); } }
 .tbx .tb-rb-stamp { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-rb-stamp 8s cubic-bezier(.5,0,.6,1.4) infinite; }
 @keyframes tb-rb-stamp { 0%, 54% { transform: scale(1.5); opacity: 0; } 58% { transform: scale(1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 .tbx .tb-rb-fail { animation: tb-rb-fail 8s ease infinite; }
@@ -346,30 +372,23 @@ export const CSS = String.raw`
 
 /* ---------- Share ---------- */
 .tbx .tb-cmd {
-  display: inline-block; margin-top: 24px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600;
+  display: inline-block; margin-top: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600;
   background: var(--ink); color: #E9F1EA; border: 3px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 0 5px 0 #0F1512; max-width: 100%;
   overflow-wrap: anywhere;
 }
 .tbx .tb-cmd span { color: var(--sun); }
 @media (max-width: 420px) { .tbx .tb-cmd { font-size: 13.5px; padding: 11px 13px; } }
-.tbx .tb-small { font-size: 16.5px; margin-top: 22px; }
-.tbx .tb-sh-l1, .tbx .tb-sh-l2, .tbx .tb-sh-l3 { animation: tb-sh-l1 9s steps(1) infinite; }
-.tbx .tb-sh-l2 { animation-name: tb-sh-l2; }
-.tbx .tb-sh-l3 { animation-name: tb-sh-l3; }
-@keyframes tb-sh-l1 { 0%, 4% { opacity: 0; } 5%, 100% { opacity: 1; } }
-@keyframes tb-sh-l2 { 0%, 14% { opacity: 0; } 15%, 100% { opacity: 1; } }
-@keyframes tb-sh-l3 { 0%, 24% { opacity: 0; } 25%, 100% { opacity: 1; } }
+.tbx .tb-small { font-size: 16.5px; margin-top: 16px; }
+/* The terminal and the link are drawn at rest; only the new version lands. */
 .tbx .tb-sh-new { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-sh-new 9s cubic-bezier(.3,1.7,.5,1) infinite; }
-@keyframes tb-sh-new { 0%, 36% { transform: scale(0); } 42%, 100% { transform: scale(1); } }
+@keyframes tb-sh-new { 0%, 8% { transform: scale(.92); } 14%, 100% { transform: scale(1); } }
 .tbx .tb-sh-sparks { animation: tb-sh-sparks 9s ease infinite; }
-@keyframes tb-sh-sparks { 0%, 40% { opacity: 0; } 44%, 100% { opacity: 1; } }
-.tbx .tb-sh-copied { animation: tb-sh-copied 9s ease infinite; }
-@keyframes tb-sh-copied { 0% { opacity: 0; } 3%, 100% { opacity: 1; } }
+@keyframes tb-sh-sparks { 0%, 8% { opacity: 0; } 16%, 86% { opacity: 1; } 100% { opacity: 0; } }
 
 /* ---------- Admins ---------- */
-.tbx .tb-admin-slab { padding-bottom: 96px; }
-@media (max-width: 640px) { .tbx .tb-admin-slab { padding-bottom: 44px; } }
-.tbx .tb-admin-split { display: grid; gap: 44px; align-items: center; }
+.tbx .tb-admin-slab { padding-bottom: 60px; }
+@media (max-width: 640px) { .tbx .tb-admin-slab { padding-bottom: 26px; } }
+.tbx .tb-admin-split { display: grid; gap: 34px; align-items: center; }
 @media (min-width: 1260px) {
   .tbx .tb-admin-split { grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 52px; }
   .tbx .tb-admin-art { margin-right: -36px; }
@@ -394,6 +413,7 @@ export const CSS = String.raw`
 .tbx .tb-admin-table tr.tb-row-hover td { background: #FFF6D6; }
 .tbx .tb-admin-table tr.tb-more td { font-size: 14px; font-weight: 650; color: #5E5A4C; padding-top: 12px; padding-bottom: 4px; }
 .tbx .tb-admin-table tr.tb-more .tb-app { font-size: 13.5px; color: var(--ink); white-space: nowrap; }
+.tbx .tb-more-phone { display: none; }
 .tbx .tb-app { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 14.5px; }
 .tbx .tb-by { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; }
 .tbx .tb-face { display: block; flex: none; }
@@ -441,17 +461,21 @@ export const CSS = String.raw`
   .tbx .tb-admin-cursor { display: none; }
   .tbx .tb-log { margin: 18px 0 0; width: 100%; transform: none; }
   .tbx .tb-admin-table td:last-child, .tbx .tb-admin-table th:last-child { padding-right: 12px; }
-  .tbx .tb-log-lines { font-size: 12.5px; padding: 10px 12px 12px; }
-  .tbx .tb-log-lines li { white-space: normal; line-height: 1.5; margin-bottom: 6px; }
+  .tbx .tb-log-lines { font-size: 12.5px; padding: 9px 12px 10px; }
+  .tbx .tb-log-lines li { white-space: normal; line-height: 1.42; margin-bottom: 4px; }
+  .tbx .tb-admin-table tbody tr:nth-child(4), .tbx .tb-admin-table tbody tr:nth-child(5) { display: none; }
+  .tbx .tb-more-wide { display: none; }
+  .tbx .tb-more-phone { display: inline; }
 }
 
 /* ---------- FAQ ---------- */
-.tbx .tb-faq { padding-top: 104px; padding-bottom: 88px; max-width: 808px; }
+.tbx .tb-faq { padding-top: 56px; padding-bottom: 48px; max-width: 1000px; }
 .tbx .tb-faq .tb-h2 { display: flex; align-items: center; gap: 14px; }
 .tbx .tb-q { width: 60px; height: 60px; flex: none; }
-.tbx .tb-faq-list { margin-top: 32px; display: grid; gap: 16px; }
+.tbx .tb-faq-list { margin-top: 24px; display: grid; gap: 12px; align-items: start; }
+@media (min-width: 880px) { .tbx .tb-faq-list { grid-template-columns: 1fr 1fr; gap: 12px 18px; } }
 .tbx .tb-faq-item { background: var(--paper); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 0 3px 0 var(--edge), 0 5px 0 var(--ink); transition: transform .1s ease, box-shadow .1s ease; }
-.tbx .tb-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; font-size: 17.5px; font-weight: 750; line-height: 1.35; }
+.tbx .tb-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; font-size: 17.5px; font-weight: 750; line-height: 1.35; }
 .tbx .tb-faq-item summary::-webkit-details-marker { display: none; }
 .tbx .tb-faq-item:has(summary:active) { transform: translateY(3px); box-shadow: 0 1px 0 var(--edge), 0 2px 0 var(--ink); }
 .tbx .tb-faq-item p { padding: 0 20px 20px; font-size: 16.5px; line-height: 1.55; max-width: 60ch; }
@@ -461,10 +485,10 @@ export const CSS = String.raw`
 }
 .tbx .tb-key svg { width: 18px; height: 18px; }
 .tbx .tb-faq-item[open] .tb-key { transform: rotate(45deg); }
-@media (max-width: 640px) { .tbx .tb-faq { padding-top: 64px; padding-bottom: 56px; } .tbx .tb-faq-item summary { font-size: 16.5px; padding: 16px; } .tbx .tb-faq-item p { padding: 0 16px 18px; } .tbx .tb-q { width: 46px; height: 46px; } }
+@media (max-width: 640px) { .tbx .tb-faq { padding-top: 36px; padding-bottom: 30px; } .tbx .tb-faq-item summary { font-size: 16.5px; padding: 15px 16px; } .tbx .tb-faq-item p { padding: 0 16px 16px; } .tbx .tb-q { width: 46px; height: 46px; } }
 
 /* ---------- Closing ---------- */
-.tbx .tb-closing { padding: 88px 24px; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+.tbx .tb-closing { padding: 56px 24px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
 .tbx .tb-cl-card { position: relative; z-index: 1; text-align: center; max-width: 560px; display: flex; flex-direction: column; align-items: center; }
 .tbx .tb-cl-card .tb-h2 { font-size: clamp(40px, 4.6vw, 64px); }
 .tbx .tb-cl-card .tb-lede { margin-left: auto; margin-right: auto; }
@@ -475,7 +499,7 @@ export const CSS = String.raw`
 .tbx .tb-cl-stickers li:nth-child(4) { animation-duration: 6.6s; animation-delay: -1s; }
 @keyframes tb-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
 @media (hover: hover) { .tbx .tb-cl-stickers li:hover { transform: translateY(-6px) scale(1.04); } }
-.tbx .tb-form { width: 100%; max-width: 480px; margin-top: 30px; }
+.tbx .tb-form { width: 100%; max-width: 480px; margin-top: 24px; }
 .tbx .tb-form-row { display: flex; gap: 12px; }
 .tbx .tb-input {
   flex: 1; min-width: 0; font: inherit; font-size: 16px; font-weight: 550; color: var(--ink);
@@ -490,30 +514,33 @@ export const CSS = String.raw`
 .tbx .tb-done-h { font-weight: 800; font-size: 19px; }
 .tbx .tb-done-p { font-size: 14.5px; margin-top: 2px; }
 @media (max-width: 640px) {
-  .tbx .tb-closing { padding: 44px 14px 48px; gap: 28px; }
+  .tbx .tb-closing { padding: 38px 14px 42px; gap: 24px; }
   .tbx .tb-form-row { flex-direction: column; }
-  .tbx .tb-cl-stickers li { width: 142px; }
-  .tbx .tb-cl-a li:nth-child(n+3), .tbx .tb-cl-b li:nth-child(n+3) { display: none; }
+  /* 152, not 138: the app name is 12.6 in a 172 viewBox, so 138 renders it at
+     10.1px. 152 puts it at 11.1px, and two of them still fit 390 with the gap. */
+  .tbx .tb-cl-stickers li { width: 152px; }
+  .tbx .tb-cl-a li:nth-child(n+3) { display: none; }
+  .tbx .tb-cl-b { display: none; }
 }
 @media (min-width: 641px) and (max-width: 1179px) { .tbx .tb-cl-a li:nth-child(4) { display: none; } }
 @media (min-width: 1180px) {
-  .tbx .tb-closing { min-height: 660px; justify-content: center; }
+  .tbx .tb-closing { min-height: 430px; justify-content: center; }
   .tbx .tb-cl-stickers { position: absolute; top: 0; bottom: 0; width: 250px; display: block; }
   .tbx .tb-cl-a { left: 2%; }
   .tbx .tb-cl-b { right: 2%; }
-  .tbx .tb-cl-stickers li { position: absolute; width: 196px; }
-  .tbx .tb-cl-a li:nth-child(1) { top: 4%; left: 10px; }
-  .tbx .tb-cl-a li:nth-child(2) { top: 27%; left: 84px; }
-  .tbx .tb-cl-a li:nth-child(3) { top: 51%; left: 4px; }
-  .tbx .tb-cl-a li:nth-child(4) { top: 74%; left: 70px; }
-  .tbx .tb-cl-b li:nth-child(1) { top: 9%; right: 40px; }
-  .tbx .tb-cl-b li:nth-child(2) { top: 38%; right: 90px; }
-  .tbx .tb-cl-b li:nth-child(3) { top: 67%; right: 20px; }
+  .tbx .tb-cl-stickers li { position: absolute; width: 182px; }
+  .tbx .tb-cl-a li:nth-child(1) { top: 1%; left: 10px; }
+  .tbx .tb-cl-a li:nth-child(2) { top: 23%; left: 82px; }
+  .tbx .tb-cl-a li:nth-child(3) { top: 45%; left: 4px; }
+  .tbx .tb-cl-a li:nth-child(4) { top: 67%; left: 68px; }
+  .tbx .tb-cl-b li:nth-child(1) { top: 5%; right: 40px; }
+  .tbx .tb-cl-b li:nth-child(2) { top: 33%; right: 88px; }
+  .tbx .tb-cl-b li:nth-child(3) { top: 61%; right: 20px; }
 }
 
 /* ---------- Footer ---------- */
-.tbx .tb-foot { padding-top: 40px; padding-bottom: 40px; }
-.tbx .tb-ground { position: relative; height: 2px; background: var(--ink); border-radius: 2px; margin-bottom: 28px; }
+.tbx .tb-foot { padding-top: 26px; padding-bottom: 26px; }
+.tbx .tb-ground { position: relative; height: 2px; background: var(--ink); border-radius: 2px; margin-bottom: 22px; }
 .tbx .tb-crawl { position: absolute; right: 18%; bottom: 1px; color: var(--ink); animation: tb-crawl 64s linear infinite; }
 .tbx .tb-crawl svg { display: block; }
 .tbx .tb-inch { display: block; transform-origin: 100% 100%; animation: tb-inch 1.8s ease-in-out infinite; }
