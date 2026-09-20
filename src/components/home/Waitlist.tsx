@@ -1,7 +1,7 @@
 'use client';
 
-// The working waitlist form from components/WaitlistForm.tsx, restyled: a
-// paper input on a toy edge and an ink toy button.
+// The waitlist: posts the address to /api/waitlist, which emails it on.
+// A paper input on a toy edge and an ink toy button.
 
 import { useState } from 'react';
 

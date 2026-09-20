@@ -1,8 +1,12 @@
 'use client';
 
-// The working connect block from components/ConnectAgent.tsx, restyled as a
-// toy: chunky tabs, the snippet in a dark terminal window, and a sun-yellow
-// Copy key that presses down and bursts three sparks when it says Copied.
+// Getting started is connecting your coding agent to Wirl's MCP server.
+// One block, one tab per agent, one copy button, styled as a toy: chunky
+// tabs, the snippet in a dark window, and a sun-yellow Copy key that presses
+// down and bursts three sparks when it says Copied.
+//
+// These are today's stdio commands; when the hosted endpoint ships, this list
+// is the only thing to change.
 
 import { useState } from 'react';
 import { AgentMark } from '@/components/AgentIcons';
@@ -31,7 +35,7 @@ const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   {
     id: 'other',
     label: 'Other MCP',
-    hint: 'Any client that speaks MCP. Run the command. Sign in once.',
+    hint: "Add this to your client's MCP config. Sign in once.",
     snippet: '{ "mcpServers": { "wirl": { "command": "npx", "args": ["-y", "@wirl/mcp"] } } }',
   },
   {
@@ -76,7 +80,7 @@ export default function Connect({ id = 'connect', after }: { id?: string; after:
         ))}
       </div>
       <div className="tb-term">
-        <div className="tb-term-bar" aria-hidden="true"><i /><i /><i /><span>{agent.label === 'No MCP' || agent.label === 'Other MCP' ? 'terminal' : agent.label}</span></div>
+        <div className="tb-term-bar" aria-hidden="true"><i /><i /><i /><span>{agent.label === 'No MCP' ? 'terminal' : agent.id === 'other' ? 'mcp.json' : agent.label}</span></div>
         <div className="tb-term-body">
           <pre>{agent.snippet}</pre>
           <div className="tb-term-row">
