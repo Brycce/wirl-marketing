@@ -100,9 +100,13 @@ export function LogoSticker({ agent, x, y, size = 40, tilt, uid, peel = null, co
 // Shadows are CSS so they can grow on hover, and sit on the untilted wrapper
 // so the light always comes from straight above.
 const CSS = `
-.tb-stickers { display: inline-flex; align-items: center; gap: .03em; vertical-align: -.3em; margin-left: .04em; }
+/* Sized and set so the stickers match the capitals beside them: the art is
+   30 of the 32 viewBox units, so .82em of box gives art about a cap tall, and
+   the offset centres that art on the cap band instead of hanging it below the
+   baseline. */
+.tb-stickers { display: inline-flex; align-items: center; gap: .06em; vertical-align: -.046em; margin-left: .06em; }
 .tb-stk-s {
-  display: block; flex: none; width: .92em; height: .92em; color: ${INK};
+  display: block; flex: none; width: .82em; height: .82em; color: ${INK};
   filter: drop-shadow(0 .01em .017em rgba(27,36,32,.16)) drop-shadow(0 .037em .072em rgba(27,36,32,.26));
   transition: transform .22s cubic-bezier(.2,.8,.2,1), filter .22s cubic-bezier(.2,.8,.2,1);
 }
@@ -111,7 +115,7 @@ const CSS = `
   transform: rotate(var(--tilt, 0deg)); transition: transform .22s cubic-bezier(.2,.8,.2,1);
 }
 .tb-stk-more {
-  width: .6em; height: .6em;
+  width: .56em; height: .56em;
   filter: drop-shadow(0 .008em .014em rgba(27,36,32,.12)) drop-shadow(0 .024em .05em rgba(27,36,32,.2));
 }
 @media (hover: hover) {
