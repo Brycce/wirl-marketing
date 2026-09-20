@@ -4,6 +4,9 @@ export const CSS = String.raw`
   --ink: #1B2420; --cream: #F7F1E4; --paper: #FFFDF7; --edge: #E4D9C3; --wash: #F3ECDD;
   --sun: #FFD23F; --sun-edge: #D9A514; --coral: #FF9A76; --mint: #A6E6BE; --sky: #A9D8F7; --lilac: #CDBFFF;
   --green: #2E9D5B; --tomato: #E5483B; --blue: #3F6FE8; --pink: #FF8FB8;
+  /* The quiet beat between sky and lilac: a warm neutral with the pink's
+     temperature but none of its volume, so the white card on it still pops. */
+  --blush: #F2DACB;
   background: var(--cream); color: var(--ink); min-height: 100vh; overflow-x: clip;
   font-feature-settings: 'cv11', 'ss03';
 }
@@ -45,6 +48,7 @@ export const CSS = String.raw`
 .tbx .bg-sky { background: var(--sky); }
 .tbx .bg-lilac { background: var(--lilac); }
 .tbx .bg-pink { background: var(--pink); }
+.tbx .bg-blush { background: var(--blush); }
 .tbx .bg-sun { background: var(--sun); }
 .tbx .bg-ink { background: var(--ink); color: var(--cream); }
 @media (max-width: 640px) {
@@ -162,10 +166,6 @@ export const CSS = String.raw`
 }
 .tbx .tb-h-pay { animation: tb-h-pay 9s ease infinite; }
 @keyframes tb-h-pay { 0%, 35% { transform: translateY(0); } 36.5%, 38% { transform: translateY(4px); } 40%, 100% { transform: translateY(0); } }
-.tbx .tb-twinkle { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-twinkle 2.8s ease-in-out infinite; }
-.tbx .tb-twinkle-2 { animation-delay: -1s; }
-.tbx .tb-twinkle-3 { animation-delay: -1.9s; animation-duration: 2.2s; }
-@keyframes tb-twinkle { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(.7) rotate(20deg); } }
 
 
 .tbx .tb-phone { display: inline; }
@@ -217,8 +217,6 @@ export const CSS = String.raw`
 @keyframes tb-s-hand { 0% { transform: translate(34px, 30px); } 12% { transform: translate(0, 0); } 17%, 21% { transform: translate(0, 5px); } 26%, 100% { transform: translate(0, 0); } }
 .tbx .tb-s-check { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-pop-in 6s cubic-bezier(.3,1.6,.5,1) infinite; }
 @keyframes tb-pop-in { 0%, 21% { transform: scale(0); } 27%, 100% { transform: scale(1); } }
-.tbx .tb-s-confetti { transform-box: fill-box; transform-origin: 0% 100%; animation: tb-confetti 6s cubic-bezier(.3,1.5,.5,1) infinite; }
-@keyframes tb-confetti { 0%, 36% { transform: scale(.2) translate(-40px, 20px); opacity: 0; } 42% { opacity: 1; } 46%, 100% { transform: scale(1); opacity: 1; } }
 .tbx .tb-s-pill { transform-box: fill-box; transform-origin: 50% 100%; animation: tb-bounce 6s ease infinite; }
 @keyframes tb-bounce { 0%, 36% { transform: translateY(0); } 40% { transform: translateY(-8px); } 45% { transform: translateY(0); } 48% { transform: translateY(-2px); } 51%, 100% { transform: translateY(0); } }
 
@@ -280,22 +278,25 @@ export const CSS = String.raw`
   .tbx .tb-sheet-slim .tb-sheet-empty { display: none; }
 }
 
-/* ---------- The index: six badges that jump to their own band ---------- */
-.tbx .tb-index { padding-top: 40px; padding-bottom: 34px; display: grid; gap: 26px; align-items: center; }
-@media (min-width: 1024px) { .tbx .tb-index { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 44px; } }
+/* ---------- The index: six badges that jump to their own band ----------
+   It sits on cream between two coloured bands, so it needs real air above and
+   below or it reads as a crack rather than a pause. The badges take the wider
+   column (8fr) so the six labels never come within a word of each other. */
+.tbx .tb-index { padding-top: 62px; padding-bottom: 56px; display: grid; gap: 30px; align-items: center; }
+@media (min-width: 1024px) { .tbx .tb-index { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 56px; } }
 .tbx .tb-index .tb-h2 { font-size: clamp(30px, 2.9vw, 40px); }
-.tbx .tb-index-p { margin-top: 10px; font-size: 16.5px; line-height: 1.5; max-width: 34ch; }
-.tbx .tb-badges { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--ink); text-decoration: none; }
-.tbx .tb-badge-art { width: 100%; max-width: 58px; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+.tbx .tb-index-p { margin-top: 10px; font-size: 16.5px; line-height: 1.5; max-width: 32ch; }
+.tbx .tb-badges { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px 20px; }
+.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; }
+.tbx .tb-badge-art { width: 100%; max-width: 62px; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
 @media (hover: hover) { .tbx .tb-badges a:hover .tb-badge-art { transform: translateY(-4px) rotate(-4deg); } .tbx .tb-badges a:hover .tb-badge-label { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; } }
 .tbx .tb-badge-label { font-size: 14px; font-weight: 750; text-align: center; line-height: 1.2; white-space: nowrap; }
 @media (max-width: 640px) {
-  .tbx .tb-index { padding-top: 30px; padding-bottom: 24px; gap: 16px; }
+  .tbx .tb-index { padding-top: 40px; padding-bottom: 36px; gap: 24px; }
   /* On a phone the index is a two-column list, so the labels stay full size. */
-  .tbx .tb-badges { grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-  .tbx .tb-badges a { flex-direction: row; align-items: center; gap: 9px; }
-  .tbx .tb-badge-art { width: 38px; flex: none; max-width: none; }
+  .tbx .tb-badges { grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+  .tbx .tb-badges a { flex-direction: row; align-items: center; gap: 10px; }
+  .tbx .tb-badge-art { width: 40px; flex: none; max-width: none; }
   .tbx .tb-badge-label { font-size: 15px; text-align: left; }
 }
 
@@ -356,13 +357,12 @@ export const CSS = String.raw`
 .tbx .tb-nowrap { white-space: nowrap; }
 .tbx .tb-log-t { color: #9FB1A6; }
 .tbx .tb-rb-live { animation: tb-rb-live 8s cubic-bezier(.5,0,.3,1) infinite; }
-@keyframes tb-rb-live { 0%, 8% { transform: translate(276px, 0); } 64% { transform: translate(276px, 0); } 70% { transform: translate(138px, -58px); } 76%, 100% { transform: translate(0, 0); } }
+/* Live starts on v4's top-left corner, left of the 500 badge rather than on
+   top of it: at 276 the green pill covered the red one for two thirds of the
+   loop. It flies back to v3 over the same arc. */
+@keyframes tb-rb-live { 0%, 8% { transform: translate(248px, 0); } 64% { transform: translate(248px, 0); } 70% { transform: translate(124px, -58px); } 76%, 100% { transform: translate(0, 0); } }
 .tbx .tb-rb-err { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-rb-err 8s cubic-bezier(.3,1.7,.5,1) infinite; }
-.tbx .tb-rb-err-2 { animation-name: tb-rb-err-2; }
-.tbx .tb-rb-err-3 { animation-name: tb-rb-err-3; }
 @keyframes tb-rb-err { 0%, 12% { transform: scale(0); } 16%, 100% { transform: scale(1); } }
-@keyframes tb-rb-err-2 { 0%, 18% { transform: scale(0); } 22%, 100% { transform: scale(1); } }
-@keyframes tb-rb-err-3 { 0%, 24% { transform: scale(0); } 28%, 100% { transform: scale(1); } }
 .tbx .tb-rb-stamp { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-rb-stamp 8s cubic-bezier(.5,0,.6,1.4) infinite; }
 @keyframes tb-rb-stamp { 0%, 54% { transform: scale(1.5); opacity: 0; } 58% { transform: scale(1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 .tbx .tb-rb-fail { animation: tb-rb-fail 8s ease infinite; }
@@ -382,8 +382,6 @@ export const CSS = String.raw`
 /* The terminal and the link are drawn at rest; only the new version lands. */
 .tbx .tb-sh-new { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-sh-new 9s cubic-bezier(.3,1.7,.5,1) infinite; }
 @keyframes tb-sh-new { 0%, 8% { transform: scale(.92); } 14%, 100% { transform: scale(1); } }
-.tbx .tb-sh-sparks { animation: tb-sh-sparks 9s ease infinite; }
-@keyframes tb-sh-sparks { 0%, 8% { opacity: 0; } 16%, 86% { opacity: 1; } 100% { opacity: 0; } }
 
 /* ---------- Admins ---------- */
 .tbx .tb-admin-slab { padding-bottom: 60px; }
@@ -428,7 +426,8 @@ export const CSS = String.raw`
 .tbx .tb-last i { width: 10px; height: 10px; border-radius: 99px; background: #B3AB98; border: 2px solid var(--ink); }
 .tbx .tb-last i.tb-pulse { background: var(--green); animation: tb-pulse 2.4s ease-in-out infinite; }
 @keyframes tb-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(46,157,91,.5); } 50% { box-shadow: 0 0 0 5px rgba(46,157,91,0); } }
-.tbx .tb-admin-cursor { position: absolute; left: 196px; top: 128px; pointer-events: none; filter: drop-shadow(0 2px 0 rgba(27,36,32,.2)); }
+/* Left of the first row's avatar, not across her face. */
+.tbx .tb-admin-cursor { position: absolute; left: 172px; top: 130px; pointer-events: none; filter: drop-shadow(0 2px 0 rgba(27,36,32,.2)); }
 .tbx .tb-log {
   position: relative; margin: -22px 22px 0 auto; width: min(540px, 86%); background: #28342E; color: #E9F1EA;
   border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 4px 0 #101713, 0 7px 0 var(--ink); overflow: hidden;

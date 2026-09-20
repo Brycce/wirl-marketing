@@ -2,7 +2,7 @@
 // chat says "deploy", a browser is open at the company link, and a sticker
 // on it says company only. That is the headline, drawn.
 
-import { K, Win, Term, LinkBar, Btn, Avatar, Harbor, NamedCursor, Sparkle, RoundSticker, CastShadow, textW } from '../kit';
+import { K, Win, Term, LinkBar, Btn, Avatar, Harbor, NamedCursor, RoundSticker, CastShadow, textW } from '../kit';
 import { LogoSticker } from '../marks';
 
 const LINK = 'harbor--supplier-payments.wirl.run';
@@ -88,19 +88,21 @@ function Chat({ v }: { v: string }) {
   );
 }
 
-/* The round green sticker slapped on the browser's corner. */
-function CompanyOnly({ v }: { v: string }) {
+/* The round green sticker, stuck on the app's left edge. It sits in the clear
+   pocket of the sun disc beside the window, overlapping nothing but the
+   window's own border: the tab, the link and the rows all stay readable. */
+function CompanyOnly({ v, x, y }: { v: string; x: number; y: number }) {
   return (
     <g>
       <RoundSticker
-        x={538}
-        y={64}
+        x={x}
+        y={y}
         r={45}
         tilt={-8}
         id={`hero-only-${v}`}
         big
         className="tb-h-sticker"
-        peel={{ angle: -42, depth: 11 }}
+        peel={{ angle: -138, depth: 11 }}
         face={
           <g>
             <circle r={44} fill={K.green} stroke={K.ink} strokeWidth={3} />
@@ -120,41 +122,44 @@ function CompanyOnly({ v }: { v: string }) {
 }
 
 const LABEL = 'An agent chat says deploy supplier-payments; the app opens in a browser at harbor--supplier-payments.wirl.run with a Company only sticker on it.';
+const LABEL_PHONE = 'An agent chat says deploy supplier-payments and replies with the link harbor--supplier-payments.wirl.run, and only people at harbor.co can open it; the app is open in a browser above.';
 
-/* Wide: the browser back right, the chat overlapping its lower left. */
+/* Wide: the browser back right, the chat overlapping its lower left, and the
+   sticker alone in the pocket to the window's left. No loose sparkles: the
+   sun disc is the shine. */
 function Wide() {
   return (
     <svg viewBox="0 0 600 540" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
       <circle cx={330} cy={262} r={252} fill={K.sun} />
       <Browser />
       <Chat v="w" />
-      <CompanyOnly v="w" />
+      <CompanyOnly v="w" x={100} y={244} />
       <NamedCursor x={540} y={328} who="priya" className="tb-h-cursor" tagLeft />
-      <Sparkle x={112} y={188} r={15} fill={K.paper} className="tb-twinkle" />
-      <Sparkle x={452} y={508} r={12} fill={K.paper} className="tb-twinkle tb-twinkle-2" />
-      <Sparkle x={86} y={236} r={8} fill={K.paper} className="tb-twinkle tb-twinkle-3" />
     </svg>
   );
 }
 
-/* Phone: the same pieces, bigger, the chat tucked under the browser. */
+/* Phone: the same pieces, bigger, the chat tucked under the browser. No room
+   here for the sticker without it landing on the tab or the link, and the chat
+   under the app says the same thing in words, so the phone goes without it. */
 function Phone() {
   return (
-    <svg viewBox="0 0 450 545" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx={225} cy={270} r={222} fill={K.sun} />
+    <svg viewBox="0 0 450 545" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL_PHONE} strokeLinecap="round" strokeLinejoin="round">
+      {/* Off-centre by 20: at 225 the disc showed as a seven-unit hairline down
+          the browser's left side as well as the wedge on the right, which read
+          as a mis-registered print. From 245 its left edge is behind the
+          browser and all of it that shows is one crescent on the right. */}
+      <circle cx={245} cy={270} r={222} fill={K.sun} />
       <g transform="translate(-140 -26)">
         <Browser />
       </g>
       <g transform="translate(-6 14)">
         <Chat v="p" />
       </g>
+      {/* No name tag here: it would land on the chat, and her email is on the page already. */}
       <g transform="translate(-140 -26)">
-        <CompanyOnly v="p" />
-        {/* No name tag here: it would land on the chat, and her email is on the page already. */}
         <NamedCursor x={540} y={328} who="priya" className="tb-h-cursor" tag={false} />
       </g>
-      <Sparkle x={420} y={420} r={13} fill={K.paper} className="tb-twinkle" />
-      <Sparkle x={24} y={300} r={9} fill={K.paper} className="tb-twinkle tb-twinkle-2" />
     </svg>
   );
 }

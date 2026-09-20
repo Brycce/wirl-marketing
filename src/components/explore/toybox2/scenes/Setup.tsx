@@ -20,11 +20,12 @@ export default function SetupScene() {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {/* The terminal behind, showing the same code */}
-      <Term x={430} y={84} w={116} h={132} barH={28}>
-        <text className="mono" x={452} y={140} fontSize={17} fill="#B9C6BD">code</text>
-        <text className="mono" x={452} y={172} fontSize={18} fill={K.sun} fontWeight={700}>KTQM-</text>
-        <text className="mono" x={452} y={196} fontSize={18} fill={K.sun} fontWeight={700}>4821</text>
+      {/* The terminal behind, showing the same code. It tucks 14 under the
+          browser, not 6, so it reads as sitting behind rather than butted up. */}
+      <Term x={422} y={84} w={120} h={132} barH={28}>
+        <text className="mono" x={450} y={140} fontSize={17} fill="#B9C6BD">code</text>
+        <text className="mono" x={450} y={172} fontSize={18} fill={K.sun} fontWeight={700}>KTQM-</text>
+        <text className="mono" x={450} y={196} fontSize={18} fill={K.sun} fontWeight={700}>4821</text>
       </Term>
 
       {/* The approve screen, close up */}
@@ -38,7 +39,9 @@ export default function SetupScene() {
         <Btn x={288} y={180} w={132} h={44} faceClass="tb-s-approve" label="Approve" size={20} />
         <CheckBadge x={302} y={174} r={13} className="tb-s-check" />
       </Win>
-      <Hand x={352} y={210} s={1.15} className="tb-s-hand" />
+      {/* The finger presses the key below the word, not through the tail of
+          the p: at 216 the fingertip clears the descender by seven units. */}
+      <Hand x={352} y={216} s={1.15} className="tb-s-hand" />
 
       {/* What comes back: the link, as a die-cut sticker over the corner */}
       <g className="tb-s-pill">
@@ -48,12 +51,8 @@ export default function SetupScene() {
           <text className="mono" x={pillX + 48} y={325} fontSize={17.5} fill={K.ink}>{LINK}</text>
         </DieCut>
       </g>
-      <g className="tb-s-confetti">
-        <rect x={452} y={272} width={11} height={17} rx={2.5} fill={K.coral} stroke={K.ink} strokeWidth={2} transform="rotate(24 457 280)" />
-        <circle cx={492} cy={300} r={6} fill={K.sun} stroke={K.ink} strokeWidth={2} />
-        <rect x={506} y={252} width={11} height={17} rx={2.5} fill={K.mint} stroke={K.ink} strokeWidth={2} transform="rotate(-30 511 260)" />
-        <path d="M478 246 l6 -11 l6 11 z" fill={K.pink} stroke={K.ink} strokeWidth={2} />
-      </g>
+      {/* No confetti beside the Approve key: four shapes that stood for
+          nothing, at the one place the eye should be on the button. */}
     </svg>
   );
 }

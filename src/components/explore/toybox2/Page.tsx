@@ -6,8 +6,10 @@
 // Setup is told twice at most: the connect block in the hero, then one
 // section that carries the three steps and the any-MCP-agent point. The
 // badge row under it is an index into the bands below, not a second telling.
-// Band colours run coral, sky, pink, lilac, ink, coral, mint, sky, sun:
-// warm, cool, warm, cool, dark in the middle, then back out to the sun.
+// Band colours run coral, sky, blush, lilac, ink, coral, mint, sky, sun. The
+// sign-in band is the quiet beat: pink next to coral and lilac was a third
+// shout in a row, so it is a warm neutral now and the arc reads loud, mid,
+// quiet, loud, dark, loud, mid, mid, loud rather than a parade.
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -179,7 +181,7 @@ export default function ToyboxPage() {
           </ul>
         </section>
 
-        <Slab id="signin" tone="bg-pink">
+        <Slab id="signin" tone="bg-blush">
           <Split
             text={
               <>

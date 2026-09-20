@@ -5,14 +5,18 @@ import type { ReactNode } from 'react';
 import { K, DieCut, Avatar, Padlock } from '../kit';
 
 /* ---------- Harbor's apps, each a little window sticker behind the lock ---------- */
-type AppSticker = { name: string; bar: string; barText: string; tilt: number; inner: ReactNode };
+/* lockLeft: in the closing slab's wide pile each tile is dealt down and to one
+   side, so the tile below covers whichever bottom corner it lands on. The two
+   tiles whose neighbour lands bottom-right wear their lock bottom-left, so no
+   lock is ever sliced in half. */
+type AppSticker = { name: string; bar: string; barText: string; tilt: number; lockLeft?: boolean; inner: ReactNode };
 
 const bars = (x: number, y: number, ws: number[], gap = 13) =>
   ws.map((w, i) => <rect key={i} x={x} y={y + i * gap} width={w} height={7} rx={3.5} fill={K.edge} />);
 
 export const APPS: AppSticker[] = [
   {
-    name: 'customer-credits', bar: K.coral, barText: K.ink, tilt: -7,
+    name: 'customer-credits', bar: K.coral, barText: K.ink, tilt: -7, lockLeft: true,
     inner: (
       <g>
         {[0, 1, 2].map((i) => (
@@ -41,7 +45,7 @@ export const APPS: AppSticker[] = [
     ),
   },
   {
-    name: 'budget-lines', bar: K.sun, barText: K.ink, tilt: -4,
+    name: 'budget-lines', bar: K.sun, barText: K.ink, tilt: -4, lockLeft: true,
     inner: (
       <g>
         {[30, 48, 22, 58, 40, 66].map((h, i) => (
@@ -101,17 +105,18 @@ export const APPS: AppSticker[] = [
 ];
 
 export function AppStickerArt({ app }: { app: AppSticker }) {
+  const lx = app.lockLeft ? 20 : 150;
   return (
     <svg viewBox="0 0 172 132" className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
-      <DieCut tilt={app.tilt} cx={86} cy={66} cut={<><rect x={10} y={10} width={150} height={104} rx={12} /><circle cx={150} cy={106} r={16} /></>} border={7}>
+      <DieCut tilt={app.tilt} cx={86} cy={66} cut={<><rect x={10} y={10} width={150} height={104} rx={12} /><circle cx={lx} cy={106} r={16} /></>} border={7}>
         <rect x={10} y={10} width={150} height={104} rx={12} fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
         <path d={`M10 36 V22 A12 12 0 0 1 22 10 H148 A12 12 0 0 1 160 22 V36 Z`} fill={app.bar} />
         <path d="M10 36 H160" stroke={K.ink} strokeWidth={2} />
         <text className="mono" x={19} y={28.5} fontSize={12.6} fontWeight={700} fill={app.barText}>{app.name}</text>
         {app.inner}
         <rect x={10} y={10} width={150} height={104} rx={12} fill="none" stroke={K.ink} strokeWidth={2.5} />
-        <circle cx={150} cy={106} r={15} fill={K.green} stroke={K.ink} strokeWidth={2.5} />
-        <g transform="translate(150 106)">
+        <circle cx={lx} cy={106} r={15} fill={K.green} stroke={K.ink} strokeWidth={2.5} />
+        <g transform={`translate(${lx} 106)`}>
           <path d="M-3.6 -1.6 V-4 A3.6 3.6 0 0 1 3.6 -4 V-1.6" fill="none" stroke={K.paper} strokeWidth={2.2} />
           <rect x={-5.6} y={-2} width={11.2} height={8.6} rx={2} fill={K.paper} />
         </g>
