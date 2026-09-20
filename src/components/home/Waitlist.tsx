@@ -1,10 +1,13 @@
 'use client';
 
+// The waitlist: posts the address to /api/waitlist, which emails it on.
+// A paper input on a toy edge and an ink toy button.
+
 import { useState } from 'react';
 
 type State = 'idle' | 'submitting' | 'done' | 'error';
 
-export default function WaitlistForm({ id = 'waitlist-email', center = false }: { id?: string; center?: boolean }) {
+export default function Waitlist({ id = 'waitlist-email' }: { id?: string }) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<State>('idle');
   const [message, setMessage] = useState('');
@@ -34,22 +37,22 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
 
   if (state === 'done') {
     return (
-      <div className={`max-w-md flex items-start gap-3 ${center ? 'mx-auto justify-center' : ''}`}>
-        <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" className="shrink-0 mt-0.5">
-          <circle cx="14" cy="14" r="14" fill="#2F7D4F" />
-          <path d="M8 14.5 l4 4 l8 -9" fill="none" stroke="#FCF8F0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <div className="tb-done" role="status">
+        <svg viewBox="0 0 36 36" width="36" height="36" aria-hidden="true">
+          <circle cx="18" cy="18" r="15.5" fill="#2E9D5B" stroke="#1B2420" strokeWidth="3" />
+          <path d="M11 18.5 l4.6 4.6 l9.4 -10" fill="none" stroke="#FFFDF7" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        <div className="text-left">
-          <p className="font-display font-bold text-xl leading-none">You&apos;re on the list.</p>
-          <p className="text-dim text-[14px] mt-1.5">We&apos;ll write when your workspace is ready.</p>
+        <div>
+          <p className="tb-done-h">You&apos;re on the list.</p>
+          <p className="tb-done-p">We&apos;ll write when your workspace is ready.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className={`max-w-md ${center ? 'mx-auto text-center' : ''}`}>
-      <div className="flex flex-col sm:flex-row gap-3">
+    <form onSubmit={onSubmit} className="tb-form">
+      <div className="tb-form-row">
         <label htmlFor={id} className="sr-only">Work email</label>
         <input
           id={id}
@@ -59,14 +62,14 @@ export default function WaitlistForm({ id = 'waitlist-email', center = false }: 
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@company.com"
           disabled={state === 'submitting'}
-          className="input flex-1 min-w-0 px-4 py-2.5 text-[15px] placeholder:text-dim/70 disabled:opacity-60"
+          className="tb-input"
         />
-        <button type="submit" disabled={state === 'submitting'} className="btn disabled:opacity-60">
+        <button type="submit" disabled={state === 'submitting'} className="tbtn tbtn-ink">
           {state === 'submitting' ? 'Joining' : 'Join the waitlist'}
         </button>
       </div>
-      <p className="text-[13px] text-dim mt-3 min-h-[1.25rem]" aria-live="polite">
-        {state === 'error' ? <span className="text-red">{message}</span> : 'Private beta. No spam, no drip campaign.'}
+      <p className="tb-form-note" aria-live="polite">
+        {state === 'error' ? <span className="tb-err">{message}</span> : 'Private beta. No spam, no drip campaign.'}
       </p>
     </form>
   );
