@@ -149,23 +149,24 @@ export const CSS = String.raw`
 .tbx .tb-after a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 
 /* ---------- Hero motion ----------
-   The frame is complete from the first paint: the command, the reply, the
-   link and the sticker are all drawn. Only the caret blinks and the cursor
-   walks over to Pay, so a screenshot never catches an empty box. */
+   The frame is complete from the first paint: all four windows, the link and
+   the sticker are drawn, and the cursor starts on screen just off the card.
+   It walks onto Continue and presses it, so a screenshot never catches an
+   empty box. (tb-h-caret is the sign-in band's, not the hero's.) */
 .tbx .tb-h-caret { animation: tb-h-caret 1.1s steps(1) infinite; }
 @keyframes tb-h-caret { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
 .tbx .tb-h-sticker { transform-box: fill-box; transform-origin: 50% 50%; animation: tb-h-settle 9s ease-in-out infinite; }
 @keyframes tb-h-settle { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(-1.6deg); } 96% { transform: rotate(1deg); } }
 .tbx .tb-h-cursor { animation: tb-h-cursor 9s cubic-bezier(.45,0,.3,1) infinite; }
 @keyframes tb-h-cursor {
-  0%, 22% { transform: translate(-40px, 26px); }
-  34% { transform: translate(0, 0); }
-  36% { transform: translate(0, 3px); }
-  40%, 88% { transform: translate(0, 0); }
-  100% { transform: translate(-40px, 26px); }
+  0%, 10% { transform: translate(26px, -12px); }
+  24% { transform: translate(0, 0); }
+  26.5% { transform: translate(0, 3px); }
+  30%, 88% { transform: translate(0, 0); }
+  100% { transform: translate(26px, -12px); }
 }
-.tbx .tb-h-pay { animation: tb-h-pay 9s ease infinite; }
-@keyframes tb-h-pay { 0%, 35% { transform: translateY(0); } 36.5%, 38% { transform: translateY(4px); } 40%, 100% { transform: translateY(0); } }
+.tbx .tb-h-press { animation: tb-h-press 9s ease infinite; }
+@keyframes tb-h-press { 0%, 25% { transform: translateY(0); } 27%, 29% { transform: translateY(4px); } 32%, 100% { transform: translateY(0); } }
 
 
 .tbx .tb-phone { display: inline; }
