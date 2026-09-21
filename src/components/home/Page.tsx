@@ -41,7 +41,7 @@ const faqJsonLd = {
 
 /* The hero headline: one line per \n, and [icons] becomes the row of logo
    stickers. The word before the stickers stays on their line. */
-function Headline({ text }: { text: string }) {
+export function Headline({ text }: { text: string }) {
   return (
     <>
       {text.split('\n').map((line, i) => {
