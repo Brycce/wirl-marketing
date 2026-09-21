@@ -1,9 +1,10 @@
-// The hero: the whole product in one frame, on a big sun disc. The agent's
-// chat says "deploy", a browser is open at the company link, and a sticker
-// on it says company only. That is the headline, drawn.
+// The hero: the app itself, live on a big sun disc. A browser is open at the
+// company link with a sticker on it saying company only, and Priya's cursor
+// is on Pay. The agent's chat used to sit here too, but the connect block
+// right beside it is already a Claude Code window, and two of those in one
+// view read as one thing said twice.
 
-import { K, Win, Term, LinkBar, Btn, Avatar, Acme, NamedCursor, RoundSticker, CastShadow, textW } from '../kit';
-import { LogoSticker } from '../marks';
+import { K, Win, LinkBar, Btn, Avatar, Acme, NamedCursor, RoundSticker, CastShadow } from '../kit';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 
@@ -61,33 +62,6 @@ function Browser() {
   );
 }
 
-/* The agent's chat: "deploy", and the reply with the link. The whole exchange
-   is drawn from the first frame; only the caret after the command blinks. */
-function Chat({ v }: { v: string }) {
-  const x = 20;
-  const y = 316;
-  const cmdW = textW('you › deploy supplier-payments', 16, true);
-  return (
-    <g>
-      <Term x={x} y={y} w={384} h={196} barH={38}>
-        <text x={120} y={340} fontSize={15} fill={K.termText}>Claude Code</text>
-        <text className="mono" x={40} y={384} fontSize={16} fill={K.termText}>
-          <tspan fill={K.sun}>you ›</tspan> deploy supplier-payments
-        </text>
-        <rect className="tb-h-caret" x={40 + cmdW + 3} y={370} width={9} height={18} fill={K.sun} />
-        <g>
-          <circle cx={45} cy={415} r={4.5} fill="#D97757" />
-          <text x={58} y={421} fontSize={16} fill={K.termText} fontWeight={600}>Live at</text>
-          <text className="mono" x={58} y={447} fontSize={15} fill="#A9CCFF">{LINK}</text>
-          <path d={`M58 452 H${58 + textW(LINK, 15, true)}`} stroke="#A9CCFF" strokeWidth={1.6} />
-          <text x={58} y={477} fontSize={16} fill={K.termText} fontWeight={600}>Only people at acme.co can open it.</text>
-        </g>
-      </Term>
-      <LogoSticker agent="claude" x={98} y={335} size={24} uid={`hero-chat-${v}`} />
-    </g>
-  );
-}
-
 /* The round green sticker, stuck on the app's left edge. It sits in the clear
    pocket of the sun disc beside the window, overlapping nothing but the
    window's own border: the tab, the link and the rows all stay readable. */
@@ -121,42 +95,36 @@ function CompanyOnly({ v, x, y }: { v: string; x: number; y: number }) {
   );
 }
 
-const LABEL = 'An agent chat says deploy supplier-payments; the app opens in a browser at acme--supplier-payments.wirl.run with a Company only sticker on it.';
-const LABEL_PHONE = 'An agent chat says deploy supplier-payments and replies with the link acme--supplier-payments.wirl.run, and only people at acme.co can open it; the app is open in a browser above.';
+const LABEL = 'The supplier-payments app open in a browser at acme--supplier-payments.wirl.run, with a Company only sticker on it.';
+const LABEL_PHONE = 'The supplier-payments app open in a browser at acme--supplier-payments.wirl.run, with a Company only sticker on it.';
 
-/* Wide: the browser back right, the chat overlapping its lower left, and the
-   sticker alone in the pocket to the window's left. No loose sparkles: the
-   sun disc is the shine. */
+/* Wide: the browser on the sun disc, the sticker alone in the pocket to its
+   left. No loose sparkles: the disc is the shine. */
 function Wide() {
   return (
-    <svg viewBox="0 0 600 540" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx={330} cy={262} r={252} fill={K.sun} />
+    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx={336} cy={200} r={216} fill={K.sun} />
       <Browser />
-      <Chat v="w" />
-      <CompanyOnly v="w" x={100} y={244} />
+      <CompanyOnly v="w" x={98} y={208} />
       <NamedCursor x={540} y={328} who="priya" className="tb-h-cursor" tagLeft />
     </svg>
   );
 }
 
-/* Phone: the same pieces, bigger, the chat tucked under the browser. No room
-   here for the sticker without it landing on the tab or the link, and the chat
-   under the app says the same thing in words, so the phone goes without it. */
+/* Phone: the same browser, bigger. With the chat gone the sticker has room
+   under the window's left corner, so the phone gets it too. */
 function Phone() {
   return (
-    <svg viewBox="0 0 450 545" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL_PHONE} strokeLinecap="round" strokeLinejoin="round">
-      {/* Off-centre by 20: at 225 the disc showed as a seven-unit hairline down
-          the browser's left side as well as the wedge on the right, which read
-          as a mis-registered print. From 245 its left edge is behind the
-          browser and all of it that shows is one crescent on the right. */}
-      <circle cx={245} cy={270} r={222} fill={K.sun} />
+    <svg viewBox="0 0 450 420" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL_PHONE} strokeLinecap="round" strokeLinejoin="round">
+      {/* Off-centre by 20: centred, the disc showed as a hairline down the
+          browser's left side as well as the wedge on the right, which read as a
+          mis-registered print. From 245 all of it that shows is one crescent. */}
+      <circle cx={245} cy={196} r={200} fill={K.sun} />
       <g transform="translate(-140 -26)">
         <Browser />
       </g>
-      <g transform="translate(-6 14)">
-        <Chat v="p" />
-      </g>
-      {/* No name tag here: it would land on the chat, and her email is on the page already. */}
+      <CompanyOnly v="p" x={72} y={352} />
+      {/* No name tag here: her email is on the app's own header already. */}
       <g transform="translate(-140 -26)">
         <NamedCursor x={540} y={328} who="priya" className="tb-h-cursor" tag={false} />
       </g>
