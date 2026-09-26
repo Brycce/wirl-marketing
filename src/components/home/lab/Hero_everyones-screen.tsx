@@ -9,6 +9,7 @@
 // the desk line so no screen is covered.
 
 import { K, PEOPLE, Avatar, DieCut, MiniLock, Check, Tile, textW, type Who } from '../kit';
+import { LabANight } from './Hero_same-link-two-phones';
 
 const LINK = 'acme--spend-requests.wirl.run';
 const P = 'hx-everyones-screen';
@@ -74,7 +75,7 @@ function Laptop({ lid, inset, base, who, amount, z, i }: {
   const cx = lid.x + lid.w / 2;
   return (
     <g>
-      <rect x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={13} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-la-n-rim" x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={13} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <circle cx={cx} cy={lid.y + inset.top / 2 + 0.5} r={1.7} fill="#4A5A51" />
       <AppScreen
         x={lid.x + inset.side} y={lid.y + inset.top}
@@ -235,36 +236,39 @@ const LABEL =
 
 export default function HeroEveryonesScreen() {
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{STYLE}</style>
-      <defs>
-        <clipPath id={`${P}-crop`}>
-          <rect x={-10} y={-40} width={620} height={452} />
-        </clipPath>
-      </defs>
-      <circle cx={300} cy={170} r={180} fill={K.sun} />
-      <LinkSticker />
-      <g clipPath={`url(#${P}-crop)`}>
-        <rect x={-10} y={DESK_Y + 16} width={620} height={120} fill={WOOD_FRONT} stroke={K.ink} strokeWidth={3} />
-        <rect x={-10} y={DESK_Y} width={620} height={16} rx={4} fill={WOOD_TOP} stroke={K.ink} strokeWidth={3} />
-      </g>
-      <Laptop
-        lid={{ x: 20, y: 188, w: 164, h: 120 }} inset={{ side: 7, top: 7, bottom: 9 }} base={{ x: 14, w: 176, h: 8 }}
-        who="priya" amount="$38" z={SMALL} i={0}
-      />
-      <Laptop
-        lid={{ x: 198, y: 164, w: 204, h: 142 }} inset={{ side: 8, top: 8, bottom: 10 }} base={{ x: 194, w: 212, h: 10 }}
-        who="tom" amount="$120" z={BIG} i={1}
-      />
-      <Laptop
-        lid={{ x: 416, y: 188, w: 164, h: 120 }} inset={{ side: 7, top: 7, bottom: 9 }} base={{ x: 410, w: 176, h: 8 }}
-        who="sam" amount="$9" z={SMALL} i={2}
-      />
-      <g clipPath={`url(#${P}-crop)`}>
-        <Priya cx={102} />
-        <Tom cx={300} />
-        <Sam cx={498} />
-      </g>
-    </svg>
+    <>
+      <LabANight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{STYLE}</style>
+        <defs>
+          <clipPath id={`${P}-crop`}>
+            <rect x={-10} y={-40} width={620} height={452} />
+          </clipPath>
+        </defs>
+        <circle className="hx-la-n-disc" cx={300} cy={170} r={180} fill={K.sun} />
+        <LinkSticker />
+        <g clipPath={`url(#${P}-crop)`}>
+          <rect className="hx-la-n-desk-front" x={-10} y={DESK_Y + 16} width={620} height={120} fill={WOOD_FRONT} stroke={K.ink} strokeWidth={3} />
+          <rect className="hx-la-n-desk-top" x={-10} y={DESK_Y} width={620} height={16} rx={4} fill={WOOD_TOP} stroke={K.ink} strokeWidth={3} />
+        </g>
+        <Laptop
+          lid={{ x: 20, y: 188, w: 164, h: 120 }} inset={{ side: 7, top: 7, bottom: 9 }} base={{ x: 14, w: 176, h: 8 }}
+          who="priya" amount="$38" z={SMALL} i={0}
+        />
+        <Laptop
+          lid={{ x: 198, y: 164, w: 204, h: 142 }} inset={{ side: 8, top: 8, bottom: 10 }} base={{ x: 194, w: 212, h: 10 }}
+          who="tom" amount="$120" z={BIG} i={1}
+        />
+        <Laptop
+          lid={{ x: 416, y: 188, w: 164, h: 120 }} inset={{ side: 7, top: 7, bottom: 9 }} base={{ x: 410, w: 176, h: 8 }}
+          who="sam" amount="$9" z={SMALL} i={2}
+        />
+        <g clipPath={`url(#${P}-crop)`}>
+          <Priya cx={102} />
+          <Tom cx={300} />
+          <Sam cx={498} />
+        </g>
+      </svg>
+    </>
   );
 }

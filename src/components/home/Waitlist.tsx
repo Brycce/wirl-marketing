@@ -1,7 +1,7 @@
 'use client';
 
 // The waitlist: posts the address to /api/waitlist, which emails it on.
-// A paper input on a toy edge and an ink toy button.
+// A paper input on a toy edge and an ink toy button (sun yellow at night).
 
 import { useState } from 'react';
 
@@ -64,7 +64,8 @@ export default function Waitlist({ id = 'waitlist-email' }: { id?: string }) {
           disabled={state === 'submitting'}
           className="tb-input"
         />
-        <button type="submit" disabled={state === 'submitting'} className="tbtn tbtn-ink">
+        {/* tb-wl-go: sun yellow at night (the rule is in scenes/Small.tsx). */}
+        <button type="submit" disabled={state === 'submitting'} className="tbtn tbtn-ink tb-wl-go">
           {state === 'submitting' ? 'Joining' : 'Join the waitlist'}
         </button>
       </div>

@@ -13,11 +13,38 @@
 
 import { K, MiniLock, Avatar, Btn, Hand } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { night } from '../css';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
 const P = 'hx-lp-overlap-';
 const BASE_EDGE = '#CDBFA3';
+
+/* ---------- Night ----------
+   Night mode for the four laptop-to-phone heroes (lp-overlap, lp-gate,
+   lp-handoff, lp-people). All four render this one stylesheet, word for word,
+   so React's dedupe by href is always right. The devices, people and stickers
+   keep their day colours; only what stands for the background or sits on it
+   changes:
+   hx-lp-n-disc  the sun disc, which would be the brightest thing on the page;
+                 at night it takes the night sun band's deep tint (--band-sun).
+   hx-lp-n-rim   an ink body (laptop lid, phone body, dark hair) whose edge
+                 would melt into the night page; its ink outline lifts to
+                 --term-line, the same soft frame the terminals get.
+   hx-lp-n-halo  a night-only copy of a dark shape, drawn behind it with a
+                 wider stroke (display="none" by day), so only the outside
+                 edge gets the rim (Tom's curls in lp-people).
+   hx-lp-n-line  an ink stroke drawn straight onto the disc (lp-gate's
+                 arrows); it turns the page's text colour. */
+export const LP_NIGHT = night(`
+.tbx .hx-lp-n-disc { fill: var(--band-sun); }
+.tbx .hx-lp-n-rim { stroke: var(--term-line); }
+.tbx .hx-lp-n-halo { display: inline; stroke: var(--term-line); }
+.tbx .hx-lp-n-line { stroke: var(--text); }
+`);
+export function LpNight() {
+  return <style href="tb-dark-lab-b" precedence="default">{LP_NIGHT}</style>;
+}
 
 const CSS = `
 @media (prefers-reduced-motion: no-preference) {
@@ -83,7 +110,7 @@ function Laptop() {
         fill={BASE_EDGE} stroke={K.ink} strokeWidth={2}
       />
       {/* Lid: the ink is the bezel */}
-      <rect x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <circle cx={LID.x + LID.w / 2} cy={LID.y + BEZEL / 2} r={2.2} fill="#3B4A42" />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={8} fill={K.paper} />
       {/* Her ask */}
@@ -124,7 +151,7 @@ function Phone() {
     <g transform={`rotate(${ROT} ${cx} ${cy})`}>
       {/* Body, with its side showing on the right */}
       <rect x={body.x + 4} y={body.y} width={body.w} height={body.h} rx={28} fill={K.metal} stroke={K.ink} strokeWidth={3} />
-      <rect x={body.x} y={body.y} width={body.w} height={body.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={body.x} y={body.y} width={body.w} height={body.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={sr} fill={K.paper} />
       {/* The company sign-in, as a slim strip across the top */}
       <path d={`M${scr.x} ${scr.y + stripH} V${scr.y + sr} A${sr} ${sr} 0 0 1 ${scr.x + sr} ${scr.y} H${scr.x + scr.w - sr} A${sr} ${sr} 0 0 1 ${scr.x + scr.w} ${scr.y + sr} V${scr.y + stripH} Z`} fill={K.green} />
@@ -155,12 +182,15 @@ const LABEL =
 
 export default function HeroLpOverlap() {
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{CSS}</style>
-      <circle cx={306} cy={212} r={194} fill={K.sun} />
-      <Laptop />
-      <Phone />
-    </svg>
+    <>
+      <LpNight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{CSS}</style>
+        <circle className="hx-lp-n-disc" cx={306} cy={212} r={194} fill={K.sun} />
+        <Laptop />
+        <Phone />
+      </svg>
+    </>
   );
 }
 

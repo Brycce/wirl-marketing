@@ -13,6 +13,7 @@
 
 import { K, DieCut, MiniLock, Btn, CheckBadge, GoogleG } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LpNight } from './Hero_lp-overlap';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const P = 'hx-lp-people-';
@@ -109,7 +110,7 @@ function Priya({ x, y, s, bottom }: Pose) {
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
       {/* A black bob to the jaw, fringe swept to one side */}
-      <path d="M-12.4 -1 C-13.6 -13 -7 -16.6 0 -16.6 C7 -16.6 13.6 -13 12.4 -1 L12.8 7.6 C9 9.4 -9 9.4 -12.8 7.6 Z" fill={p.hair} stroke={K.ink} strokeWidth={w} />
+      <path className="hx-lp-n-rim" d="M-12.4 -1 C-13.6 -13 -7 -16.6 0 -16.6 C7 -16.6 13.6 -13 12.4 -1 L12.8 7.6 C9 9.4 -9 9.4 -12.8 7.6 Z" fill={p.hair} stroke={K.ink} strokeWidth={w} />
       <Torso top={p.top} skin={p.skin} w={w} bottom={bottom} />
       <ellipse cx={0} cy={-2} rx={9.6} ry={10.4} fill={p.skin} stroke={K.ink} strokeWidth={w} />
       <path d="M-10 -3.2 C-10.6 -11.6 -5 -14.4 0.6 -14.2 C6.4 -14 10.6 -11 10 -3.2 C8.4 -6.4 5.6 -8.8 2.2 -9.2 C-1.4 -7.2 -6 -5.6 -10 -3.2 Z" fill={p.hair} stroke={K.ink} strokeWidth={w} />
@@ -124,6 +125,11 @@ function Tom({ x, y, s, bottom }: Pose) {
   const curls: [number, number, number][] = [[-9.4, -5.4, 3.4], [-8.6, -10, 3.8], [-4.6, -13.4, 4], [0.4, -14.6, 4], [5.2, -13.4, 4], [8.8, -10, 3.8], [9.6, -5.4, 3.4], [-2, -10.4, 3.6], [3, -10.6, 3.6]];
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
+      {/* Night only: a rim round the outside of his curls, behind his face so
+          it never crosses his forehead (see LP_NIGHT in Hero_lp-overlap). */}
+      <g className="hx-lp-n-halo" display="none" fill={p.hair} stroke={K.ink} strokeWidth={w * 2.4}>
+        {curls.map(([cx, cy, r]) => <circle key={`${cx}${cy}`} cx={cx} cy={cy} r={r} />)}
+      </g>
       <Torso top={p.top} skin={p.skin} w={w} bottom={bottom} />
       <circle cx={-9.6} cy={-0.6} r={2.4} fill={p.skin} stroke={K.ink} strokeWidth={w} />
       <circle cx={9.6} cy={-0.6} r={2.4} fill={p.skin} stroke={K.ink} strokeWidth={w} />
@@ -191,7 +197,7 @@ function Laptop({ lid, bezel, base }: { lid: Box; bezel: number; base: Box }) {
         d={`M${mid - notch / 2} ${base.y} V${base.y + 2} Q${mid - notch / 2} ${base.y + 6} ${mid - notch / 2 + 4} ${base.y + 6} H${mid + notch / 2 - 4} Q${mid + notch / 2} ${base.y + 6} ${mid + notch / 2} ${base.y + 2} V${base.y}`}
         fill={BASE_EDGE} stroke={K.ink} strokeWidth={2}
       />
-      <rect x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={15} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={15} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={7} fill={K.paper} />
       {/* Her ask */}
       <path d={bubble(ask, 14, 'right')} fill={K.pinkWash} stroke={K.ink} strokeWidth={2} />
@@ -224,7 +230,7 @@ function Phone({ body, tilt }: { body: Box; tilt: number }) {
   return (
     <g transform={`rotate(${tilt} ${cx} ${cy})`}>
       <rect x={body.x + 4} y={body.y} width={body.w} height={body.h} rx={24} fill={K.metal} stroke={K.ink} strokeWidth={3} />
-      <rect x={body.x} y={body.y} width={body.w} height={body.h} rx={24} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={body.x} y={body.y} width={body.w} height={body.h} rx={24} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={sr} fill={K.paper} />
       <path d={`M${scr.x} ${scr.y + barH} V${scr.y + sr} A${sr} ${sr} 0 0 1 ${scr.x + sr} ${scr.y} H${scr.x + scr.w - sr} A${sr} ${sr} 0 0 1 ${scr.x + scr.w} ${scr.y + sr} V${scr.y + barH} Z`} fill={K.green} />
       <path d={`M${scr.x} ${scr.y + barH} H${scr.x + scr.w}`} stroke={K.ink} strokeWidth={2} />
@@ -273,9 +279,11 @@ export default function HeroLpPeople() {
   const pEnd = L(-hw, 0);
   const tEnd = L(hw, 0);
   return (
+    <>
+    <LpNight />
     <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
       <style>{CSS}</style>
-      <circle cx={300} cy={206} r={200} fill={K.sun} />
+      <circle className="hx-lp-n-disc" cx={300} cy={206} r={200} fill={K.sun} />
       <Priya x={78} y={188} s={3.5} bottom={52} />
       <Tom x={522} y={124} s={3.5} bottom={70} />
       {/* The desk they share */}
@@ -294,5 +302,6 @@ export default function HeroLpPeople() {
       <Phone body={PHONE} tilt={4} />
       <PhoneGrip body={PHONE} tilt={4} skin={TOM.skin} />
     </svg>
+    </>
   );
 }

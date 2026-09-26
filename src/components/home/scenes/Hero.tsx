@@ -14,6 +14,7 @@
 
 import type { ReactNode } from 'react';
 import { K, Win, LinkBar, Btn, Avatar, Acme, GoogleG, NamedCursor, RoundSticker, Check, textW } from '../kit';
+import { HeroSetupNight } from '../marks';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
@@ -242,7 +243,7 @@ const LABEL =
 function Wide() {
   return (
     <svg viewBox="0 0 600 412" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx={300} cy={196} r={212} fill={K.sun} />
+      <circle className="tb-hero-sun" cx={300} cy={196} r={212} fill={K.sun} />
       <BoardWin box={{ x: 194, y: 28, w: 204, h: 170 }} rot={-2} size={14.5} barH={28} pitch={26} />
       <ChartWin box={{ x: 4, y: 68, w: 204, h: 184 }} rot={-5} size={14.5} barH={28} bw={20} pitch={30} x0={12} />
       <QueueWin
@@ -263,7 +264,7 @@ function Wide() {
 function Phone() {
   return (
     <svg viewBox="0 0 430 404" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx={215} cy={198} r={202} fill={K.sun} />
+      <circle className="tb-hero-sun" cx={215} cy={198} r={202} fill={K.sun} />
       <BoardWin box={{ x: 128, y: 14, w: 210, h: 150 }} rot={-2} size={14} barH={30} pitch={32} />
       <ChartWin box={{ x: 0, y: 60, w: 148, h: 168 }} rot={-5} size={14} barH={30} bw={12} pitch={14} x0={3} />
       <QueueWin
@@ -281,6 +282,7 @@ function Phone() {
 export default function HeroScene() {
   return (
     <>
+      <HeroSetupNight />
       <Wide />
       <Phone />
     </>

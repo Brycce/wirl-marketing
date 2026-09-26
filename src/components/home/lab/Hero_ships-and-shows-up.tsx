@@ -22,6 +22,7 @@
 import { useEffect, useRef } from 'react';
 import { K, CastShadow, Avatar, AvatarStack, Acme, MiniLock, textW, type Who } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LabANight } from './Hero_same-link-two-phones';
 
 const P = 'hx-ships-and-shows-up';
 const MUTED = '#5E5A4C';
@@ -266,16 +267,17 @@ export default function HeroShipsAndShowsUp() {
 
   return (
     <>
+      <LabANight />
       <svg ref={wide} viewBox="0 0 600 412" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
         <style>{CSS}</style>
         <Defs v="w" />
-        <circle cx={330} cy={190} r={196} fill={K.sun} />
+        <circle className="hx-la-n-disc" cx={330} cy={190} r={196} fill={K.sun} />
         <Card c={WIDE_CARD} />
         <Bubble b={WIDE_BUBBLE} />
       </svg>
       <svg ref={phone} viewBox="0 0 430 404" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
         <Defs v="p" />
-        <circle cx={250} cy={236} r={168} fill={K.sun} />
+        <circle className="hx-la-n-disc" cx={250} cy={236} r={168} fill={K.sun} />
         <Card c={PHONE_CARD} />
         <Bubble b={PHONE_BUBBLE} />
       </svg>

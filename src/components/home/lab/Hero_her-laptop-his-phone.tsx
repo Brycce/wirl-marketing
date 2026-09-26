@@ -14,6 +14,7 @@
 
 import { K, DieCut, MiniLock, Avatar, Btn, CheckBadge, Hand } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LabANight } from './Hero_same-link-two-phones';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
@@ -111,7 +112,7 @@ function Laptop({ lid, bezel, base, notch = 60, ask, reply, size, lead, pad, rep
         </g>
       )}
       {/* Lid: the ink is the bezel */}
-      <rect x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-la-n-rim" x={lid.x} y={lid.y} width={lid.w} height={lid.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <circle cx={lid.x + lid.w / 2} cy={lid.y + bezel / 2} r={2.2} fill="#3B4A42" />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={8} fill={K.paper} />
       {/* Her ask */}
@@ -157,7 +158,7 @@ function Phone({ body, inset, rot, t }: { body: Box; inset: number; rot: number;
     <g transform={`rotate(${rot} ${cx} ${cy})`}>
       {/* Body, with its side showing on the right */}
       <rect x={body.x + 4} y={body.y} width={body.w} height={body.h} rx={28} fill={K.metal} stroke={K.ink} strokeWidth={3} />
-      <rect x={body.x} y={body.y} width={body.w} height={body.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-la-n-rim" x={body.x} y={body.y} width={body.w} height={body.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={sr} fill={K.paper} />
       {/* App bar */}
       <path d={`M${scr.x} ${scr.y + t.barH} V${scr.y + sr} A${sr} ${sr} 0 0 1 ${scr.x + sr} ${scr.y} H${scr.x + scr.w - sr} A${sr} ${sr} 0 0 1 ${scr.x + scr.w} ${scr.y + sr} V${scr.y + t.barH} Z`} fill={K.green} />
@@ -216,14 +217,14 @@ function Wide() {
   return (
     <svg viewBox="0 0 600 412" className="tb-art tb-hero-art tb-hero-wide" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
       <style>{CSS}</style>
-      <circle cx={300} cy={214} r={200} fill={K.sun} />
+      <circle className="hx-la-n-disc" cx={300} cy={214} r={200} fill={K.sun} />
       {/* One path: out of her laptop, through the link, into his phone. */}
       <path
-        className={`${P}path`}
+        className={`${P}path hx-la-n-line`}
         d="M110 122 C110 72, 118 47, 150 47 H490 C528 47, 540 62, 540 99"
         fill="none" stroke={K.ink} strokeWidth={3} strokeDasharray="2 9"
       />
-      <path d="M532 91 L540 100 L548 91" fill="none" stroke={K.ink} strokeWidth={3} />
+      <path className="hx-la-n-line" d="M532 91 L540 100 L548 91" fill="none" stroke={K.ink} strokeWidth={3} />
       <Laptop
         lid={{ x: 20, y: 124, w: 300, h: 196 }} bezel={12} base={{ x: 6, y: 320, w: 328, h: 20 }}
         ask={{ x: 100, y: 150, w: 196, h: 58 }} reply={{ x: 46, y: 228, w: 212, h: 60 }}
@@ -245,13 +246,13 @@ const N_T: PhoneSizes = { bar: 13.5, name: 13.5, email: 14, row: 14, btn: 16, ba
 function Narrow() {
   return (
     <svg viewBox="0 0 430 404" className="tb-art tb-hero-art tb-hero-phone" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx={215} cy={206} r={190} fill={K.sun} />
+      <circle className="hx-la-n-disc" cx={215} cy={206} r={190} fill={K.sun} />
       <path
-        className={`${P}path`}
+        className={`${P}path hx-la-n-line`}
         d="M76 110 C76 70, 76 37, 52 35 M378 35 C404 36, 404 70, 398 119"
         fill="none" stroke={K.ink} strokeWidth={3} strokeDasharray="2 9"
       />
-      <path d="M390 111 L398 120 L406 111" fill="none" stroke={K.ink} strokeWidth={3} />
+      <path className="hx-la-n-line" d="M390 111 L398 120 L406 111" fill="none" stroke={K.ink} strokeWidth={3} />
       <Laptop
         lid={{ x: 0, y: 108, w: 240, h: 188 }} bezel={11} base={{ x: -4, y: 296, w: 248, h: 16 }} notch={48}
         ask={{ x: 44, y: 130, w: 170, h: 54 }} reply={{ x: 20, y: 206, w: 190, h: 56 }}
@@ -268,6 +269,7 @@ function Narrow() {
 export default function HeroHerLaptopHisPhone() {
   return (
     <>
+      <LabANight />
       <Wide />
       <Narrow />
     </>

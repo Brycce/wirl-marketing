@@ -13,6 +13,7 @@
 
 import { K, Win, Btn, Acme, Avatar, NamedCursor, MiniLock } from '../kit';
 import { LogoSticker } from '../marks';
+import { LabANight } from './Hero_same-link-two-phones';
 
 const APP = 'customer-credits';
 const LINK = 'acme--customer-credits.wirl.run';
@@ -147,7 +148,7 @@ function Scene({ L, cls }: { L: Layout; cls: string }) {
       strokeLinejoin="round"
     >
       <style>{css(L.sfx, L.cursor.x, L.cursor.y)}</style>
-      <circle cx={L.sun.cx} cy={L.sun.cy} r={L.sun.r} fill={K.sun} />
+      <circle className="hx-la-n-disc" cx={L.sun.cx} cy={L.sun.cy} r={L.sun.r} fill={K.sun} />
       <App box={L.win} sfx={L.sfx} />
       <Reply L={L} />
     </svg>
@@ -170,13 +171,19 @@ const PHONE: Layout = {
 };
 
 export function HeroTheAgentsReplyPhone() {
-  return <Scene L={PHONE} cls="tb-hero-phone" />;
+  return (
+    <>
+      <LabANight />
+      <Scene L={PHONE} cls="tb-hero-phone" />
+    </>
+  );
 }
 
 /* Both crops; only one is ever on screen. */
 export default function HeroTheAgentsReply() {
   return (
     <>
+      <LabANight />
       <Scene L={WIDE} cls="tb-hero-wide" />
       <Scene L={PHONE} cls="tb-hero-phone" />
     </>

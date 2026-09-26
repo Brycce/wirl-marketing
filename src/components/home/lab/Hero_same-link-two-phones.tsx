@@ -8,6 +8,7 @@
 
 import type { ReactNode } from 'react';
 import { K, Avatar, Btn, CheckBadge, DieCut, MiniLock, Padlock } from '../kit';
+import { night } from '../css';
 
 const P = 'hx-same-link-two-phones';
 const LINK = 'acme--supplier-payments.wirl.run';
@@ -40,6 +41,42 @@ const CSS = `
 }
 `;
 
+/* ---------- Night ----------
+   Night mode for six hero explorations: same-link-two-phones,
+   her-laptop-his-phone, the-agents-reply, the-thread, ships-and-shows-up and
+   everyones-screen. All six render this one stylesheet, word for word, so
+   React's dedupe by href is always right. Windows, phones, people and
+   stickers keep their day colours, like lit screens in a dark room; only
+   what stands for the background or sits straight on it changes (see NIGHT
+   in css.ts):
+   hx-la-n-disc  the sun disc, by day the sun band's own yellow and at night
+                 the brightest thing on the page; it takes the night sun
+                 band's deep tint (--band-sun), as the lp-* heroes do.
+   hx-la-n-rim   an ink device body (laptop lid, phone body) whose edge would
+                 melt into the night page; its ink outline lifts to
+                 --term-line, the same soft frame the dark terminals get.
+   hx-la-n-nub   small ink parts that stick out past that rim (a phone's side
+                 buttons); filled with the rim colour so they still show.
+   hx-la-n-line  an ink stroke drawn straight onto the disc or the page (an
+                 arrow, a dotted path); it turns the page's text colour.
+   hx-la-n-desk-top, hx-la-n-desk-front
+                 everyones-screen's desk, which runs edge to edge as the
+                 floor of that picture: by day a light wood, at night it was
+                 the biggest bright plane on the page and upstaged the three
+                 lit screens, so it goes a shade darker, like a desk lit only
+                 by its laptops. Hair and shoulders still read against it. */
+export const LAB_A_NIGHT = night(`
+.tbx .hx-la-n-disc { fill: var(--band-sun); }
+.tbx .hx-la-n-rim { stroke: var(--term-line); }
+.tbx .hx-la-n-nub { fill: var(--term-line); }
+.tbx .hx-la-n-line { stroke: var(--text); }
+.tbx .hx-la-n-desk-top { fill: #B38B5C; }
+.tbx .hx-la-n-desk-front { fill: #94704A; }
+`);
+export function LabANight() {
+  return <style href="tb-dark-lab-a" precedence="default">{LAB_A_NIGHT}</style>;
+}
+
 /* A short chunky arrow with an open head. */
 function Arrow({ from, to }: { from: [number, number]; to: [number, number] }) {
   const [x1, y1] = from;
@@ -55,8 +92,8 @@ function Arrow({ from, to }: { from: [number, number]; to: [number, number] }) {
   const b = [hx + uy * half, hy - ux * half];
   return (
     <g fill="none" stroke={K.ink} strokeWidth={4.5}>
-      <path d={`M${x1} ${y1} L${x2} ${y2}`} />
-      <path d={`M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${x2} ${y2} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} />
+      <path className="hx-la-n-line" d={`M${x1} ${y1} L${x2} ${y2}`} />
+      <path className="hx-la-n-line" d={`M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${x2} ${y2} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} />
     </g>
   );
 }
@@ -77,9 +114,9 @@ function Phone({ x, rot, id, outer, account, children }: {
         </clipPath>
       </defs>
       {/* Side buttons, peeking out of the outer edge */}
-      <rect x={btnX} y={PY + 74} width={5} height={30} rx={2.5} fill={K.ink} />
-      <rect x={btnX} y={PY + 114} width={5} height={30} rx={2.5} fill={K.ink} />
-      <rect x={x} y={PY} width={PW} height={PH} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-la-n-nub" x={btnX} y={PY + 74} width={5} height={30} rx={2.5} fill={K.ink} />
+      <rect className="hx-la-n-nub" x={btnX} y={PY + 114} width={5} height={30} rx={2.5} fill={K.ink} />
+      <rect className="hx-la-n-rim" x={x} y={PY} width={PW} height={PH} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <g clipPath={`url(#${P}-${id})`}>
         <rect x={sx} y={SY} width={SW} height={PH} fill={K.paper} />
         <rect x={sx} y={SY} width={SW} height={STRIP} fill={K.wash} />
@@ -157,57 +194,60 @@ export default function HeroSameLinkTwoPhones() {
   const LX = 66;
   const RX = 344;
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{CSS}</style>
-      {/* Raised 6 from the spec's cy 214 so the disc finishes inside the canvas
-          instead of being sliced flat along the bottom. */}
-      <g>
-        <circle cx={300} cy={208} r={204} fill={K.sun} />
+    <>
+      <LabANight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{CSS}</style>
+        {/* Raised 6 from the spec's cy 214 so the disc finishes inside the canvas
+            instead of being sliced flat along the bottom. */}
+        <g>
+          <circle className="hx-la-n-disc" cx={300} cy={208} r={204} fill={K.sun} />
 
-        {/* Tom, at acme.co */}
-        <Phone
-          x={LX} rot={-4} id="tom" outer="left"
-          account={<Account x={LX} email="tom@acme.co" avatar={<Avatar who="tom" x={LX + BEZEL + 23} y={SY + STRIP / 2} r={13} />} />}
-        >
-          <TomScreen x={LX} />
-        </Phone>
+          {/* Tom, at acme.co */}
+          <Phone
+            x={LX} rot={-4} id="tom" outer="left"
+            account={<Account x={LX} email="tom@acme.co" avatar={<Avatar who="tom" x={LX + BEZEL + 23} y={SY + STRIP / 2} r={13} />} />}
+          >
+            <TomScreen x={LX} />
+          </Phone>
 
-        {/* Alex, outside */}
-        <Phone
-          x={RX} rot={4} id="alex" outer="right"
-          account={
-            <Account
-              x={RX}
-              email="alex@gmail.com"
-              avatar={
-                <g transform={`translate(${RX + BEZEL + 23} ${SY + STRIP / 2})`}>
-                  <circle r={13} fill={ALEX} stroke={K.ink} strokeWidth={2} />
-                  <text x={0} y={5.4} fontSize={15} fontWeight={800} fill={K.paper} textAnchor="middle">A</text>
-                </g>
-              }
-            />
-          }
-        >
-          <AlexScreen x={RX} />
-        </Phone>
-      </g>
+          {/* Alex, outside */}
+          <Phone
+            x={RX} rot={4} id="alex" outer="right"
+            account={
+              <Account
+                x={RX}
+                email="alex@gmail.com"
+                avatar={
+                  <g transform={`translate(${RX + BEZEL + 23} ${SY + STRIP / 2})`}>
+                    <circle r={13} fill={ALEX} stroke={K.ink} strokeWidth={2} />
+                    <text x={0} y={5.4} fontSize={15} fontWeight={800} fill={K.paper} textAnchor="middle">A</text>
+                  </g>
+                }
+              />
+            }
+          >
+            <AlexScreen x={RX} />
+          </Phone>
+        </g>
 
-      {/* Tom's tick, on the phone's corner, over the bezel */}
-      <g transform={`rotate(-4 ${LX + PW / 2} ${PY + PH / 2})`}>
-        <CheckBadge x={LX + PW - 6} y={PY + 6} r={20} className={`${P}-pop`} />
-      </g>
+        {/* Tom's tick, on the phone's corner, over the bezel */}
+        <g transform={`rotate(-4 ${LX + PW / 2} ${PY + PH / 2})`}>
+          <CheckBadge x={LX + PW - 6} y={PY + 6} r={20} className={`${P}-pop`} />
+        </g>
 
-      {/* The link, and where it goes */}
-      <DieCut big border={9} cut={<rect x={104} y={18} width={392} height={50} rx={25} />}>
-        {/* Invisible: stretches the filter region so the sticker's soft
-            shadow is not sliced off in a straight line across the sun. */}
-        <rect x={104} y={4} width={392} height={100} fill="none" stroke="none" />
-        <rect x={104} y={18} width={392} height={50} rx={25} fill={K.paper} stroke={K.ink} strokeWidth={3} />
-        <MiniLock x={132} y={41} s={1.2} />
-        <text className="mono" x={149} y={43 + 17 * 0.36} fontSize={17} fill={K.ink}>{LINK}</text>
-      </DieCut>
-      <Arrow from={[216, 84]} to={[166, PY - 5]} />
-      <Arrow from={[384, 84]} to={[434, PY - 5]} />
-    </svg>
+        {/* The link, and where it goes */}
+        <DieCut big border={9} cut={<rect x={104} y={18} width={392} height={50} rx={25} />}>
+          {/* Invisible: stretches the filter region so the sticker's soft
+              shadow is not sliced off in a straight line across the sun. */}
+          <rect x={104} y={4} width={392} height={100} fill="none" stroke="none" />
+          <rect x={104} y={18} width={392} height={50} rx={25} fill={K.paper} stroke={K.ink} strokeWidth={3} />
+          <MiniLock x={132} y={41} s={1.2} />
+          <text className="mono" x={149} y={43 + 17 * 0.36} fontSize={17} fill={K.ink}>{LINK}</text>
+        </DieCut>
+        <Arrow from={[216, 84]} to={[166, PY - 5]} />
+        <Arrow from={[384, 84]} to={[434, PY - 5]} />
+      </svg>
+    </>
   );
 }

@@ -16,6 +16,7 @@
 
 import { K, DieCut, MiniLock, Avatar, Btn, CheckBadge, Hand, GoogleG } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LpNight } from './Hero_lp-overlap';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
@@ -111,7 +112,7 @@ function Laptop() {
         d={`M${mid - notch / 2} ${BASE.y} V${BASE.y + 2} Q${mid - notch / 2} ${BASE.y + 6} ${mid - notch / 2 + 4} ${BASE.y + 6} H${mid + notch / 2 - 4} Q${mid + notch / 2} ${BASE.y + 6} ${mid + notch / 2} ${BASE.y + 2} V${BASE.y}`}
         fill={BASE_EDGE} stroke={K.ink} strokeWidth={2}
       />
-      <rect x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <circle cx={LID.x + LID.w / 2} cy={LID.y + BEZEL / 2} r={2.2} fill="#3B4A42" />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={8} fill={K.paper} />
       {/* Her ask */}
@@ -148,7 +149,7 @@ function Phone() {
   return (
     <g transform={`rotate(${ROT} ${cx} ${cy})`}>
       <rect x={PHONE.x + 4} y={PHONE.y} width={PHONE.w} height={PHONE.h} rx={28} fill={K.metal} stroke={K.ink} strokeWidth={3} />
-      <rect x={PHONE.x} y={PHONE.y} width={PHONE.w} height={PHONE.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={PHONE.x} y={PHONE.y} width={PHONE.w} height={PHONE.h} rx={28} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={sr} fill={K.paper} />
       {/* Browser bar, where the link lands */}
       <path d={`M${scr.x} ${bar} V${scr.y + sr} A${sr} ${sr} 0 0 1 ${scr.x + sr} ${scr.y} H${scr.x + scr.w - sr} A${sr} ${sr} 0 0 1 ${scr.x + scr.w} ${scr.y + sr} V${bar} Z`} fill={K.wash} />
@@ -204,13 +205,16 @@ const LABEL =
 
 export default function HeroLpHandoff() {
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{CSS}</style>
-      <circle cx={300} cy={214} r={196} fill={K.sun} />
-      <Laptop />
-      <Phone />
-      <LinkPill x={PPILL.x} y={PPILL.y} tilt={PPILL.tilt} />
-      <HandoffArrow />
-    </svg>
+    <>
+      <LpNight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{CSS}</style>
+        <circle className="hx-lp-n-disc" cx={300} cy={214} r={196} fill={K.sun} />
+        <Laptop />
+        <Phone />
+        <LinkPill x={PPILL.x} y={PPILL.y} tilt={PPILL.tilt} />
+        <HandoffArrow />
+      </svg>
+    </>
   );
 }

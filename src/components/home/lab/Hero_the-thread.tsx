@@ -14,6 +14,7 @@
 
 import { K, Win, CastShadow, Avatar, Acme, MiniLock, Padlock, Check } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LabANight } from './Hero_same-link-two-phones';
 
 const MUTED = '#5E5A4C';
 const LINK = 'acme--supplier-payments.wirl.run';
@@ -124,26 +125,29 @@ function Reactions() {
 
 export default function HeroTheThread() {
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{CSS}</style>
-      <circle cx={300} cy={206} r={206} fill={K.sun} />
-      <CastShadow x={24} y={20} w={540} h={372} r={20} dx={12} dy={16} />
-      <Win x={24} y={20} w={540} h={372} r={20} bar={K.lilac} barH={46} dots={false}>
-        <text x={48} y={49} fontSize={17} fontWeight={800} fill={K.ink}># finance</text>
+    <>
+      <LabANight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{CSS}</style>
+        <circle className="hx-la-n-disc" cx={300} cy={206} r={206} fill={K.sun} />
+        <CastShadow x={24} y={20} w={540} h={372} r={20} dx={12} dy={16} />
+        <Win x={24} y={20} w={540} h={372} r={20} bar={K.lilac} barH={46} dots={false}>
+          <text x={48} y={49} fontSize={17} fontWeight={800} fill={K.ink}># finance</text>
 
-        <Header who="tom" name="Tom Abara" time="9:02" y={92} />
-        <text x={98} y={116} fontSize={17} fontWeight={600} fill={K.ink}>Could we get a way to approve</text>
-        <text x={98} y={138} fontSize={17} fontWeight={600} fill={K.ink}>supplier payments?</text>
+          <Header who="tom" name="Tom Abara" time="9:02" y={92} />
+          <text x={98} y={116} fontSize={17} fontWeight={600} fill={K.ink}>Could we get a way to approve</text>
+          <text x={98} y={138} fontSize={17} fontWeight={600} fill={K.ink}>supplier payments?</text>
 
-        <Header who="priya" name="Priya Nair" time="9:14" y={180} />
-        <text x={98} y={204} fontSize={17} fontWeight={600} fill={K.ink}>Made us one with Claude</text>
-        <ClaudeEmoji x={321} y={197.5} size={20} />
-        <text className="mono" x={98} y={228} fontSize={16} fill={K.blue}>{LINK}</text>
-        <path d={`M98 231.5 H${98 + LINK.length * 16 * 0.6}`} stroke={K.blue} strokeWidth={1.6} />
+          <Header who="priya" name="Priya Nair" time="9:14" y={180} />
+          <text x={98} y={204} fontSize={17} fontWeight={600} fill={K.ink}>Made us one with Claude</text>
+          <ClaudeEmoji x={321} y={197.5} size={20} />
+          <text className="mono" x={98} y={228} fontSize={16} fill={K.blue}>{LINK}</text>
+          <path d={`M98 231.5 H${98 + LINK.length * 16 * 0.6}`} stroke={K.blue} strokeWidth={1.6} />
 
-        <Preview />
-        <Reactions />
-      </Win>
-    </svg>
+          <Preview />
+          <Reactions />
+        </Win>
+      </svg>
+    </>
   );
 }

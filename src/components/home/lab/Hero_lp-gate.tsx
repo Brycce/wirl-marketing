@@ -12,6 +12,7 @@
 import type { ReactNode } from 'react';
 import { K, DieCut, MiniLock, Avatar, Btn, CheckBadge, Padlock } from '../kit';
 import { LogoStickerArt } from '../marks';
+import { LpNight } from './Hero_lp-overlap';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
@@ -97,7 +98,7 @@ function Laptop() {
         d={`M${mid - notch / 2} ${BASE.y} V${BASE.y + 2} Q${mid - notch / 2} ${BASE.y + 6} ${mid - notch / 2 + 4} ${BASE.y + 6} H${mid + notch / 2 - 4} Q${mid + notch / 2} ${BASE.y + 6} ${mid + notch / 2} ${BASE.y + 2} V${BASE.y}`}
         fill={BASE_EDGE} stroke={K.ink} strokeWidth={2}
       />
-      <rect x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={LID.x} y={LID.y} width={LID.w} height={LID.h} rx={16} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <circle cx={LID.x + LID.w / 2} cy={LID.y + BEZEL / 2} r={2.2} fill="#3B4A42" />
       <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} rx={8} fill={K.paper} />
       {/* Her ask */}
@@ -127,7 +128,7 @@ function Phone({ body, inset, rot, id, children }: { body: Box; inset: number; r
         </clipPath>
       </defs>
       <rect x={body.x + 4} y={body.y} width={body.w} height={body.h} rx={26} fill={K.metal} stroke={K.ink} strokeWidth={3} />
-      <rect x={body.x} y={body.y} width={body.w} height={body.h} rx={26} fill={K.ink} stroke={K.ink} strokeWidth={3} />
+      <rect className="hx-lp-n-rim" x={body.x} y={body.y} width={body.w} height={body.h} rx={26} fill={K.ink} stroke={K.ink} strokeWidth={3} />
       <g clipPath={`url(#${P}${id})`}>
         <rect x={scr.x} y={scr.y} width={scr.w} height={scr.h} fill={K.paper} />
         {children}
@@ -214,8 +215,8 @@ function Arrow({ from, via, to }: { from: [number, number]; via: [number, number
   const b = [hx + uy * half, hy - ux * half];
   return (
     <g fill="none" stroke={K.ink} strokeWidth={4}>
-      <path d={`M${from[0]} ${from[1]} Q${vx} ${vy} ${x2} ${y2}`} />
-      <path d={`M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${x2} ${y2} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} />
+      <path className="hx-lp-n-line" d={`M${from[0]} ${from[1]} Q${vx} ${vy} ${x2} ${y2}`} />
+      <path className="hx-lp-n-line" d={`M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${x2} ${y2} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} />
     </g>
   );
 }
@@ -225,23 +226,26 @@ const LABEL =
 
 export default function HeroLpGate() {
   return (
-    <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
-      <style>{CSS}</style>
-      <circle cx={300} cy={214} r={200} fill={K.sun} />
-      <Laptop />
-      <Phone body={ALEXB} inset={ALEX_IN} rot={-5} id="alex">
-        <AlexScreen />
-      </Phone>
-      <Phone body={TOM} inset={TOM_IN} rot={5} id="tom">
-        <TomScreen />
-      </Phone>
-      <g transform={`rotate(5 ${TOM.x + TOM.w / 2} ${TOM.y + TOM.h / 2})`}>
-        {/* Kept inside x≈592 so the frame's right edge at 1024–1150px does not cut it in half. */}
-        <CheckBadge x={TOM.x + TOM.w - 21} y={TOM.y - 2} r={18} />
-      </g>
-      <LinkPill box={PILL} size={14} tilt={-2} />
-      <Arrow from={[377, 157]} via={[398, 136]} to={[417, 135]} />
-      <Arrow from={[377, 165]} via={[394, 180]} to={[389, 210]} />
-    </svg>
+    <>
+      <LpNight />
+      <svg viewBox="0 0 600 412" className="tb-art tb-hero-art" role="img" aria-label={LABEL} strokeLinecap="round" strokeLinejoin="round">
+        <style>{CSS}</style>
+        <circle className="hx-lp-n-disc" cx={300} cy={214} r={200} fill={K.sun} />
+        <Laptop />
+        <Phone body={ALEXB} inset={ALEX_IN} rot={-5} id="alex">
+          <AlexScreen />
+        </Phone>
+        <Phone body={TOM} inset={TOM_IN} rot={5} id="tom">
+          <TomScreen />
+        </Phone>
+        <g transform={`rotate(5 ${TOM.x + TOM.w / 2} ${TOM.y + TOM.h / 2})`}>
+          {/* Kept inside x≈592 so the frame's right edge at 1024–1150px does not cut it in half. */}
+          <CheckBadge x={TOM.x + TOM.w - 21} y={TOM.y - 2} r={18} />
+        </g>
+        <LinkPill box={PILL} size={14} tilt={-2} />
+        <Arrow from={[377, 157]} via={[398, 136]} to={[417, 135]} />
+        <Arrow from={[377, 165]} via={[394, 180]} to={[389, 210]} />
+      </svg>
+    </>
   );
 }

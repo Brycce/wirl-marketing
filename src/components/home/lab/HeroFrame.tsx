@@ -3,6 +3,7 @@
 // Nothing here ships to the home page.
 import type { ReactNode } from 'react';
 import Wordmark from '@/components/Wordmark';
+import ThemeToggle from '@/components/ThemeToggle';
 import { CSS } from '../css';
 import { tb } from '../copy';
 import { GlobalDefs } from '../kit';
@@ -16,7 +17,10 @@ export default function HeroFrame({ art, label }: { art: ReactNode; label?: stri
       <GlobalDefs />
       <nav className="wrap tb-nav" aria-label="Main">
         <Wordmark />
-        {label && <span style={{ fontSize: 14, fontWeight: 700, opacity: 0.55 }}>{label}</span>}
+        <div className="tb-nav-links">
+          {label && <span style={{ fontSize: 14, fontWeight: 700, opacity: 0.55 }}>{label}</span>}
+          <ThemeToggle />
+        </div>
       </nav>
       <main>
         <header className="wrap tb-hero">
