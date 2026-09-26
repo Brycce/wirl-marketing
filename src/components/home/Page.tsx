@@ -14,6 +14,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Wordmark from '@/components/Wordmark';
+import ThemeToggle from '@/components/ThemeToggle';
 import { SnailMark } from '@/components/paper/Snail';
 import { CSS } from './css';
 import { tb } from './copy';
@@ -41,7 +42,7 @@ const faqJsonLd = {
 
 /* The hero headline: one line per \n, and [icons] becomes the row of logo
    stickers. The word before the stickers stays on their line. */
-function Headline({ text }: { text: string }) {
+export function Headline({ text }: { text: string }) {
   return (
     <>
       {text.split('\n').map((line, i) => {
@@ -98,6 +99,7 @@ export default function ToyboxPage() {
       <nav className="wrap tb-nav" aria-label="Main">
         <Link href="/" aria-label="Wirl home"><Wordmark /></Link>
         <div className="tb-nav-links">
+          <ThemeToggle />
           <a href="https://docs.wirl.dev" className="tb-plain">Docs</a>
           <a href="https://app.wirl.dev/login" className="tb-plain">Log in</a>
           <a href="#connect" className="tbtn"><span className="tb-phone">Connect</span><span className="tb-wide">{tb.nav_cta}</span></a>

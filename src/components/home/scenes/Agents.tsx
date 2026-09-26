@@ -6,7 +6,7 @@
 import { Children, isValidElement, type ReactNode } from 'react';
 import { AGENT_MARKS } from '@/components/AgentIcons';
 import { K } from '../kit';
-import { LogoStickerArt } from '../marks';
+import { LogoStickerArt, HeroSetupNight } from '../marks';
 
 const SHEET = K.paper;
 const CUT = '#C9BFA8';
@@ -26,12 +26,13 @@ function outline(node: ReactNode): string {
 }
 
 /* A dashed kiss-cut line round a shape: a wide dashed stroke with a narrower
-   solid one in sheet colour on top, so only a thin dashed rim shows. */
+   solid one in sheet colour on top, so only a thin dashed rim shows. Both
+   carry a class so night mode can match them to the dark sheet. */
 function KissCut({ d, border, gap = 2.2 }: { d: string; border: number; gap?: number }) {
   return (
     <g>
-      <path d={d} fill="none" stroke={CUT} strokeWidth={border + gap * 2 + 1.2} strokeDasharray="1.4 1.4" strokeLinecap="butt" strokeLinejoin="round" />
-      <path d={d} fill={SHEET} stroke={SHEET} strokeWidth={border + gap * 2} strokeLinejoin="round" />
+      <path className="tb-kiss-cut" d={d} fill="none" stroke={CUT} strokeWidth={border + gap * 2 + 1.2} strokeDasharray="1.4 1.4" strokeLinecap="butt" strokeLinejoin="round" />
+      <path className="tb-kiss-sheet" d={d} fill={SHEET} stroke={SHEET} strokeWidth={border + gap * 2} strokeLinejoin="round" />
     </g>
   );
 }
@@ -119,6 +120,7 @@ export default function AgentSheet({ notes, slim = false }: { notes: readonly { 
   const cells = [<LogoCell key="c" id="claude" />, <LogoCell key="x" id="codex" />, <LogoCell key="u" id="cursor" />, <PlusCell key="p" />, <SkillCell key="s" />];
   return (
     <div className={`tb-sheet${slim ? ' tb-sheet-slim' : ''}`}>
+      <HeroSetupNight />
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <defs>
           <filter id="tb-sheet-shadow" x="-30%" y="-30%" width="160%" height="170%" colorInterpolationFilters="sRGB">

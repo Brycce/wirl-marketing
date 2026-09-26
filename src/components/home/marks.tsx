@@ -7,6 +7,7 @@
 import { Children, isValidElement, useId, type ReactNode } from 'react';
 import { AGENT_MARKS, AGENT_NAMES } from '@/components/AgentIcons';
 import { K } from './kit';
+import { night } from './css';
 
 const STICKER = K.paper;
 const BACKSIDE = K.edge;
@@ -38,9 +39,12 @@ const LOOK: Record<string, { tilt: number; peel?: Peel }> = {
   cursor: { tilt: -3, peel: { x: 22.53, y: 17.59, angle: 30, depth: 1.3 } },
 };
 
-/* One logo sticker, drawn in the logo's own 24-unit space. Used inside any svg. */
-export function LogoStickerArt({ agent, uid, border = 6, peel, flapClass }: {
-  agent: string; uid: string; border?: number; peel?: Peel | null; flapClass?: string;
+/* One logo sticker, drawn in the logo's own 24-unit space. Used inside any svg.
+   `color` is the ink of a one-colour mark (Cursor's): the sticker is always
+   paper, so its mark is set here rather than inherited from the page text,
+   which is cream at night. */
+export function LogoStickerArt({ agent, uid, border = 6, peel, flapClass, color = INK }: {
+  agent: string; uid: string; border?: number; peel?: Peel | null; flapClass?: string; color?: string;
 }) {
   const mark = AGENT_MARKS.find((m) => m.id === agent);
   if (!mark) return null;
@@ -65,7 +69,7 @@ export function LogoStickerArt({ agent, uid, border = 6, peel, flapClass }: {
           </filter>
         </defs>
       )}
-      <g clipPath={fold ? `url(#${key}-keep)` : undefined}>
+      <g clipPath={fold ? `url(#${key}-keep)` : undefined} color={color}>
         <path d={d} fill={STICKER} stroke={STICKER} strokeWidth={border} strokeLinejoin="round" />
         {mark.icon(uid)}
       </g>
@@ -90,7 +94,7 @@ export function LogoSticker({ agent, x, y, size = 40, tilt, uid, peel = null, co
     <g transform={`translate(${x} ${y})`} color={color}>
       <g filter="url(#tb-stk)">
         <g transform={`rotate(${t}) scale(${s}) translate(-12 -12)`}>
-          <LogoStickerArt agent={agent} uid={uid} peel={peel} />
+          <LogoStickerArt agent={agent} uid={uid} peel={peel} color={color} />
         </g>
       </g>
     </g>
@@ -98,7 +102,9 @@ export function LogoSticker({ agent, x, y, size = 40, tilt, uid, peel = null, co
 }
 
 // Shadows are CSS so they can grow on hover, and sit on the untilted wrapper
-// so the light always comes from straight above.
+// so the light always comes from straight above. Their colour is --stk-shade
+// (ink by day), which night mode turns black: an ink shadow vanishes on the
+// night page.
 const CSS = `
 /* Sized and set so the stickers match the capitals beside them: the art is
    30 of the 32 viewBox units, so .82em of box gives art about a cap tall, and
@@ -107,7 +113,7 @@ const CSS = `
 .tb-stickers { display: inline-flex; align-items: center; gap: .06em; vertical-align: -.046em; margin-left: .06em; }
 .tb-stk-s {
   display: block; flex: none; width: .82em; height: .82em; color: ${INK};
-  filter: drop-shadow(0 .01em .017em rgba(27,36,32,.16)) drop-shadow(0 .037em .072em rgba(27,36,32,.26));
+  filter: drop-shadow(0 .01em .017em rgba(var(--stk-shade, 27,36,32),.16)) drop-shadow(0 .037em .072em rgba(var(--stk-shade, 27,36,32),.26));
   transition: transform .22s cubic-bezier(.2,.8,.2,1), filter .22s cubic-bezier(.2,.8,.2,1);
 }
 .tb-stk-s > svg {
@@ -116,12 +122,12 @@ const CSS = `
 }
 .tb-stk-more {
   width: .56em; height: .56em;
-  filter: drop-shadow(0 .008em .014em rgba(27,36,32,.12)) drop-shadow(0 .024em .05em rgba(27,36,32,.2));
+  filter: drop-shadow(0 .008em .014em rgba(var(--stk-shade, 27,36,32),.12)) drop-shadow(0 .024em .05em rgba(var(--stk-shade, 27,36,32),.2));
 }
 @media (hover: hover) {
   .tb-stk-s:not(.tb-stk-more):hover {
     transform: translateY(-.05em);
-    filter: drop-shadow(0 .012em .02em rgba(27,36,32,.12)) drop-shadow(0 .08em .11em rgba(27,36,32,.24));
+    filter: drop-shadow(0 .012em .02em rgba(var(--stk-shade, 27,36,32),.12)) drop-shadow(0 .08em .11em rgba(var(--stk-shade, 27,36,32),.24));
   }
   .tb-stk-s:not(.tb-stk-more):hover > svg { transform: rotate(calc(var(--tilt, 0deg) * .4)); }
 }
@@ -130,12 +136,42 @@ const CSS = `
 }
 `;
 
+/* Night rules for the hero, the setup band and its agent sheet, and these
+   stickers (see NIGHT in css.ts for how night mode works). One string, shared
+   by every component in that slice under one href, so React hoists it once
+   whichever of them is on the page. The drawings keep their own colours;
+   only what stands for the background, or sits straight on it, changes. */
+const NIGHT_HERO_SETUP = night(String.raw`
+/* Hero (scenes/Hero.tsx): full sun yellow behind the fan is the brightest
+   thing on the night page. The disc takes the sun band's own night tint, a
+   warm dusk the paper windows still stand out on. */
+.tbx .tb-hero-sun { fill: var(--band-sun); }
+
+/* The headline stickers: ink shadows vanish on the night page; black ones
+   keep the lift, and the hover still grows it. */
+.tbx .tb-stickers { --stk-shade: 0,0,0; }
+
+/* The agent sheet (scenes/Agents.tsx) is the dark card at night, so the
+   backing round each sticker follows it instead of staying a paper halo, and
+   the kiss-cut line is a light dash that reads on it. The empty slot in the
+   corner becomes just its dashed outline, as by day. */
+.tbx .tb-kiss-sheet { fill: var(--card); stroke: var(--card); }
+.tbx .tb-kiss-cut { stroke: #6A6254; }
+.tbx #tb-sheet-shadow feDropShadow { flood-color: #000; flood-opacity: .35; }
+`);
+
+/* Render anywhere in the slice; React dedupes it by href. */
+export function HeroSetupNight() {
+  return <style href="tb-dark-hero-setup" precedence="default">{NIGHT_HERO_SETUP}</style>;
+}
+
 /* The headline's row of logo stickers, with a small round "+" for the rest. */
 export function HeadlineStickers() {
   const uid = `hs${clean(useId())}`;
   return (
     <span className="tb-stickers">
       <style href="tb-stickers" precedence="default">{CSS}</style>
+      <HeroSetupNight />
       <span className="sr-only">{AGENT_NAMES}</span>
       {AGENT_MARKS.map(({ id, name }) => (
         <span key={id} className="tb-stk-s" title={name} aria-hidden="true" style={{ ['--tilt' as string]: `${LOOK[id]?.tilt ?? 0}deg` }}>

@@ -67,6 +67,10 @@ export function GlobalDefs() {
         <pattern id="tb-dots-light" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <circle cx="3.5" cy="3.5" r="1.45" fill={K.cream} fillOpacity="0.16" />
         </pattern>
+        {/* The same halftone at night (css.ts swaps it in on .tb-cast): ink dots vanish on a dark band. */}
+        <pattern id="tb-dots-night" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <circle cx="3.5" cy="3.5" r="1.45" fill="#000" fillOpacity="0.4" />
+        </pattern>
         {/* Rubber stamps: a little worn, with specks where the ink didn't take. */}
         <mask id="tb-worn" maskContentUnits="objectBoundingBox">
           <rect width="1" height="1" fill="#fff" />
@@ -106,24 +110,28 @@ export function Tile({ x, y, w, h, r = 14, fill = K.paper, edge = K.edge, d = 6,
   );
 }
 
-/* A soft halftone cast shadow, down and to the right, for the biggest object. */
-export function CastShadow({ x, y, w, h, r = 14, dx = 12, dy = 16, light = false }: {
-  x: number; y: number; w: number; h: number; r?: number; dx?: number; dy?: number; light?: boolean;
+/* A soft halftone cast shadow, down and to the right, for the biggest object.
+   The ink one carries tb-cast so night mode can swap in darker dots; the light
+   one (for the ink band) reads the same at night. */
+export function CastShadow({ x, y, w, h, r = 14, dx = 12, dy = 16, light = false, className }: {
+  x: number; y: number; w: number; h: number; r?: number; dx?: number; dy?: number; light?: boolean; className?: string;
 }) {
-  return <rect x={x + dx} y={y + dy} width={w} height={h} rx={r} fill={`url(#${light ? 'tb-dots-light' : 'tb-dots'})`} />;
+  const cls = [light ? '' : 'tb-cast', className ?? ''].filter(Boolean).join(' ') || undefined;
+  return <rect className={cls} x={x + dx} y={y + dy} width={w} height={h} rx={r} fill={`url(#${light ? 'tb-dots-light' : 'tb-dots'})`} />;
 }
 
 const topPath = (x: number, y: number, w: number, h: number, r: number) =>
   `M${x} ${y + h} V${y + r} A${r} ${r} 0 0 1 ${x + r} ${y} H${x + w - r} A${r} ${r} 0 0 1 ${x + w} ${y + r} V${y + h} Z`;
 
-/* An app window: a fat title bar with three dots, a body, and the toy edge. */
-export function Win({ x, y, w, h, r = 14, fill = K.paper, edge = K.edge, bar = K.edge, barH = 38, dots = true, stroke = K.ink, dotFill = K.paper, children }: {
+/* An app window: a fat title bar with three dots, a body, and the toy edge.
+   frameClass goes on the outline and the edge's outline, for night mode. */
+export function Win({ x, y, w, h, r = 14, fill = K.paper, edge = K.edge, bar = K.edge, barH = 38, dots = true, stroke = K.ink, dotFill = K.paper, frameClass, children }: {
   x: number; y: number; w: number; h: number; r?: number; fill?: string; edge?: string; bar?: string; barH?: number;
-  dots?: boolean; stroke?: string; dotFill?: string; children?: ReactNode;
+  dots?: boolean; stroke?: string; dotFill?: string; frameClass?: string; children?: ReactNode;
 }) {
   return (
     <g>
-      <rect x={x} y={y + 6} width={w} height={h} rx={r} fill={edge} stroke={stroke} strokeWidth={3} />
+      <rect className={frameClass} x={x} y={y + 6} width={w} height={h} rx={r} fill={edge} stroke={stroke} strokeWidth={3} />
       <rect x={x} y={y} width={w} height={h} rx={r} fill={fill} />
       <path d={topPath(x, y, w, barH, r)} fill={bar} />
       <path d={`M${x} ${y + barH} H${x + w}`} stroke={stroke} strokeWidth={2.5} />
@@ -131,17 +139,19 @@ export function Win({ x, y, w, h, r = 14, fill = K.paper, edge = K.edge, bar = K
         <circle key={i} cx={x + 20 + i * 15} cy={y + barH / 2} r={4.6} fill={dotFill} stroke={stroke} strokeWidth={2} />
       ))}
       {children}
-      <rect x={x} y={y} width={w} height={h} rx={r} fill="none" stroke={stroke} strokeWidth={3} />
+      <rect className={frameClass} x={x} y={y} width={w} height={h} rx={r} fill="none" stroke={stroke} strokeWidth={3} />
     </g>
   );
 }
 
-/* A terminal or agent chat: the same window, dark. */
+/* A terminal or agent chat: the same window, dark. Its outline carries
+   tb-term-frame, which night mode lifts so a dark window on a dark band keeps
+   its edge (the same frame the HTML terminals get from --term-line). */
 export function Term({ x, y, w, h, barH = 36, children, stroke = K.ink, face = K.term, bar = K.termBar }: {
   x: number; y: number; w: number; h: number; barH?: number; children?: ReactNode; stroke?: string; face?: string; bar?: string;
 }) {
   return (
-    <Win x={x} y={y} w={w} h={h} fill={face} edge={K.termEdge} bar={bar} barH={barH} stroke={stroke} dotFill="#3B4A42">
+    <Win x={x} y={y} w={w} h={h} fill={face} edge={K.termEdge} bar={bar} barH={barH} stroke={stroke} dotFill="#3B4A42" frameClass="tb-term-frame">
       {children}
     </Win>
   );
@@ -471,9 +481,9 @@ export function Stamp({ x, y, text, rot = -12, size = 26, color = K.tomato, clas
   );
 }
 
-/* A flat ink shadow under something that floats. */
-export function Floor({ x, y, rx, ry = 6, o = 0.12 }: { x: number; y: number; rx: number; ry?: number; o?: number }) {
-  return <ellipse cx={x} cy={y} rx={rx} ry={ry} fill={K.ink} opacity={o} />;
+/* A flat ink shadow under something that floats. tb-floor turns it black at night. */
+export function Floor({ x, y, rx, ry = 6, o = 0.12, className }: { x: number; y: number; rx: number; ry?: number; o?: number; className?: string }) {
+  return <ellipse className={`tb-floor${className ? ` ${className}` : ''}`} cx={x} cy={y} rx={rx} ry={ry} fill={K.ink} opacity={o} />;
 }
 
 /* Text placeholder bars inside a window. */

@@ -1,18 +1,44 @@
 // Every Toybox style, scoped under .tbx. Keyframes are prefixed tb-.
-export const CSS = String.raw`
+// BASE is the page by day; NIGHT, at the bottom, is what changes at night.
+const BASE = String.raw`
 .tbx {
+  /* The toy palette: what the drawings are made of. These never change with
+     the theme, so a drawing at night keeps its own colours. */
   --ink: #1B2420; --cream: #F7F1E4; --paper: #FFFDF7; --edge: #E4D9C3; --wash: #F3ECDD;
   --sun: #FFD23F; --sun-edge: #D9A514; --coral: #FF9A76; --mint: #A6E6BE; --sky: #A9D8F7; --lilac: #CDBFFF;
   --green: #2E9D5B; --tomato: #E5483B; --blue: #3F6FE8; --pink: #FF8FB8;
   /* The quiet beat between sky and lilac: a warm neutral with the pink's
      temperature but none of its volume, so the white card on it still pops. */
   --blush: #F2DACB;
-  background: var(--cream); color: var(--ink); min-height: 100vh; overflow-x: clip;
+
+  /* The page chrome: everything round the drawings. These, and only these,
+     get night values in NIGHT below. By day each is the colour it always was. */
+  --bg: #F7F1E4;                 /* the page (and html, in globals.css) */
+  --text: #1B2420;               /* body text */
+  --heading: #1B2420;
+  --muted: #5E5A4C;              /* quiet text */
+  --link: #1B2420;
+  --focus: #1B2420;              /* focus ring */
+  --line: #1B2420;               /* outline of a chrome card, tab or pill */
+  --lift: #1B2420;               /* toy edge under a button, number disc or key */
+  --card: #FFFDF7;               /* FAQ items, the sticker sheet, tabs */
+  --card-edge: #E4D9C3;          /* the side of a card, between face and outline */
+  --card-rule: #D9CFBA;          /* dashed line inside the sticker sheet */
+  --rule: rgba(27,36,32,.22);    /* dashed divider on a band */
+  --hover: #FFF6D6;              /* a tab under the pointer */
+  --inv: #1B2420; --inv-text: #F7F1E4; --inv-lift: #000;  /* selected tab, ink button */
+  --field: #FFFDF7; --field-text: #1B2420; --field-line: #1B2420; --field-edge: #E4D9C3;
+  --field-ring: rgba(27,36,32,.2); --placeholder: #8A8474;
+  --term-line: #1B2420; --term-lift: #101713;  /* frame of the connect block and the log */
+  --err: #8E1F16;
+  --band-coral: #FF9A76; --band-sky: #A9D8F7; --band-blush: #F2DACB; --band-lilac: #CDBFFF;
+  --band-mint: #A6E6BE; --band-sun: #FFD23F; --band-pink: #FF8FB8; --band-ink: #1B2420;
+  background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: clip;
   font-feature-settings: 'cv11', 'ss03';
 }
 .tbx *, .tbx *::before, .tbx *::after { box-sizing: border-box; }
 .tbx ::selection { background: var(--sun); color: var(--ink); }
-.tbx :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 8px; }
+.tbx :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
 .tbx svg text { font-family: Inter, system-ui, sans-serif; font-weight: 700; }
 .tbx svg .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; font-weight: 600; }
 .tbx .tb-art { display: block; width: 100%; height: auto; overflow: visible; }
@@ -21,6 +47,7 @@ export const CSS = String.raw`
 @media (max-width: 640px) { .tbx .wrap { padding: 0 18px; } }
 
 /* Type */
+.tbx .tb-h1, .tbx .tb-h2, .tbx .tb-h3 { color: var(--heading); }
 .tbx .tb-h1 { font-weight: 800; font-size: clamp(38px, 4.3vw, 60px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; }
 .tbx .tb-h2 { font-weight: 800; font-size: clamp(32px, 3.7vw, 52px); line-height: 1.03; letter-spacing: -0.035em; text-wrap: balance; }
 .tbx .tb-lede { margin-top: 18px; font-size: 18px; line-height: 1.52; max-width: 42ch; }
@@ -35,22 +62,28 @@ export const CSS = String.raw`
 .tbx .tb-kicker {
   display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px;
   font-size: 14px; font-weight: 750; letter-spacing: .01em;
-  background: var(--paper); border: 2px solid var(--ink); border-radius: 99px; padding: 6px 12px 6px 8px;
-  box-shadow: 0 3px 0 var(--ink);
+  background: var(--card); border: 2px solid var(--line); border-radius: 99px; padding: 6px 12px 6px 8px;
+  box-shadow: 0 3px 0 var(--lift);
 }
 .tbx .tb-kicker svg { width: 20px; height: 20px; flex: none; }
 
 /* Slabs: big rounded blocks of colour, stacked with cream gaps like toy blocks. */
 .tbx .slab { margin: 16px 16px 0; border-radius: 40px; position: relative; isolation: isolate; overflow: hidden; padding: 48px 0; scroll-margin-top: 16px; }
 .tbx .slab-in { max-width: 1232px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 64px); }
-.tbx .bg-coral { background: var(--coral); }
-.tbx .bg-mint { background: var(--mint); }
-.tbx .bg-sky { background: var(--sky); }
-.tbx .bg-lilac { background: var(--lilac); }
-.tbx .bg-pink { background: var(--pink); }
-.tbx .bg-blush { background: var(--blush); }
-.tbx .bg-sun { background: var(--sun); }
-.tbx .bg-ink { background: var(--ink); color: var(--cream); }
+/* Each band also sets --band to its own colour, so a drawn shape that has to
+   match the band it sits on can use it (see tb-n-band in NIGHT). */
+.tbx .bg-coral { --band: var(--band-coral); background: var(--band); }
+.tbx .bg-mint { --band: var(--band-mint); background: var(--band); }
+.tbx .bg-sky { --band: var(--band-sky); background: var(--band); }
+.tbx .bg-lilac { --band: var(--band-lilac); background: var(--band); }
+.tbx .bg-pink { --band: var(--band-pink); background: var(--band); }
+.tbx .bg-blush { --band: var(--band-blush); background: var(--band); }
+.tbx .bg-sun { --band: var(--band-sun); background: var(--band); }
+/* The ink band is dark by day too, so its text is cream in both themes. */
+.tbx .bg-ink {
+  --band: var(--band-ink); --text: var(--cream); --heading: var(--cream); --link: var(--cream); --rule: rgba(247,241,228,.2);
+  background: var(--band); color: var(--text);
+}
 @media (max-width: 640px) {
   .tbx .slab { margin: 12px 8px 0; border-radius: 28px; padding: 30px 0 24px; scroll-margin-top: 10px; }
 }
@@ -72,26 +105,48 @@ export const CSS = String.raw`
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   font: inherit; font-weight: 750; font-size: 16px; line-height: 1; white-space: nowrap; letter-spacing: -0.005em;
   color: var(--ink); background: var(--sun); border: 2px solid var(--ink); border-radius: 999px;
-  padding: 13px 20px; box-shadow: 0 4px 0 var(--ink); cursor: pointer; text-decoration: none;
+  padding: 13px 20px; box-shadow: 0 4px 0 var(--lift); cursor: pointer; text-decoration: none;
   transition: transform .09s ease, box-shadow .09s ease, background-color .15s ease;
 }
-.tbx .tbtn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--ink); }
-.tbx .tbtn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.tbx .tbtn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--lift); }
+.tbx .tbtn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--lift); }
 .tbx .tbtn:disabled { opacity: .7; cursor: default; }
 .tbx .tbtn-sm { font-size: 15px; padding: 10px 16px; }
 .tbx .tbtn-paper { background: var(--paper); }
-.tbx .tbtn-ink { background: var(--ink); color: var(--cream); box-shadow: 0 4px 0 #000; }
-.tbx .tbtn-ink:hover { box-shadow: 0 5px 0 #000; }
-.tbx .tbtn-ink:active { box-shadow: 0 1px 0 #000; }
+.tbx .tbtn-ink { background: var(--inv); color: var(--inv-text); box-shadow: 0 4px 0 var(--inv-lift); }
+.tbx .tbtn-ink:hover { box-shadow: 0 5px 0 var(--inv-lift); }
+.tbx .tbtn-ink:active { box-shadow: 0 1px 0 var(--inv-lift); }
 
 /* Nav */
 .tbx .tb-nav { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; padding-bottom: 20px; }
-.tbx .tb-nav a { color: var(--ink); text-decoration: none; }
+.tbx .tb-nav a { color: var(--link); text-decoration: none; }
 .tbx .tb-nav-links { display: flex; align-items: center; gap: 22px; font-size: 15.5px; font-weight: 650; }
 .tbx .tb-nav-links .tb-plain { opacity: .85; }
 .tbx .tb-nav-links .tb-plain:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
-.tbx .tb-nav .tbtn { padding: 11px 16px; font-size: 15px; }
-@media (max-width: 639px) { .tbx .tb-nav-links .tb-plain { display: none; } }
+.tbx .tb-nav .tbtn { padding: 11px 16px; font-size: 15px; color: var(--ink); }
+@media (max-width: 639px) { .tbx .tb-nav-links { gap: 12px; } .tbx .tb-nav-links .tb-plain { display: none; } }
+
+/* The day/night button (ThemeToggle.tsx): a round toy key the height of the
+   nav button. Both icons are always in the markup and CSS picks one from
+   data-theme on <html>, so the right one shows from the first paint. With no
+   data-theme (JavaScript off) it could not work, so it is not shown. */
+.tbx .tb-theme {
+  position: relative; flex: none; width: 40px; height: 40px; padding: 0; display: grid; place-items: center;
+  color: var(--text); background: var(--card); border: 2px solid var(--line); border-radius: 999px;
+  box-shadow: 0 3px 0 var(--lift); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: transform .09s ease, box-shadow .09s ease, background-color .15s ease;
+}
+.tbx .tb-theme:hover { background: var(--hover); }
+.tbx .tb-theme:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--lift); }
+.tbx .tb-theme svg {
+  grid-area: 1 / 1; width: 20px; height: 20px; overflow: visible;
+  transition: transform .35s cubic-bezier(.3,1.4,.5,1), opacity .2s ease;
+}
+.tbx .tb-theme-moon path { fill: var(--text); stroke: var(--text); }
+.tbx .tb-theme-sun circle { fill: var(--sun); }
+.tbx .tb-theme-sun path { fill: none; stroke: var(--sun); }
+.tbx .tb-theme-sun { opacity: 0; transform: rotate(-60deg) scale(.5); }
+:root:not([data-theme]) .tbx .tb-theme { display: none; }
 
 /* Hero */
 .tbx .tb-hero { padding-top: 28px; padding-bottom: 48px; display: grid; gap: 30px; align-items: center; }
@@ -110,16 +165,16 @@ export const CSS = String.raw`
 .tbx .tb-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
 .tbx .tb-tab {
   display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 14.5px; font-weight: 700; line-height: 1;
-  color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; padding: 8px 13px;
-  box-shadow: 0 3px 0 var(--ink); cursor: pointer; transition: transform .09s ease, box-shadow .09s ease, background-color .15s;
+  color: var(--text); background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 8px 13px;
+  box-shadow: 0 3px 0 var(--lift); cursor: pointer; transition: transform .09s ease, box-shadow .09s ease, background-color .15s;
 }
-.tbx .tb-tab:hover { background: #FFF6D6; }
-.tbx .tb-tab:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
-.tbx .tb-tab[aria-selected='true'] { background: var(--ink); color: var(--cream); transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.tbx .tb-tab:hover { background: var(--hover); }
+.tbx .tb-tab:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--lift); }
+.tbx .tb-tab[aria-selected='true'] { background: var(--inv); color: var(--inv-text); transform: translateY(2px); box-shadow: 0 1px 0 var(--lift); }
 .tbx .tb-tab-mark { width: 16px; height: 16px; flex: none; margin-left: -2px; }
 .tbx .tb-term {
-  background: #28342E; color: #E9F1EA; border: 3px solid var(--ink); border-radius: 18px; overflow: hidden;
-  box-shadow: 0 3px 0 #101713, 0 6px 0 var(--ink);
+  background: #28342E; color: #E9F1EA; border: 3px solid var(--term-line); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 3px 0 var(--term-lift), 0 6px 0 var(--term-line);
 }
 .tbx .tb-term-bar { display: flex; align-items: center; gap: 7px; background: var(--ink); padding: 10px 14px; border-bottom: 2px solid #101713; }
 .tbx .tb-term-bar i { width: 11px; height: 11px; border-radius: 99px; background: #3B4A42; border: 2px solid #101713; }
@@ -146,7 +201,7 @@ export const CSS = String.raw`
 }
 @media (max-width: 420px) { .tbx .tb-term pre { font-size: 13px; } .tbx .tb-term-body { padding: 14px 14px 15px; } }
 .tbx .tb-after { margin-top: 14px; font-size: 15px; line-height: 1.5; max-width: 52ch; }
-.tbx .tb-after a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.tbx .tb-after a { color: var(--link); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 
 /* ---------- Hero motion ----------
    The frame is complete from the first paint: all four windows, the link and
@@ -209,7 +264,7 @@ export const CSS = String.raw`
 .tbx .tb-steps b { font-weight: 750; }
 .tbx .tb-num {
   flex: none; width: 34px; height: 34px; border-radius: 99px; display: grid; place-items: center; margin-top: -3px;
-  background: var(--sun); border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); font-weight: 850; font-size: 16px;
+  color: var(--ink); background: var(--sun); border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--lift); font-weight: 850; font-size: 16px;
 }
 @media (max-width: 640px) { .tbx .tb-steps li { font-size: 16.5px; } }
 .tbx .tb-s-approve { animation: tb-s-press 6s ease infinite; }
@@ -223,7 +278,7 @@ export const CSS = String.raw`
 
 /* ---------- Bring your own agent: a strip at the foot of the setup slab ---------- */
 .tbx .tb-byo {
-  margin-top: 32px; padding-top: 28px; border-top: 3px dashed rgba(27,36,32,.22);
+  margin-top: 32px; padding-top: 28px; border-top: 3px dashed var(--rule);
   display: grid; gap: 26px; align-items: center;
 }
 @media (min-width: 1024px) { .tbx .tb-byo { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 44px; } }
@@ -234,11 +289,11 @@ export const CSS = String.raw`
 
 /* ---------- Agents sticker sheet ---------- */
 .tbx .tb-sheet {
-  position: relative; background: var(--paper); border: 3px solid var(--ink); border-radius: 28px;
-  box-shadow: 0 4px 0 var(--edge), 0 7px 0 var(--ink); padding: 34px 26px 28px;
+  position: relative; background: var(--card); border: 3px solid var(--line); border-radius: 28px;
+  box-shadow: 0 4px 0 var(--card-edge), 0 7px 0 var(--line); padding: 34px 26px 28px;
 }
 .tbx .tb-sheet::before {
-  content: ''; position: absolute; inset: 12px; border-radius: 18px; border: 2px dashed #D9CFBA; pointer-events: none;
+  content: ''; position: absolute; inset: 12px; border-radius: 18px; border: 2px dashed var(--card-rule); pointer-events: none;
 }
 .tbx .tb-sheet-empty { position: absolute; top: 10px; right: 18px; width: 66px; height: 66px; }
 .tbx .tb-sheet-grid { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
@@ -288,7 +343,7 @@ export const CSS = String.raw`
 .tbx .tb-index .tb-h2 { font-size: clamp(30px, 2.9vw, 40px); }
 .tbx .tb-index-p { margin-top: 10px; font-size: 16.5px; line-height: 1.5; max-width: 32ch; }
 .tbx .tb-badges { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px 20px; }
-.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; }
+.tbx .tb-badges a { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--link); text-decoration: none; }
 .tbx .tb-badge-art { width: 100%; max-width: 62px; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
 @media (hover: hover) { .tbx .tb-badges a:hover .tb-badge-art { transform: translateY(-4px) rotate(-4deg); } .tbx .tb-badges a:hover .tb-badge-label { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; } }
 .tbx .tb-badge-label { font-size: 14px; font-weight: 750; text-align: center; line-height: 1.2; white-space: nowrap; }
@@ -351,7 +406,7 @@ export const CSS = String.raw`
 .tbx .tb-rb { display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .tbx .tb-logchip {
   font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600; line-height: 1.35;
-  background: var(--ink); color: #E9F1EA; border: 3px solid var(--ink); border-radius: 16px; padding: 11px 16px;
+  background: var(--ink); color: #E9F1EA; border: 3px solid var(--term-line); border-radius: 16px; padding: 11px 16px;
   box-shadow: 0 5px 0 #0F1512; max-width: 100%;
 }
 .tbx .tb-logchip b { color: var(--sun); font-weight: 700; }
@@ -374,7 +429,7 @@ export const CSS = String.raw`
 /* ---------- Share ---------- */
 .tbx .tb-cmd {
   display: inline-block; margin-top: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600;
-  background: var(--ink); color: #E9F1EA; border: 3px solid var(--ink); border-radius: 14px; padding: 12px 16px; box-shadow: 0 5px 0 #0F1512; max-width: 100%;
+  background: var(--ink); color: #E9F1EA; border: 3px solid var(--term-line); border-radius: 14px; padding: 12px 16px; box-shadow: 0 5px 0 #0F1512; max-width: 100%;
   overflow-wrap: anywhere;
 }
 .tbx .tb-cmd span { color: var(--sun); }
@@ -396,7 +451,7 @@ export const CSS = String.raw`
 @media (min-width: 761px) and (max-width: 959px) { .tbx .tb-col-uses { display: none; } }
 @media (max-width: 1259px) { .tbx .tb-admin-cursor { display: none; } }
 .tbx .tb-admin {
-  position: relative; background: var(--paper); border: 3px solid var(--ink); border-radius: 22px; overflow: hidden; padding-bottom: 30px;
+  position: relative; color: var(--ink); background: var(--paper); border: 3px solid var(--ink); border-radius: 22px; overflow: hidden; padding-bottom: 30px;
   box-shadow: 0 4px 0 var(--edge), 0 7px 0 var(--ink);
 }
 .tbx .tb-admin-bar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-bottom: 2.5px solid var(--ink); background: var(--edge); font-size: 16px; font-weight: 650; }
@@ -431,7 +486,7 @@ export const CSS = String.raw`
 .tbx .tb-admin-cursor { position: absolute; left: 172px; top: 130px; pointer-events: none; filter: drop-shadow(0 2px 0 rgba(27,36,32,.2)); }
 .tbx .tb-log {
   position: relative; margin: -22px 22px 0 auto; width: min(540px, 86%); background: #28342E; color: #E9F1EA;
-  border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 4px 0 #101713, 0 7px 0 var(--ink); overflow: hidden;
+  border: 3px solid var(--term-line); border-radius: 18px; box-shadow: 0 4px 0 var(--term-lift), 0 7px 0 var(--term-line); overflow: hidden;
   transform: rotate(-1.2deg);
 }
 .tbx .tb-log-bar { display: flex; align-items: center; gap: 4px; background: var(--ink); padding: 9px 14px; font-size: 13px; font-weight: 750; color: #B9C6BD; }
@@ -474,14 +529,14 @@ export const CSS = String.raw`
 .tbx .tb-q { width: 60px; height: 60px; flex: none; }
 .tbx .tb-faq-list { margin-top: 24px; display: grid; gap: 12px; align-items: start; }
 @media (min-width: 880px) { .tbx .tb-faq-list { grid-template-columns: 1fr 1fr; gap: 12px 18px; } }
-.tbx .tb-faq-item { background: var(--paper); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 0 3px 0 var(--edge), 0 5px 0 var(--ink); transition: transform .1s ease, box-shadow .1s ease; }
+.tbx .tb-faq-item { background: var(--card); border: 2px solid var(--line); border-radius: 18px; box-shadow: 0 3px 0 var(--card-edge), 0 5px 0 var(--line); transition: transform .1s ease, box-shadow .1s ease; }
 .tbx .tb-faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; font-size: 17.5px; font-weight: 750; line-height: 1.35; }
 .tbx .tb-faq-item summary::-webkit-details-marker { display: none; }
-.tbx .tb-faq-item:has(summary:active) { transform: translateY(3px); box-shadow: 0 1px 0 var(--edge), 0 2px 0 var(--ink); }
+.tbx .tb-faq-item:has(summary:active) { transform: translateY(3px); box-shadow: 0 1px 0 var(--card-edge), 0 2px 0 var(--line); }
 .tbx .tb-faq-item p { padding: 0 20px 20px; font-size: 16.5px; line-height: 1.55; max-width: 60ch; }
 .tbx .tb-key {
   flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
-  background: var(--sun); border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); transition: transform .2s cubic-bezier(.3,1.4,.5,1);
+  color: var(--ink); background: var(--sun); border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--lift); transition: transform .2s cubic-bezier(.3,1.4,.5,1);
 }
 .tbx .tb-key svg { width: 18px; height: 18px; }
 .tbx .tb-faq-item[open] .tb-key { transform: rotate(45deg); }
@@ -502,15 +557,15 @@ export const CSS = String.raw`
 .tbx .tb-form { width: 100%; max-width: 480px; margin-top: 24px; }
 .tbx .tb-form-row { display: flex; gap: 12px; }
 .tbx .tb-input {
-  flex: 1; min-width: 0; font: inherit; font-size: 16px; font-weight: 550; color: var(--ink);
-  background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; padding: 12px 18px;
-  box-shadow: 0 2px 0 var(--edge), 0 4px 0 var(--ink); outline: none;
+  flex: 1; min-width: 0; font: inherit; font-size: 16px; font-weight: 550; color: var(--field-text);
+  background: var(--field); border: 2px solid var(--field-line); border-radius: 999px; padding: 12px 18px;
+  box-shadow: 0 2px 0 var(--field-edge), 0 4px 0 var(--field-line); outline: none;
 }
-.tbx .tb-input::placeholder { color: #8A8474; }
-.tbx .tb-input:focus-visible { box-shadow: 0 2px 0 var(--edge), 0 4px 0 var(--ink), 0 0 0 4px rgba(27,36,32,.2); }
+.tbx .tb-input::placeholder { color: var(--placeholder); }
+.tbx .tb-input:focus-visible { box-shadow: 0 2px 0 var(--field-edge), 0 4px 0 var(--field-line), 0 0 0 4px var(--field-ring); }
 .tbx .tb-form-note { margin-top: 14px; font-size: 14.5px; font-weight: 600; min-height: 1.3em; }
-.tbx .tb-err { color: #8E1F16; font-weight: 750; }
-.tbx .tb-done { display: flex; align-items: center; gap: 12px; margin-top: 28px; text-align: left; background: var(--paper); border: 2px solid var(--ink); border-radius: 18px; padding: 14px 18px; box-shadow: 0 4px 0 var(--ink); }
+.tbx .tb-err { color: var(--err); font-weight: 750; }
+.tbx .tb-done { display: flex; align-items: center; gap: 12px; margin-top: 28px; text-align: left; background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 14px 18px; box-shadow: 0 4px 0 var(--lift); }
 .tbx .tb-done-h { font-weight: 800; font-size: 19px; }
 .tbx .tb-done-p { font-size: 14.5px; margin-top: 2px; }
 @media (max-width: 640px) {
@@ -540,8 +595,8 @@ export const CSS = String.raw`
 
 /* ---------- Footer ---------- */
 .tbx .tb-foot { padding-top: 26px; padding-bottom: 26px; }
-.tbx .tb-ground { position: relative; height: 2px; background: var(--ink); border-radius: 2px; margin-bottom: 22px; }
-.tbx .tb-crawl { position: absolute; right: 18%; bottom: 1px; color: var(--ink); animation: tb-crawl 64s linear infinite; }
+.tbx .tb-ground { position: relative; height: 2px; background: var(--text); border-radius: 2px; margin-bottom: 22px; }
+.tbx .tb-crawl { position: absolute; right: 18%; bottom: 1px; color: var(--text); animation: tb-crawl 64s linear infinite; }
 .tbx .tb-crawl svg { display: block; }
 .tbx .tb-inch { display: block; transform-origin: 100% 100%; animation: tb-inch 1.8s ease-in-out infinite; }
 @keyframes tb-inch { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(1.08); } }
@@ -556,7 +611,7 @@ export const CSS = String.raw`
   100% { transform: translateX(0) scaleX(1); }
 }
 .tbx .tb-foot-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
-.tbx .tb-foot-row a { color: var(--ink); text-decoration: none; }
+.tbx .tb-foot-row a { color: var(--link); text-decoration: none; }
 .tbx .tb-foot-links { display: flex; gap: 24px; font-size: 15px; font-weight: 650; }
 .tbx .tb-foot-links a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 @media (max-width: 640px) { .tbx .tb-foot-row { flex-direction: column; align-items: flex-start; } }
@@ -566,3 +621,101 @@ export const CSS = String.raw`
   .tbx .tb-burst { display: none; }
 }
 `;
+
+/**
+ * Night rules, written once with plain `.tbx ...` selectors. Each rule comes
+ * out twice: under :root[data-theme="dark"] (the head script in layout.tsx and
+ * the nav toggle set that), and under prefers-color-scheme: dark for a visitor
+ * with no data-theme at all (JavaScript off). Either way the selector outranks
+ * the day rule for the same element, so order does not matter.
+ */
+export function night(css: string): string {
+  const chosen = css.replace(/\.tbx\b/g, ':root[data-theme="dark"] .tbx');
+  const system = css.replace(/\.tbx\b/g, ':root:not([data-theme="light"]) .tbx');
+  return `${chosen}\n@media (prefers-color-scheme: dark) {\n${system}\n}\n`;
+}
+
+/* ---------- Night ----------
+   How night mode works, for anyone adding to it:
+
+   1. The drawings keep their own colours. Paper windows stay light, stickers
+      stay bright, outlines stay ink: lit screens and toys in a dark room. The
+      K palette in kit.tsx and the toy tokens at the top of .tbx (--ink,
+      --paper, --sun...) never change. Never recolour K, and never put var()
+      in an SVG attribute (fill="var(--x)"): not every engine honours it.
+   2. The page chrome goes dark: the chrome tokens get night values here, and
+      every chrome rule in BASE reads them.
+   3. A drawn piece that stands for the background or sits straight on a band
+      (the sun disc behind a hero, a label drawn on the band, a shape filled
+      with the cream page colour, a shadow that vanishes, a halo that glares)
+      gets a class name on the shape itself in its scene, and a rule in here
+      restyles it. A CSS rule beats an SVG presentation attribute in every
+      engine, so fill={K.cream} in the TSX plus `.tbx .tb-x { fill: var(--bg) }`
+      here is safe. The class has to be on the shape that carries the fill:
+      a class on a <g> will not beat its children's own fill attributes.
+      The tb-n-* hooks below cover the common cases with no new CSS; for
+      anything else, add a rule under the section's heading. */
+const NIGHT = night(String.raw`
+.tbx {
+  --bg: #1C1A17;
+  --text: #ECE5D5;
+  --heading: #FAF5E9;
+  --muted: #B8B09E;
+  --link: #FAF5E9;
+  --focus: #FAF5E9;
+  --line: #0E0D0B;
+  --lift: #0E0D0B;
+  --card: #2A2723;
+  --card-edge: #1E1C19;
+  --card-rule: rgba(247,241,228,.14);
+  --rule: rgba(247,241,228,.18);
+  --hover: #3A3323;
+  --inv: #F3ECDD; --inv-text: #1B2420; --inv-lift: #0E0D0B;
+  --field: #171512; --field-text: #ECE5D5; --field-line: #9A9180; --field-edge: #0E0D0B;
+  --field-ring: rgba(247,241,228,.22); --placeholder: #9C9381;
+  --term-line: #3B4943; --term-lift: #0B0F0D;
+  --err: #FFA193;
+  --band-coral: #4E2B20; --band-sky: #233948; --band-blush: #3B312B; --band-lilac: #30294C;
+  --band-mint: #233E2D; --band-sun: #4B3A16; --band-pink: #4A2533; --band-ink: #212C27;
+}
+/* The ink band would all but vanish into the night page: a faint rim. */
+.tbx .bg-ink { box-shadow: inset 0 0 0 2px rgba(233,241,234,.08); }
+.tbx .tb-logchip, .tbx .tb-cmd { box-shadow: 0 5px 0 var(--term-lift); }
+
+/* The nav button shows the sun at night, to go back to day. */
+.tbx .tb-theme-moon { opacity: 0; transform: rotate(60deg) scale(.5); }
+.tbx .tb-theme-sun { opacity: 1; transform: none; }
+
+/* Shared kit pieces (kit.tsx). Sticker shadows and floor shadows are ink,
+   which disappears on a night band; at night they are black and a little
+   stronger. */
+.tbx #tb-stk feDropShadow, .tbx #tb-stk-lg feDropShadow { flood-color: #000; flood-opacity: .32; }
+.tbx #tb-flap feDropShadow { flood-color: #000; flood-opacity: .45; }
+.tbx .tb-floor { fill: #000; }
+.tbx .tb-cast { fill: url(#tb-dots-night); }
+/* A drawn terminal (kit Term) gets the lifted frame the HTML ones have. */
+.tbx .tb-term-frame { stroke: var(--term-line); }
+
+/* Hooks a scene can put on a drawn shape, no new CSS needed:
+   tb-n-page   a shape filled with the page colour (cream by day)
+   tb-n-band   a shape filled with the colour of the band it sits on
+   tb-n-text   text or a mark drawn straight onto a band or the page
+   tb-n-line   an ink stroke drawn straight onto a band or the page
+   tb-n-shadow a flat ink shadow shape
+   tb-n-dim    a light halo or glow that glares at night */
+.tbx .tb-n-page { fill: var(--bg); }
+.tbx .tb-n-band { fill: var(--band, var(--bg)); }
+.tbx .tb-n-text { fill: var(--text); }
+.tbx .tb-n-line { stroke: var(--text); }
+.tbx .tb-n-shadow { fill: #000; }
+.tbx .tb-n-dim { opacity: .35; }
+
+/* ---- Hero (scenes/Hero.tsx) ---- */
+/* ---- Mess (scenes/Mess.tsx) ---- */
+/* ---- Setup and agents (scenes/Setup.tsx, scenes/Agents.tsx) ---- */
+/* ---- Index badges and closing stickers (scenes/Small.tsx) ---- */
+/* ---- Sign-in, company-only, keys, rollback, share (scenes/Features.tsx) ---- */
+/* ---- Admins (scenes/Admin.tsx) ---- */
+`);
+
+export const CSS = BASE + NIGHT;

@@ -7,9 +7,24 @@
 
 import { K, Win, Term, LinkBar, Btn, Hand, Avatar, AvatarStack, Acme, GoogleG, Globe, Padlock, CheckBadge, DieCut,
   RoundSticker, NamedCursor, Stamp, CastShadow, MiniLock, Arrow } from '../kit';
+import { night } from '../css';
 
 const LINK = 'acme--supplier-payments.wirl.run';
 const MUTED = '#5E5A4C';
+
+/* Night, for this file and Mess.tsx (see NIGHT in css.ts for the approach).
+   Checked band by band at 1440 and 390: the mess stickers and the sign-in,
+   company-only, keys and rollback pictures need nothing. Their paper
+   windows, stickers and pills carry their own light faces and coloured toy
+   edges, and the kit already darkens their cast and sticker shadows. The one
+   piece that went missing is the Copied! bubble in Share: a flat ink shape
+   drawn straight onto the band, with nothing but its fill to show its outline,
+   so on the night mint it all but disappeared and left the word floating. It
+   keeps its ink fill and gets the lifted edge that Tom's terminal just below
+   it, and every other dark block on the page, wears at night. */
+const NIGHT_CSS = night(String.raw`
+.tbx .tb-sh-bubble { stroke: var(--term-line); stroke-width: 2.5px; }
+`);
 
 /* ---------- Sign-in: the Google account chooser, cropped close ---------- */
 function AccountRow({ y, who, flash }: { y: number; who: 'priya' | 'tom'; flash?: boolean }) {
@@ -257,45 +272,49 @@ export function RollbackScene() {
    frame, no text under anything, and no loose sparkles. */
 export function ShareScene() {
   return (
-    <svg viewBox="0 0 560 400" className="tb-art" role="img" aria-label="The link to supplier-payments in a big pill with Priya's cursor on it, and a Copy link key under it with a Copied speech bubble pointing at it. Below, Tom's terminal: npx wirl pull supplier-payments, pulled v4, npx wirl dev. Over its corner, v5 of the app with a new Export CSV button." strokeLinecap="round" strokeLinejoin="round">
-      {/* 1. The link, as the object being handed over */}
-      <g>
-        <rect x={20} y={28} width={440} height={54} rx={27} fill={K.edge} stroke={K.ink} strokeWidth={3} transform="translate(0 6)" />
-        <rect x={20} y={28} width={440} height={54} rx={27} fill={K.paper} stroke={K.ink} strokeWidth={3} />
-        <MiniLock x={52} y={53} s={1.5} />
-        <text className="mono" x={74} y={62} fontSize={18} fill={K.ink}>{LINK}</text>
-      </g>
-      {/* tagSize 18: at 390 this picture renders 371 wide, so the default 15 would
-          put "Priya" at 9.4px. 18 lands it at 11.3px, level with the band. */}
-      <NamedCursor x={466} y={58} who="priya" s={0.95} tagSize={18} />
-      {/* 2. Copy, with the bubble's tail aimed at the key rather than at air */}
-      <Btn x={20} y={104} w={148} h={44} label="Copy link" size={18} fill={K.sun} edge={K.sunEdge} color={K.ink} faceClass="tb-sh-copy" />
-      <g>
-        <path d="M210 106 H316 A14 14 0 0 1 330 120 V136 A14 14 0 0 1 316 150 H210 A14 14 0 0 1 196 136 V134 L178 128 L196 122 V120 A14 14 0 0 1 210 106 Z" fill={K.ink} />
-        <text x={263} y={135} fontSize={18} fontWeight={800} fill={K.paper} textAnchor="middle">Copied!</text>
-      </g>
-      {/* 3. Tom pulls it. The lines are there from the first frame; the caret blinks. */}
-      <CastShadow x={20} y={176} w={430} h={158} dx={12} dy={14} />
-      <Term x={20} y={176} w={430} h={158} barH={34}>
-        <Avatar who="tom" x={62} y={193} r={12} />
-        <text x={82} y={199} fontSize={17.5} fill={K.termText}>Tom&apos;s laptop</text>
-        <text className="mono" x={40} y={242} fontSize={17.5} fill={K.termText}><tspan fill={K.sun}>$</tspan> npx wirl pull supplier-payments</text>
-        <text className="mono" x={40} y={274} fontSize={17.5} fill={K.mint}>✓ pulled v4</text>
-        <text className="mono" x={40} y={306} fontSize={17.5} fill={K.termText}><tspan fill={K.sun}>$</tspan> npx wirl dev</text>
-        <rect className="tb-h-caret" x={198} y={292} width={10} height={20} fill={K.sun} />
-      </Term>
-      {/* 4. And ships v5, over the terminal's empty bottom-right corner only */}
-      <g className="tb-sh-new">
-        <DieCut tilt={-3} cx={444} cy={325} border={8} cut={<rect x={344} y={258} width={200} height={134} rx={14} />}>
-          <Win x={344} y={258} w={200} h={134} bar={K.green} barH={34}>
-            <rect x={490} y={265} width={44} height={22} rx={11} fill={K.paper} stroke={K.ink} strokeWidth={2} />
-            <text className="mono" x={512} y={282} fontSize={17} fontWeight={800} fill={K.ink} textAnchor="middle">v5</text>
-            <Acme x={364} y={312} r={11} />
-            <text x={382} y={319} fontSize={17} fontWeight={800} fill={K.ink}>Supplier payments</text>
-            <Btn x={362} y={338} w={164} h={38} label="Export CSV" size={17.5} fill={K.sun} edge={K.sunEdge} color={K.ink} />
-          </Win>
-        </DieCut>
-      </g>
-    </svg>
+    <>
+      {/* Outside the <svg>: React only hoists a <style> into <head> from HTML. */}
+      <style href="tb-dark-mess-features" precedence="default">{NIGHT_CSS}</style>
+      <svg viewBox="0 0 560 400" className="tb-art" role="img" aria-label="The link to supplier-payments in a big pill with Priya's cursor on it, and a Copy link key under it with a Copied speech bubble pointing at it. Below, Tom's terminal: npx wirl pull supplier-payments, pulled v4, npx wirl dev. Over its corner, v5 of the app with a new Export CSV button." strokeLinecap="round" strokeLinejoin="round">
+        {/* 1. The link, as the object being handed over */}
+        <g>
+          <rect x={20} y={28} width={440} height={54} rx={27} fill={K.edge} stroke={K.ink} strokeWidth={3} transform="translate(0 6)" />
+          <rect x={20} y={28} width={440} height={54} rx={27} fill={K.paper} stroke={K.ink} strokeWidth={3} />
+          <MiniLock x={52} y={53} s={1.5} />
+          <text className="mono" x={74} y={62} fontSize={18} fill={K.ink}>{LINK}</text>
+        </g>
+        {/* tagSize 18: at 390 this picture renders 371 wide, so the default 15 would
+            put "Priya" at 9.4px. 18 lands it at 11.3px, level with the band. */}
+        <NamedCursor x={466} y={58} who="priya" s={0.95} tagSize={18} />
+        {/* 2. Copy, with the bubble's tail aimed at the key rather than at air */}
+        <Btn x={20} y={104} w={148} h={44} label="Copy link" size={18} fill={K.sun} edge={K.sunEdge} color={K.ink} faceClass="tb-sh-copy" />
+        <g>
+          <path className="tb-sh-bubble" d="M210 106 H316 A14 14 0 0 1 330 120 V136 A14 14 0 0 1 316 150 H210 A14 14 0 0 1 196 136 V134 L178 128 L196 122 V120 A14 14 0 0 1 210 106 Z" fill={K.ink} />
+          <text x={263} y={135} fontSize={18} fontWeight={800} fill={K.paper} textAnchor="middle">Copied!</text>
+        </g>
+        {/* 3. Tom pulls it. The lines are there from the first frame; the caret blinks. */}
+        <CastShadow x={20} y={176} w={430} h={158} dx={12} dy={14} />
+        <Term x={20} y={176} w={430} h={158} barH={34}>
+          <Avatar who="tom" x={62} y={193} r={12} />
+          <text x={82} y={199} fontSize={17.5} fill={K.termText}>Tom&apos;s laptop</text>
+          <text className="mono" x={40} y={242} fontSize={17.5} fill={K.termText}><tspan fill={K.sun}>$</tspan> npx wirl pull supplier-payments</text>
+          <text className="mono" x={40} y={274} fontSize={17.5} fill={K.mint}>✓ pulled v4</text>
+          <text className="mono" x={40} y={306} fontSize={17.5} fill={K.termText}><tspan fill={K.sun}>$</tspan> npx wirl dev</text>
+          <rect className="tb-h-caret" x={198} y={292} width={10} height={20} fill={K.sun} />
+        </Term>
+        {/* 4. And ships v5, over the terminal's empty bottom-right corner only */}
+        <g className="tb-sh-new">
+          <DieCut tilt={-3} cx={444} cy={325} border={8} cut={<rect x={344} y={258} width={200} height={134} rx={14} />}>
+            <Win x={344} y={258} w={200} h={134} bar={K.green} barH={34}>
+              <rect x={490} y={265} width={44} height={22} rx={11} fill={K.paper} stroke={K.ink} strokeWidth={2} />
+              <text className="mono" x={512} y={282} fontSize={17} fontWeight={800} fill={K.ink} textAnchor="middle">v5</text>
+              <Acme x={364} y={312} r={11} />
+              <text x={382} y={319} fontSize={17} fontWeight={800} fill={K.ink}>Supplier payments</text>
+              <Btn x={362} y={338} w={164} h={38} label="Export CSV" size={17.5} fill={K.sun} edge={K.sunEdge} color={K.ink} />
+            </Win>
+          </DieCut>
+        </g>
+      </svg>
+    </>
   );
 }

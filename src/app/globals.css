@@ -5,6 +5,16 @@
 @tailwind utilities;
 
 html { scroll-behavior: smooth; }
+
+/* The page colour behind everything, so overscroll and the moment before the
+   page paints match the theme. Keep these two in step with --bg in
+   src/components/home/css.ts. The head script in layout.tsx sets data-theme;
+   the media query covers a visitor with JavaScript off. */
+:root { background: #F7F1E4; color-scheme: light; }
+:root[data-theme="dark"] { background: #1C1A17; color-scheme: dark; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { background: #1C1A17; color-scheme: dark; }
+}
 body { font-optical-sizing: auto; font-feature-settings: 'cv11', 'ss03'; }
 
 :focus-visible { outline: 3px solid #1F2A1F; outline-offset: 3px; }

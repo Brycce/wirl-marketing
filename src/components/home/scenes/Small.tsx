@@ -3,6 +3,33 @@
 
 import type { ReactNode } from 'react';
 import { K, DieCut, Avatar, Padlock } from '../kit';
+import { night } from '../css';
+
+/* Night, for the index badges and the closing band here, the admin band
+   (Admin.tsx), the connect block (Connect.tsx) and the waitlist form
+   (Waitlist.tsx). See NIGHT in css.ts for the approach. Checked at 1440, 1024
+   and 390: the admin table and log stay lit screens, the connect block and
+   the app stickers read as they are, and the chrome tokens already carry the
+   rest. Two things needed a hand:
+   - The Keys badge is ink, the one badge whose face is the colour of the
+     night page, so inside its paper ring it read as a hole punched through
+     the sticker. It takes a lifted ink, the way the ink band is lifted.
+   - The waitlist button is ink by day because its band is sun yellow. At
+     night the band is a dark tint, so the button takes the sun yellow every
+     other call to action on the night page wears. Waitlist.tsx is a client
+     component and can't import css.ts, so its rule lives in this sheet,
+     which the closing stickers beside it always render.
+   One string under one href, so React hoists it once however many of these
+   are on the page. */
+const NIGHT_ADMIN_CLOSING = night(String.raw`
+.tbx .tb-n-keys { fill: #2F3D36; }
+.tbx .tb-wl-go { background: var(--sun); color: var(--ink); }
+`);
+
+/* Render outside any <svg>: React only hoists a <style> into <head> from HTML. */
+export function AdminClosingNight() {
+  return <style href="tb-dark-admin-closing" precedence="default">{NIGHT_ADMIN_CLOSING}</style>;
+}
 
 /* ---------- Acme's apps, each a little window sticker behind the lock ---------- */
 /* lockLeft: in the closing slab's wide pile each tile is dealt down and to one
@@ -107,36 +134,43 @@ export const APPS: AppSticker[] = [
 export function AppStickerArt({ app }: { app: AppSticker }) {
   const lx = app.lockLeft ? 20 : 150;
   return (
-    <svg viewBox="0 0 172 132" className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
-      <DieCut tilt={app.tilt} cx={86} cy={66} cut={<><rect x={10} y={10} width={150} height={104} rx={12} /><circle cx={lx} cy={106} r={16} /></>} border={7}>
-        <rect x={10} y={10} width={150} height={104} rx={12} fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
-        <path d={`M10 36 V22 A12 12 0 0 1 22 10 H148 A12 12 0 0 1 160 22 V36 Z`} fill={app.bar} />
-        <path d="M10 36 H160" stroke={K.ink} strokeWidth={2} />
-        <text className="mono" x={19} y={28.5} fontSize={12.6} fontWeight={700} fill={app.barText}>{app.name}</text>
-        {app.inner}
-        <rect x={10} y={10} width={150} height={104} rx={12} fill="none" stroke={K.ink} strokeWidth={2.5} />
-        <circle cx={lx} cy={106} r={15} fill={K.green} stroke={K.ink} strokeWidth={2.5} />
-        <g transform={`translate(${lx} 106)`}>
-          <path d="M-3.6 -1.6 V-4 A3.6 3.6 0 0 1 3.6 -4 V-1.6" fill="none" stroke={K.paper} strokeWidth={2.2} />
-          <rect x={-5.6} y={-2} width={11.2} height={8.6} rx={2} fill={K.paper} />
-        </g>
-      </DieCut>
-    </svg>
+    <>
+      <AdminClosingNight />
+      <svg viewBox="0 0 172 132" className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
+        <DieCut tilt={app.tilt} cx={86} cy={66} cut={<><rect x={10} y={10} width={150} height={104} rx={12} /><circle cx={lx} cy={106} r={16} /></>} border={7}>
+          <rect x={10} y={10} width={150} height={104} rx={12} fill={K.paper} stroke={K.ink} strokeWidth={2.5} />
+          <path d={`M10 36 V22 A12 12 0 0 1 22 10 H148 A12 12 0 0 1 160 22 V36 Z`} fill={app.bar} />
+          <path d="M10 36 H160" stroke={K.ink} strokeWidth={2} />
+          <text className="mono" x={19} y={28.5} fontSize={12.6} fontWeight={700} fill={app.barText}>{app.name}</text>
+          {app.inner}
+          <rect x={10} y={10} width={150} height={104} rx={12} fill="none" stroke={K.ink} strokeWidth={2.5} />
+          <circle cx={lx} cy={106} r={15} fill={K.green} stroke={K.ink} strokeWidth={2.5} />
+          <g transform={`translate(${lx} 106)`}>
+            <path d="M-3.6 -1.6 V-4 A3.6 3.6 0 0 1 3.6 -4 V-1.6" fill="none" stroke={K.paper} strokeWidth={2.2} />
+            <rect x={-5.6} y={-2} width={11.2} height={8.6} rx={2} fill={K.paper} />
+          </g>
+        </DieCut>
+      </svg>
+    </>
   );
 }
 
 /* ---------- The built-in features, as a row of round badges ---------- */
-function Badge({ fill, tilt, children }: { fill: string; tilt: number; children: ReactNode }) {
+/* faceClass goes on the coloured face, for night mode. */
+function Badge({ fill, tilt, faceClass, children }: { fill: string; tilt: number; faceClass?: string; children: ReactNode }) {
   return (
-    <svg viewBox="-40 -40 80 80" className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
-      <g filter="url(#tb-stk)">
-        <g transform={`rotate(${tilt})`}>
-          <circle r={34} fill={K.paper} />
-          <circle r={28} fill={fill} stroke={K.ink} strokeWidth={2.5} />
-          {children}
+    <>
+      <AdminClosingNight />
+      <svg viewBox="-40 -40 80 80" className="tb-art" aria-hidden="true" strokeLinecap="round" strokeLinejoin="round">
+        <g filter="url(#tb-stk)">
+          <g transform={`rotate(${tilt})`}>
+            <circle r={34} fill={K.paper} />
+            <circle className={faceClass} r={28} fill={fill} stroke={K.ink} strokeWidth={2.5} />
+            {children}
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+    </>
   );
 }
 
@@ -152,10 +186,10 @@ export const FEATURE_BADGES: { href: string; label: string; art: ReactNode }[] =
   {
     href: '#keys', label: 'Keys',
     art: (
-      <Badge fill={K.ink} tilt={-4}>
+      <Badge fill={K.ink} tilt={-4} faceClass="tb-n-keys">
         <g transform="rotate(-35)">
           <circle cx={-8} cy={0} r={9} fill={K.sun} stroke={K.ink} strokeWidth={2.5} />
-          <circle cx={-10} cy={0} r={3} fill={K.ink} />
+          <circle className="tb-n-keys" cx={-10} cy={0} r={3} fill={K.ink} />
           <path d="M0 -3.4 H17 V3.4 H14 V8 H9 V3.4 H0 Z" fill={K.sun} stroke={K.ink} strokeWidth={2.5} />
         </g>
       </Badge>
