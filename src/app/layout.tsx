@@ -25,12 +25,12 @@ export const metadata: Metadata = {
     url: SITE,
     siteName: 'Wirl',
     locale: 'en_US',
-    title: 'Let your people build.',
+    title: 'Build internal tools. Deploy them behind your company login.',
     description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Let your people build.',
+    title: 'Build internal tools. Deploy them behind your company login.',
     description: DESCRIPTION,
   },
 };
