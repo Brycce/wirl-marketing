@@ -24,9 +24,17 @@ const V2_CSS = `
 .tbx .hc { text-align: center; padding-top: 44px; padding-bottom: 36px; }
 .tbx .hc .tb-h1 { font-size: clamp(40px, 5.6vw, 76px); max-width: 15ch; margin: 0 auto; }
 .tbx .hc .tb-lede { margin: 26px auto 0; max-width: 50ch; font-size: 20px; text-wrap: balance; }
-.tbx .hc-connect { max-width: 640px; margin: 34px auto 0; text-align: left; }
-.tbx .hc-connect [role=tablist] { justify-content: center; }
-.tbx .hc-connect .tb-connect > p:last-child { text-align: center; margin-left: auto; margin-right: auto; }
+.tbx .hc-connect { max-width: 640px; margin: 34px auto 0; }
+/* The setup block, centred with the hero: tabs, the command, the Copy key and
+   its hint, and the note under it. A multi-line snippet stays left-aligned
+   inside a centred box so its lines still read as code. */
+.tbx .hc-connect .tb-connect { margin-left: auto; margin-right: auto; max-width: 600px; }
+.tbx .hc-connect .tb-tabs { justify-content: center; }
+.tbx .hc-connect .tb-term-body { text-align: center; }
+.tbx .hc-connect .tb-term pre { display: inline-block; max-width: 100%; text-align: left; }
+.tbx .hc-connect .tb-term-row { flex-direction: column; justify-content: center; }
+.tbx .hc-connect .tb-hint { flex: none; text-align: center; }
+.tbx .hc-connect .tb-after { margin-left: auto; margin-right: auto; text-align: center; }
 @media (max-width: 640px) {
   .tbx .hc { padding-top: 18px; padding-bottom: 22px; }
   .tbx .hc .tb-lede { font-size: 17.5px; }
