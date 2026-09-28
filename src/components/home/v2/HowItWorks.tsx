@@ -120,7 +120,6 @@ const CSS = `
 .tbx .hw { padding-top: 24px; padding-bottom: 40px; }
 .tbx .hw-head { text-align: center; max-width: 760px; margin: 0 auto; }
 .tbx .hw-kicker { display: inline-block; font-size: 14px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.tbx .hw-head .tb-h2 { margin-top: 10px; }
 .tbx .hw-head .tb-lede { margin: 16px auto 0; max-width: 56ch; }
 .tbx .hw-steps { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tbx .hw-step, .tbx .hw-card {
@@ -166,8 +165,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="wrap hw" aria-labelledby="hw-title">
       <style href="tbx-hw" precedence="default">{CSS}</style>
       <div className="hw-head">
-        <span className="hw-kicker">How it works</span>
-        <h2 id="hw-title" className="tb-h2">From an idea to a link your company can open.</h2>
+        <h2 id="hw-title" className="tb-h2">How it works</h2>
         <p className="tb-lede">Your people build the tool with the agent they already use. Wirl hosts it behind your company login, and IT can see all of it.</p>
       </div>
 

@@ -20,10 +20,13 @@ import { APPS, AppStickerArt } from '../scenes/Small';
 import { Headline, Keep, Split, Slab, faqJsonLd } from '../Page';
 import HowItWorks from './HowItWorks';
 
+// The hero's one line under the headline, for this version only.
+const HERO_LINE = 'From an idea to a link your teammates can open.';
+
 const V2_CSS = `
 .tbx .hc { text-align: center; padding-top: 44px; padding-bottom: 36px; }
 .tbx .hc .tb-h1 { font-size: clamp(40px, 5.6vw, 76px); max-width: 15ch; margin: 0 auto; }
-.tbx .hc .tb-lede { margin: 26px auto 0; max-width: 50ch; font-size: 20px; text-wrap: balance; }
+.tbx .hc .tb-lede { margin: 24px auto 0; max-width: 50ch; font-size: 24px; font-weight: 500; text-wrap: balance; }
 .tbx .hc-connect { max-width: 640px; margin: 34px auto 0; }
 /* The setup block, centred with the hero: tabs, the command, the Copy key and
    its hint, and the note under it. A multi-line snippet stays left-aligned
@@ -62,7 +65,7 @@ export default function PageV2() {
         {/* Hero, centred */}
         <header className="wrap hc">
           <h1 className="tb-h1"><Headline text={tb.hero_h1} /></h1>
-          <p className="tb-lede">{tb.hero_p}</p>
+          <p className="tb-lede">{HERO_LINE}</p>
           <div className="hc-connect">
             <Connect after={tb.connect_after} />
           </div>
