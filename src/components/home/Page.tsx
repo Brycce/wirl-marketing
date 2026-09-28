@@ -30,7 +30,7 @@ import { SigninScene, OnlyScene, KeysScene, RollbackScene, ShareScene } from './
 import { AdminTable, LogCard } from './scenes/Admin';
 import { APPS, AppStickerArt, FEATURE_BADGES } from './scenes/Small';
 
-const faqJsonLd = {
+export const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: tb.faq.map(({ q, a }) => ({
@@ -62,7 +62,7 @@ export function Headline({ text }: { text: string }) {
 }
 
 /* Hyphenated words (sign-in, Company-only) never break at the hyphen. */
-function Keep({ text }: { text: string }) {
+export function Keep({ text }: { text: string }) {
   return (
     <>
       {text.split(/(\S+-\S+)/).map((part, i) =>
@@ -73,7 +73,7 @@ function Keep({ text }: { text: string }) {
 }
 
 /* Text beside the picture, alternating sides; on a phone, text first. */
-function Split({ text, art, flip = false }: { text: ReactNode; art: ReactNode; flip?: boolean }) {
+export function Split({ text, art, flip = false }: { text: ReactNode; art: ReactNode; flip?: boolean }) {
   return (
     <div className={`split ${flip ? 'flip' : ''}`}>
       <div className="text">{text}</div>
@@ -82,7 +82,7 @@ function Split({ text, art, flip = false }: { text: ReactNode; art: ReactNode; f
   );
 }
 
-function Slab({ id, tone, children, className = '' }: { id?: string; tone: string; children: ReactNode; className?: string }) {
+export function Slab({ id, tone, children, className = '' }: { id?: string; tone: string; children: ReactNode; className?: string }) {
   return (
     <section id={id} className={`slab ${tone} ${className}`}>
       <div className="slab-in">{children}</div>
