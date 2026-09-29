@@ -127,7 +127,9 @@ const CSS = `
   box-shadow: 0 6px 0 var(--card-edge), 0 6px 0 3px var(--line);
 }
 .tbx .hw-step { padding: 18px 20px 22px; display: flex; flex-direction: column; }
-.tbx .hw-art { display: block; width: 100%; height: auto; margin-bottom: 14px; }
+/* Number and words first, the drawing under them, pinned to the bottom so the
+   three drawings line up even when a description runs longer. */
+.tbx .hw-art { display: block; width: 100%; height: auto; margin-top: auto; padding-top: 16px; }
 .tbx .hw-art .mono { font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace; }
 .tbx .hw-step-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: var(--heading); }
 .tbx .hw-num {
@@ -149,13 +151,13 @@ const CSS = `
 }
 @media (max-width: 900px) {
   .tbx .hw-steps { grid-template-columns: minmax(0, 1fr); }
-  .tbx .hw-step { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 4px 18px; align-items: center; }
-  .tbx .hw-art { grid-row: span 2; margin: 0; }
+  .tbx .hw-step { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 4px 18px; align-items: center; }
+  .tbx .hw-art { grid-column: 2; grid-row: 1 / span 2; margin: 0; padding-top: 0; }
   .tbx .hw-cards { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
-  .tbx .hw-step { display: flex; }
-  .tbx .hw-art { margin-bottom: 12px; }
+  .tbx .hw-step { display: flex; align-items: stretch; }
+  .tbx .hw-art { grid-column: auto; grid-row: auto; padding-top: 14px; }
   .tbx .hw-card-title { font-size: 23px; }
 }
 `;
@@ -172,9 +174,9 @@ export default function HowItWorks() {
       <ol className="hw-steps">
         {STEPS.map((s, i) => (
           <li key={s.title} className="hw-step">
-            {ART[s.art]}
             <h3 className="hw-step-title"><span className="hw-num" aria-hidden="true">{i + 1}</span>{s.title}</h3>
             <p>{s.body}</p>
+            {ART[s.art]}
           </li>
         ))}
       </ol>
