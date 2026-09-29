@@ -26,6 +26,8 @@ const HERO_LINE = 'From an idea to a link your teammates can open.';
 const V2_CSS = `
 .tbx .hc { text-align: center; padding-top: 44px; padding-bottom: 36px; }
 .tbx .hc .tb-h1 { font-size: clamp(40px, 5.6vw, 76px); max-width: 15ch; margin: 0 auto; }
+/* The second sentence in a softer tone, so the headline reads as two. */
+.tbx .hc .tb-h1 > span.block:nth-child(2) { color: var(--muted); }
 .tbx .hc .tb-lede { margin: 24px auto 0; max-width: 50ch; font-size: 24px; font-weight: 500; text-wrap: balance; }
 .tbx .hc-connect { max-width: 640px; margin: 34px auto 0; }
 /* The setup block, centred with the hero: tabs, the command, the Copy key and
