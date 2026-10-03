@@ -17,7 +17,7 @@ const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   {
     id: 'claude',
     label: 'Claude Code',
-    hint: 'Run this once. The first time you ask your agent to deploy, it shows you a link and a code; approve it in the browser and you are in.',
+    hint: 'Run this once. The first time you deploy, approve it in your browser.',
     snippet: 'claude mcp add wirl -- npx -y @wirl/mcp',
   },
   {
@@ -46,7 +46,9 @@ const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   },
 ];
 
-export default function Connect({ id = 'connect', after }: { id?: string; after: string }) {
+/* compact: the command and Copy share one row inside the box, and the hint
+   sits under the box with the waitlist line, so the block stays short. */
+export default function Connect({ id = 'connect', after, compact = false }: { id?: string; after: string; compact?: boolean }) {
   const [active, setActive] = useState('claude');
   const [copied, setCopied] = useState(0);
   const agent = AGENTS.find((a) => a.id === active) ?? AGENTS[0];
@@ -79,31 +81,58 @@ export default function Connect({ id = 'connect', after }: { id?: string; after:
           </button>
         ))}
       </div>
-      <div className="tb-term">
-        <div className="tb-term-bar" aria-hidden="true"><i /><i /><i /><span>{agent.label === 'No MCP' ? 'terminal' : agent.id === 'other' ? 'mcp.json' : agent.label}</span></div>
-        <div className="tb-term-body">
-          <pre>{agent.snippet}</pre>
-          <div className="tb-term-row">
-            <button type="button" onClick={copy} className="tbtn tbtn-sm tb-copy" data-copied={copied ? 'yes' : 'no'}>
-              {copied ? 'Copied' : 'Copy'}
-              {copied ? (
-                <span key={copied} className="tb-burst" aria-hidden="true"><i /><i /><i /></span>
-              ) : null}
-            </button>
-            {agent.id === 'cursor' && (
-              <a href={CURSOR_DEEPLINK} className="tbtn tbtn-sm tbtn-paper">Add to Cursor</a>
-            )}
-            <span className="tb-hint">{agent.hint}</span>
+      {compact ? (
+        <>
+          <div className="tb-term">
+            <div className="tb-term-bar" aria-hidden="true"><i /><i /><i /><span>{agent.label === 'No MCP' ? 'terminal' : agent.id === 'other' ? 'mcp.json' : agent.label}</span></div>
+            <div className="tb-term-line">
+              <pre>{agent.snippet}</pre>
+              <div className="tb-term-actions">
+                <button type="button" onClick={copy} className="tbtn tbtn-sm tb-copy" data-copied={copied ? 'yes' : 'no'}>
+                  {copied ? 'Copied' : 'Copy'}
+                  {copied ? (
+                    <span key={copied} className="tb-burst" aria-hidden="true"><i /><i /><i /></span>
+                  ) : null}
+                </button>
+                {agent.id === 'cursor' && (
+                  <a href={CURSOR_DEEPLINK} className="tbtn tbtn-sm tbtn-paper">Add to Cursor</a>
+                )}
+              </div>
+            </div>
+          </div>
+          <p className="tb-below">
+            {agent.hint} No agent yet? <a href="#waitlist">Join the waitlist</a>.
+          </p>
+        </>
+      ) : (
+        <>
+        <div className="tb-term">
+          <div className="tb-term-bar" aria-hidden="true"><i /><i /><i /><span>{agent.label === 'No MCP' ? 'terminal' : agent.id === 'other' ? 'mcp.json' : agent.label}</span></div>
+          <div className="tb-term-body">
+            <pre>{agent.snippet}</pre>
+            <div className="tb-term-row">
+              <button type="button" onClick={copy} className="tbtn tbtn-sm tb-copy" data-copied={copied ? 'yes' : 'no'}>
+                {copied ? 'Copied' : 'Copy'}
+                {copied ? (
+                  <span key={copied} className="tb-burst" aria-hidden="true"><i /><i /><i /></span>
+                ) : null}
+              </button>
+              {agent.id === 'cursor' && (
+                <a href={CURSOR_DEEPLINK} className="tbtn tbtn-sm tbtn-paper">Add to Cursor</a>
+              )}
+              <span className="tb-hint">{agent.hint}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <p className="tb-after">
-        {after.split(/(waitlist)/i).map((part, i) =>
-          /^waitlist$/i.test(part)
-            ? <a key={i} href="#waitlist">{part}</a>
-            : <span key={i}>{part}</span>
-        )}
-      </p>
+        <p className="tb-after">
+          {after.split(/(waitlist)/i).map((part, i) =>
+            /^waitlist$/i.test(part)
+              ? <a key={i} href="#waitlist">{part}</a>
+              : <span key={i}>{part}</span>
+          )}
+        </p>
+        </>
+      )}
     </div>
   );
 }

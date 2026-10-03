@@ -184,6 +184,13 @@ const BASE = String.raw`
 .tbx .tb-term-row { margin-top: 13px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
 .tbx .tb-hint { font-size: 14px; line-height: 1.45; color: #C9D6CD; max-width: 44ch; flex: 1 1 220px; }
 .tbx .tb-copy { min-width: 92px; }
+/* The short version of the block: command and Copy on one row, hint below. */
+.tbx .tb-term-line { display: flex; align-items: center; gap: 12px 16px; padding: 14px 14px 14px 20px; }
+.tbx .tb-term-line pre { flex: 1 1 auto; min-width: 0; text-align: left; word-break: normal; overflow-wrap: anywhere; }
+.tbx .tb-term-actions { flex: none; display: flex; gap: 8px; }
+.tbx .tb-below { margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.tbx .tb-below a { color: var(--link); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+@media (max-width: 480px) { .tbx .tb-term-line { flex-direction: column; align-items: stretch; padding: 14px; } .tbx .tb-term-actions { justify-content: center; } }
 .tbx .tb-copy[data-copied='yes'] { background: #A6E6BE; }
 .tbx .tb-burst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
 .tbx .tb-burst i {
