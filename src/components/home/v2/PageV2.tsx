@@ -35,11 +35,7 @@ const V2_CSS = `
    inside a centred box so its lines still read as code. */
 .tbx .hc-connect .tb-connect { margin-left: auto; margin-right: auto; max-width: 600px; }
 .tbx .hc-connect .tb-tabs { justify-content: center; }
-.tbx .hc-connect .tb-term-body { text-align: center; }
-.tbx .hc-connect .tb-term pre { display: inline-block; max-width: 100%; text-align: left; }
-.tbx .hc-connect .tb-term-row { flex-direction: column; justify-content: center; }
-.tbx .hc-connect .tb-hint { flex: none; text-align: center; }
-.tbx .hc-connect .tb-after { margin-left: auto; margin-right: auto; text-align: center; }
+.tbx .hc-connect .tb-below { text-align: center; text-wrap: balance; }
 @media (max-width: 640px) {
   .tbx .hc { padding-top: 18px; padding-bottom: 22px; }
   .tbx .hc .tb-lede { font-size: 17.5px; }
@@ -69,7 +65,7 @@ export default function PageV2() {
           <h1 className="tb-h1"><Headline text={tb.hero_h1} /></h1>
           <p className="tb-lede">{HERO_LINE}</p>
           <div className="hc-connect">
-            <Connect after={tb.connect_after} />
+            <Connect after={tb.connect_after} compact />
           </div>
         </header>
 
