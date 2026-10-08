@@ -5,6 +5,7 @@
 // rest of the page is the live page's own sections.
 
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import Wordmark from '@/components/Wordmark';
 import ThemeToggle from '@/components/ThemeToggle';
 import { SnailMark } from '@/components/paper/Snail';
@@ -29,6 +30,8 @@ const V2_CSS = `
 /* The second sentence in a softer tone, so the headline reads as two. */
 .tbx .hc .tb-h1 > span.block:nth-child(2) { color: var(--muted); }
 .tbx .hc .tb-lede { margin: 24px auto 0; max-width: 50ch; font-size: 24px; font-weight: 500; text-wrap: balance; }
+.tbx .hc-wide .tb-h1 { max-width: 24ch; }
+.tbx .hc-art { max-width: 560px; margin: 36px auto 0; }
 .tbx .hc-connect { max-width: 640px; margin: 34px auto 0; }
 /* The setup block, centred with the hero: tabs, the command, the Copy key and
    its hint, and the note under it. A multi-line snippet stays left-aligned
@@ -42,7 +45,9 @@ const V2_CSS = `
 }
 `;
 
-export default function PageV2() {
+/* The hero's words and an optional picture can be swapped, so other versions
+   of the hero can be tried on test pages without copying the whole page. */
+export default function PageV2({ h1 = tb.hero_h1, line = HERO_LINE, art, wide = false }: { h1?: string; line?: string; art?: ReactNode; wide?: boolean }) {
   return (
     <div className="tbx">
       <style href="tbx" precedence="default">{CSS}</style>
@@ -61,9 +66,10 @@ export default function PageV2() {
 
       <main>
         {/* Hero, centred */}
-        <header className="wrap hc">
-          <h1 className="tb-h1"><Headline text={tb.hero_h1} /></h1>
-          <p className="tb-lede">{HERO_LINE}</p>
+        <header className={`wrap hc${wide ? ' hc-wide' : ''}`}>
+          <h1 className="tb-h1"><Headline text={h1} /></h1>
+          <p className="tb-lede">{line}</p>
+          {art && <div className="hc-art">{art}</div>}
           <div className="hc-connect">
             <Connect after={tb.connect_after} compact />
           </div>
