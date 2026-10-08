@@ -94,12 +94,11 @@ export default function PageV2({ h1 = tb.hero_h1, line = HERO_LINE, art, wide = 
           />
         </Slab>
 
-        {/* What Wirl is: the answer to the list above, point by point */}
+        {/* What Wirl is, said once, before the features go deep */}
         <Slab id="what-it-is" tone="bg-mint">
-          <WhatItIs
-            title="Wirl is a secure cloud for vibe-coded internal tools."
-            lede="Every tool your people build gets a link only your company can open, and IT sees all of them in one place."
-          />
+          <WhatItIs title="Wirl is a secure cloud for vibe-coded internal tools.">
+            Your people deploy from the agent they already use. Each tool gets a <b>company-only link</b>, its keys stay in a <b>vault</b>, and IT sees <b>every app in one place</b>: who built it, what it connects to, and who can open it.
+          </WhatItIs>
         </Slab>
 
         <Slab id="signin" tone="bg-blush">
