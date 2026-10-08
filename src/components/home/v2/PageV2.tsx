@@ -97,7 +97,7 @@ export default function PageV2({ h1 = tb.hero_h1, line = HERO_LINE, art, wide = 
         {/* What Wirl is, said once, before the features go deep */}
         <Slab id="what-it-is" tone="bg-mint">
           <WhatItIs title="Wirl is a secure cloud for vibe-coded internal tools.">
-            Your people deploy from the agent they already use. Each tool gets a <b>company-only link</b>, its keys stay in a <b>vault</b>, and IT sees <b>every app in one place</b>: who built it, what it connects to, and who can open it.
+            Your people deploy from the agent they already use. Each tool gets a <b className="whitespace-nowrap">company-only link</b>, its keys stay in a <b>vault</b>, and IT sees <b>every app in one place</b>: who built it, what it connects to, and who can open it.
           </WhatItIs>
         </Slab>
 
