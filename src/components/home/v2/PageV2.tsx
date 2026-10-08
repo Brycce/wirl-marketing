@@ -22,7 +22,7 @@ import { Headline, Keep, Split, Slab, faqJsonLd } from '../Page';
 import HowItWorks from './HowItWorks';
 
 // The hero's one line under the headline, for this version only.
-const HERO_LINE = 'From an idea to a link your teammates can open.';
+const HERO_LINE = 'Share the tools you vibe-code like you share a Google Doc.';
 
 const V2_CSS = `
 .tbx .hc { text-align: center; padding-top: 44px; padding-bottom: 36px; }
