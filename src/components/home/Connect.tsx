@@ -17,25 +17,25 @@ const AGENTS: { id: string; label: string; hint: string; snippet: string }[] = [
   {
     id: 'claude',
     label: 'Claude Code',
-    hint: 'Run this once. The first time you deploy, approve it in your browser.',
+    hint: 'Run this once. Unless this computer is already signed in with npx wirl login, the first time your agent needs your wirl account it shows you a link and a code: approve the code in your browser.',
     snippet: 'claude mcp add wirl -- npx -y @wirl/mcp',
   },
   {
     id: 'codex',
     label: 'Codex',
-    hint: 'Add these three lines to ~/.codex/config.toml.',
+    hint: 'Add these three lines to ~/.codex/config.toml. Unless this computer is already signed in with npx wirl login, the first time your agent needs your wirl account it shows you a link and a code: approve the code in your browser.',
     snippet: '[mcp_servers.wirl]\ncommand = "npx"\nargs = ["-y", "@wirl/mcp"]',
   },
   {
     id: 'cursor',
     label: 'Cursor',
-    hint: 'Add this to .cursor/mcp.json, or use the button.',
+    hint: 'Add this to .cursor/mcp.json, or use the button. Unless this computer is already signed in with npx wirl login, the first time your agent needs your wirl account it shows you a link and a code: approve the code in your browser.',
     snippet: '{ "mcpServers": { "wirl": { "command": "npx", "args": ["-y", "@wirl/mcp"] } } }',
   },
   {
     id: 'other',
     label: 'Other MCP',
-    hint: "Add this to your client's MCP config. Sign in once.",
+    hint: "Add this to your client's MCP config. Unless this computer is already signed in with npx wirl login, the first time your agent needs your wirl account it shows you a link and a code: approve the code in your browser.",
     snippet: '{ "mcpServers": { "wirl": { "command": "npx", "args": ["-y", "@wirl/mcp"] } } }',
   },
   {

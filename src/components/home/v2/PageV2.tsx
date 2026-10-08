@@ -231,6 +231,8 @@ export default function PageV2({ h1 = tb.hero_h1, line = HERO_LINE, art, wide = 
           <div className="tb-foot-links">
             <a href="https://docs.wirl.dev">Docs</a>
             <a href="#waitlist">Waitlist</a>
+            <Link href="/terms">Terms</Link>
+            <Link href="/privacy">Privacy</Link>
             <span>© 2026 Wirl</span>
           </div>
         </div>
