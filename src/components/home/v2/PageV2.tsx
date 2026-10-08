@@ -20,6 +20,7 @@ import { AdminTable, LogCard } from '../scenes/Admin';
 import { APPS, AppStickerArt } from '../scenes/Small';
 import { Headline, Keep, Split, Slab, faqJsonLd } from '../Page';
 import HowItWorks from './HowItWorks';
+import WhatItIs from './WhatItIs';
 
 // The hero's one line under the headline, for this version only.
 const HERO_LINE = 'Share the tools you vibe-code like you share a Google Doc.';
@@ -90,6 +91,14 @@ export default function PageV2({ h1 = tb.hero_h1, line = HERO_LINE, art, wide = 
               </>
             }
             art={<MessStickers labels={tb.mess_tiles} />}
+          />
+        </Slab>
+
+        {/* What Wirl is: the answer to the list above, point by point */}
+        <Slab id="what-it-is" tone="bg-mint">
+          <WhatItIs
+            title="Wirl is a secure cloud for vibe-coded internal tools."
+            lede="Every tool your people build gets a link only your company can open, and IT sees all of them in one place."
           />
         </Slab>
 
