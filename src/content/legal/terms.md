@@ -1,6 +1,6 @@
 # Terms of service
 
-Last updated: [[T5: the date you publish this page]]
+Last updated: 9 October 2026
 
 These terms are an agreement between you and Oimo Technologies Inc. ("wirl", "we", "us") about your use of:
 
@@ -30,7 +30,7 @@ The service has limits. The current list is on the Limits page at docs.wirl.dev.
 
 ## 3. Accounts
 
-You sign in with a Google account. You must be at least [[T7: minimum age, suggested 16]]. wirl is a tool for work.
+You sign in with a Google account. You must be at least 16. wirl is a tool for work.
 
 You are responsible for what is done with your account, and with every token you create or approve, including tokens you give to coding agents. Revoke a token as soon as you stop trusting whatever holds it.
 
@@ -43,7 +43,7 @@ Every account belongs to at least one organisation. Apps, connections and member
 - **Personal organisations.** A Google account without a company domain gets an organisation of its own.
 - **What is visible.** A new app in a company-domain organisation starts visible to everyone in that organisation. A new app anywhere else starts private. Only a person, on the app's Access page, can make an app public.
 
-If you believe an organisation for your company's domain is in the wrong hands, write to [[T3: contact email, suggested support@wirl.dev, not yet confirmed]].
+If you believe an organisation for your company's domain is in the wrong hands, write to bryce@oimo.tech.
 
 ## 5. Your apps and your data
 
@@ -83,11 +83,11 @@ Do not use wirl to:
 
 wirl is free today. We charge for nothing and hold no payment details.
 
-[[T11: your wording on future pricing, or delete this line]]
+If we start charging, we will tell you before anything costs money.
 
 ## 9. Ending your use, and what happens to your data
 
-You can stop using the service at any time. Delete your apps, revoke your tokens, and write to [[T3]] to have your account deleted.
+You can stop using the service at any time. Delete your apps, revoke your tokens, and write to bryce@oimo.tech to have your account deleted.
 
 We may suspend or end your access if you break these terms, if the law requires it, or if we stop offering the service. Where we can, we will tell you first and give you time to take your apps and data.
 
@@ -113,8 +113,8 @@ We may update these terms. We will post the new version on this page with its da
 
 ## 13. Governing law
 
-These terms are governed by the laws of [[T4: governing law and courts]], and disputes go to the courts there.
+These terms are governed by the laws of British Columbia, Canada, and disputes go to the courts there.
 
 ## 14. Contact
 
-Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. [[T3]].
+Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. bryce@oimo.tech.

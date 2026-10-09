@@ -1,6 +1,6 @@
 # Privacy policy
 
-Last updated: [[T5: the date you publish this page]]
+Last updated: 9 October 2026
 
 ## Who we are
 
@@ -12,7 +12,7 @@ Oimo Technologies Inc. ("wirl", "we", "us"), of 3542 Blanshard St #206, Victoria
 - the apps people deploy, at addresses ending in wirl.run
 - the `wirl` command-line tool and the `@wirl/mcp` server
 
-This policy says what we collect, why, who handles it for us, how long we keep it, and how to ask us to delete it. To ask anything about it, write to [[T3: contact email, suggested support@wirl.dev, not yet confirmed]].
+This policy says what we collect, why, who handles it for us, how long we keep it, and how to ask us to delete it. To ask anything about it, write to bryce@oimo.tech.
 
 For your account and our own records, we decide what is kept and why. The apps you deploy, and the data in them, belong to you or your company. We store and run them on your instructions.
 
@@ -116,7 +116,7 @@ wirl's operators can see weekly totals: new people, new organisations, apps crea
 - www.wirl.dev sets no cookies and runs no analytics.
 - It remembers whether you chose the light or dark theme, in your browser's local storage, under the name `wirl-theme`. That never leaves your browser.
 - It loads its fonts from Google Fonts. To fetch them, your browser sends Google your IP address, the site's address and your browser's headers. Google says it sets no cookies for this and does not use it to build profiles or for advertising.
-- **The waitlist.** If you join the waitlist, www.wirl.dev does not keep your address in a database. It sends one email, through Resend, to wirl's founder, with your address in it and as the reply-to, together with the address of the page you joined from. You receive no email. Your address then sits in that mailbox, which only wirl's founder reads, and in Resend's record of the email it delivered. To be removed, write to [[T3]] from the address you gave, and we delete the email.
+- **The waitlist.** If you join the waitlist, www.wirl.dev does not keep your address in a database. It sends one email, through Resend, to wirl's founder, with your address in it and as the reply-to, together with the address of the page you joined from. You receive no email. Your address then sits in that mailbox, which only wirl's founder reads, and in Resend's record of the email it delivered. To be removed, write to bryce@oimo.tech from the address you gave, and we delete the email.
 - docs.wirl.dev sets no cookies. Its only script adds "Copy" buttons to code samples, and it loads nothing from other sites.
 
 ### Cookies on app.wirl.dev and on apps
@@ -217,7 +217,7 @@ You can do these yourself:
 - Hand an app to someone else.
 - Download an app's code with `wirl pull`, and read its log with `wirl logs`.
 
-Write to us at [[T3]], from the address you sign in with, to:
+Write to us at bryce@oimo.tech, from the address you sign in with, to:
 
 - **Delete your account.** There is no button for this yet, so we do it by hand. Before you ask, delete or hand over the apps you own. We delete your email address, name, Google id and job answer, your tokens, your memberships and the invitations sent to your address, and we rename your personal organisation. Its address, made from the part of your email address before the @, stays taken, as every organisation's and app's address does. Records that refer to your account only by an internal id, such as which versions you deployed and entries in the activity record, are kept for the times above; the entries for sign-ins from a terminal or an agent also keep the computer's name. What apps stored about you is in their own databases: ask the people who run them.
 - **Get a copy of what we hold about you.**
@@ -230,7 +230,7 @@ Your session and app-access cookies are sent only over HTTPS. Keys are encrypted
 
 ## Children
 
-wirl is a tool for work. It is not meant for anyone under [[T7: minimum age, suggested 16]]. If you believe someone under that age has an account, write to us and we will delete it.
+wirl is a tool for work. It is not meant for anyone under 16. If you believe someone under that age has an account, write to us and we will delete it.
 
 ## Changes to this policy
 
@@ -238,4 +238,4 @@ We will post changes on this page with a new date. If a change is material, we w
 
 ## Contact
 
-Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. [[T3]].
+Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. bryce@oimo.tech.
