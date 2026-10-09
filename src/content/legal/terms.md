@@ -2,7 +2,7 @@
 
 Last updated: [[T5: the date you publish this page]]
 
-These terms are an agreement between you and [[T1: legal entity name]] ("wirl", "we", "us") about your use of:
+These terms are an agreement between you and Oimo Technologies Inc. ("wirl", "we", "us") about your use of:
 
 - www.wirl.dev, app.wirl.dev and docs.wirl.dev
 - the apps hosted at addresses ending in wirl.run
@@ -117,4 +117,4 @@ These terms are governed by the laws of [[T4: governing law and courts]], and di
 
 ## 14. Contact
 
-[[T1]], [[T2: postal address]]. [[T3]].
+Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. [[T3]].

@@ -4,7 +4,7 @@ Last updated: [[T5: the date you publish this page]]
 
 ## Who we are
 
-[[T1: legal entity name]] ("wirl", "we", "us"), of [[T2: postal address]], runs wirl:
+Oimo Technologies Inc. ("wirl", "we", "us"), of 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada, runs wirl:
 
 - the website at www.wirl.dev
 - the dashboard, API and hosted MCP server at app.wirl.dev
@@ -238,4 +238,4 @@ We will post changes on this page with a new date. If a change is material, we w
 
 ## Contact
 
-[[T1]], [[T2]]. [[T3]].
+Oimo Technologies Inc., 3542 Blanshard St #206, Victoria, BC V8X 2W8, Canada. [[T3]].
