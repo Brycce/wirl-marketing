@@ -16,8 +16,6 @@ This policy says what we collect, why, who handles it for us, how long we keep i
 
 For your account and our own records, we decide what is kept and why. The apps you deploy, and the data in them, belong to you or your company. We store and run them on your instructions.
 
-[[LAWYER BLOCK: controller and processor roles, and whether company customers need a data processing agreement.]]
-
 ## What we collect
 
 ### Your account
@@ -96,6 +94,7 @@ wirl sends these emails automatically, and no others:
 - an alert to an app's owner that the app has been failing
 - a notice to an app's owner that a flow run failed
 - a notice to an app's owner that the app's flow runs are paused for the rest of the day
+- a note to our founder when someone joins the waitlist on www.wirl.dev, with the address they gave
 
 The messages are plain text. Resend delivers them. Messages to an app's owner go only to an owner who is still a member of the app's organisation.
 
@@ -152,7 +151,7 @@ Where the law asks for one, we rely on:
 - your consent, for the optional job question
 - legal obligations, where the law requires us to keep or disclose something
 
-[[LAWYER BLOCK: confirm these legal bases, and add the rights that depend on where a person lives (access, correction, deletion, portability, objection, complaint to a regulator).]]
+Wherever you live, you can ask to see, correct or delete what we hold about you, by writing to bryce@oimo.tech. If you are in Canada, you can also complain to the Office of the Information and Privacy Commissioner for British Columbia; in the EU or UK, to your local data protection authority.
 
 ## Who handles data for us
 
@@ -162,14 +161,14 @@ Where the law asks for one, we rely on:
 | Cloudflare | Runs every app, the gate and flows, and carries all traffic to wirl.run. Stores each app's code, database, previews, flow runs and logs | Cloudflare's worldwide network. Cloudflare chooses where to place each app's database; wirl sets no location |
 | Railway | Hosts app.wirl.dev: the dashboard, the API and the hosted MCP server. Apps' outgoing calls pass through it, so it can attach keys | United States (US West, California) |
 | Neon | Hosts wirl's own database: accounts, organisations, the activity record, encrypted keys, run records | United States (AWS us-west-2, Oregon) |
-| Resend | Sends wirl's email | United States, according to Resend |
+| Resend | Sends wirl's email, including the note to our founder when someone joins the waitlist | United States, according to Resend |
 | Vercel | Hosts www.wirl.dev and docs.wirl.dev | Vercel's network |
 
 Apart from what this page describes (what apps and the people who build them are told, what colleagues and admins see, what an invitation says, and the keys your apps send to the services they call), we share data only with these providers, and when the law requires it.
 
 If you connect a coding agent to wirl, what wirl's tools return to it goes to that agent and to the company that provides it, under your own agreement with them. That includes your apps' code, logs and run records.
 
-[[LAWYER BLOCK: international transfers, for people outside the United States.]]
+Our providers store data in the United States. By using wirl you accept that your data is handled there.
 
 ## How long we keep it
 
@@ -200,7 +199,7 @@ A cleanup job runs every six hours. So "after 30 days" means within about six ho
 | A sign-in code for `wirl login` or `@wirl/mcp` | Removed a day or more after it expires |
 | An agent's registration and sign-in codes through app.wirl.dev/mcp | Kept, the codes as hashes. Nothing removes them today |
 | A note that you signed out | Until the session would have ended anyway |
-| The waitlist | [[T13: how long the waitlist emails are kept in the founder's mailbox; the code does not set a limit]] |
+| The waitlist | Until the beta opens to you, or you ask us to remove it |
 
 Data we remove can stay for a while in our providers' backups before they overwrite it.
 

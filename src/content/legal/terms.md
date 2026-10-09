@@ -101,7 +101,7 @@ What you can take with you today:
 
 ## 10. Warranties, liability and indemnity
 
-[[T12 LAWYER BLOCK: counsel replaces this section. Conventional starting text, not reviewed: "The service is provided as is and as available, without warranties of any kind, to the extent the law allows. We are not liable for indirect, incidental, special or consequential loss, or for loss of data, profits or revenue, arising from the service. Where liability cannot be excluded, our total liability to you is limited to the greater of what you paid us in the twelve months before the claim and one hundred US dollars. Nothing in these terms limits liability that the law does not allow to be limited." Counsel also decides whether you indemnify us for claims about your apps' content and data.]]
+The service is provided as is and as available, without warranties of any kind, to the extent the law allows. We are not liable for indirect, incidental, special or consequential loss, or for loss of data, profits or revenue, arising from the service. Where liability cannot be excluded, our total liability to you is limited to the greater of what you paid us in the twelve months before the claim and one hundred US dollars. Nothing in these terms limits liability that the law does not allow to be limited.
 
 ## 11. Other services
 
